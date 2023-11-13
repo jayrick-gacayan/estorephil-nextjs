@@ -145,21 +145,19 @@ export function Carousel() {
           <CarouselItem imgSrc='/static_images/estorephil_for_carousel.png' imgAlt='carousel-img-2' index={1} currentSlide={carouselCurrentSlide} />
           <CarouselItem imgSrc='/static_images/carousel_image_two.jpg' imgAlt='carousel-img-3' index={2} currentSlide={carouselCurrentSlide} />
         </div>
-        <div className='absolute bottom-3 left-0 flex gap-2 items-center w-full justify-center '>
-          <div className='h-1 w-6 rounded bg-white/100' onClick={() => { setCarouselCurrentSide(0) }} />
-          <div className='h-1 w-6 rounded bg-white/100' onClick={() => { setCarouselCurrentSide(1) }} />
-          <div className='h-1 w-6 rounded bg-white/100' onClick={() => { setCarouselCurrentSide(2) }} />
+        <div className='absolute bottom-3 left-0 flex gap-2 items-center w-full justify-center'>
+          {
+            [0, 1, 2].map((value: number) => {
+              return (
+                <div key={`carousel-item-main-${value}`}
+                  className={`h-1 w-6 rounded  cursor-pointer ${carouselCurrentSlide === value ? `bg-primary-light` : `bg-white`}`}
+                  onClick={() => { setCarouselCurrentSide(value) }} />
+              )
+            })
+          }
+
         </div>
       </div>
-      {/* <div className='w-full overflow-hidden h-full touch-pan-y'>
-        <div ref={containerRef}
-          className={`flex w-full ${isSwiping ? 'transition-none' : 'transition-all'} h-full  duration-300 ease-out`}
-          style={{ transform: `translate3d(${offsetX}px, 0, 0)` }}>
-          <CarouselItem imgSrc='/static_images/carousel_image_two.jpg' imgAlt='carousel-img-1' />
-          <CarouselItem imgSrc='/static_images/estorephil_logo.svg' imgAlt='carousel-img-2' />
-          <CarouselItem imgSrc='/static_images/carousel_image_two.jpg' imgAlt='carousel-img-3' />
-        </div>
-      </div> */}
     </div>
   )
 }
