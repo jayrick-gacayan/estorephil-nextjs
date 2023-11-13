@@ -27,7 +27,7 @@ export function AdminSidebar({ currentLink }: { currentLink: string }): JSX.Elem
                 className='w-full'>
                 <Link
                   href={`${adminLink.link}`}
-                  className={`transition-all delay-100 ease-linear block p-4 space-x-2 ${currentLink === adminLink.altText ? `border-l-4 border-l-[#23b7e5] text-[#23b7e5]` : `text-inherit`}`}>
+                  className={`transition-all delay-100 ease-linear block py-2 px-4 space-x-2 ${currentLink === adminLink.altText ? `border-l-4 border-l-[#23b7e5] text-[#23b7e5]` : `text-inherit`}`}>
                   {adminLink.icon}
                   <span className='align-middle'>{adminLink.text}</span>
                 </Link>

@@ -1,6 +1,6 @@
 import { FaUsers, FaWarehouse } from 'react-icons/fa';
 import { IoIosChatbubbles } from 'react-icons/io';
-import { AdminModelCard } from '../_components/model_card';
+import { AdminModelCard } from '../../_components/model_card';
 
 export function ModelCardContainer() {
   return (

@@ -8,7 +8,7 @@ export function AdminNavbarHeader() {
 
   return (
     <header className='sticky w-full top-0 left-0 z-[9999]'>
-      <nav className='bg-sky-300 text-white w-full'>
+      <nav className='bg-[#23b7e5] text-white w-full'>
         <div className='flex '>
           <div className='flex-none w-[224px] py-3 px-2'>
             <Link href='/home' className='w-[224px] relative block md:h-full h-8'>
