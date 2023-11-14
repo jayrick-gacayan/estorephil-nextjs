@@ -6,7 +6,7 @@ export function HomeCategories() {
       <div className='flex'>
         <div className='flex-1 font-bold'>CATEGORIES</div>
       </div>
-      <div className='block text-[#2F353D]'>
+      <div className='block text-secondary'>
         <Link href='#' className='block'>3D Printed Products</Link>
         <Link href='#' className='block'>Automotive & Powersports</Link>
         <Link href='#' className='block'>Baby Products &#40;excluding Baby Apparel&#41;</Link>

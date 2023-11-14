@@ -1,5 +1,5 @@
 import { OurSellers } from './_sections/our_sellers';
-import { ProductsContainer } from './_sections/products_container';
+import { ProductsContainer } from '../_components/products_container';
 import { Product } from '@/models/product';
 import { Carousel } from './_sections/carousel';
 import { HomeCategories } from './_sections/home_categories';
@@ -148,10 +148,10 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </div>
       <OurSellers />
-      <div className='max-w-screen-2xl m-auto py-4 text-[#2F353D]'>
+      <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
         <ProductsContainer headerText='Popular Balikbayan Items' products={popularProductItems} />
       </div>
-      <div className='max-w-screen-2xl m-auto py-4 text-[#2F353D]'>
+      <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
         <ProductsContainer headerText='New Items' products={newItems} />
       </div>
     </div>

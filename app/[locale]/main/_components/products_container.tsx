@@ -1,5 +1,5 @@
 import { Product } from '@/models/product';
-import { ProductItem } from '../../_components/product_item';
+import { ProductItem } from './product_item';
 
 export function ProductsContainer({
   headerText,
@@ -11,7 +11,7 @@ export function ProductsContainer({
   return (
     <>
       <div className='flex mb-2'>
-        <div className='flex-1 font-[500] text-2xl'>{headerText}</div>
+        <div className='flex-1 font-[500] text-[28px] leading-0'>{headerText}</div>
         <div></div>
       </div>
       <div className='flex flex-row flex-wrap gap-4'>

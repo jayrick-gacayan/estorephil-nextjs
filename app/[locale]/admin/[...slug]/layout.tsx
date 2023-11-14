@@ -2,8 +2,6 @@ import { ReactNode } from 'react';
 import { AdminPageHeader } from './_components/admin_page_header';
 import { LinkProps } from '@/types/props/link_props';
 import { FaChartBar, FaChartLine, FaFilter, FaImages, FaMoneyCheck, FaShoppingBasket, FaShoppingCart, FaThLarge } from 'react-icons/fa';
-import Link from 'next-intl/link';
-import Image from 'next/image';
 import { AdminNavbarHeader } from './_sections/admin_navbar_header';
 import { AdminSidebar } from './_sections/admin_sidebar';
 
@@ -36,7 +34,7 @@ export default function Layout({
   return (
     <>
       <AdminNavbarHeader />
-      <main className='h-[calc(100vh-48px)] flex w-full text-[#2F353D] relative'>
+      <main className='h-[calc(100vh-48px)] flex w-full text-secondary relative'>
         <AdminSidebar currentLink={currentLink} />
         <div className='flex-1 h-full overflow-auto bg-neutral-200'>
           <div className='border-b-2 border-neutral-300'>

@@ -1,9 +1,9 @@
 'use client';
 
 import { Seller } from '@/models/seller';
-import { SellerItem } from '../../_components/seller_item';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
+import { SellerItem } from '../../_components/seller_item';
 
 export function OurSellers() {
   const sliderContainerRef = useRef<HTMLDivElement>(null);
@@ -81,7 +81,7 @@ export function OurSellers() {
   }
 
   return (
-    <div className='max-w-screen-2xl m-auto py-4 text-[#2F353D] h-auto'>
+    <div className='max-w-screen-2xl m-auto py-4 text-secondary h-auto'>
       <div className="flex mb-2">
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>

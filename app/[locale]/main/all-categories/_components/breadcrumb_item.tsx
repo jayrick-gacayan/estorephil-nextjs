@@ -4,17 +4,19 @@ import { FaChevronRight } from 'react-icons/fa';
 export function BreadcrumbItem({
   isLink,
   withRightArrowChevron,
+  link,
   text
 }: {
   isLink: boolean;
+  link?: string;
   withRightArrowChevron: boolean;
   text: string;
 }) {
-  return isLink ?
+  return isLink && link !== undefined ?
     (
-      <Link href='#' className='text-[#0D2D82] space-x-0.5'>
+      <Link href={link} className='text-primary-light space-x-0.5'>
         <span className='align-middle'>{text}</span>
-        {withRightArrowChevron && <>{<FaChevronRight className='inline-block h-3 w-3 text-[#2F353D]' />}</>}
+        {withRightArrowChevron && <>{<FaChevronRight className='inline-block h-3 w-3 text-secondary' />}</>}
       </Link>
     ) :
     (
