@@ -14,7 +14,7 @@ export function BreadcrumbItem({
 }) {
   return isLink && link !== undefined ?
     (
-      <Link href={link} className='text-primary-light space-x-0.5'>
+      <Link href={link} className='text-primary space-x-0.5'>
         <span className='align-middle'>{text}</span>
         {withRightArrowChevron && <>{<FaChevronRight className='inline-block h-3 w-3 text-secondary' />}</>}
       </Link>

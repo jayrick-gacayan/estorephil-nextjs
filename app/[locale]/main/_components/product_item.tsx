@@ -26,7 +26,7 @@ export function ProductItem({ product }: { product: Product }) {
           </div>
           <span>&#40;{product.raters}&#41;</span>
         </div>
-        <div className='font-bold text-[#1186FF]'>
+        <div className='font-bold text-primary'>
           &#8369; {product.price.toFixed(2)}
         </div>
       </div>

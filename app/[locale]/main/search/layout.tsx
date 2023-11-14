@@ -1,13 +1,6 @@
-import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
 import { SearchSidebar } from './_sections/search_sidebar';
 import { ReactNode } from 'react';
-import { Breadcrumbs } from '../_components/bread_crumbs';
-
-const searchBCItems: BreadcrumbProps[] = [
-  { link: '/home', text: 'Home' },
-  { text: 'Search' }
-];
-
+import BreadcrumbsContainer from '../all-categories/_sections/breadcrumbs_container';
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
 
@@ -17,8 +10,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
         <SearchSidebar />
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
-            <Breadcrumbs breadcrumbs={searchBCItems} />
-
+            <BreadcrumbsContainer basePath='Search' text='Search' />
           </div>
           {children}
         </div>

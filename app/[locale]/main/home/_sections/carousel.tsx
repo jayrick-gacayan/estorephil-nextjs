@@ -150,7 +150,7 @@ export function Carousel() {
             [0, 1, 2].map((value: number) => {
               return (
                 <div key={`carousel-item-main-${value}`}
-                  className={`h-1 w-6 rounded  cursor-pointer ${carouselCurrentSlide === value ? `bg-primary-light` : `bg-white`}`}
+                  className={`h-1 w-6 rounded  cursor-pointer ${carouselCurrentSlide === value ? `bg-primary` : `bg-white`}`}
                   onClick={() => { setCarouselCurrentSide(value) }} />
               )
             })

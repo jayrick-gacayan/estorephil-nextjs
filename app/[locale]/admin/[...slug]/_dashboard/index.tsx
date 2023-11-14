@@ -12,7 +12,6 @@ export function DashbaordContent() {
           <OrdersDataSection />
           <TradeRatesDataSection />
           <TopSellersDataSection />
-
         </div>
         <div className='w-[312px] flex-none'>
           <div className='bg-white border rounded border-neutral-300 border-t-4 p-4 space-y-2'>

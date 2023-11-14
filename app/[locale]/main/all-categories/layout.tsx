@@ -1,15 +1,9 @@
 import { ReactNode } from 'react';
 import { CategorySidebar } from './_sections/category_sidebar';
 import Image from 'next/image'
-import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
-import { Breadcrumbs } from '../_components/bread_crumbs';
+import BreadcrumbsContainer from './_sections/breadcrumbs_container';
 
-const allCategoriesBCItems: BreadcrumbProps[] = [
-  { link: '/home', text: 'Home' },
-  { text: 'All Categories' }
-];
-
-export default function CategoriesLayout({ children }: { children: ReactNode }) {
+export default function CategoriesLayout({ children }: { children: ReactNode }): JSX.Element {
 
   return (
     <div className='text-secondary'>
@@ -17,7 +11,7 @@ export default function CategoriesLayout({ children }: { children: ReactNode }) 
         <CategorySidebar />
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
-            <Breadcrumbs breadcrumbs={allCategoriesBCItems} />
+            <BreadcrumbsContainer basePath='all-category' text='All Categories' />
             <div className='flex gap-4'>
               <div className="w-32 h-32 flex-none">
                 {<Image alt={`product-category`}

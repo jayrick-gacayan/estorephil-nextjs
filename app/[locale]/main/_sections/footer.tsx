@@ -35,7 +35,7 @@ const paymentTypeLinks: LinkProps[] = [
 
 export function Footer() {
   return (
-    <div className='w-full bg-primary text-white p-8'>
+    <div className='w-full bg-primary-dark text-white p-8'>
       <div className='max-w-screen-2xl m-auto py-8'>
         <div className='flex lg:flex-row flex-col gap-1 lg:space-y-0 space-y-4'>
           <div className='w-full'>
@@ -46,7 +46,7 @@ export function Footer() {
             <FooterLinksContainerWithIcons headerText='SOCIALS' links={socialLinks} linkChildrenClassName='p-1' />
           </div>
           <div className='w-full space-y-2'>
-            <FooterLinksContainerWithIcons headerText='SOCIALS' links={paymentTypeLinks} linkChildrenClassName='bg-white text-primary p-1 rounded' />
+            <FooterLinksContainerWithIcons headerText='SOCIALS' links={paymentTypeLinks} linkChildrenClassName='bg-white text-primary-dark p-1 rounded' />
           </div>
           <div className='w-full space-y-2'>
             <h1 className='font-bold'>Promotions</h1>

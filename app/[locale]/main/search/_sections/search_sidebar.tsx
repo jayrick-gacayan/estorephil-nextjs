@@ -1,8 +1,13 @@
-import { Checkbox } from '@/app/[locale]/_components/checkbox';
-import { CategoryCheckbox } from '../../_components/category_checkbox';
+'use client';
 
+import { Checkbox } from '@/app/[locale]/_components/checkbox';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next-intl/client';
 
 export function SearchSidebar() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   return (
     <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[292px] border-r-2 border-r-secondary-light'>
 
@@ -10,12 +15,31 @@ export function SearchSidebar() {
         <div className='space-y-3'>
           <div className='font-bold'>Related Categories</div>
           <div className='block space-y-4'>
-            <CategoryCheckbox category='Camera & Photo' />
-            <CategoryCheckbox category='Cell Phone Devices' />
-            <CategoryCheckbox category='Collectibles – Entertainment or Sports' />
-            <CategoryCheckbox category='Consumer Electronics' />
-            <CategoryCheckbox category='Electronics Accessories' />
-            <CategoryCheckbox category='Electronics Accessories' />
+            {
+              [
+                'Camera & Photo',
+                'Cell Phone Devices',
+                'Collectibles \u207B Entertainment or Sports',
+                'Consumer Electronics',
+                'Electronics Accessories',
+                'Electronics Accessories',
+              ].map((relatedCategory: string, index: number) => {
+                return (
+                  <Checkbox key={`related-category-${index}-${relatedCategory}`}
+                    labelText={relatedCategory}
+                    current={searchParams.get('keyword') ?? ''}
+                    onCheckboxChanged={(text: string) => {
+                      let queryStringSearch = new URLSearchParams();
+
+                      queryStringSearch.set('keyword', text);
+
+                      router.push(window.location.pathname + '?' + queryStringSearch.toString());
+                    }}
+                  />
+                )
+              })
+            }
+
           </div>
         </div>
         <div className='w-full'>
@@ -32,9 +56,18 @@ export function SearchSidebar() {
         <div className='space-y-3'>
           <div className='font-bold'>Ships from</div>
           <div className='block space-y-4'>
-            <Checkbox labelText='Canada' />
-            <Checkbox labelText='Philippines' />
-            <Checkbox labelText='USA' />
+            {
+              ['Canada', 'Philippines', 'USA',].map((shipFrom: string, index: number) => {
+                return (
+                  <Checkbox key={`ship-from-${index}-${shipFrom}`}
+                    labelText={shipFrom}
+                    current=''
+                    onCheckboxChanged={(text: string) => {
+                      return;
+                    }} />
+                )
+              })
+            }
           </div>
         </div>
       </div>

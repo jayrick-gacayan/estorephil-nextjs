@@ -2,9 +2,10 @@ import Link from 'next-intl/link';
 
 export function HomeCategories() {
   return (
-    <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-2 space-y-2 bg-white'>
+    <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-3 space-y-2 bg-white'>
       <div className='flex'>
         <div className='flex-1 font-bold'>CATEGORIES</div>
+        <Link href={`/all-categories`} className='w-auto flex-none underline text-primary hover:text-primary-dark'>View All</Link>
       </div>
       <div className='block text-secondary'>
         <Link href='#' className='block'>3D Printed Products</Link>
