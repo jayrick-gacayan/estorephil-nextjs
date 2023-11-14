@@ -10,12 +10,15 @@ const montserrat = Montserrat({
 })
 
 import './globals.css';
+import Providers from './_sections/providers';
 
 export default function RootLayout({ children }: { children: ReactNode; }) {
 
   return (
-    <html>
-      <body className={montserrat.className}>{children}</body>
-    </html>
+    <Providers>
+      <html>
+        <body className={montserrat.className}>{children}</body>
+      </html>
+    </Providers>
   );
 }
