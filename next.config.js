@@ -11,7 +11,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path(\\!admin)',
+        source: '/:locale/:path((?!admin$).*)',
         destination: '/:locale/main/:path*',
       },
     ]
