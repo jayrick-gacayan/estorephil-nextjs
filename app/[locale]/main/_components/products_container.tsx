@@ -3,10 +3,12 @@ import { ProductItem } from './product_item';
 
 export function ProductsContainer({
   headerText,
-  products
+  products,
+  onClick,
 }: {
   headerText: string;
-  products: Product[]
+  products: Product[];
+  onClick?: () => void;
 }): JSX.Element {
   return (
     <>
@@ -17,7 +19,7 @@ export function ProductsContainer({
       <div className='flex flex-row flex-wrap gap-4'>
         {
           products.map((product: Product) => {
-            return (<ProductItem key={`product-item-${product.id}`} product={product} />)
+            return (<ProductItem key={`product-item-${product.id}`} product={product} onClick={onClick} />)
           })
         }
       </div>

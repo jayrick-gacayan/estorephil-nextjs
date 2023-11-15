@@ -1,11 +1,12 @@
-import { CustomerSegments } from "./customer_segments";
+import { CustomerSegments } from './customer_segments';
 import Link from 'next-intl/link';
 import Image from 'next/image';
-import { FaCartShopping, FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from "react-icons/fa6";
-import { TextWithIcon } from "../_components/text_with_icon";
-import { NavbarSearch } from "./navbar_search";
+import { FaCartShopping, FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
+import { TextWithIcon } from '../_components/text_with_icon';
+import { NavbarSearch } from './navbar_search';
 
 export default function MainHeader() {
+
   return (
     <header className='sticky top-0 left-0 w-full z-[9999]'>
       <CustomerSegments />

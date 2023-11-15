@@ -1,10 +1,16 @@
 import { Product } from '@/models/product';
 import Image from 'next/image';
-import { FaStar } from 'react-icons/fa';
 
-export function ProductItem({ product }: { product: Product }) {
+export function ProductItem({
+  product,
+  onClick
+}: {
+  product: Product;
+  onClick?: () => void;
+}) {
   return (
-    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden'>
+    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden cursor-pointer'
+      onClick={onClick}>
       <div className='transition-all delay-200 ease-in w-full h-60 hover:scale-125'>
         <Image alt={`product-image-${product.id}`}
           src={product.productImage}

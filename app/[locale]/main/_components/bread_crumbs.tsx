@@ -8,7 +8,7 @@ export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: BreadcrumbProps[] })
         breadcrumbs.map((breadcrumb: BreadcrumbProps, index: number) => {
           let breadcrumbProps: any = {
             isLink: breadcrumb.link ? true : false,
-            withRightArrowChevron: breadcrumb.link ? true : false,
+            withRightArrowChevron: (index < breadcrumbs.length - 1) ? true : false,
             text: breadcrumb.text
           }
 

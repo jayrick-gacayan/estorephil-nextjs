@@ -1,3 +1,5 @@
+import { FaCheck } from "react-icons/fa6";
+
 export function Checkbox({
   labelText,
   current,
@@ -11,7 +13,9 @@ export function Checkbox({
     <div className='flex w-fit gap-2 items-center justify-start'
       onClick={() => { onCheckboxChanged(labelText) }}>
       <div className='flex-none w-auto'>
-        <div className={`border ${current === labelText ? 'border-primary' : 'border-tertiary'} rounded w-4 h-4`} />
+        <div className={`border -leading-1  ${current === labelText ? 'border-primary text-primary' : 'border-tertiary'} rounded w-5 h-5`} >
+          <FaCheck className={`${current === labelText ? 'block' : 'hidden'} w-4 h-4 translate-x-[1.5px] translate-y-[.5px]`} />
+        </div>
       </div>
       <div className={`inline-block text-sm flex-1 ${labelText === current ? 'text-primary' : 'text-inherit'}`}>{labelText}</div>
     </div >

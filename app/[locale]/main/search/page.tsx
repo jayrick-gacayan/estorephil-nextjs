@@ -1,5 +1,7 @@
-import { Product } from "@/models/product"
-import { ProductsContainer } from "../_components/products_container"
+import { Product } from '@/models/product'
+import { ProductsContainer } from '../_components/products_container'
+import { redirect } from 'next/navigation';
+import { SearchProducts } from './_sections/search_products';
 
 const searchProducts: Product[] = [
   {
@@ -148,10 +150,15 @@ const searchProducts: Product[] = [
   }
 ]
 
-export default function SearchPage() {
+export default function SearchPage({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+
   return (
     <div className='p-4 bg-[#F7F9FC]'>
-      <ProductsContainer headerText='Results of "Gaming"' products={searchProducts} />
+      <SearchProducts searchParams={searchParams} products={searchProducts} />
     </div>
   )
 }
