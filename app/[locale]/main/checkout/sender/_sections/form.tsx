@@ -22,16 +22,16 @@ export default function Form() {
                 <div className="text-medium font-semibold"> {translate('address')}</div>
                 <div>
                     <div className="flex gap-2 justify-between">
-                        <TextFieldInput label={translate('firstName')} type="text" placeholder={translate('firstName')} />
-                        <TextFieldInput label={translate('lastName')} type="text" placeholder={translate('lastName')} />
-                    </div>
-                    <div className="flex gap-2 justify-between">
-                        <TextFieldInput label={translate('address1')} type="text" placeholder={translate('primaryAddress')}/>
+                        <TextFieldInput label={translate('address1')} type="text" placeholder={translate('primaryAddress')} />
                         <TextFieldInput label={translate('address2')} type="text" placeholder={translate('secondaryAddress')} />
                     </div>
                     <div className="flex gap-2 justify-between">
                         <TextFieldInput label={translate('city')} type="text" placeholder={translate('city')} />
-                        <TextFieldInput label={translate('province')} type="text" placeholder={translate('province')}/>
+                        <TextFieldInput label={translate('province')} type="text" placeholder={translate('province')} />
+                    </div>
+                    <div className="flex gap-2 justify-between">
+                        <TextFieldInput label={translate('zipCode')} type="text" placeholder={translate('zipCode')} />
+                        <TextFieldInput label={translate('country')} type="text" placeholder={translate('country')} />
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
-import SummaryForm from "../_components/summary_form";
+
 import { FaCcVisa, FaCcMastercard, } from "react-icons/fa"
 import { SiAmericanexpress } from "react-icons/si"
+import SummaryForm from "../_components/summary-form"
 export default function Summary() {
     const questions = [
         'WHAT PAYMENT METHODS CAN I USE?', 'HOW DO I USE A PROMO CODE?', 'WHERE TO GET PROMO CODE?', 'HOW SECURE IS MY PURCHASE?'
@@ -28,7 +29,7 @@ export default function Summary() {
                     <div>
                         <div className=" text-gray-500 text-[36px]">NEED HELP?</div>
                         {questions.map((question, index) =>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-gray-500" key={index}>
                                 {question}
                             </div>
                         )}

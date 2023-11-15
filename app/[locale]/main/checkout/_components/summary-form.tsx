@@ -1,4 +1,4 @@
-import SummaryLabel from "./summary_label";
+import SummaryLabel from "./summary-label";
 
 export default function SummaryForm() {
     return (
