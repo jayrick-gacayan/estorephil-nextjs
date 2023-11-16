@@ -1,5 +1,5 @@
 import { Product } from '@/models/product'
-import { ProductsContainer } from '../_components/products_container'
+import { ProductsContainer } from '../_components/products-container'
 
 const featuredProducts: Product[] = [
   {

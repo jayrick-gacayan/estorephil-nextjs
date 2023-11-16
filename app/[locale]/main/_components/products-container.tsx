@@ -1,5 +1,5 @@
 import { Product } from '@/models/product';
-import { ProductItem } from './product_item';
+import { ProductItem } from './product-item';
 
 export function ProductsContainer({
   headerText,

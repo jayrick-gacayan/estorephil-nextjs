@@ -2,7 +2,7 @@ import Link from 'next-intl/link';
 import { FaCcMastercard, FaCcPaypal, FaCcStripe, FaCcVisa, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { FooterLinksContainer } from '../_components/footer_links_container';
 import { LinkProps } from '@/types/props/link_props';
-import { FooterLinksContainerWithIcons } from '../_components/footer_links_container_with_icons';
+import { FooterLinksContainerWithIcons } from '../_components/footer-links-container-with-icons';
 
 const customerCareLinks: LinkProps[] = [
   { link: '#', text: 'Order Tracking' },

@@ -2,7 +2,7 @@
 import { LinkProps } from '@/types/props/link_props';
 import { FaHome, FaRegHeart, FaUser } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
-import { MobileLinkFooterItem } from '../_components/mobile_link_footer_item';
+import { MobileLinkFooterItem } from '../_components/mobile-link-footer-item';
 
 const mobileFooterLinks: LinkProps[] = [
   { link: '#', text: 'HOME', icon: <FaHome className='w-8 h-8 block m-auto' /> },

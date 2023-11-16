@@ -2,7 +2,7 @@ import { CustomerSegments } from './customer_segments';
 import Link from 'next-intl/link';
 import Image from 'next/image';
 import { FaCartShopping, FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
-import { TextWithIcon } from '../_components/text_with_icon';
+import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from './navbar_search';
 
 export default function MainHeader() {

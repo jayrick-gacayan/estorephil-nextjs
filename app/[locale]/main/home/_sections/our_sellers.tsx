@@ -3,7 +3,7 @@
 import { Seller } from '@/models/seller';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
-import { SellerItem } from '../../_components/seller_item';
+import { SellerItem } from '../../_components/seller-item';
 
 export function OurSellers() {
   const sliderContainerRef = useRef<HTMLDivElement>(null);

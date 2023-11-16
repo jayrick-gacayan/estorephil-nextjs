@@ -1,5 +1,5 @@
 import { Product } from '@/models/product'
-import { ProductsContainer } from '../_components/products_container'
+import { ProductsContainer } from '../_components/products-container'
 import { redirect } from 'next/navigation';
 import { SearchProducts } from './_sections/search_products';
 

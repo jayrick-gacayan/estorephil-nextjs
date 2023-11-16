@@ -1,7 +1,7 @@
 'use client';
 
 import { Product } from '@/models/product';
-import { ProductsContainer } from '../../_components/products_container';
+import { ProductsContainer } from '../../_components/products-container';
 import { useRouter } from 'next-intl/client';
 
 export function SearchProducts({

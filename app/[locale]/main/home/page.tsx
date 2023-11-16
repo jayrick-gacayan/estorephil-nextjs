@@ -1,5 +1,5 @@
 import { OurSellers } from './_sections/our_sellers';
-import { ProductsContainer } from '../_components/products_container';
+import { ProductsContainer } from '../_components/products-container';
 import { Product } from '@/models/product';
 import { Carousel } from './_sections/carousel';
 import { HomeCategories } from './_sections/home_categories';

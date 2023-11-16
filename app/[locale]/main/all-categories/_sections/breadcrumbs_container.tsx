@@ -2,7 +2,7 @@
 
 import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
 import { useSearchParams } from 'next/navigation';
-import { Breadcrumbs } from '../../_components/bread_crumbs';
+import { Breadcrumbs } from '../../_components/bread-crumbs';
 
 export default function BreadcrumbsContainer({
   basePath,
