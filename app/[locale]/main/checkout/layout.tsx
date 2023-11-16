@@ -3,6 +3,8 @@ import Header from "./_sections/header";
 import CheckoutIndicator from "./_sections/checkout-indicator";
 import Summary from "./_sections/summary";
 import PreviousButton from "./_components/previous-button";
+import { usePathname, useRouter } from "next/navigation";
+import NextButton from "./_components/next-button";
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (
@@ -15,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </div>
                 <div className="mx-16 flex items-center justify-between mb-12">
                     <PreviousButton />
-                    <button className="py-4 bg-yellow-500 rounded-md text-white w-[50%]">Next</button>
+                    <NextButton />
                     <div></div>
                 </div>
             </div>
