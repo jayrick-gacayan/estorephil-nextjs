@@ -70,8 +70,8 @@ const featuredProducts: Product[] = [
 export default function AllCategories() {
 
   return (
-    <div className='p-4 bg-[#F7F9FC]'>
-      <ProductsContainer headerText='Featured Products' products={featuredProducts} />
+    <div className='p-4 bg-[#F7F9FC] space-y-4'>
+      <ProductsContainer headerText='Featured Products' products={featuredProducts} withSortBy={true} />
     </div>
   )
 }

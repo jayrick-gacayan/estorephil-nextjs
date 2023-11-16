@@ -14,7 +14,8 @@ export function SearchProducts({
   const router = useRouter();
   return (
     <ProductsContainer products={products}
-      headerText={searchParams ? `Results of \u0022${searchParams.keyword}\u0022` : ``}
-      onClick={() => { router.push('/products/1') }} />
+      headerText={searchParams && searchParams.keyword ? `Results of \u0022${searchParams.keyword}\u0022` : ``}
+      onClick={() => { router.push('/products/1') }}
+      withSortBy={true} />
   )
 }
