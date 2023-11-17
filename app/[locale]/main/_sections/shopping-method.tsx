@@ -1,39 +1,44 @@
-import Image from 'next/image';
+'use client';
+
+import { useState } from 'react';
+import { MainState } from '../_redux/main_state';
+import { useAppSelector } from '@/app/_hooks/redux_hooks';
+import { AppDispatch, StoreState } from '@/redux/store';
+import ShopMethodType from '../_components/shop-method-type';
+import { useDispatch } from 'react-redux';
+import { onModalProductDeliveryAddressOpened, onShoppingMethodChanged } from '../_redux/main-slice';
 
 export default function ShoppingMethod() {
+  const mainState: MainState = useAppSelector((state: StoreState) => { return state.main });
+  const [shopMethod, setShopMethod] = useState<string>(mainState.shoppingMethod);
+  const dispatch: AppDispatch = useDispatch();
+
+  function setShopMethodClass(shopMethodType: string) {
+    return shopMethodType === shopMethod ? 'bg-primary-dark text-white' : 'bg-primary-light';
+  }
+
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">
       <div className="flex justify-around items-center flex-col h-full w-full text-center">
         <h3 className="text-primary text-[32px] leading-0">Choose a Shopping Method</h3>
         <div className="flex items-center h-48">
-          <div className="bg-primary-dark w-48 text-white space-y-8 h-full p-4">
-            <Image alt='shopping-cart-method'
-              src='/others/custom_cart_icon.png'
-              width={96}
-              height={96}
-              className='w-24 flex-none h-24 m-auto block' />
-            <div>
-              <h4 className='font-semibold'>Shopping Cart</h4>
-              <span className='block text-sm'>Shop by Product</span>
-            </div>
-          </div>
-          <div className="bg-primary-light w-48 space-y-8 h-full p-4">
-            <Image alt='shopping-cart-method'
-              src='/others/custom_cart_icon.png'
-              width={96}
-              height={96}
-              className='w-24 flex-none h-24 m-auto block' />
-            <div>
-              <h4 className='font-semibold'>Balikbayan Box</h4>
-              <span className='block text-sm'>Select your Box Type</span>
-            </div>
-          </div>
+          <ShopMethodType shopMethodType='Shopping Cart'
+            otherText='Shop by Product'
+            shopMethodImage='custom_cart_icon.png'
+            shopMethodActiveClass={setShopMethodClass}
+            onShoppingMethodSet={(shopMethodType: string) => { setShopMethod(shopMethodType) }} />
+          <ShopMethodType shopMethodType='Balikbayan Box'
+            otherText='Select your Box Type'
+            shopMethodImage='balik_box_icon.png'
+            shopMethodActiveClass={setShopMethodClass}
+            onShoppingMethodSet={(shopMethodType: string) => { setShopMethod(shopMethodType) }} />
         </div>
 
         <div className="space-y-3 w-full">
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {
-              // dispatch(onModalProductDeliveryAddressOpened(''));
+              dispatch(onShoppingMethodChanged(shopMethod));
+              dispatch(onModalProductDeliveryAddressOpened(''));
 
               // setTimeout(() => {
               //   dispatch(onModalProductDeliveryAddressOpened('changeAddress'));

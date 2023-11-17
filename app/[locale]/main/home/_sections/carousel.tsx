@@ -110,7 +110,7 @@ export function Carousel() {
   // };
 
   return (
-    <div className='flex-1 h-[400px] w-full'>
+    <div className='flex-1 h-full w-full'>
       <div className='relative h-full w-full overflow-hidden'
         onMouseDown={(event: MouseEvent<HTMLDivElement>) => {
           console.log('client x', event.clientX);

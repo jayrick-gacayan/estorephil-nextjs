@@ -141,7 +141,7 @@ export default function Home({ params }: { params: { locale: string } }) {
   return (
     <div className='bg-[#F8FBFE] px-8'>
       <div className='max-w-screen-2xl m-auto py-4'>
-        <div className='flex md:flex-row flex-col gap-2'>
+        <div className='flex md:flex-row flex-col gap-2 h-[400px]'>
           <HomeCategories />
           <Carousel />
           <BayanSection />
