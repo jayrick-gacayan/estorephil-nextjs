@@ -6,7 +6,7 @@ import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import ShopMethodType from '../_components/shop-method-type';
 import { useDispatch } from 'react-redux';
-import { onModalProductDeliveryAddressOpened, onShoppingMethodChanged } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened, shoppingMethodChanged } from '../_redux/main-slice';
 
 export default function ShoppingMethod({ onClose }: { onClose: () => void; }): JSX.Element {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
@@ -24,12 +24,12 @@ export default function ShoppingMethod({ onClose }: { onClose: () => void; }): J
         <div className="flex items-center h-48">
           <ShopMethodType shopMethodType='Shopping Cart'
             otherText='Shop by Product'
-            shopMethodImage='custom_cart_icon.png'
+            shopMethodImage='custom_cart_icon.svg'
             shopMethodActiveClass={setShopMethodClass}
             onShoppingMethodSet={(shopMethodType: string) => { setShopMethod(shopMethodType) }} />
           <ShopMethodType shopMethodType='Balikbayan Box'
             otherText='Select your Box Type'
-            shopMethodImage='balik_box_icon.png'
+            shopMethodImage='balik_box_icon.svg'
             shopMethodActiveClass={setShopMethodClass}
             onShoppingMethodSet={(shopMethodType: string) => { setShopMethod(shopMethodType) }} />
         </div>
@@ -38,7 +38,7 @@ export default function ShoppingMethod({ onClose }: { onClose: () => void; }): J
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {
               onClose();
-              dispatch(onShoppingMethodChanged(shopMethod));
+              dispatch(shoppingMethodChanged(shopMethod));
             }}>
             Next
           </button>

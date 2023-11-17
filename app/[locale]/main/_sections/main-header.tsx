@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { useMemo } from 'react';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
 export default function MainHeader() {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
@@ -36,7 +36,7 @@ export default function MainHeader() {
                 shoppingMethod === '' ?
                   (
                     <button className='text-white border border-white py-2 px-4 h-full rounded text-xl align-middle'
-                      onClick={() => { dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' })) }}>
+                      onClick={() => { dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' })) }}>
                       Create Order
                     </button>
                   ) :

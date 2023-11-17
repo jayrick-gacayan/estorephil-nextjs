@@ -5,7 +5,7 @@ import Modal from '../../_components/modal';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { memo, useEffect, useMemo, useRef } from 'react';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import EnterDeliveryAddress from './enter-delivery-address';
 import ChangeAddress from './change-address';
@@ -48,7 +48,7 @@ function ProductDeliveryAddressModal() {
         setTimeout(() => {
           modalWrapperRef.current?.classList.remove('flex');
           modalWrapperRef.current?.classList.add('hidden');
-          dispatch(onModalProductDeliveryAddressOpened({ open: false, type: '' }));
+          dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
         }, 300);
       }
     }

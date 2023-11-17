@@ -4,13 +4,13 @@ import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { CustomSelect } from '../../_components/custom-select';
 import Image from 'next/image';
 import { AppDispatch } from '@/redux/store';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
 export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
 
   function onCloseModal() {
-    dispatch(onModalProductDeliveryAddressOpened({ open: false, type: '' }));
+    dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
   }
 
   return (
@@ -44,7 +44,7 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
           onClose();
 
           setTimeout(() => {
-            dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
+            dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
           }, 1000)
         }}>
         Next
