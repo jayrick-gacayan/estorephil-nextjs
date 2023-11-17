@@ -1,5 +1,5 @@
 'use client'
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next-intl/client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
