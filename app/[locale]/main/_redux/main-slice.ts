@@ -18,11 +18,12 @@ export const mainSlice = createSlice({
         ...state, shoppingMethod: action.payload
       };
     },
-    onModalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<string>) => {
+    onModalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
+      const { open, type } = action.payload;
       return {
         ...state, modalProductDeliveryAddressInfo: {
-          open: !state.modalProductDeliveryAddressInfo.open,
-          type: action.payload
+          open,
+          type
         }
       }
     }
