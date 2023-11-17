@@ -7,7 +7,7 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 export function AdminNavbarHeader() {
 
   return (
-    <header className='sticky w-full top-0 left-0 z-[9999]'>
+    <header className='sticky w-full top-0 left-0 z-[999]'>
       <nav className='bg-[#23b7e5] text-white w-full'>
         <div className='flex '>
           <div className='flex-none w-[224px] py-3 px-2'>

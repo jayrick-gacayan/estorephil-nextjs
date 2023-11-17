@@ -13,7 +13,7 @@ const mobileFooterLinks: LinkProps[] = [
 
 export function MobileStickyFooter() {
   return (
-    <div className='sticky md:hidden block bottom-0 top-0 bg-primary-dark text-white border-t border-t-white z-[9999]'>
+    <div className='sticky md:hidden block bottom-0 top-0 bg-primary-dark text-white border-t border-t-white z-[999]'>
       <div className='flex justify-around px-8 py-4'>
         {
           mobileFooterLinks.map((link: LinkProps) => {

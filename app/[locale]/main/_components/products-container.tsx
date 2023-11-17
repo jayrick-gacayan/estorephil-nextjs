@@ -1,5 +1,6 @@
 import { Product } from '@/models/product';
 import { ProductItem } from './product-item';
+import { CustomSelect } from '../../_components/custom_select';
 
 export function ProductsContainer({
   headerText,
@@ -23,7 +24,7 @@ export function ProductsContainer({
             <div className='flex-none space-x-2'>
               <span>Sort</span>
               <div className='inline-block w-36'>
-                {/* <CustomSelect<string, string | undefined> items={['Top Seller', 'Low Seller']} value={undefined} placeholder="Sort by:" /> */}
+                <CustomSelect<string, string | undefined> items={['Top Seller', 'Low Seller']} value={undefined} placeholder="Sort by:" />
               </div>
             </div>
           )

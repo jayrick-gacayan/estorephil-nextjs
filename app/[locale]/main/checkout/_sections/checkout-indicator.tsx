@@ -1,6 +1,6 @@
 "use client"
 
-import { RootState } from "@/redux/store"
+import { StoreState } from "@/redux/store"
 import { usePathname, useRouter } from "next/navigation"
 import { FaCheck } from "react-icons/fa"
 import { useSelector } from "react-redux"
@@ -39,7 +39,7 @@ export default function CheckoutIndicator() {
                 <div className="w-[25%]">
                     <div className="flex relative">
 
-                        <div className={`flex items-center justify-center rounded-full w-[50px] h-[50px] z-10 px-4 py-2 text-center ${url.includes('payment-method') ? `bg-[#f3f3f3] text-black` : !url.includes('payment-method') ? `bg-[#f3f3f3] text-black` :  `bg-blue-500 text-white`} text-[20px]`}>4</div>
+                        <div className={`flex items-center justify-center rounded-full w-[50px] h-[50px] z-10 px-4 py-2 text-center ${url.includes('payment-method') ? `bg-[#f3f3f3] text-black` : !url.includes('payment-method') ? `bg-[#f3f3f3] text-black` : `bg-blue-500 text-white`} text-[20px]`}>4</div>
 
                     </div>
                     <div className="text-xs text-gray-400 font-medium pt-2">Step 4</div>

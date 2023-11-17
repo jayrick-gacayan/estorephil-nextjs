@@ -8,7 +8,7 @@ import { NavbarSearch } from './navbar_search';
 export default function MainHeader() {
 
   return (
-    <header className='sticky top-0 left-0 w-full z-[9999]'>
+    <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
       <div className='w-full bg-primary-dark text-white px-8 py-4'>
         <nav className='max-w-screen-2xl m-auto'>

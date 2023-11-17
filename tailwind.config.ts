@@ -28,6 +28,8 @@ const config: Config = {
         danger: '#E74C3C',
         'danger-light': '#FFF3F3',
         success: '#27AE60',
+        warning: '#F0CB24',
+        'warning-light': '#FFD046',
       }
     },
   },
