@@ -1,4 +1,5 @@
 'use client'
+import Validations from "@/types/validations"
 import { usePathname } from "next/navigation"
 import { useRouter } from "next/navigation"
 

@@ -1,6 +1,7 @@
 export enum ValidationStatus {
     VALID,
     EMPTY,
+    INVALID_INPUT,
     INVALID_FORMAT,
     NONE,
 }
