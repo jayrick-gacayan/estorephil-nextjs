@@ -1,6 +1,6 @@
 import { Product } from '@/models/product';
 import { ProductItem } from './product-item';
-import { CustomSelect } from '../../_components/custom_select';
+import { CustomSelect } from '../../_components/custom-select';
 
 export function ProductsContainer({
   headerText,

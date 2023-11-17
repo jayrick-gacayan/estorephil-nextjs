@@ -1,6 +1,6 @@
-import { SearchSidebar } from './_sections/search_sidebar';
+import { SearchSidebar } from './_sections/search-sidebar';
 import { ReactNode } from 'react';
-import BreadcrumbsContainer from '../all-categories/_sections/breadcrumbs_container';
+import BreadcrumbsContainer from '../all-categories/_sections/breadcrumbs-container';
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
 

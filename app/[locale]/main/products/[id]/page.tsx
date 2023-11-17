@@ -1,9 +1,9 @@
 import { FaRegHeart } from 'react-icons/fa';
 import Image from 'next/image';
 import { FaCartShopping } from 'react-icons/fa6';
-import { ProductInformation } from './_section/product_information';
-import { QuantityContainer } from './_section/quantity_container';
-import { ProductPreviewImage } from './_section/product_image_preview';
+import { ProductInformation } from './_section/product-information';
+import { QuantityContainer } from './_section/quantity-container';
+import { ProductPreviewImage } from './_section/product-image-preview';
 import { BiCheckShield } from 'react-icons/bi';
 import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
 import { HiInformationCircle, HiOutlineLocationMarker } from 'react-icons/hi';

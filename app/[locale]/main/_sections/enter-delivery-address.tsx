@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
-import { CustomSelect } from '../../_components/custom_select';
+import { CustomSelect } from '../../_components/custom-select';
 import Image from 'next/image';
 import { AppDispatch } from '@/redux/store';
 import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';

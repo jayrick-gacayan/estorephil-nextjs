@@ -1,12 +1,12 @@
 'use client';
 
-import { CustomerSegments } from './customer_segments';
+import { CustomerSegments } from './customer-segments';
 import Link from 'next-intl/link';
 import Image from 'next/image';
 import { FaCartShopping, FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
 import { TextWithIcon } from '../_components/text-with-icon';
 import { BsBox2 } from 'react-icons/bs';
-import { NavbarSearch } from './navbar_search';
+import { NavbarSearch } from './navbar-search';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';

@@ -3,7 +3,7 @@
 import { getRefValue, useStateRef } from '@/app/_hooks/use_ref_hooks';
 import { MouseEvent, useRef, useState } from 'react';
 import { PointerEvent } from 'react';
-import { CarouselItem } from '../_components/carousel_item';
+import { CarouselItem } from '../_components/carousel-item';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
 // function getTouchEventData(
