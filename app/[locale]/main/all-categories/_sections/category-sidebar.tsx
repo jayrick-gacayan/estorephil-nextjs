@@ -23,8 +23,8 @@ export function CategorySidebar() {
               'Camera & Photo',
               'Cell Phone Devices',
               'Clothing & Accessories',
-              'Collectibles \u207B Books',
-              'Collectibles \u207B Coins',
+              'Collectibles \u2212 Books',
+              'Collectibles \u2212 Coins',
               'Consumer Electronics',
               'Electronics Accessories',
             ].map((category: string, index: number) => {

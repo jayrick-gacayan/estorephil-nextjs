@@ -19,7 +19,7 @@ export function SearchSidebar() {
               [
                 'Camera & Photo',
                 'Cell Phone Devices',
-                'Collectibles \u207B Entertainment or Sports',
+                'Collectibles \u2212 Entertainment or Sports',
                 'Consumer Electronics',
                 'Electronics Accessories',
                 'Electronics Accessories',
