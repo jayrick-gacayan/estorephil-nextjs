@@ -147,16 +147,17 @@ const searchProducts: Product[] = [
     productImage: '/products/laptop_image.png'
   }
 ]
-
-export default function SearchPage({
+/*
+{
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
-}) {
+} */
+export default function SearchPage() {
 
   return (
     <div className='p-4 bg-[#F7F9FC]'>
-      <SearchProducts searchParams={searchParams} products={searchProducts} />
+      <SearchProducts products={searchProducts} />
     </div>
   )
 }
