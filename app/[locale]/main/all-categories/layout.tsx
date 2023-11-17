@@ -11,7 +11,7 @@ export default function CategoriesLayout({ children }: { children: ReactNode }):
         <CategorySidebar />
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
-            <BreadcrumbsContainer basePath='all-category' text='All Categories' />
+            <BreadcrumbsContainer basePath='all-categories' text='All Categories' />
             <div className='flex gap-4'>
               <div className="w-32 h-32 flex-none">
                 {<Image alt={`product-category`}
