@@ -1,10 +1,9 @@
 import { ReactNode } from "react";
-import Header from "./_sections/header";
-import CheckoutIndicator from "./_sections/checkout-indicator";
-import Summary from "./_sections/summary";
-import PreviousButton from "./_components/previous-button";
-import { usePathname, useRouter } from "next/navigation";
-import NextButton from "./_components/next-button";
+import Header from "../_sections/header";
+import CheckoutIndicator from "../_sections/checkout-indicator";
+import Summary from "../_sections/summary";
+import PreviousButton from "../_components/previous-button";
+import NextButton from "../_components/next-button";
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (
