@@ -1,13 +1,17 @@
 'use client';
 
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
-import { CustomSelect } from '../../_components/custom_select';
+import { CustomSelect } from '../../_components/custom-select';
 import Image from 'next/image';
 import { AppDispatch } from '@/redux/store';
 import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
-export default function EnterDeliveryAddress() {
+export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
+
+  function onCloseModal() {
+    dispatch(onModalProductDeliveryAddressOpened({ open: false, type: '' }));
+  }
 
   return (
     <div className="py-8 space-y-3 w-[512px] m-auto">
@@ -37,15 +41,16 @@ export default function EnterDeliveryAddress() {
       </div>
       <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
         onClick={() => {
-          dispatch(onModalProductDeliveryAddressOpened(''));
+          onClose();
 
           setTimeout(() => {
-            dispatch(onModalProductDeliveryAddressOpened('changeAddress'));
+            dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
           }, 1000)
         }}>
         Next
       </button>
-      <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'>
+      <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
+        onClick={onClose}>
         Skip
       </button>
     </div>

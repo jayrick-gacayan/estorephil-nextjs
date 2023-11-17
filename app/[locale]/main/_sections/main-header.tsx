@@ -1,20 +1,20 @@
 'use client';
 
-import { CustomerSegments } from './customer_segments';
+import { CustomerSegments } from './customer-segments';
 import Link from 'next-intl/link';
 import Image from 'next/image';
 import { FaCartShopping, FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
 import { TextWithIcon } from '../_components/text-with-icon';
 import { BsBox2 } from 'react-icons/bs';
-import { NavbarSearch } from './navbar_search';
+import { NavbarSearch } from './navbar-search';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
-import { AppDispatch, StoreState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { useMemo } from 'react';
 import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
 export default function MainHeader() {
-  const mainState: MainState = useAppSelector((state: StoreState) => { return state.main });
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
 
   const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
@@ -36,7 +36,7 @@ export default function MainHeader() {
                 shoppingMethod === '' ?
                   (
                     <button className='text-white border border-white py-2 px-4 h-full rounded text-xl align-middle'
-                      onClick={() => { dispatch(onModalProductDeliveryAddressOpened('enterAddress')) }}>
+                      onClick={() => { dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' })) }}>
                       Create Order
                     </button>
                   ) :

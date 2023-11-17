@@ -3,13 +3,13 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
 import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
-import { StoreState } from '@/redux/store';
+import { RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { useMemo } from 'react';
 
 export default function FloatingCardButton(): JSX.Element | null {
   const dispatch = useAppDispatch();
-  const mainState: MainState = useAppSelector((state: StoreState) => { return state.main; });
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
   const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
 
@@ -19,7 +19,7 @@ export default function FloatingCardButton(): JSX.Element | null {
         <div className='max-w-screen-2xl m-auto'>
           <div className='cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4'
             onClick={() => {
-              dispatch(onModalProductDeliveryAddressOpened('enterAddress'))
+              dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' }));
             }}>
             <div className='space-y-1 '>
               <Image alt={`${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}

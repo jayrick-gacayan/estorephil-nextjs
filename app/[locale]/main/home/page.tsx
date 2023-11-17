@@ -1,9 +1,9 @@
-import { OurSellers } from './_sections/our_sellers';
+import { OurSellers } from './_sections/our-sellers';
 import { ProductsContainer } from '../_components/products-container';
 import { Product } from '@/models/product';
 import { Carousel } from './_sections/carousel';
-import { HomeCategories } from './_sections/home_categories';
-import { BayanSection } from './_sections/bayan_section';
+import { HomeCategories } from './_sections/home-categories';
+import { BayanSection } from './_sections/bayan-section';
 
 const popularProductItems: Product[] = [
   {

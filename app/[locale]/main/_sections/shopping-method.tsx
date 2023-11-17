@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import { MainState } from '../_redux/main_state';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
-import { AppDispatch, StoreState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import ShopMethodType from '../_components/shop-method-type';
 import { useDispatch } from 'react-redux';
 import { onModalProductDeliveryAddressOpened, onShoppingMethodChanged } from '../_redux/main-slice';
 
-export default function ShoppingMethod() {
-  const mainState: MainState = useAppSelector((state: StoreState) => { return state.main });
+export default function ShoppingMethod({ onClose }: { onClose: () => void; }): JSX.Element {
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const [shopMethod, setShopMethod] = useState<string>(mainState.shoppingMethod);
   const dispatch: AppDispatch = useDispatch();
 
@@ -37,16 +37,13 @@ export default function ShoppingMethod() {
         <div className="space-y-3 w-full">
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {
+              onClose();
               dispatch(onShoppingMethodChanged(shopMethod));
-              dispatch(onModalProductDeliveryAddressOpened(''));
-
-              // setTimeout(() => {
-              //   dispatch(onModalProductDeliveryAddressOpened('changeAddress'));
-              // }, 1000)
             }}>
             Next
           </button>
-          <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'>
+          <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
+            onClick={onClose}>
             Back
           </button>
         </div>

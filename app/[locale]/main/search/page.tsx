@@ -1,7 +1,7 @@
 import { Product } from '@/models/product'
 import { ProductsContainer } from '../_components/products-container'
 import { redirect } from 'next/navigation';
-import { SearchProducts } from './_sections/search_products';
+import { SearchProducts } from './_sections/search-products';
 
 const searchProducts: Product[] = [
   {

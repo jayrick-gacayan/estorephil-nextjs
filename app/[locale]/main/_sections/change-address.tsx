@@ -5,8 +5,10 @@ import { AppDispatch } from '@/redux/store';
 import Image from 'next/image';
 import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
-export default function ChangeAddress() {
+export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
   const dispatch: AppDispatch = useAppDispatch();
+
+
 
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">
@@ -28,10 +30,9 @@ export default function ChangeAddress() {
           <div className="flex-1">
             <button className="w-full rounded-full p-3 bg-primary text-white hover:bg-primary-light cursor-pointer"
               onClick={() => {
-                dispatch(onModalProductDeliveryAddressOpened(''));
-
+                onClose();
                 setTimeout(() => {
-                  dispatch(onModalProductDeliveryAddressOpened('shoppingMethod'));
+                  dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'shoppingMethod' }));
                 }, 1000)
               }}>
               Continue
@@ -39,9 +40,7 @@ export default function ChangeAddress() {
           </div>
           <div className="flex-none w-48">
             <button className="w-full rounded-full p-3 bg-danger text-white cursor-pointer"
-              onClick={() => {
-                dispatch(onModalProductDeliveryAddressOpened(''));
-              }}>
+              onClick={onClose}>
               Cancel
             </button>
           </div>

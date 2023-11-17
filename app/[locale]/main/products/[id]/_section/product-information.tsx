@@ -1,4 +1,4 @@
-import { ProductInfoItem } from '../_components/product_info_item';
+import { ProductInfoItem } from '../_components/product-info-item';
 
 export function ProductInformation() {
   return (

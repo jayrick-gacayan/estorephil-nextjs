@@ -1,6 +1,6 @@
 "use client"
 
-import { StoreState } from "@/redux/store"
+import { RootState } from "@/redux/store"
 import { usePathname, useRouter } from "next/navigation"
 import { FaCheck } from "react-icons/fa"
 import { useSelector } from "react-redux"
