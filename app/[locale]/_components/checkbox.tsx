@@ -10,7 +10,7 @@ export function Checkbox({
   onCheckboxChanged: (text: string) => void;
 }) {
   return (
-    <div className='flex w-fit gap-2 items-center justify-start'
+    <div className='flex w-fit gap-2 items-center justify-start cursor-pointer'
       onClick={() => { onCheckboxChanged(labelText) }}>
       <div className='flex-none w-auto'>
         <div className={`border -leading-1  ${current === labelText ? 'border-primary text-primary' : 'border-tertiary'} rounded w-5 h-5`} >
