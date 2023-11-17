@@ -1,5 +1,6 @@
 import { Product } from '@/models/product'
 import { ProductsContainer } from '../_components/products-container'
+import CategoryProductListResult from './_sections/category-product-list-result'
 
 const featuredProducts: Product[] = [
   {
@@ -71,7 +72,7 @@ export default function AllCategories() {
 
   return (
     <div className='p-4 bg-[#F7F9FC] space-y-4'>
-      <ProductsContainer headerText='Featured Products' products={featuredProducts} withSortBy={true} />
+      <CategoryProductListResult headerText='Featured Products' products={featuredProducts} />
     </div>
   )
 }
