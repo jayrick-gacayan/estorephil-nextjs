@@ -11,7 +11,7 @@ async function getMessages(locale: string) {
 }
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'de' }];
+  return [{ locale: 'en' }, { locale: 'ph' }];
 }
 
 export default async function LocaleLayout({
