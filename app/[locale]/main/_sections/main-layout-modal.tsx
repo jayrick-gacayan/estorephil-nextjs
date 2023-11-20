@@ -10,8 +10,9 @@ import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import EnterDeliveryAddress from './enter-delivery-address';
 import ChangeAddress from './change-address';
 import ShoppingMethod from './shopping-method';
+import ChangeShopMethod from './change-shop-method';
 
-function ProductDeliveryAddressModal() {
+function MainLayoutModal() {
   const modalWrapperRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
@@ -61,9 +62,10 @@ function ProductDeliveryAddressModal() {
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
         {(open && type === 'shoppingMethod') && (<ShoppingMethod onClose={onClose} />)}
+        {(open && type === 'changeShopMethod') && (<ChangeShopMethod onClose={onClose} />)}
       </div>
     </Modal>
   )
 }
 
-export default memo(ProductDeliveryAddressModal)
+export default memo(MainLayoutModal)

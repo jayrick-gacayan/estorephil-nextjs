@@ -19,7 +19,7 @@ export default function FloatingCardButton(): JSX.Element | null {
         <div className='max-w-screen-2xl m-auto'>
           <div className='cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4'
             onClick={() => {
-              dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' }));
+              dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeShopMethod' }));
             }}>
             <div className='space-y-1 '>
               <Image alt={`${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
