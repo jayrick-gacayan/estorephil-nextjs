@@ -113,12 +113,12 @@ export function Carousel() {
     <div className='flex-1 h-full w-full'>
       <div className='relative h-full w-full overflow-hidden'
         onMouseDown={(event: MouseEvent<HTMLDivElement>) => {
-          console.log('client x', event.clientX);
-          console.log('client y', event.clientY);
+          // console.log('client x', event.clientX);
+          // console.log('client y', event.clientY);
         }}
         onMouseMove={(event: MouseEvent<HTMLDivElement>) => {
-          console.log('client x', event.clientX);
-          console.log('client y', event.clientY);
+          // console.log('client x', event.clientX);
+          // console.log('client y', event.clientY);
         }}
         onMouseLeave={() => { }}
         onMouseUp={() => { }}

@@ -15,7 +15,7 @@ export default function MainHeader() {
       <CustomerSegments />
       <div className='w-full bg-primary-dark text-white px-8 py-4'>
         <nav className='max-w-screen-2xl m-auto'>
-          <div className='flex md:flex-row flex-col w-full justify-between overflow-hidden rounded p-2 md:gap-12 gap-4'>
+          <div className='flex md:flex-row flex-col w-full justify-between rounded p-2 md:gap-12 gap-4'>
             <Link href='/home' className='flex-none w-[160px] block relative md:h-auto h-12'>
               <Image alt='estorephil-logo'
                 src='/static_images/estorephil_logo.svg'
@@ -23,13 +23,13 @@ export default function MainHeader() {
             </Link>
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
-              <ShopMethodNavbar />
-
-              <Image alt='profile-image'
-                src='/static_images/static_profile_img.png'
-                width={48}
-                height={48}
-                className='rounded-full border border-white w-12 h-12 inline-block' />
+              <ShopMethodNavbar>
+                <Image alt='profile-image'
+                  src='/static_images/static_profile_img.png'
+                  width={48}
+                  height={48}
+                  className='rounded-full border border-white w-12 h-12 inline-block' />
+              </ShopMethodNavbar>
             </div>
           </div>
           <div className='flex py-2 text-primary-light text-sm'>
