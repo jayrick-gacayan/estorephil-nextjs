@@ -14,7 +14,7 @@ export function CarouselItem({
   return (
     <div className='h-full w-full absolute transition-all duration-150'
       style={{ transform: `translateX(${100 * (Math.abs(index - currentSlide))}%)` }}>
-      <Image alt={imgAlt} src={imgSrc} fill className='object-cover' draggable='false' />
+      <Image alt={imgAlt} src={imgSrc} fill className='object-fill' draggable='false' />
     </div>
   )
 }

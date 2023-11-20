@@ -7,7 +7,7 @@ import { ProductPreviewImage } from './_section/product-image-preview';
 import { BiCheckShield } from 'react-icons/bi';
 import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
 import { HiInformationCircle, HiOutlineLocationMarker } from 'react-icons/hi';
-import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
+import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
