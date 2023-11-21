@@ -29,8 +29,12 @@ export function CategorySidebar() {
               'Electronics Accessories',
             ].map((category: string, index: number) => {
               return (
-                <Checkbox key={`category-${index}-${category}`}
+                <Checkbox<string> key={`category-${index}-${category}`}
                   labelText={category}
+                  labelClassname={(value: string, current: string) => {
+                    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+                  }}
+                  value={category}
                   current={searchParams.get('keyword') ?? ''}
                   onCheckboxChanged={(text: string) => {
                     let queryStringSearch = new URLSearchParams();

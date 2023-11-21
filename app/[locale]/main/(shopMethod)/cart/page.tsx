@@ -1,3 +1,10 @@
+import SelectAll from "./_sections/select-all";
+
+
 export default function CartPage() {
-  return <div>This is the cart page.</div>
+  return (
+    <>
+      <SelectAll />
+    </>
+  )
 }
