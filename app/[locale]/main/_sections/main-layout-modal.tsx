@@ -25,27 +25,26 @@ function MainLayoutModal() {
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   useEffect(() => {
-    if (modalWrapperRef.current) {
+    if (modalContentRef.current) {
       if (open) {
         setTimeout(() => {
           if (modalContentRef.current) {
-            modalContentRef.current.classList.add('bottom-0');
-            modalContentRef.current.classList.remove('-bottom-40');
+            modalContentRef.current.classList.remove('animate-slide-bottom-down');
+            modalContentRef.current.classList.add('animate-slide-bottom-up');
           }
-        }, 300);
-        modalWrapperRef.current.classList.remove('hidden');
-        modalWrapperRef.current.classList.add('flex');
+        }, 300)
+
       }
     }
-  }, [open])
+  }, [open]);
 
   useOutsideClick(modalContentRef, () => { onClose(); });
 
   function onClose(): void {
     if (modalContentRef.current) {
       if (open) {
-        modalContentRef.current.classList.remove('bottom-0');
-        modalContentRef.current.classList.add('-bottom-40');
+        modalContentRef.current.classList.add('animate-slide-bottom-down');
+        modalContentRef.current.classList.remove('animate-slide-bottom-up');
         setTimeout(() => {
           modalWrapperRef.current?.classList.remove('flex');
           modalWrapperRef.current?.classList.add('hidden');
@@ -56,9 +55,9 @@ function MainLayoutModal() {
   }
 
   return (
-    <Modal ref={modalWrapperRef}>
+    <Modal ref={modalWrapperRef} open={open}>
       <div ref={modalContentRef}
-        className={`transition-all duration-200 ease-in-out md:w-[640px] flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
+        className={`modal-content md:w-[640px] flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
         {(open && type === 'shoppingMethod') && (<ShoppingMethod onClose={onClose} />)}
