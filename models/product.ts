@@ -1,3 +1,5 @@
+import { Seller } from "./seller";
+
 export interface Product {
   id: number;
   name: string;
@@ -6,4 +8,5 @@ export interface Product {
   rating: number;
   raters: number;
   productImage: string;
+  seller?: Seller;
 }
