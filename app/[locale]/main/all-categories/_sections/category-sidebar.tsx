@@ -16,15 +16,13 @@ export function CategorySidebar() {
           {
             [
               '3D Printed Products',
-              'Automotive & Powerparts',
-              'Baby Products',
+              'Baby Products \u0028excluding Baby Apparel\u0029',
               'Beauty',
               'Books',
-              'Camera & Photo',
-              'Cell Phone Devices',
-              'Clothing & Accessories',
+              'Camera \u0026 Photo',
               'Collectibles \u2212 Books',
               'Collectibles \u2212 Coins',
+              'Collectibles \u2212 Entertainment or Sports',
               'Consumer Electronics',
               'Electronics Accessories',
             ].map((category: string, index: number) => {
