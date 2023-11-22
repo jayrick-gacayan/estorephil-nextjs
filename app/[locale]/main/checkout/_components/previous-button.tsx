@@ -1,7 +1,6 @@
 'use client'
 import Validations from "@/types/validations"
-import { usePathname } from "next/navigation"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next-intl/client";
 
 export default function PreviousButton() {
     const url = usePathname()
