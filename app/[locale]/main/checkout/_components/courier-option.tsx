@@ -18,7 +18,7 @@ export default function CourierOption({
         <>
             <div className={`flex items-center justify-start gap-2 w-[382px]  ${selected && `border-2 border-blue-500`}`}>
                 <div>
-                    <img src={courierImageUrl} alt={courierName} height={79} width={79} className="object-fill" />
+                    <Image src={courierImageUrl} alt={courierName} height={79} width={79} className="object-fill" />
                 </div>
                 <div>
                     <div className="text-lg font-[600]"> {courierName}</div>

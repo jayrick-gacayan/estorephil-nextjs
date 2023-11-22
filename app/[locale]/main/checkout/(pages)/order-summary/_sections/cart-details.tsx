@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CartItem from "../_components/cart-item";
 
 export default function CartDetails() {
@@ -43,7 +44,7 @@ export default function CartDetails() {
             <div className="border-[2px] border-gray-400 w-full">
                 <div className="h-[77px] bg-[#DFD08838] p-4 flex items-center justify-start gap-4">
                     <div>
-                        <img height={50} width={50} src='https://scontent.fceb2-2.fna.fbcdn.net/v/t39.30808-6/327298283_1387173895443168_6574742268092633565_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=IB5SrZw3ztcAX9Kj0dP&_nc_ht=scontent.fceb2-2.fna&oh=00_AfB7yjGbOh98JB8Wdxzmbp2IgTJ601oh2ieUibWNGLZPfA&oe=6558D918' />
+                        <Image alt='' height={50} width={50} src='https://scontent.fceb2-2.fna.fbcdn.net/v/t39.30808-6/327298283_1387173895443168_6574742268092633565_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=IB5SrZw3ztcAX9Kj0dP&_nc_ht=scontent.fceb2-2.fna&oh=00_AfB7yjGbOh98JB8Wdxzmbp2IgTJ601oh2ieUibWNGLZPfA&oe=6558D918' />
                     </div>
                     <div className="text-[20px] font-[500] text-[#041D60]">
                         Scent Store
