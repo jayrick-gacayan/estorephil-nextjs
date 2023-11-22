@@ -12,10 +12,14 @@ import reportReducer from '@/app/[locale]/main/dashboard/(pages)/reports/_redux/
 import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[id]/_redux/report-detail-slice'
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
-import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice'
+import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
+import shopMethodReducer from '@/app/[locale]/main/(shopMethod)/_redux/shop-method-slice';
+
+
 export const store = configureStore({
     reducer: {
         main: mainReducer,
+        shopMethod: shopMethodReducer,
         checkout: checkoutReducer,
         sender: senderReducer,
         receiver: receiverReducer,

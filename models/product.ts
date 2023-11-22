@@ -9,4 +9,5 @@ export interface Product {
   raters: number;
   productImage: string;
   seller?: Seller;
+  isSelectedForCheckout?: boolean;
 }

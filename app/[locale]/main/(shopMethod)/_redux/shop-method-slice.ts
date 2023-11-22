@@ -4,7 +4,8 @@ import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 
 const initialState: ShopMethodState = {
-  shopMethodItems: []
+  shopMethodItems: [],
+  isSelectAll: false,
 }
 
 export const shopMethodSlice = createSlice({
@@ -16,11 +17,24 @@ export const shopMethodSlice = createSlice({
         ...state, shopMethodItems: action.payload
       };
     },
+    isSelectAllSet: (state: ShopMethodState, action: PayloadAction<boolean>) => {
+      return {
+        ...state, isSelectAll: action.payload
+      }
+    },
+    addToShopMethodItem: (state: ShopMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
+      return {
+        ...state,
+        shopMethodItems: [...state.shopMethodItems, action.payload]
+      }
+    }
   }
 })
 
 export const {
-  shopMethodItemsSet
+  shopMethodItemsSet,
+  isSelectAllSet,
+  addToShopMethodItem,
 } = shopMethodSlice.actions;
 
 export default shopMethodSlice.reducer;

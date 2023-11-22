@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <div className='w-full space-y-2'>
               <h1 className='font-bold text-primary text-3xl'>C&#36; {product.price.toFixed(2)}</h1>
               <div className='flex w-full gap-8'>
-                <QuantityContainer />
+                <QuantityContainer product={product} />
                 <div className='w-full flex justify-around gap-4'>
                   <button className='transition border border-primary duration-100 rounded-full flex-1 h-auto bg-primary text-white space-x-2 px-6 py-3 hover:bg-primary-light'>
                     <FaCartShopping className='inline-block' />
