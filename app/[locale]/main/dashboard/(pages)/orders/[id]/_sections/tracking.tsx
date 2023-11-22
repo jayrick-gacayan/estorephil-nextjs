@@ -31,7 +31,7 @@ export default function Tracking() {
                 <div className="px-[62px] py-[48px]">
                     <div className="flex flex-col">
                         {sortedTracking.map((tracking, index) =>
-                            <div className="flex items-start gap-4 my-4">
+                            <div className="flex items-start gap-4 my-4" key={index}>
                                 <div>
                                     <div className={`text-[18px] font-bold ${index !== 0 ? `text-gray-400` : `text-[#041D60]`}`}>{formatMonthAndDay(tracking.dateModified)}</div>
                                     <div className={`text-[16px] font-bold ${index !== 0 ? `text-gray-400` : `text-[#041D60]`}`}>{formatTime(tracking.dateModified)}</div>
