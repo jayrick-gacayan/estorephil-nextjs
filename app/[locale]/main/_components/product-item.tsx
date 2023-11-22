@@ -3,14 +3,18 @@ import Image from 'next/image';
 
 export function ProductItem({
   product,
-  onClick
+  onRedirectProductClick
 }: {
   product: Product;
-  onClick?: () => void;
+  onRedirectProductClick?: (product: Product) => void;
 }) {
+
+  function clickRedirect() {
+    onRedirectProductClick && onRedirectProductClick(product);
+  }
   return (
     <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden cursor-pointer'
-      onClick={onClick}>
+      onClick={clickRedirect}>
       <div className='transition-all delay-200 ease-in w-full h-60 hover:scale-125'>
         <Image alt={`product-image-${product.id}`}
           src={product.productImage}

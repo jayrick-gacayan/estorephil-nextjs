@@ -6,7 +6,7 @@ import { QuantityContainer } from './_section/quantity-container';
 import { ProductPreviewImage } from './_section/product-image-preview';
 import { BiCheckShield } from 'react-icons/bi';
 import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
-import { HiInformationCircle, HiOutlineLocationMarker } from 'react-icons/hi';
+import { HiInformationCircle } from 'react-icons/hi';
 import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
 import { Product } from '@/models/product';
@@ -37,8 +37,6 @@ export default async function ProductPage({ params }: { params: { id: string } }
     { text: 'Home Decor Products' },
     { link: '/home', text: product.category }
   ];
-
-  console.log('djflkasdjfsd', product.productImage)
 
   return (
     <div className='bg-[#ECF0F1] p-8'>

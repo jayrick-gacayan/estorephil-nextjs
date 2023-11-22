@@ -24,8 +24,7 @@ export function SearchProducts({
 
   return (
     <ProductsContainer products={products}
-      headerText={searchParams && keyword !== '' ? `Results of \u0022${keyword}\u0022` : ``}
-      onClick={() => { router.push('/products/1') }}>
+      headerText={searchParams && keyword !== '' ? `Results of \u0022${keyword}\u0022` : ``}>
       <div className='flex-none space-x-2'>
         <span>Sort</span>
         <div className='inline-block w-36'>
