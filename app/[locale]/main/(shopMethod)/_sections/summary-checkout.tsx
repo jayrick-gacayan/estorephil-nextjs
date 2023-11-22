@@ -85,8 +85,8 @@ export default function SummaryCheckout() {
             </div>
           </div>
         </div>
-        <Link href="/" className="text-primary block text-right py-2 underline cursor-pointer hover:text-primary-light">APPLY A PROMO CODE</Link>
-        <button className='border border-tertiary-dark w-full bg-tertiary-dark rounded text-white text-center p-4'>
+        <Link href="/" className="text-primary block text-right text-sm py-2 underline cursor-pointer hover:text-primary-light">APPLY A PROMO CODE</Link>
+        <button className='border border-tertiary-dark w-full bg-tertiary-dark rounded text-white text-center p-4 hover:bg-secondary-light'>
           CHECK OUT
         </button>
       </div>

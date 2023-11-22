@@ -57,8 +57,8 @@ export default function CartItemsContainer() {
           {
             appleProducts.map((valueCart: Cart) => {
               return (
-                <div className='flex gap-2 p-2 text-secondary items-center'>
-
+                <div className='flex gap-2 p-2 text-secondary items-center'
+                  key={`cart-product-seller-${valueCart.seller.id}-${valueCart.product.id}`}>
                   <div className='flex-none w-auto'>
                     <Checkbox<string> current={''} value={''} onCheckboxChanged={(value: string) => {
 
@@ -117,8 +117,8 @@ export default function CartItemsContainer() {
           {
             appleProducts.map((valueCart: Cart) => {
               return (
-                <div className='flex gap-2 p-2 text-secondary items-center'>
-
+                <div className='flex gap-2 p-2 text-secondary items-center'
+                  key={`cart-product-seller-${valueCart.seller.id}-${valueCart.product.id}`}>
                   <div className='flex-none w-auto'>
                     <Checkbox<string> current={''} value={''} onCheckboxChanged={(value: string) => {
 
