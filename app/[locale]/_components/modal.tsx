@@ -19,7 +19,7 @@ const Modal = forwardRef(
           }
         }
       }
-    }, [ref, open]);
+    }, [open]);
 
     return (
       <div ref={ref}
