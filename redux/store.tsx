@@ -9,6 +9,7 @@ import orderDetailReducer from '@/app/[locale]/main/dashboard/(pages)/orders/[id
 import customerReducer from '@/app/[locale]/main/dashboard/(pages)/customers/_redux/customers-slice'
 import notificationReducer from '@/app/[locale]/main/dashboard/(pages)/notifications/_redux/notifications-slice'
 import reportReducer from '@/app/[locale]/main/dashboard/(pages)/reports/_redux/report-slice'
+import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[id]/_redux/report-detail-slice'
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice'
@@ -24,6 +25,7 @@ export const store = configureStore({
         customer: customerReducer,
         notification: notificationReducer,
         report: reportReducer,
+        reportDetail: reportDetailreducer,
         staff: staffReducer,
         staffDetail: staffDetailReducer,
         staffAdd: staffAddReducer,
