@@ -26,7 +26,7 @@ export function NavbarSearch() {
           let queryStringParams = new URLSearchParams();
 
           queryStringParams.set('keyword', "" + navbarSearchText);
-          router.push(window.location.pathname + '?' + queryStringParams.toString());
+          router.push('/search?' + queryStringParams.toString());
         }}>
         Search
       </div>

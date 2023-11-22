@@ -1,4 +1,4 @@
-import { LinkProps } from '@/types/props/link_props';
+import { LinkProps } from '@/types/props/link-props';
 import Link from 'next-intl/link';
 
 export function FooterLinksContainer({

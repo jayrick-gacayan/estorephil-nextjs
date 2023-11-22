@@ -7,51 +7,67 @@ import { ProductPreviewImage } from './_section/product-image-preview';
 import { BiCheckShield } from 'react-icons/bi';
 import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
 import { HiInformationCircle, HiOutlineLocationMarker } from 'react-icons/hi';
-import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
+import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
+import { Product } from '@/models/product';
+import { notFound } from 'next/navigation';
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export async function generateStaticParams() {
+  let products = (await import('@/app/_data/product.json')).default;
+
+  return products.products.map((product: Product) => {
+    return { id: product.id.toString() }
+  });
+}
+
+
+export default async function ProductPage({ params }: { params: { id: string } }) {
+
+  let product = (await import('@/app/_data/product.json')).default.products.find((product: Product) => {
+    return product.id.toString() === params.id;
+  });
+
+  if (!product) {
+    notFound();
+  }
+
+
   let breadCrumbsItems: BreadcrumbProps[] = [
     { text: 'Home & Kitchen' },
     { text: 'Home Decor Products' },
-    { link: '/home', text: 'Frying Pans' }
+    { link: '/home', text: product.category }
   ];
+
+  console.log('djflkasdjfsd', product.productImage)
 
   return (
     <div className='bg-[#ECF0F1] p-8'>
       <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>
         <div className='flex w-full divide-x-2 divide-secondary-light items-stretch'>
           <div className='basis-1/2 py-6 px-8 '>
-            <ProductPreviewImage />
+            <ProductPreviewImage productImage={product.productImage} />
           </div>
           <div className='basis-1/2 py-6 px-16 space-y-4'>
             <Breadcrumbs breadcrumbs={breadCrumbsItems} />
             <div className='block'>
-              <h3 className='font-semibold py-2 border-b border-b-tertiary text-sm overflow-hidden'>
+              <h3 className='font-semibold py-2 border-b border-b-tertiary'>
                 <div className='w-full text-ellipsis overflow-hidden h-full'>
-                  Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem.
-                  Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque.
-                  Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar.
-                  Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna.
+                  {product.name}
                 </div>
-
               </h3>
-              <div className='py-2 border-b border-b-tertiary text-sm h-32 overflow-hidden'>
-                Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem.
-                Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque.
-                Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar.
-                Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna.
+              <div className='py-2 border-b border-b-tertiary text-sm'>
+                {product.description}
               </div>
               <div className='py-2 border-b border-b-tertiary'>
                 <span className='block'>Seller</span>
                 <div className='flex gap-2 items-center'>
                   <div className='flex-none w-auto'>
                     <div className='rounded-full border-2 border-primary relative h-[72px] w-[72px]'>
-                      <Image alt='seller-product-info' src='/others/costco.png' fill className='rounded-full object-fill' />
+                      <Image alt='seller-product-info' src={product.seller.sellerImage} fill className='rounded-full object-fill' />
                     </div>
                   </div>
                   <div>
-                    <h6 className='font-semibold'>Costco</h6>
+                    <h6 className='font-semibold'>{product.seller.name}</h6>
                   </div>
                 </div>
               </div>
@@ -133,7 +149,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               </div>
             </div>
             <div className='w-full space-y-2'>
-              <h1 className='font-bold text-primary text-3xl'>C&#36; 100.00</h1>
+              <h1 className='font-bold text-primary text-3xl'>C&#36; {product.price.toFixed(2)}</h1>
               <div className='flex w-full gap-8'>
                 <QuantityContainer />
                 <div className='w-full flex justify-around gap-4'>

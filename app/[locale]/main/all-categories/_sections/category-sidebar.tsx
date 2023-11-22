@@ -16,21 +16,23 @@ export function CategorySidebar() {
           {
             [
               '3D Printed Products',
-              'Automotive & Powerparts',
-              'Baby Products',
+              'Baby Products \u0028excluding Baby Apparel\u0029',
               'Beauty',
               'Books',
-              'Camera & Photo',
-              'Cell Phone Devices',
-              'Clothing & Accessories',
-              'Collectibles \u207B Books',
-              'Collectibles \u207B Coins',
+              'Camera \u0026 Photo',
+              'Collectibles \u2212 Books',
+              'Collectibles \u2212 Coins',
+              'Collectibles \u2212 Entertainment or Sports',
               'Consumer Electronics',
               'Electronics Accessories',
             ].map((category: string, index: number) => {
               return (
-                <Checkbox key={`category-${index}-${category}`}
+                <Checkbox<string> key={`category-${index}-${category}`}
                   labelText={category}
+                  labelClassname={(value: string, current: string) => {
+                    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+                  }}
+                  value={category}
                   current={searchParams.get('keyword') ?? ''}
                   onCheckboxChanged={(text: string) => {
                     let queryStringSearch = new URLSearchParams();

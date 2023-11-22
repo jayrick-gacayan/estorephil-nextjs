@@ -1,33 +1,35 @@
 'use client';
 
-import { useState } from 'react';
+import { forwardRef, memo, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 
-export function CustomSelect<T, P>({
-  labelText,
-  items,
-  value,
-  placeholder,
-}: {
-  labelText?: string;
-  items: T[];
-  value: P;
+export type SelectProps<T, P> = {
+  labelText: string;
+  items: T[]
+  value: P
   placeholder: string;
-}): JSX.Element {
-  const [visible, setVisible] = useState<boolean>(false);
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+}
 
+export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
+  { labelText, items, value, placeholder, visible, setVisible }, ref
+) => {
   return (
-    <div className='block space-y-1 w-full'>
+    <div ref={ref} className='block space-y-1 w-full'>
       {labelText && <div className='block'>{labelText}</div>}
       <div className='block relative'>
-        <div className='flex border border-secondary-light rounded overflow-hidden bg-white p-2 hover:cursor-pointer'
-          onClick={() => {
-            if (items.length > 0) { setVisible(!visible); }
+        <div className='flex border border-secondary-light rounded overflow-hidden bg-white p-2 hover:cursor-pointer'>
+          <div className='flex-1' onClick={() => {
+            if (items.length > 0) { setVisible(true); }
           }}>
-          <div className='flex-1'>
             {typeof value === 'string' ? (value === '' ? placeholder : value) : typeof value === 'number' ? value : value ? Object.assign(value, {} as any).name : `${placeholder}`}
           </div>
-          <div className='w-auto flex-none'>
+          <div className='w-auto flex-none'
+            onClick={() => {
+              if (items.length > 0) { setVisible(!visible); }
+              else { return; }
+            }}>
             <HiChevronDown className={`transition-all duration-100 w-8 h-6 ${visible ? `-rotate-90` : `rotate-0`}`} />
           </div>
         </div>
@@ -55,4 +57,8 @@ export function CustomSelect<T, P>({
       </div>
     </div>
   )
-}
+});
+
+CustomSelect.displayName = 'CustomSelect';
+
+export default memo(CustomSelect);

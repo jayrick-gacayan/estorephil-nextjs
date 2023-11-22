@@ -13,12 +13,12 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    onShoppingMethodChanged: (state: MainState, action: PayloadAction<string>) => {
+    shoppingMethodChanged: (state: MainState, action: PayloadAction<string>) => {
       return {
         ...state, shoppingMethod: action.payload
       };
     },
-    onModalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
+    modalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
       const { open, type } = action.payload;
       return {
         ...state, modalProductDeliveryAddressInfo: {
@@ -31,8 +31,8 @@ export const mainSlice = createSlice({
 })
 
 export const {
-  onModalProductDeliveryAddressOpened,
-  onShoppingMethodChanged
+  modalProductDeliveryAddressOpened,
+  shoppingMethodChanged
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

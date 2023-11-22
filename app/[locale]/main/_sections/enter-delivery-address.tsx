@@ -4,13 +4,18 @@ import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { CustomSelect } from '../../_components/custom-select';
 import Image from 'next/image';
 import { AppDispatch } from '@/redux/store';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { useRef, useState } from 'react';
 
 export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
+  const countrySelectRef = useRef<HTMLDivElement>(null);
+  const citySelectRef = useRef<HTMLDivElement>(null);
+  const [countrySelectVisible, setCountrySelectVisible] = useState<boolean>(false);
+  const [citySelectVisible, setCitySelectVisible] = useState<boolean>(false);
   const dispatch: AppDispatch = useAppDispatch();
 
   function onCloseModal() {
-    dispatch(onModalProductDeliveryAddressOpened({ open: false, type: '' }));
+    dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
   }
 
   return (
@@ -27,16 +32,22 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
       <p className='leading-0 text-sm italic'>You can skip this to view all of our products in store.</p>
       <div className='flex gap-4 text-left'>
         <div className='w-full'>
-          <CustomSelect<string, string | undefined>
+          <CustomSelect ref={countrySelectRef}
             items={['Philippines', 'Canada', 'United States of America']}
             value={undefined}
-            placeholder='Country:' />
+            placeholder='Country:'
+            labelText=''
+            visible={countrySelectVisible}
+            setVisible={setCountrySelectVisible} />
         </div>
         <div className='w-full'>
-          <CustomSelect<string, string | undefined>
+          <CustomSelect ref={citySelectRef}
             items={['Quezon City', 'Cebu City', 'Manila', 'Davao City']}
             value={undefined}
-            placeholder='City:' />
+            placeholder='City:'
+            labelText=''
+            visible={citySelectVisible}
+            setVisible={setCitySelectVisible} />
         </div>
       </div>
       <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
@@ -44,7 +55,7 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
           onClose();
 
           setTimeout(() => {
-            dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
+            dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
           }, 1000)
         }}>
         Next

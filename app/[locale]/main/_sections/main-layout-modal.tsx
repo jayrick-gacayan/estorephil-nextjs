@@ -5,13 +5,14 @@ import Modal from '../../_components/modal';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { memo, useEffect, useMemo, useRef } from 'react';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import EnterDeliveryAddress from './enter-delivery-address';
 import ChangeAddress from './change-address';
 import ShoppingMethod from './shopping-method';
+import ChangeShopMethod from './change-shop-method';
 
-function ProductDeliveryAddressModal() {
+function MainLayoutModal() {
   const modalWrapperRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
@@ -24,46 +25,46 @@ function ProductDeliveryAddressModal() {
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   useEffect(() => {
-    if (modalWrapperRef.current) {
+    if (modalContentRef.current) {
       if (open) {
         setTimeout(() => {
           if (modalContentRef.current) {
-            modalContentRef.current.classList.add('bottom-0');
-            modalContentRef.current.classList.remove('-bottom-40');
+            modalContentRef.current.classList.remove('animate-slide-bottom-down');
+            modalContentRef.current.classList.add('animate-slide-bottom-up');
           }
-        }, 300);
-        modalWrapperRef.current.classList.remove('hidden');
-        modalWrapperRef.current.classList.add('flex');
+        }, 300)
+
       }
     }
-  }, [open])
+  }, [open]);
 
   useOutsideClick(modalContentRef, () => { onClose(); });
 
   function onClose(): void {
     if (modalContentRef.current) {
       if (open) {
-        modalContentRef.current.classList.remove('bottom-0');
-        modalContentRef.current.classList.add('-bottom-40');
+        modalContentRef.current.classList.add('animate-slide-bottom-down');
+        modalContentRef.current.classList.remove('animate-slide-bottom-up');
         setTimeout(() => {
           modalWrapperRef.current?.classList.remove('flex');
           modalWrapperRef.current?.classList.add('hidden');
-          dispatch(onModalProductDeliveryAddressOpened({ open: false, type: '' }));
+          dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
         }, 300);
       }
     }
   }
 
   return (
-    <Modal ref={modalWrapperRef}>
+    <Modal ref={modalWrapperRef} open={open}>
       <div ref={modalContentRef}
-        className={`transition-all duration-200 ease-in-out md:w-[640px] flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
+        className={`modal-content md:w-[640px] flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
         {(open && type === 'shoppingMethod') && (<ShoppingMethod onClose={onClose} />)}
+        {(open && type === 'changeShopMethod') && (<ChangeShopMethod onClose={onClose} />)}
       </div>
     </Modal>
   )
 }
 
-export default memo(ProductDeliveryAddressModal)
+export default memo(MainLayoutModal)

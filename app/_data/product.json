@@ -1,0 +1,214 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "2022 Apple MacBook Air Laptop with M2 chip",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_one.png",
+      "seller": {
+        "id": 4,
+        "sellerImage": "/sellers/apple.png",
+        "name": "Apple"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 2,
+      "name": "CUK ROG Zephyrus Duo 16 Gaming Notebook",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_two.png",
+      "seller": {
+        "id": 3,
+        "sellerImage": "/sellers/samsung.png",
+        "name": "Samsung"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 3,
+      "name": "Apple - iPhone 14 Pro Max 128GB - Deep Purple",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_three.png",
+      "seller": {
+        "id": 4,
+        "sellerImage": "/sellers/apple.png",
+        "name": "Apple"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 4,
+      "name": "LG - 27” UltraGear UHD Nano IPS 1ms 144Hz Monitor",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_four.png",
+      "seller": {
+        "id": 3,
+        "sellerImage": "/sellers/samsung.png",
+        "name": "Samsung"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 5,
+      "name": "Coca-Cola plus coffee",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_five.png",
+      "seller": {
+        "id": 5,
+        "sellerImage": "/sellers/mcdonald.png",
+        "name": "McDonald"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 6,
+      "name": "Coca-Cola plus coffee in can",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_five.png",
+      "seller": {
+        "id": 1,
+        "sellerImage": "/sellers/jollibee.png",
+        "name": "Jollibee"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 7,
+      "name": "Amazon - 75” Class Omni Series 4K UHD Smart Fire TV",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_six.png",
+      "seller": {
+        "id": 2,
+        "sellerImage": "/sellers/asianhome.png",
+        "name": "Asian Home"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 8,
+      "name": "2022 Apple MacBook Air Laptop with M2 chip",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_one.png",
+      "seller": {
+        "id": 4,
+        "sellerImage": "/sellers/apple.png",
+        "name": "Apple"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 9,
+      "name": "CUK ROG Zephyrus Duo 16 Gaming Notebook",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_two.png",
+      "seller": {
+        "id": 3,
+        "sellerImage": "/sellers/samsung.png",
+        "name": "Samsung"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 10,
+      "name": "Apple - iPhone 14 Pro Max 128GB - Deep Purple",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_three.png",
+      "seller": {
+        "id": 4,
+        "sellerImage": "/sellers/apple.png",
+        "name": "Apple"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 11,
+      "name": "LG - 27” UltraGear UHD Nano IPS 1ms 144Hz Monitor",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_four.png",
+      "seller": {
+        "id": 3,
+        "sellerImage": "/sellers/samsung.png",
+        "name": "Samsung"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 12,
+      "name": "Coca-Cola plus coffee",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_five.png",
+      "seller": {
+        "id": 5,
+        "sellerImage": "/sellers/mcdonald.png",
+        "name": "McDonald"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 13,
+      "name": "Coca-Cola plus coffee in can",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_five.png",
+      "seller": {
+        "id": 1,
+        "sellerImage": "/sellers/jollibee.png",
+        "name": "Jollibee"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 14,
+      "name": "Amazon - 75” Class Omni Series 4K UHD Smart Fire TV",
+      "category": "Consumer Electronics",
+      "price": 5458,
+      "rating": 4.0,
+      "raters": 123,
+      "productImage": "/products/product_six.png",
+      "seller": {
+        "id": 2,
+        "sellerImage": "/sellers/asianhome.png",
+        "name": "Asian Home"
+      },
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    }
+  ]
+}

@@ -10,7 +10,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
         <SearchSidebar />
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
-            <BreadcrumbsContainer basePath='Search' text='Search' />
+            <BreadcrumbsContainer basePath='search' text='Search' />
           </div>
           {children}
         </div>

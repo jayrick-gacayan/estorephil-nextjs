@@ -3,12 +3,10 @@
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { AppDispatch } from '@/redux/store';
 import Image from 'next/image';
-import { onModalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 
 export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
   const dispatch: AppDispatch = useAppDispatch();
-
-
 
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">
@@ -23,7 +21,7 @@ export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
           <p className='leading-0 font-semibold'>
             All items that you have added will be removed upon changing to a new address.
           </p>
-          <p className='leading-0 text-sm italic text-danger font-semibold'> Do you want to proceed?</p>
+          <p className='leading-0 text-sm italic text-danger font-semibold'>Do you want to proceed?</p>
         </div>
 
         <div className="flex gap-2 w-full">
@@ -32,7 +30,7 @@ export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
               onClick={() => {
                 onClose();
                 setTimeout(() => {
-                  dispatch(onModalProductDeliveryAddressOpened({ open: true, type: 'shoppingMethod' }));
+                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shoppingMethod' }));
                 }, 1000)
               }}>
               Continue

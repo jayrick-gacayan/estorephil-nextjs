@@ -1,23 +1,38 @@
-import { ReactNode, forwardRef } from 'react';
+import { ForwardedRef, ReactNode, Ref, RefAttributes, RefObject, forwardRef, memo, useEffect } from 'react';
 
-const Modal = forwardRef<HTMLDivElement, { children: ReactNode }>(
-  ({
-    children,
-  }: {
-    children: ReactNode
-  },
-    ref) => {
+type Modal = {
+  open: boolean;
+  children: ReactNode;
+}
+
+const Modal = forwardRef(
+  ({ children, open }: Modal, ref: ForwardedRef<HTMLDivElement>) => {
+
+    useEffect(() => {
+      if (ref && typeof ref !== 'function') {
+        if (ref.current) {
+          if (open) {
+            ref.current.classList.remove('hidden');
+            ref.current.classList.add('flex');
+
+
+          }
+        }
+      }
+    }, [open]);
+
     return (
       <div ref={ref}
-        className={`transition-all fixed z-[9999] hidden top-0 left-0 w-screen h-screen items-center justify-center
-      after:bg-black/30 after:absolute after:top-0 after:left-0 after:w-screen after:h-screen after:z-0`}>
+        className='transition-all hidden duration-100 fixed z-[9999] top-0 left-0 w-screen h-screen items-center justify-center
+      after:bg-black/30 after:absolute after:top-0 after:left-0 after:w-screen after:h-screen after:z-0'>
         {children}
       </div>
     )
-  });
+  }
+);
 
 Modal.displayName = 'Modal';
 
-export default Modal;
+export default memo(Modal);
 
 

@@ -1,4 +1,4 @@
-import { BreadcrumbProps } from "@/types/props/breadcrumb_props";
+import { BreadcrumbProps } from "@/types/props/breadcrumb-props";
 import { BreadcrumbItem } from "./breadcrumb-item";
 
 export function Breadcrumbs({ breadcrumbs }: { breadcrumbs: BreadcrumbProps[] }) {

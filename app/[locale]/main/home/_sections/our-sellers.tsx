@@ -2,33 +2,15 @@
 
 import { Seller } from '@/models/seller';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { SellerItem } from '../../_components/seller-item';
+import Sellers from "@/app/_data/seller.json";
 
 export function OurSellers() {
   const sliderContainerRef = useRef<HTMLDivElement>(null);
   const innerSliderContainerRef = useRef<HTMLDivElement>(null);
 
-  const sellers: Seller[] = [
-    { id: 1, sellerImage: '/sellers/jollibee.png' },
-    { id: 2, sellerImage: '/sellers/asianhome.png' },
-    { id: 3, sellerImage: '/sellers/samsung.png' },
-    { id: 4, sellerImage: '/sellers/jollibee.png' },
-    { id: 5, sellerImage: '/sellers/asianhome.png' },
-    { id: 6, sellerImage: '/sellers/samsung.png' },
-    { id: 7, sellerImage: '/sellers/jollibee.png' },
-    { id: 8, sellerImage: '/sellers/asianhome.png' },
-    { id: 9, sellerImage: '/sellers/samsung.png' },
-    { id: 10, sellerImage: '/sellers/jollibee.png' },
-    { id: 11, sellerImage: '/sellers/asianhome.png' },
-    { id: 12, sellerImage: '/sellers/samsung.png' },
-    { id: 13, sellerImage: '/sellers/jollibee.png' },
-    { id: 14, sellerImage: '/sellers/asianhome.png' },
-    { id: 15, sellerImage: '/sellers/samsung.png' },
-    { id: 16, sellerImage: '/sellers/jollibee.png' },
-    { id: 17, sellerImage: '/sellers/samsung.png' },
-    { id: 18, sellerImage: '/sellers/jollibee.png' },
-  ];
+  const sellers: Seller[] = Sellers.sellers;
 
   function moveSellersSlider(moveTo: number) {
     if (sliderContainerRef.current) {

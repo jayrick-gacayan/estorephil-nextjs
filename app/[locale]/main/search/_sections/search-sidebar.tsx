@@ -8,6 +8,10 @@ export function SearchSidebar() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  function checkboxLabelClassname(value: string, current: string) {
+    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+  }
+
   return (
     <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[292px] border-r-2 border-r-secondary-light'>
 
@@ -19,14 +23,16 @@ export function SearchSidebar() {
               [
                 'Camera & Photo',
                 'Cell Phone Devices',
-                'Collectibles \u207B Entertainment or Sports',
+                'Collectibles \u2212 Entertainment or Sports',
                 'Consumer Electronics',
                 'Electronics Accessories',
                 'Electronics Accessories',
               ].map((relatedCategory: string, index: number) => {
                 return (
-                  <Checkbox key={`related-category-${index}-${relatedCategory}`}
+                  <Checkbox<string> key={`related-category-${index}-${relatedCategory}`}
                     labelText={relatedCategory}
+                    labelClassname={checkboxLabelClassname}
+                    value={relatedCategory}
                     current={searchParams.get('keyword') ?? ''}
                     onCheckboxChanged={(text: string) => {
                       let queryStringSearch = new URLSearchParams();
@@ -59,9 +65,11 @@ export function SearchSidebar() {
             {
               ['Canada', 'Philippines', 'USA',].map((shipFrom: string, index: number) => {
                 return (
-                  <Checkbox key={`ship-from-${index}-${shipFrom}`}
+                  <Checkbox<string> key={`ship-from-${index}-${shipFrom}`}
                     labelText={shipFrom}
+                    labelClassname={checkboxLabelClassname}
                     current=''
+                    value={shipFrom}
                     onCheckboxChanged={(text: string) => {
                       return;
                     }} />

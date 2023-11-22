@@ -1,6 +1,6 @@
 'use client';
 
-import { LinkProps } from '@/types/props/link_props';
+import { LinkProps } from '@/types/props/link-props';
 import { FaChartBar, FaChartLine, FaFilter, FaImages, FaMoneyCheck, FaShoppingBasket, FaShoppingCart, FaThLarge } from 'react-icons/fa';
 import Link from 'next-intl/link';
 
