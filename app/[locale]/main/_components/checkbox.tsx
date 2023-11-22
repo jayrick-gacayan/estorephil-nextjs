@@ -2,11 +2,9 @@ import { useTranslations } from "next-intl"
 
 export default function CheckBox({
     label,
-    onClick,
     onChange,
 }: {
     label: string,
-    onClick?: () => void
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }) {
 

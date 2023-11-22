@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function CartItem({
     imageUrl,
     name,
@@ -14,7 +16,7 @@ export default function CartItem({
     return (
         <>
             <tr className="border-b-[1.5px] border-gray-300">
-                <td><img src={imageUrl} height={40} width={40} /></td>
+                <td><Image src={imageUrl} height={40} width={40} alt='' /></td>
                 <td>{name}</td>
                 <td>{price}</td>
                 <td>{quantity}</td>
