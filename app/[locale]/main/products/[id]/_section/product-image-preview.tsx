@@ -4,12 +4,13 @@ import { ImageProps } from '@/types/props/image_props';
 import Image from 'next/image';
 import { useState } from 'react';
 
-export function ProductPreviewImage() {
+export function ProductPreviewImage({ productImage }: { productImage: string; }) {
   let previewImages: ImageProps[] = [
-    { id: 1, src: '/products/frontview-laptop.webp', alt: `preview-image-1` },
-    { id: 2, src: '/products/backview-laptop.jfif', alt: `preview-image-2` },
-    { id: 3, src: '/products/frontview-laptop.webp', alt: `preview-image-3` },
-    { id: 4, src: '/products/backview-laptop.jfif', alt: `preview-image-4` },
+    { id: 1, src: productImage, alt: `preview-image-orig` },
+    { id: 2, src: '/products/frontview-laptop.webp', alt: `preview-image-1` },
+    { id: 3, src: '/products/backview-laptop.jfif', alt: `preview-image-2` },
+    { id: 4, src: '/products/frontview-laptop.webp', alt: `preview-image-3` },
+    { id: 5, src: '/products/backview-laptop.jfif', alt: `preview-image-4` },
   ]
 
   const [currentPreviewImage, setCurrentPreviewImage] = useState<ImageProps>(previewImages[0])
