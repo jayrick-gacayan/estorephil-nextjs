@@ -13,7 +13,7 @@ export default function SideBar() {
         <> {onDetailsPage ? <></> : <div className="px-[120px] pr-16 w-[25%] h-full">
             <div className="my-4">
                 <div className="flex items-center justify-center relative p-8">
-                    <Image alt='' src='https://t4.ftcdn.net/jpg/03/31/93/85/360_F_331938599_nmkc39B7E74s1G5P01b0YCJ6x0MNMqJz.jpg' height={181} width={181} className="rounded-[100%] border-4 border-blue-200" />
+                    <Image alt='' src='https://1000logos.net/wp-content/uploads/2021/02/Shopee-Logo-2015.png' height={181} width={181} className="h-[181px] w-[181px] rounded-full shadow-md border-4 border-blue-200" />
                     <button className="bg-blue-500 border-1 border-white rounded-full absolute bottom-[35px] right-[18px] z-10 p-2">
                         <FaCamera color={"white"} size={15} />
                     </button>

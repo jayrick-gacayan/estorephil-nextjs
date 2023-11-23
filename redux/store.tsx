@@ -14,12 +14,14 @@ import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/st
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
 import shopMethodReducer from '@/app/[locale]/main/(shopMethod)/_redux/shop-method-slice';
+import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 
 
 export const store = configureStore({
     reducer: {
         main: mainReducer,
         shopMethod: shopMethodReducer,
+        register: registerReducer,
         checkout: checkoutReducer,
         sender: senderReducer,
         receiver: receiverReducer,

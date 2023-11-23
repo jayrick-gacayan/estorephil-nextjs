@@ -25,11 +25,26 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin$).*)',
+        source: '/:locale/:path((?![admin|register|login]).*)',
         destination: '/:locale/main/:path*',
       },
+           
+
+      // {
+      //   source: '/:locale/:path((?!admin$).*)',
+      //   destination: '/:locale/main/:path*',
+      // },
     ]
   },
+  // async redirects(){
+  //   return [
+  //     {
+  //       source: '/:locale/auth/:path*',
+  //       destination: '/:locale/:path*',
+  //       permanent: false,
+  //     }
+  //   ]
+  // }
 }
 
 module.exports = nextConfig
