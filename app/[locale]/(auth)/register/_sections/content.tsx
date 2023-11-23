@@ -9,7 +9,7 @@ export default function Content() {
     return (
         <>
             {state.status === 'waiting' ? (
-                <div className="flex items-center w-[80%] justify-between">
+                <div className="flex items-center w-[80%] justify-between h-[90%]">
                     <div className="flex flex-col justify-between">
                         <div className="my-4">
                             <h1 className="text-[70px] text-primary-dark font-bold">Become an Agent</h1>
@@ -33,7 +33,7 @@ export default function Content() {
                 </div>)
                 : state.status == 'success' &&
                 (
-                    <div className="flex flex-col items-center justify-center gap-4">
+                    <div className="flex flex-col items-center justify-center gap-4 h-[90vh]">
                         <div className="text-center">
                             <Image
                                 src={'/thank-you.png'}

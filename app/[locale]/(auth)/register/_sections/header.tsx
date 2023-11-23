@@ -3,7 +3,7 @@ export default function Header() {
     console.log('-------')
     return (
         <>
-            <div className="flex items-center justify-between w-[80%] h-[10%]">
+            <div className="flex items-center justify-between w-[80%] h-full">
                 <div>
                     <div className="text-[25px] font-bold text-primary-dark">eStorePh</div>
                 </div>
