@@ -11,6 +11,7 @@ import EnterDeliveryAddress from './enter-delivery-address';
 import ChangeAddress from './change-address';
 import ShoppingMethod from './shopping-method';
 import ChangeShopMethod from './change-shop-method';
+import SelectedShopMethodDetails from './selected-shop-method-details';
 
 function MainLayoutModal() {
   const modalWrapperRef = useRef<HTMLDivElement>(null);
@@ -57,11 +58,12 @@ function MainLayoutModal() {
   return (
     <Modal ref={modalWrapperRef} open={open}>
       <div ref={modalContentRef}
-        className={`modal-content md:w-[640px] flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
+        className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
         {(open && type === 'shoppingMethod') && (<ShoppingMethod onClose={onClose} />)}
         {(open && type === 'changeShopMethod') && (<ChangeShopMethod onClose={onClose} />)}
+        {(open && type === 'shopMethodDetails') && (<SelectedShopMethodDetails onClose={onClose} />)}
       </div>
     </Modal>
   )

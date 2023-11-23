@@ -1,6 +1,5 @@
-import { Product } from '@/models/product'
-import { ProductsContainer } from '../_components/products-container'
-import CategoryProductListResult from './_sections/category-product-list-result'
+import { Product } from '@/models/product';
+import CategoryProductListResult from './_sections/category-product-list-result';
 
 const featuredProducts: Product[] = [
   {
