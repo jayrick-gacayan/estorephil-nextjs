@@ -3,6 +3,7 @@ import { ShopMethodState } from './shop-method-state';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { Product } from '@/models/product';
+import { Seller } from '@/models/seller';
 
 const initialState: ShopMethodState = {
   shopMethodItems: [],
@@ -67,6 +68,23 @@ export const shopMethodSlice = createSlice({
           existingData.isGoingToCheckout = !existingData.isGoingToCheckout;
         }
       }
+    },
+    isAllProductsGoingToCheckoutBySeller: (state: ShopMethodState, action: PayloadAction<{ seller: Seller; isAllGoingToCheckOut: boolean; }>) => {
+      if (state.shopMethodItems.length > 0) {
+        let { seller, isAllGoingToCheckOut } = action.payload;
+
+        state.shopMethodItems = state.shopMethodItems.map((value: Cart | BalikbayanBox) => {
+          return value.seller.id !== seller.id ? value :
+            { ...value, isGoingToCheckout: !isAllGoingToCheckOut }
+        });
+      }
+    },
+    isSelectAllProductsGoingToCheckout: (state: ShopMethodState, action: PayloadAction<boolean>) => {
+      if (state.shopMethodItems.length > 0) {
+        state.shopMethodItems = state.shopMethodItems.map((value: Cart | BalikbayanBox) => {
+          return { ...value, isGoingToCheckout: !action.payload }
+        })
+      }
     }
   },
 
@@ -78,7 +96,9 @@ export const {
   addToShopMethodItem,
   removeFromToShopMethodItem,
   productItemQuantitySet,
-  productItemisGoingToCheckoutChanged
+  productItemisGoingToCheckoutChanged,
+  isAllProductsGoingToCheckoutBySeller,
+  isSelectAllProductsGoingToCheckout
 } = shopMethodSlice.actions;
 
 export default shopMethodSlice.reducer;

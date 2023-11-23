@@ -38,7 +38,7 @@ export function Carousel() {
     return () => {
       clearCarouselInterval();
     }
-  }, [carouselMoveToRight]);
+  }, [carouselMoveToRight, clearCarouselInterval]);
 
 
   function handlePointerEvent(event: MouseEvent | TouchEvent) {
