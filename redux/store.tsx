@@ -13,9 +13,11 @@ import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice'
+import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 export const store = configureStore({
     reducer: {
         main: mainReducer,
+        register: registerReducer,
         checkout: checkoutReducer,
         sender: senderReducer,
         receiver: receiverReducer,
