@@ -42,8 +42,6 @@ export default function ProductButtonsContainer({
     }
   }, [quantity, productMemo]);
 
-  console.log('Product from the cart', productMemo);
-
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
@@ -76,7 +74,8 @@ export default function ProductButtonsContainer({
                   product: product,
                   seller: seller,
                   quantity,
-                  total: product.price * quantity
+                  total: product.price * quantity,
+                  isGoingToCheckout: false
                 }) :
                 removeFromToShopMethodItem(productMemo)
               );
