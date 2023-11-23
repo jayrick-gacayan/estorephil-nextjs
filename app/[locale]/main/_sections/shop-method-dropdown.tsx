@@ -12,169 +12,22 @@ import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
 import Dropdown from '../../_components/dropdown';
 import Link from 'next-intl/link';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-
-const dropdownCartItems: ShopMethod[] = [
-  {
-    id: 1,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 3.7,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 2,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 3,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 4,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 5,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 6,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  },
-  {
-    id: 7,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'cart',
-  }
-]
-
-const dropdownBalikBayanBoxItems: ShopMethod[] = [
-  {
-    id: 1,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 3.7,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 2,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 3,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 4,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 5,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 6,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  },
-  {
-    id: 7,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png',
-    shopMethod: 'balikbayanbox',
-  }
-]
+import { ShopMethodState } from '../(shopMethod)/_redux/shop-method-state';
+import { BalikbayanBox } from '@/models/balikbayan-box';
+import { Cart } from '@/models/cart';
+import { removeFromToShopMethodItem } from '../(shopMethod)/_redux/shop-method-slice';
 
 export default function ShopMethodDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
+  const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod });
   const dispatch: AppDispatch = useAppDispatch();
 
   const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const shopMethodItems = useMemo(() => { return shopMethodState.shopMethodItems }, [shopMethodState.shopMethodItems]);
 
   let shopHeaderText = shoppingMethod === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
-  let dropdownItems = shoppingMethod === 'Shopping Cart' ? dropdownCartItems : dropdownBalikBayanBoxItems;
-
-  const [shopMethodItems, setShopMethodItems] = useState<ShopMethod[]>(dropdownItems);
-
-  let sortDropdownItems = shopMethodItems.sort((a: ShopMethod, b: ShopMethod) => {
-    return a.id - b.id;;
-  }).slice(0, 4);
 
   useEffect(() => {
     if (shoppingMethod !== '') {
@@ -213,7 +66,7 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
                 (<BsBox2 className='w-10 h-10 inline-block align-middle cursor-pointer' />)
             }
           </div>
-          <span className='absolute -top-3 -right-3 rounded-full w-auto p-1.5 bg-danger'>12</span>
+          {shopMethodItems.length > 0 && (<span className='absolute -top-3 -right-3 rounded-full w-auto p-1.5 bg-danger'>{shopMethodItems.length}</span>)}
         </div>
         <div className='space-y-1'>
           <span className='block'>{shopHeaderText}</span>
@@ -224,22 +77,29 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
       <div id="dropdown-shop-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 text-secondary top-[250%] right-0 z-[29999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
         <div className='p-2 border-b-2 border-b-secondary-light flex gap-2 items-center'>
           <div className='flex-1 font-semibold text-lg leading-0'>{shopHeaderText.includes('BAYAN') ? `${shopHeaderText} BOX` : shopHeaderText}</div>
-          <div className='flex-none w-auto text-secondary-light text-base'>10</div>
+          {shopMethodItems.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{shopMethodItems.length}</div>)}
         </div>
         <div className='space-y-2'>
           {
-            sortDropdownItems.map((value: ShopMethod) => {
-              return (
-                <DropdownItem key={`shop-method-key-${value.name}-${value.id}`}>
-                  <ShopMethodDropdownItem onDelete={() => {
-                    setShopMethodItems(shopMethodItems.filter((shopMethod: ShopMethod) => { return shopMethod.id !== value.id }))
-                  }} {...value} />
-                </DropdownItem>
+            shopMethodItems.length === 0 ? (<div className='text-center font-semibold text-[24px] leading-0'>No Items</div>) :
+              (
+                <>
+                  {
+                    shopMethodItems.slice(0, 4).map((shopMethodItem: Cart | BalikbayanBox) => {
+                      return (
+                        <DropdownItem key={`shop-method-key-${shopMethodItem.product.name}-${shopMethodItem.product.id}`}>
+                          <ShopMethodDropdownItem onDelete={() => {
+                            dispatch(removeFromToShopMethodItem(shopMethodItem));
+                          }} {...shopMethodItem.product} />
+                        </DropdownItem>
+                      )
+                    })
+                  }
+                </>
               )
-            })
           }
         </div>
-        <Link href='/home' className='text-warning underline block text-center cursor-pointer'>
+        <Link href={`/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`} className='text-warning underline block text-center cursor-pointer'>
           View All
         </Link>
       </div>

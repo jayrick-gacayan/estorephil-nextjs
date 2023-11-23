@@ -1,8 +1,5 @@
-import { FaRegHeart } from 'react-icons/fa';
 import Image from 'next/image';
-import { FaCartShopping } from 'react-icons/fa6';
 import { ProductInformation } from './_section/product-information';
-import { QuantityContainer } from './_section/quantity-container';
 import { ProductPreviewImage } from './_section/product-image-preview';
 import { BiCheckShield } from 'react-icons/bi';
 import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
@@ -11,6 +8,7 @@ import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
 import { Product } from '@/models/product';
 import { notFound } from 'next/navigation';
+import ProductButtonsContainer from './_section/product-buttons-container';
 
 export async function generateStaticParams() {
   let products = (await import('@/app/_data/product.json')).default;
@@ -148,18 +146,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             </div>
             <div className='w-full space-y-2'>
               <h1 className='font-bold text-primary text-3xl'>C&#36; {product.price.toFixed(2)}</h1>
-              <div className='flex w-full gap-8'>
-                <QuantityContainer product={product} />
-                <div className='w-full flex justify-around gap-4'>
-                  <button className='transition border border-primary duration-100 rounded-full flex-1 h-auto bg-primary text-white space-x-2 px-6 py-3 hover:bg-primary-light'>
-                    <FaCartShopping className='inline-block' />
-                    <span className='align-middle'>Add to Cart</span>
-                  </button>
-                  <button className='rounded-full w-24 h-auto bg-danger-light text-danger hover:bg-danger hover:text-white border border-danger space-x-2 px-6 py-3 text-center'>
-                    <FaRegHeart className='inline-block' />
-                  </button>
-                </div>
-              </div>
+              <ProductButtonsContainer product={product} seller={product.seller!} />
             </div>
           </div>
         </div>

@@ -58,7 +58,7 @@ function MainLayoutModal() {
   return (
     <Modal ref={modalWrapperRef} open={open}>
       <div ref={modalContentRef}
-        className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10`}>
+        className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
         {(open && type === 'shoppingMethod') && (<ShoppingMethod onClose={onClose} />)}

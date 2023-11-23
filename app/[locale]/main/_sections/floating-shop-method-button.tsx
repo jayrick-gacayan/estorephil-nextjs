@@ -13,7 +13,7 @@ export default function FloatingCardButton(): JSX.Element | null {
 
   const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
 
-  return mainState.shoppingMethod === '' ? null :
+  return shoppingMethod === '' ? null :
     (
       <div className='fixed bottom-8 right-0 w-full z-[1999]'>
         <div className='max-w-screen-2xl m-auto'>
