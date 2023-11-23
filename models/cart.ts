@@ -6,4 +6,5 @@ export interface Cart {
   seller: Seller;
   quantity: number;
   total: number;
+  isGoingToCheckout?: boolean;
 }

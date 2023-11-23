@@ -30,7 +30,7 @@ export const shopMethodSlice = createSlice({
       }
     },
     removeFromToShopMethodItem: (state: ShopMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
-      console.log('I am here remove Item');
+
       if (state.shopMethodItems.length > 0) {
         let { product } = action.payload;
         let existingData = state.shopMethodItems.find((shopMethodItem: Cart | BalikbayanBox) => {
@@ -56,8 +56,20 @@ export const shopMethodSlice = createSlice({
           existingData.total = quantity * product.price;
         }
       }
+    },
+    productItemisGoingToCheckoutChanged: (state: ShopMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
+      if (state.shopMethodItems.length > 0) {
+        let existingData = state.shopMethodItems.find((shopMethod: Cart | BalikbayanBox) => {
+          return shopMethod.product.id === action.payload.product.id
+        });
+
+        if (existingData) {
+          existingData.isGoingToCheckout = !existingData.isGoingToCheckout;
+        }
+      }
     }
-  }
+  },
+
 })
 
 export const {
@@ -65,7 +77,8 @@ export const {
   isSelectAllSet,
   addToShopMethodItem,
   removeFromToShopMethodItem,
-  productItemQuantitySet
+  productItemQuantitySet,
+  productItemisGoingToCheckoutChanged
 } = shopMethodSlice.actions;
 
 export default shopMethodSlice.reducer;
