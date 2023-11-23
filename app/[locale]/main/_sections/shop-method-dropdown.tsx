@@ -2,7 +2,7 @@
 
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { RootState, AppDispatch } from '@/redux/store';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BsBox2 } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
 import { MainState } from '../_redux/main_state';
@@ -29,24 +29,23 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
 
   let shopHeaderText = shoppingMethod === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
 
-  useEffect(() => {
-    if (shoppingMethod !== '') {
-      if (dropdownRef.current) {
-        let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
-        if (querySelector) {
-          querySelector.classList.add('hidden')
-        }
-      }
-    }
-  }, [shoppingMethod]);
-
-  useOutsideClick(dropdownRef, () => {
+  const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
       let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
       if (querySelector) {
         querySelector.classList.add('hidden')
       }
     }
+  }, []);
+
+  useEffect(() => {
+    if (shoppingMethod !== '') {
+      closeDropdown();
+    }
+  }, [shoppingMethod, closeDropdown]);
+
+  useOutsideClick(dropdownRef, () => {
+    closeDropdown();
   });
 
   return (
@@ -99,7 +98,16 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
               )
           }
         </div>
-        <Link href={`/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`} className='text-warning underline block text-center cursor-pointer'>
+        <Link href={`/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+          className='text-warning underline block text-center cursor-pointer'
+          onClick={() => {
+            if (dropdownRef.current) {
+              let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
+              if (querySelector) {
+                querySelector.classList.add('hidden')
+              }
+            }
+          }}>
           View All
         </Link>
       </div>

@@ -15,21 +15,18 @@ export default function FloatingCardButton(): JSX.Element | null {
 
   return shoppingMethod === '' ? null :
     (
-      <div className='fixed bottom-8 right-0 w-full z-[1999]'>
-        <div className='max-w-screen-2xl m-auto'>
-          <div className='cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4'
-            onClick={() => {
-              dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeShopMethod' }));
-            }}>
-            <div className='space-y-1 '>
-              <Image alt={`${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
-                src={`/others/${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
-                width={88}
-                height={88}
-                className='h-[88px] w-[88px] block m-auto' />
-              <span className='block text-center'>Change</span>
-            </div>
-          </div>
+
+      <div className='fixed bottom-8 right-[184px] z-[1999] cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4'
+        onClick={() => {
+          dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeShopMethod' }));
+        }}>
+        <div className='space-y-1 '>
+          <Image alt={`${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
+            src={`/others/${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
+            width={88}
+            height={88}
+            className='h-[88px] w-[88px] block m-auto' />
+          <span className='block text-center'>Change</span>
         </div>
       </div>
     )
