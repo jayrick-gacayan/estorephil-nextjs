@@ -7,7 +7,7 @@ import ShopMethodHeader from './shop-method-header';
 import SummaryCheckout from './summary-checkout';
 import { ShopMethodState } from '../_redux/shop-method-state';
 import { MainState } from '../../_redux/main_state';
-import { redirect } from 'next/navigation';
+import RedirectToHomePage from '../../_sections/redirect-to-home-page';
 
 export default function LayoutContainer({
   checkoutSlug,
@@ -24,20 +24,18 @@ export default function LayoutContainer({
     return shopMethodState.shopMethodItems;
   }, [shopMethodState.shopMethodItems]);
 
-  if (shoppingMethod === '') {
-    redirect('/')
-  }
 
-  return shopMethodItems.length === 0 ? (<>{children}</>) :
-    (
-      <div className='flex'>
-        <div className='flex-1 bg-white'>
-          <ShopMethodHeader text={checkoutSlug.toUpperCase()} />
-          <div className='p-8 space-y-3'>
-            {children}
+  return shoppingMethod === '' ? (<RedirectToHomePage />) :
+    shopMethodItems.length === 0 ? (<>{children}</>) :
+      (
+        <div className='flex'>
+          <div className='flex-1 bg-white'>
+            <ShopMethodHeader text={checkoutSlug.toUpperCase()} />
+            <div className='p-8 space-y-3'>
+              {children}
+            </div>
           </div>
+          <SummaryCheckout />
         </div>
-        <SummaryCheckout />
-      </div>
-    )
+      )
 }
