@@ -28,6 +28,7 @@ const config: Config = {
         'secondary-light': '#77620038',
         tertiary: '#CFCFCF',
         'tertiary-dark': '#DFD08838',
+        'tertiary-light': '#F7F9FC',
         danger: '#E74C3C',
         'danger-light': '#FFF3F3',
         success: '#27AE60',
