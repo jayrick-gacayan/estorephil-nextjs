@@ -97,7 +97,7 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
               )
           }
         </div>
-        <Link href={`/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+        <Link href={`/shop-method/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {
