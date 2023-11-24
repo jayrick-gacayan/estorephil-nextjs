@@ -6,12 +6,13 @@ export function generateStaticParams() {
 }
 
 export default function Layout({
-  params: { slug },
+  params,
   children
 }: {
   params: { slug: string; },
   children: ReactNode
 }): JSX.Element {
+  let slug = params.slug;
 
   return (
     <LayoutContainer checkoutSlug={slug}>{children}</LayoutContainer>

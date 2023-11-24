@@ -13,8 +13,8 @@ import Link from 'next-intl/link';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
-import { ShopMethodState } from '../[slug]/_redux/shop-method-state';
-import { removeFromToShopMethodItem } from '../[slug]/_redux/shop-method-slice';
+import { ShopMethodState } from '../(shop-method)/[slug]/_redux/shop-method-state';
+import { removeFromToShopMethodItem } from '../(shop-method)/[slug]/_redux/shop-method-slice';
 
 export default function ShopMethodDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);

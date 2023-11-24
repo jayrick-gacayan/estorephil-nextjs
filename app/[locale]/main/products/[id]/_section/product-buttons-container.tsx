@@ -11,8 +11,8 @@ import { MainState } from '../../../_redux/main_state';
 import { BsBox2 } from 'react-icons/bs';
 import { modalProductDeliveryAddressOpened } from '../../../_redux/main-slice';
 import { Seller } from '@/models/seller';
-import { productItemQuantitySet, addToShopMethodItem, removeFromToShopMethodItem } from '../../../[slug]/_redux/shop-method-slice';
-import { ShopMethodState } from '../../../[slug]/_redux/shop-method-state';
+import { productItemQuantitySet, addToShopMethodItem, removeFromToShopMethodItem } from '../../../(shop-method)/[slug]/_redux/shop-method-slice';
+import { ShopMethodState } from '../../../(shop-method)/[slug]/_redux/shop-method-state';
 
 export default function ProductButtonsContainer({
   product,

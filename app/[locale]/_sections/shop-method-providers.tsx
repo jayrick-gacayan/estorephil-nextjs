@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { MainState } from '../main/_redux/main_state';
 import ShopMethodItemsJSON from '@/app/_data/cart.json';
-import { shopMethodItemsSet } from '../main/[slug]/_redux/shop-method-slice';
+import { shopMethodItemsSet } from '../main/(shop-method)/[slug]/_redux/shop-method-slice';
 
 export default function ShopMethodProviders({ children }: { children: ReactNode; }) {
   const dispatch: AppDispatch = useAppDispatch();
