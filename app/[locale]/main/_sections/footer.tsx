@@ -46,7 +46,7 @@ export function Footer() {
             <FooterLinksContainerWithIcons headerText='SOCIALS' links={socialLinks} linkChildrenClassName='p-1' />
           </div>
           <div className='w-full space-y-2'>
-            <FooterLinksContainerWithIcons headerText='SOCIALS' links={paymentTypeLinks} linkChildrenClassName='bg-white text-primary-dark p-1 rounded' />
+            <FooterLinksContainerWithIcons headerText='PAYMENT' links={paymentTypeLinks} linkChildrenClassName='bg-white text-primary-dark p-1 rounded' />
           </div>
           <div className='w-full space-y-2'>
             <h1 className='font-bold'>Promotions</h1>

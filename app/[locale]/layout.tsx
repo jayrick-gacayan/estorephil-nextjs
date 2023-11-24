@@ -1,6 +1,8 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
+import ShopMethodProviders from './_sections/shop-method-providers';
+
 
 async function getMessages(locale: string) {
   try {
@@ -25,7 +27,9 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <ShopMethodProviders>
+        {children}
+      </ShopMethodProviders>
     </NextIntlClientProvider>
   )
 }

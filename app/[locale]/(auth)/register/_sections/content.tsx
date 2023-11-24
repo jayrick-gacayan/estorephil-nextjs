@@ -14,7 +14,7 @@ export default function Content() {
                         <div className="my-4">
                             <h1 className="text-[70px] text-primary-dark font-bold">Become an Agent</h1>
                             <p className="text-[25px] text-primary-dark font-medium">
-                                You get % commission for every successful customer purchase
+                                You get &#37; commission for every successful customer purchase
                             </p>
                         </div>
                         <div className="my-4">
@@ -44,7 +44,7 @@ export default function Content() {
                         </div>
                         <div className="text-center">
                             <h1 className="text-[#2F353D] text-[56px] font-semibold">Thank you for signing up</h1>
-                            <p className="text-[#2F353D] text-[20px] font-normal">An email will be sent to you once we're done checking the details you have provided.</p>
+                            <p className="text-[#2F353D] text-[20px] font-normal">An email will be sent to you once we&#39;re done checking the details you have provided.</p>
                         </div>
                         <div className="w-full flex items-center justify-center">
                             <button className="text-white bg-primary py-2 w-[60%]">Home</button>

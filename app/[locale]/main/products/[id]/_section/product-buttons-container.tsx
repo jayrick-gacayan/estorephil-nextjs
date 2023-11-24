@@ -40,7 +40,7 @@ export default function ProductButtonsContainer({
     if (productMemo) {
       dispatch(productItemQuantitySet({ product: product, quantity: quantity }));
     }
-  }, [quantity, productMemo]);
+  }, [quantity, productMemo, dispatch, product]);
 
   return (
     <div className='flex w-full gap-8'>
