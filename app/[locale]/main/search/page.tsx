@@ -147,12 +147,7 @@ const searchProducts: Product[] = [
     productImage: '/products/laptop_image.png'
   }
 ]
-/*
-{
-  searchParams
-}: {
-  searchParams: { [key: string]: string | string[] | undefined }
-} */
+
 export default function SearchPage() {
 
   return (

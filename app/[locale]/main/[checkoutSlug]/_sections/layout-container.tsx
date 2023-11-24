@@ -1,13 +1,13 @@
 'use client';
 
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import ShopMethodHeader from './shop-method-header';
 import SummaryCheckout from './summary-checkout';
 import { ShopMethodState } from '../_redux/shop-method-state';
 import { MainState } from '../../_redux/main_state';
-import RedirectToHomePage from '../../_sections/redirect-to-home-page';
+import { useRouter } from 'next-intl/client';
 
 export default function LayoutContainer({
   checkoutSlug,
@@ -15,7 +15,8 @@ export default function LayoutContainer({
 }: {
   checkoutSlug: string;
   children: ReactNode;
-}): JSX.Element {
+}): JSX.Element | null {
+  const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; });
 
@@ -24,8 +25,14 @@ export default function LayoutContainer({
     return shopMethodState.shopMethodItems;
   }, [shopMethodState.shopMethodItems]);
 
+  useEffect(() => {
+    if (shoppingMethod === '') {
+      router.push('/')
+    }
+  }, [shoppingMethod])
 
-  return shoppingMethod === '' ? (<RedirectToHomePage />) :
+
+  return shoppingMethod === '' ? null :
     shopMethodItems.length === 0 ? (<>{children}</>) :
       (
         <div className='flex'>
