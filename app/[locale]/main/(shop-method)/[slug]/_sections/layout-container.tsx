@@ -1,13 +1,13 @@
 'use client';
 
-import { ReactNode, useEffect, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
+import { ShopMethodState } from '../_redux/shop-method-state';
+import { MainState } from '../../../_redux/main_state';
 import ShopMethodHeader from './shop-method-header';
 import SummaryCheckout from './summary-checkout';
-import { ShopMethodState } from '../_redux/shop-method-state';
-import { MainState } from '../../_redux/main_state';
-import { useRouter } from 'next-intl/client';
+
 
 export default function LayoutContainer({
   checkoutSlug,
@@ -24,9 +24,6 @@ export default function LayoutContainer({
   const shopMethodItems = useMemo(() => {
     return shopMethodState.shopMethodItems;
   }, [shopMethodState.shopMethodItems]);
-
-
-
 
   return shoppingMethod === '' ? null :
     shopMethodItems.length === 0 ? (<>{children}</>) :

@@ -3,10 +3,11 @@
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
-import CartItemsContainer from './cart-items-container';
 import { ShopMethodState } from '../_redux/shop-method-state';
 import { useRouter } from 'next-intl/client';
-import { MainState } from '../../_redux/main_state';
+import { MainState } from '../../../_redux/main_state';
+import CartItemsContainer from './cart-items-container';
+
 
 export default function PageContainer({
   checkoutSlug
