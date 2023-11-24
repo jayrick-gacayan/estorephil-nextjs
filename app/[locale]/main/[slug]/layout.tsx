@@ -2,18 +2,18 @@ import { ReactNode } from 'react';
 import LayoutContainer from './_sections/layout-container';
 
 export function generateStaticParams() {
-  return [{ checkoutSlug: 'cart' }, { checkoutSlug: 'balikbayan-box' }];
+  return [{ slug: 'cart' }, { slug: 'balikbayan-box' }];
 }
 
 export default function Layout({
-  params: { checkoutSlug },
+  params: { slug },
   children
 }: {
-  params: { checkoutSlug: string; },
+  params: { slug: string; },
   children: ReactNode
 }): JSX.Element {
 
   return (
-    <LayoutContainer checkoutSlug={checkoutSlug}>{children}</LayoutContainer>
+    <LayoutContainer checkoutSlug={slug}>{children}</LayoutContainer>
   )
 }

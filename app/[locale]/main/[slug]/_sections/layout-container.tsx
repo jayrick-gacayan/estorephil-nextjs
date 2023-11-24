@@ -29,7 +29,7 @@ export default function LayoutContainer({
     if (shoppingMethod === '') {
       router.push('/')
     }
-  }, [shoppingMethod])
+  }, [shoppingMethod, router])
 
 
   return shoppingMethod === '' ? null :
