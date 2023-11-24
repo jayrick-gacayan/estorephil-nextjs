@@ -13,7 +13,7 @@ import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
-import shopMethodReducer from '@/app/[locale]/main/(shop-method)/[slug]/_redux/shop-method-slice';
+import shopMethodReducer from '@/app/[locale]/main/shop-method/[slug]/_redux/shop-method-slice';
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 
 export const store = configureStore({
