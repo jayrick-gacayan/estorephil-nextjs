@@ -7,12 +7,12 @@ import { Product } from '@/models/product';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useEffect, useMemo, useState } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
-import { ShopMethodState } from '../../../(shopMethod)/_redux/shop-method-state';
 import { MainState } from '../../../_redux/main_state';
 import { BsBox2 } from 'react-icons/bs';
 import { modalProductDeliveryAddressOpened } from '../../../_redux/main-slice';
-import { addToShopMethodItem, productItemQuantitySet, removeFromToShopMethodItem } from '../../../(shopMethod)/_redux/shop-method-slice';
 import { Seller } from '@/models/seller';
+import { productItemQuantitySet, addToShopMethodItem, removeFromToShopMethodItem } from '../../../[checkoutSlug]/_redux/shop-method-slice';
+import { ShopMethodState } from '../../../[checkoutSlug]/_redux/shop-method-state';
 
 export default function ProductButtonsContainer({
   product,

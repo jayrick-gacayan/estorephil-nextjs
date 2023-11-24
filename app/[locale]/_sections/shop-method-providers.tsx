@@ -5,9 +5,9 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { MainState } from '../main/_redux/main_state';
 import ShopMethodItemsJSON from '@/app/_data/cart.json';
-import { shopMethodItemsSet } from '../main/(shopMethod)/_redux/shop-method-slice';
 import { Cart } from '@/models/cart';
 import { BalikbayanBox } from '@/models/balikbayan-box';
+import { shopMethodItemsSet } from '../main/[checkoutSlug]/_redux/shop-method-slice';
 
 export default function ShopMethodProviders({ children }: { children: ReactNode; }) {
   const dispatch: AppDispatch = useAppDispatch();
@@ -20,11 +20,12 @@ export default function ShopMethodProviders({ children }: { children: ReactNode;
   useEffect(() => {
     if (shoppingMethod !== '') {
       dispatch(
-        shopMethodItemsSet(ShopMethodItemsJSON.carts.map((
-          (value: Cart | BalikbayanBox) => {
-            return { ...value, isGoingToCheckout: false }
-          }
-        )))
+        shopMethodItemsSet([])
+        // shopMethodItemsSet(ShopMethodItemsJSON.carts.map((
+        //   (value: Cart | BalikbayanBox) => {
+        //     return { ...value, isGoingToCheckout: false }
+        //   }
+        // )))
       );
     }
   }, [shoppingMethod, dispatch]);
