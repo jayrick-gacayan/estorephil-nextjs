@@ -19,9 +19,8 @@ export function ProductsContainer({
   return (
     <>
       <div className='flex mb-2'>
-        <div className='flex-1 font-[500] text-[28px] leading-0'>{headerText}</div>
+        {headerText !== '' && (<div className='flex-1 font-[500] text-[28px] leading-0'>{headerText}</div>)}
         {children && children}
-
       </div>
       <div className='flex flex-row flex-wrap gap-4'>
         {
