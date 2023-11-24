@@ -13,7 +13,7 @@ export function SearchSidebar() {
   }
 
   return (
-    <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[292px] border-r-2 border-r-secondary-light'>
+    <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[320px] border-r-2 border-r-secondary-light'>
 
       <div className='space-y-3 w-3/4 m-auto'>
         <div className='space-y-3'>

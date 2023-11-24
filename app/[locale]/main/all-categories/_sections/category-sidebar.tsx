@@ -9,8 +9,8 @@ export function CategorySidebar() {
   const searchParams = useSearchParams();
 
   return (
-    <div className='flex-none bg-white w-[292px] border-r-2 border-r-secondary-light py-2'>
-      <div className='space-y-3 w-fit m-auto'>
+    <div className='flex-none bg-white w-[320px] border-r-2 border-r-secondary-light py-2'>
+      <div className='space-y-3 w-3/4 m-auto'>
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>
           {

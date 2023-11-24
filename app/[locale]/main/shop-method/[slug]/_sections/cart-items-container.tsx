@@ -4,14 +4,14 @@ import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import { Cart } from '@/models/cart';
 import Image from 'next/image';
 import { Seller } from '@/models/seller';
-import ShopMethodCollapsible from '../../_components/shop-method-collapsible';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import { ShopMethodState } from '../../_redux/shop-method-state';
 import { useMemo } from 'react';
 import { BalikbayanBox } from '@/models/balikbayan-box';
-import { isAllProductsGoingToCheckoutBySeller, isSelectAllProductsGoingToCheckout, productItemQuantitySet, productItemisGoingToCheckoutChanged } from '../../_redux/shop-method-slice';
-import SelectAll from './select-all';
+import { ShopMethodState } from '../_redux/shop-method-state';
+import SelectAll from '../_components/select-all';
+import ShopMethodCollapsible from '../_components/shop-method-collapsible';
+import { isSelectAllProductsGoingToCheckout, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged, productItemQuantitySet } from '../_redux/shop-method-slice';
 
 export default function CartItemsContainer() {
   const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; })

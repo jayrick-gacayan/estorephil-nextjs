@@ -7,7 +7,6 @@ import { Seller } from '@/models/seller';
 
 const initialState: ShopMethodState = {
   shopMethodItems: [],
-  isSelectAll: false,
 }
 
 export const shopMethodSlice = createSlice({
@@ -15,6 +14,9 @@ export const shopMethodSlice = createSlice({
   initialState,
   reducers: {
     shopMethodItemsSet: (state: ShopMethodState, action: PayloadAction<Cart[] | BalikbayanBox[]>) => {
+      let items = action.payload;
+
+      console.log('sdfjksdfjsdkf', items)
       return {
         ...state, shopMethodItems: action.payload
       };

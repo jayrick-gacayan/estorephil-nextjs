@@ -1,4 +1,4 @@
-import { ForwardedRef, ReactNode, Ref, RefAttributes, RefObject, forwardRef, memo, useEffect } from 'react';
+import { ForwardedRef, ReactNode, forwardRef, memo, useEffect } from 'react';
 
 type Modal = {
   open: boolean;
@@ -14,12 +14,10 @@ const Modal = forwardRef(
           if (open) {
             ref.current.classList.remove('hidden');
             ref.current.classList.add('flex');
-
-
           }
         }
       }
-    }, [open]);
+    }, [open, ref]);
 
     return (
       <div ref={ref}

@@ -2,20 +2,19 @@
 
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { RootState, AppDispatch } from '@/redux/store';
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import { BsBox2 } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
 import { MainState } from '../_redux/main_state';
-import { ShopMethod } from '@/models/shop-method';
 import DropdownItem from '../../_components/dropdown-item';
 import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
 import Dropdown from '../../_components/dropdown';
 import Link from 'next-intl/link';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { ShopMethodState } from '../(shopMethod)/_redux/shop-method-state';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
-import { removeFromToShopMethodItem } from '../(shopMethod)/_redux/shop-method-slice';
+import { ShopMethodState } from '../shop-method/[slug]/_redux/shop-method-state';
+import { removeFromToShopMethodItem } from '../shop-method/[slug]/_redux/shop-method-slice';
 
 export default function ShopMethodDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -98,7 +97,7 @@ export default function ShopMethodDropdown({ children }: { children: ReactNode }
               )
           }
         </div>
-        <Link href={`/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+        <Link href={`/shop-method/${shoppingMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {
