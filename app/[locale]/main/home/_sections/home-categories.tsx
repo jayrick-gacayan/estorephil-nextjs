@@ -1,7 +1,12 @@
+'use client';
+
 import { LinkProps } from '@/types/props/link-props';
+import { useRouter } from 'next-intl/client';
 import Link from 'next-intl/link';
 
 export function HomeCategories() {
+  const router = useRouter();
+
   const allCategoriesLinks: LinkProps[] = [
     { link: '/all-categories', text: `3D Printed Products` },
     { link: '/all-categories', text: `Baby Products \u0028excluding Baby Apparel\u0029` },
@@ -19,7 +24,8 @@ export function HomeCategories() {
     <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-3 space-y-2 bg-white'>
       <div className='flex'>
         <div className='flex-1 font-bold'>CATEGORIES</div>
-        <Link href={`/all-categories`} className='w-auto flex-none underline text-primary hover:text-primary-dark'>View All</Link>
+        <button className='w-auto flex-none underline text-primary hover:text-primary-dark'
+          onClick={() => { router.push('/all-categories') }}>View All</button>
       </div>
       <div className='block text-secondary'>
         {

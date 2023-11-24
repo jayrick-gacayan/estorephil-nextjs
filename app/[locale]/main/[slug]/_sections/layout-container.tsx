@@ -16,7 +16,7 @@ export default function LayoutContainer({
   checkoutSlug: string;
   children: ReactNode;
 }): JSX.Element | null {
-  const router = useRouter();
+
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; });
 
@@ -25,11 +25,7 @@ export default function LayoutContainer({
     return shopMethodState.shopMethodItems;
   }, [shopMethodState.shopMethodItems]);
 
-  useEffect(() => {
-    if (shoppingMethod === '') {
-      router.push('/')
-    }
-  }, [shoppingMethod, router])
+
 
 
   return shoppingMethod === '' ? null :
