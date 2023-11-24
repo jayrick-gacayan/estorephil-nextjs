@@ -21,7 +21,7 @@ export default function PageContainer({ checkoutSlug }: { checkoutSlug: string }
       <div className="max-w-screen-2xl m-auto p-8">
         <div className="flex items-center justify-center">
           <div className="flex-none w-auto text-center space-y-4">
-            <h1 className="font-semibold text-[56px] leading-0">{checkoutSlug.at(0)?.toUpperCase() + checkoutSlug.slice(1)} Empty</h1>
+            <h1 className="font-semibold text-[56px] leading-0">{`${checkoutSlug[0].toUpperCase()}${checkoutSlug.slice(1)}`} Empty</h1>
             <div className="text-tertiary">
               You have not added any items yet in your {checkoutSlug}.
             </div>
