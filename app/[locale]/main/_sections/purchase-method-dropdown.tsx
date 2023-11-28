@@ -92,7 +92,14 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
                       (<BsBox2 className='w-10 h-10 inline-block align-middle cursor-pointer' />)
                   }
                 </div>
-                {purchaseMethodItems.length > 0 && (<span className='absolute -top-3 -right-3 rounded-full w-auto p-1.5 bg-danger'>{purchaseMethodItems.length}</span>)}
+                {
+                  purchaseMethodItems.length > 0 &&
+                  (<span className='absolute -top-3 -right-2 w-7 h-7 bg-danger rounded-full flex justify-center items-center'>
+                    <div className='flex-none w-auto'>
+                      {purchaseMethodItems.length}
+                    </div>
+                  </span>)
+                }
               </div>
               <div className='space-y-1'>
                 <span className='block'>{purchaseMethodHeaderText}</span>

@@ -21,9 +21,17 @@ export default function ShopMethodCollapsible({
     <div className='border border-secondary-light'>
       <div className='flex items-center p-4 bg-tertiary-dark border-b-2 border-secondary-light'>
         <div className='flex-1 space-x-3'>
-          <div className='inline-block align-middle'>
-            <Checkbox<boolean> current={currentCheckAllItemsSeller!} value={true} onCheckboxChanged={onCheckboxChanged!} />
-          </div>
+          {
+            (currentCheckAllItemsSeller && onCheckboxChanged) &&
+            (
+              <div className='inline-block align-middle'>
+                <Checkbox<boolean> value={true}
+                  current={currentCheckAllItemsSeller}
+                  onCheckboxChanged={onCheckboxChanged!} />
+              </div>
+            )
+          }
+
           <Image alt={`cart-image-seller-${seller.id}`}
             src={seller.sellerImage}
             width={48}
