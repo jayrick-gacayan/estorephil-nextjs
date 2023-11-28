@@ -56,7 +56,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
               toastOnDropdownRef.current.classList.remove('block');
               toastOnDropdownRef.current.classList.add('hidden');
             }
-          }, 2000)
+          }, 1000)
         }
       }
     }
@@ -106,23 +106,24 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
               {
                 purchaseMethodItemToToast &&
                 (
-                  <div className={`${purchaseMethodItems.length > prevCountRef! ? `bg-success` : `bg-danger`} px-2 py-1 text-white flex items-center gap-2 overflow-hidden rounded`}>
-                    <div className='flex-none w-20 h-20'>
-                      <div className='relative w-20 h-20'>
+                  <div className={`${purchaseMethodItems.length > prevCountRef! ? `bg-success` : `bg-danger`} 
+                    px-2 py-1 text-white w-full flex items-center gap-2 overflow-hidden rounded`}>
+                    <div className='flex-none w-12 h-12'>
+                      <div className='relative w-12 h-12'>
                         <Image alt='shop-method-toast-on-dropdown'
                           src={purchaseMethodItemToToast!.product.productImage}
                           fill
-                          className='object-cover rounded border-2 border-primary' />
+                          className='object-fill rounded' />
                       </div>
 
                     </div>
-                    <div className='flex-1 space-x-2'>
-                      <span className='align-middle'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
+                    <div className='flex-1 space-x-2 w-full flex justify-between items-center'>
+                      <span className='block'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
                       </span>
                       {
                         purchaseMethodItems.length > prevCountRef! ?
-                          (<CiCircleCheck className='inline-block w-5 h-5' />) :
-                          (<CiCircleRemove className='inline-block w-5 h-5' />)
+                          (<CiCircleCheck className='inline-block w-5 h-5 mr-auto' />) :
+                          (<CiCircleRemove className='inline-block w-5 h-5 mr-auto' />)
                       }
                     </div>
                   </div>

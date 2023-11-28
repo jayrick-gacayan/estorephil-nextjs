@@ -63,7 +63,7 @@
     {
       "id": 5,
       "name": "Coca-Cola plus coffee",
-      "category": "Consumer Electronics",
+      "category": "Baby Products",
       "price": 5458,
       "rating": 4.0,
       "raters": 123,
@@ -78,7 +78,7 @@
     {
       "id": 6,
       "name": "Coca-Cola plus coffee in can",
-      "category": "Consumer Electronics",
+      "category": "Baby Products",
       "price": 5458,
       "rating": 4.0,
       "raters": 123,
@@ -168,7 +168,7 @@
     {
       "id": 12,
       "name": "Coca-Cola plus coffee",
-      "category": "Consumer Electronics",
+      "category": "Baby Products",
       "price": 5458,
       "rating": 4.0,
       "raters": 123,
@@ -183,7 +183,7 @@
     {
       "id": 13,
       "name": "Coca-Cola plus coffee in can",
-      "category": "Consumer Electronics",
+      "category": "Baby Products",
       "price": 5458,
       "rating": 4.0,
       "raters": 123,

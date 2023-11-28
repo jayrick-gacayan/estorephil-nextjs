@@ -20,13 +20,19 @@ export function ProductsContainer({
         {headerText !== '' && (<div className='flex-1 font-[500] text-[28px] leading-0'>{headerText}</div>)}
         {children && children}
       </div>
-      <div className='flex flex-row flex-wrap gap-4'>
-        {
-          products.map((product: Product) => {
-            return (<ProductItem key={`product-item-${product.id}`} product={product} />)
-          })
-        }
-      </div>
+      {
+        products.length === 0 ? <div>NO ITEMS</div> :
+          (
+            <div className='flex flex-row flex-wrap gap-4'>
+              {
+                products.map((product: Product) => {
+                  return (<ProductItem key={`product-item-${product.id}`} product={product} />)
+                })
+              }
+            </div>
+          )
+      }
+
     </>
   )
 }
