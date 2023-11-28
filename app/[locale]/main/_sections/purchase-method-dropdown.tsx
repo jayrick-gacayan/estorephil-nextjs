@@ -29,7 +29,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
   const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
-  const prevCountRef = useRef<number>(purchaseMethodItems.length);
+  const prevCountRef = usePrevious(purchaseMethodItems.length);
   const purchaseMethodItemToToast = useMemo(() => { return purchaseMethodState.purchaseMethodItemToInteract; }, [purchaseMethodState.purchaseMethodItemToInteract])
 
   let purchaseMethodHeaderText = purchaseMethod === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
@@ -45,22 +45,21 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
 
   useEffect(() => {
     if (toastOnDropdownRef.current) {
+      if (prevCountRef) {
+        if (prevCountRef > purchaseMethodItems.length ||
+          prevCountRef < purchaseMethodItems.length) {
+          toastOnDropdownRef.current.classList.remove('hidden');
+          toastOnDropdownRef.current.classList.add('block');
 
-      if (prevCountRef.current > purchaseMethodItems.length ||
-        prevCountRef.current < purchaseMethodItems.length) {
-        toastOnDropdownRef.current.classList.remove('hidden');
-        toastOnDropdownRef.current.classList.add('block');
-
-        setTimeout(() => {
-          if (toastOnDropdownRef.current) {
-            toastOnDropdownRef.current.classList.remove('block');
-            toastOnDropdownRef.current.classList.add('hidden');
-          }
-        }, 2000)
+          setTimeout(() => {
+            if (toastOnDropdownRef.current) {
+              toastOnDropdownRef.current.classList.remove('block');
+              toastOnDropdownRef.current.classList.add('hidden');
+            }
+          }, 2000)
+        }
       }
-
     }
-    prevCountRef.current = purchaseMethodItems.length;
   }, [purchaseMethodItems.length]);
 
   useEffect(() => {
@@ -103,11 +102,11 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
             <div ref={toastOnDropdownRef}
               className={`absolute top-[120%] right-0 w-64 hidden after:content-[""]
                 after:absolute after:bottom-full after:right-24 after:z-[20002] after:border-solid after:border-[6px] after:border-transparent
-                ${purchaseMethodItems.length > prevCountRef.current ? `after:border-b-success` : `after:border-b-danger`}`}>
+                ${purchaseMethodItems.length > prevCountRef! ? `after:border-b-success` : `after:border-b-danger`}`}>
               {
                 purchaseMethodItemToToast &&
                 (
-                  <div className={`${purchaseMethodItems.length > prevCountRef.current ? `bg-success` : `bg-danger`} px-2 py-1 text-white flex items-center gap-2 overflow-hidden rounded`}>
+                  <div className={`${purchaseMethodItems.length > prevCountRef! ? `bg-success` : `bg-danger`} px-2 py-1 text-white flex items-center gap-2 overflow-hidden rounded`}>
                     <div className='flex-none w-20 h-20'>
                       <div className='relative w-20 h-20'>
                         <Image alt='shop-method-toast-on-dropdown'
@@ -118,10 +117,10 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
 
                     </div>
                     <div className='flex-1 space-x-2'>
-                      <span className='align-middle'>{purchaseMethodItems.length > prevCountRef.current ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
+                      <span className='align-middle'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
                       </span>
                       {
-                        purchaseMethodItems.length > prevCountRef.current ?
+                        purchaseMethodItems.length > prevCountRef! ?
                           (<CiCircleCheck className='inline-block w-5 h-5' />) :
                           (<CiCircleRemove className='inline-block w-5 h-5' />)
                       }

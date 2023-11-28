@@ -2,7 +2,11 @@ import { ReactNode } from 'react';
 import LayoutContainer from './_sections/layout-container';
 
 export function generateStaticParams() {
-  return [{ slug: 'cart' }, { slug: 'balikbayan-box' }];
+  return [
+    { slug: 'cart' },
+    { slug: 'balikbayan-box' },
+    { slug: 'success' }
+  ];
 }
 
 export default function Layout({

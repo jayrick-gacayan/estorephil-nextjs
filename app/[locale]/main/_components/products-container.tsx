@@ -7,12 +7,10 @@ import { ReactNode } from 'react';
 export function ProductsContainer({
   headerText,
   products,
-  onRedirectProductClick,
   children,
 }: {
   headerText: string;
   products: Product[];
-  onRedirectProductClick?: (product: Product) => void;
   children?: ReactNode;
 }): JSX.Element {
 
@@ -25,10 +23,7 @@ export function ProductsContainer({
       <div className='flex flex-row flex-wrap gap-4'>
         {
           products.map((product: Product) => {
-            return (
-              <ProductItem key={`product-item-${product.id}`}
-                product={product}
-                onRedirectProductClick={onRedirectProductClick} />)
+            return (<ProductItem key={`product-item-${product.id}`} product={product} />)
           })
         }
       </div>

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Modal from '../../_components/modal';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import EnterDeliveryAddress from './enter-delivery-address';
@@ -25,6 +25,20 @@ function MainLayoutModal() {
 
   }, [mainState.modalProductDeliveryAddressInfo]);
 
+  const cbOnModalClose = useCallback(() => {
+    if (modalContentRef.current) {
+      if (open) {
+        modalContentRef.current.classList.add('animate-slide-bottom-down');
+        modalContentRef.current.classList.remove('animate-slide-bottom-up');
+        setTimeout(() => {
+          modalWrapperRef.current?.classList.remove('flex');
+          modalWrapperRef.current?.classList.add('hidden');
+          dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
+        }, 300);
+      }
+    }
+  }, [open, dispatch]);
+
   useEffect(() => {
     if (modalContentRef.current) {
       if (open) {
@@ -39,31 +53,17 @@ function MainLayoutModal() {
     }
   }, [open]);
 
-  useOutsideClick(modalContentRef, () => { onClose(); });
-
-  function onClose(): void {
-    if (modalContentRef.current) {
-      if (open) {
-        modalContentRef.current.classList.add('animate-slide-bottom-down');
-        modalContentRef.current.classList.remove('animate-slide-bottom-up');
-        setTimeout(() => {
-          modalWrapperRef.current?.classList.remove('flex');
-          modalWrapperRef.current?.classList.add('hidden');
-          dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
-        }, 300);
-      }
-    }
-  }
+  useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 
   return (
     <Modal ref={modalWrapperRef} open={open}>
       <div ref={modalContentRef}
         className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
-        {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={onClose} />)}
-        {(open && type === 'changeAddress') && (<ChangeAddress onClose={onClose} />)}
-        {(open && type === 'purchaseMethod') && (<PurchaseMethod onClose={onClose} />)}
-        {(open && type === 'changeShopMethod') && (<ChangeShopMethod onClose={onClose} />)}
-        {(open && type === 'shopMethodDetails') && (<SelectedShopMethodDetails onClose={onClose} />)}
+        {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={cbOnModalClose} />)}
+        {(open && type === 'changeAddress') && (<ChangeAddress onClose={cbOnModalClose} />)}
+        {(open && type === 'purchaseMethod') && (<PurchaseMethod onClose={cbOnModalClose} />)}
+        {(open && type === 'changeShopMethod') && (<ChangeShopMethod onClose={cbOnModalClose} />)}
+        {(open && type === 'shopMethodDetails') && (<SelectedShopMethodDetails onClose={cbOnModalClose} />)}
       </div>
     </Modal>
   )
