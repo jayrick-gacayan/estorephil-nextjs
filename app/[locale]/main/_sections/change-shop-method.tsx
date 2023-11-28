@@ -11,7 +11,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
 
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">
@@ -19,7 +19,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
         <h3 className="text-primary-dark text-[32px] leading-0">Change Shopping Method</h3>
         <div className='relative w-56 h-40'>
           <Image alt='change-shop-method-overlay-alt'
-            src={`/others/${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
+            src={`/others/${purchaseMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
             fill
             className='z-10' />
           <Image alt='change-shop-method-overlay-alt'
@@ -40,7 +40,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
               onClick={() => {
                 onClose();
                 setTimeout(() => {
-                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shoppingMethod' }));
+                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'purchaseMethod' }));
                 }, 1000)
               }}>
               Continue

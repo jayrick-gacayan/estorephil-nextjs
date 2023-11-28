@@ -11,8 +11,9 @@ import { MainState } from '../../../_redux/main_state';
 import { BsBox2 } from 'react-icons/bs';
 import { modalProductDeliveryAddressOpened } from '../../../_redux/main-slice';
 import { Seller } from '@/models/seller';
-import { productItemQuantitySet, addToShopMethodItem, removeFromToShopMethodItem } from '../../../shop-method/[slug]/_redux/shop-method-slice';
-import { ShopMethodState } from '../../../shop-method/[slug]/_redux/shop-method-state';
+import { PurchaseMethodState } from '../../../purchase-method/[slug]/_redux/purchase-method-state';
+import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../purchase-method/[slug]/_redux/purchase-method-slice';
+
 
 export default function ProductButtonsContainer({
   product,
@@ -22,19 +23,19 @@ export default function ProductButtonsContainer({
   seller: Seller;
 }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
-  const shopMethod: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; });
+  const shopMethod: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
   const dispatch: AppDispatch = useAppDispatch();
 
   const productMemo: Cart | BalikbayanBox | undefined = useMemo(() => {
-    let productShopMethod = shopMethod.shopMethodItems.find((value: Cart | BalikbayanBox) => {
+    let productShopMethod = shopMethod.purchaseMethodItems.find((value: Cart | BalikbayanBox) => {
       return product.id === value.product.id;
     });
 
     return productShopMethod;
-  }, [product, shopMethod.shopMethodItems]);
+  }, [product, shopMethod.purchaseMethodItems]);
 
   const [quantity, setQuantity] = useState<number>(!productMemo ? 1 : productMemo.quantity);
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   useEffect(() => {
     if (productMemo) {
@@ -63,9 +64,9 @@ export default function ProductButtonsContainer({
       </div>
       <div className='w-full flex justify-around gap-4'>
         <button className={`transition border duration-100 rounded-full flex-1 text-[14px] leading-0 h-auto text-white space-x-2 px-6 py-3 hover:bg-primary-light 
-          ${shoppingMethod !== '' && productMemo ? 'border-danger hover:border-danger-light bg-danger' : 'bg-primary border-primary hover:bg-primary-light'}`}
+          ${purchaseMethod !== '' && productMemo ? 'border-danger hover:border-danger-light bg-danger' : 'bg-primary border-primary hover:bg-primary-light'}`}
           onClick={() => {
-            if (shoppingMethod === '') {
+            if (purchaseMethod === '') {
               dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' }))
             }
             else {
@@ -77,20 +78,20 @@ export default function ProductButtonsContainer({
                   total: product.price * quantity,
                   isGoingToCheckout: false
                 }) :
-                removeFromToShopMethodItem(productMemo)
+                removeFromToPurchaseMethodItem(productMemo)
               );
             }
           }}>
           {
-            shoppingMethod === '' ? (<span>Create An Order</span>) :
+            purchaseMethod === '' ? (<span>Create An Order</span>) :
               (
                 <>
                   {
-                    shoppingMethod === 'Shopping Cart' ?
+                    purchaseMethod === 'Shopping Cart' ?
                       (<FaCartShopping className='inline-block' />) :
                       (<BsBox2 className='inline-block' />)
                   }
-                  <span className='align-middle'>{productMemo ? 'Remove From' : 'Add to'} {shoppingMethod === 'Shopping Cart' ? 'Cart' : 'Box'}</span>
+                  <span className='align-middle'>{productMemo ? 'Remove From' : 'Add to'} {purchaseMethod === 'Shopping Cart' ? 'Cart' : 'Box'}</span>
                 </>
               )
           }

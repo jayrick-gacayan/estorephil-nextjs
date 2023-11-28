@@ -1,5 +1,5 @@
 export interface MainState {
-  shoppingMethod: string;
+  purchaseMethod: string;
   modalProductDeliveryAddressInfo: {
     open: boolean;
     type: string;

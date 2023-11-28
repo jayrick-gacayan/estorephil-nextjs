@@ -16,7 +16,7 @@ export function FooterLinksContainerWithIcons({
         {
           links.map((link: LinkProps, index: number) => {
             return (
-              <div className={linkChildrenClassName} key={`${link.text}-${index}`}>
+              <div className={`${linkChildrenClassName} relative`} key={`${link.text}-${index}`}>
                 {link.icon}
               </div>
             );

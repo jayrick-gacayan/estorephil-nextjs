@@ -30,7 +30,7 @@ export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
               onClick={() => {
                 onClose();
                 setTimeout(() => {
-                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shoppingMethod' }));
+                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'purchaseMethod' }));
                 }, 1000)
               }}>
               Continue

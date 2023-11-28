@@ -3,7 +3,7 @@
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
-import { ShopMethodState } from '../_redux/shop-method-state';
+import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
 import { MainState } from '../../../_redux/main_state';
 import CartItemsContainer from './cart-items-container';
@@ -16,25 +16,25 @@ export default function PageContainer({
 }): JSX.Element | null {
   const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
-  const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => {
-    return state.shopMethod;
+  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => {
+    return state.purchaseMethod;
   });
 
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   useEffect(() => {
-    if (shoppingMethod === '') {
+    if (purchaseMethod === '') {
       router.push('/')
     }
-  }, [shoppingMethod, router]);
+  }, [purchaseMethod, router]);
 
-  const shopMethodItems = useMemo(() => {
-    return shopMethodState.shopMethodItems;
-  }, [shopMethodState.shopMethodItems]);
+  const purchaseMethodItems = useMemo(() => {
+    return purchaseMethodState.purchaseMethodItems;
+  }, [purchaseMethodState.purchaseMethodItems]);
 
 
-  return shoppingMethod === '' ? null :
-    shopMethodItems.length === 0 ?
+  return purchaseMethod === '' ? null :
+    purchaseMethodItems.length === 0 ?
       (
         <div className='max-w-screen-2xl m-auto p-8'>
           <div className='flex items-center justify-center'>
@@ -43,8 +43,8 @@ export default function PageContainer({
                 <Image alt='empty-shop-method-alt'
                   src='/others/shop_method_empty.svg'
                   fill />
-                <Image alt={`empty-method-${shoppingMethod}`}
-                  src={`/others/${shoppingMethod === 'Shopping Cart' ? `custom_cart` : `balik_box`}_icon.svg`}
+                <Image alt={`empty-method-${purchaseMethod}`}
+                  src={`/others/${purchaseMethod === 'Shopping Cart' ? `custom_cart` : `balik_box`}_icon.svg`}
                   fill
                   className='z-10' />
               </div>

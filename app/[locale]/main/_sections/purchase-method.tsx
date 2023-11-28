@@ -4,20 +4,20 @@ import { ReactNode, useMemo, useState } from 'react';
 import { MainState } from '../_redux/main_state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import ShopMethodType from '../_components/shop-method-type';
-import { modalProductDeliveryAddressOpened, shoppingMethodChanged } from '../_redux/main-slice';
+import PurchaseMethodType from '../_components/shop-method-type';
+import { modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
 
-export default function ShoppingMethod({
+export default function PurchaseMethod({
   onClose,
-  isSetShopMethod,
+  isSetPurchaseMethod,
   children,
 }: {
   onClose: () => void;
-  isSetShopMethod?: boolean;
+  isSetPurchaseMethod?: boolean;
   children?: ReactNode;
 }): JSX.Element {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
-  const [shopMethod, setShopMethod] = useState<string>(mainState.shoppingMethod);
+  const [purchaseMethod, setPurchaseMethod] = useState<string>(mainState.purchaseMethod);
   const dispatch: AppDispatch = useAppDispatch();
 
   const { type } = useMemo(() => {
@@ -26,12 +26,12 @@ export default function ShoppingMethod({
 
   }, [mainState.modalProductDeliveryAddressInfo]);
 
-  function setShopMethodClass(shopMethodType: string) {
-    return shopMethodType === shopMethod ? 'bg-primary-dark text-white' : 'bg-primary-light';
+  function setPurchaseMethodClass(purchaseMethodType: string) {
+    return purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-primary-light';
   }
 
-  function onShopMethodSet(shopMethodType: string) {
-    if (!isSetShopMethod) { setShopMethod(shopMethodType) }
+  function onPurchaseMethodSet(purchaseMethodType: string) {
+    if (!isSetPurchaseMethod) { setPurchaseMethod(purchaseMethodType) }
     else return;
   }
 
@@ -40,16 +40,16 @@ export default function ShoppingMethod({
       <div className="justify-around items-center h-full w-full text-center space-y-2">
         <h3 className="text-primary text-[32px] leading-0">Choose a Shopping Method</h3>
         <div className="flex items-center justify-center h-48">
-          <ShopMethodType shopMethodType='Shopping Cart'
+          <PurchaseMethodType purchaseMethodType='Shopping Cart'
             otherText='Shop by Product'
-            shopMethodImage='custom_cart_icon.svg'
-            shopMethodActiveClass={setShopMethodClass}
-            onShoppingMethodSet={onShopMethodSet} />
-          <ShopMethodType shopMethodType='Balikbayan Box'
+            purchaseMethodImage='custom_cart_icon.svg'
+            purchaseMethodActiveClass={setPurchaseMethodClass}
+            onShoppingMethodSet={onPurchaseMethodSet} />
+          <PurchaseMethodType purchaseMethodType='Balikbayan Box'
             otherText='Select your Box Type'
-            shopMethodImage='balik_box_icon.svg'
-            shopMethodActiveClass={setShopMethodClass}
-            onShoppingMethodSet={onShopMethodSet} />
+            purchaseMethodImage='balik_box_icon.svg'
+            purchaseMethodActiveClass={setPurchaseMethodClass}
+            onShoppingMethodSet={onPurchaseMethodSet} />
         </div>
         {
           children &&
@@ -64,13 +64,13 @@ export default function ShoppingMethod({
             onClick={() => {
               onClose();
               if (!children) {
-                dispatch(shoppingMethodChanged(shopMethod));
+                dispatch(purchaseMethodChanged(purchaseMethod));
                 setTimeout(() => {
                   dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shopMethodDetails' }));
                 }, 1000)
               }
             }}>
-            {type === 'shoppingMethod' && 'Next'}
+            {type === 'purchaseMethod' && 'Next'}
             {type === 'shopMethodDetails' && 'Confirm'}
           </button>
           <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'

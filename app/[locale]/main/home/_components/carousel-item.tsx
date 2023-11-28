@@ -18,7 +18,12 @@ export function CarouselItem({
       style={{ transform: `translateX(${100 * (Math.abs(index - currentSlide))}%)` }}
       onMouseDown={onPointerEvent}
       onTouchStart={onPointerEvent}>
-      <Image alt={imgAlt} src={imgSrc} fill className='object-fill pointer-events-none' draggable={false} />
+      <Image alt={imgAlt}
+        src={imgSrc}
+        fill
+        sizes="100vh"
+        className='object-fill pointer-events-none'
+        draggable={false} />
     </div>
   )
 }
