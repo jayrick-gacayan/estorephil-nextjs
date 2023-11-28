@@ -3,9 +3,9 @@
 import { ReactNode, useMemo } from 'react';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
-import { ShopMethodState } from '../_redux/shop-method-state';
+import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { MainState } from '../../../_redux/main_state';
-import ShopMethodHeader from './shop-method-header';
+import ShopMethodHeader from './purchase-method-header';
 import SummaryCheckout from './summary-checkout';
 
 
@@ -18,15 +18,15 @@ export default function LayoutContainer({
 }): JSX.Element | null {
 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
-  const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; });
+  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
 
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod])
-  const shopMethodItems = useMemo(() => {
-    return shopMethodState.shopMethodItems;
-  }, [shopMethodState.shopMethodItems]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod])
+  const purchaseMethodItems = useMemo(() => {
+    return purchaseMethodState.purchaseMethodItems;
+  }, [purchaseMethodState.purchaseMethodItems]);
 
-  return shoppingMethod === '' ? null :
-    shopMethodItems.length === 0 ? (<>{children}</>) :
+  return purchaseMethod === '' ? null :
+    purchaseMethodItems.length === 0 ? (<>{children}</>) :
       (
         <div className='flex'>
           <div className='flex-1 bg-white'>

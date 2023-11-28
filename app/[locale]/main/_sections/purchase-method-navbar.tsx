@@ -5,14 +5,14 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useMemo } from 'react';
 import { MainState } from '../_redux/main_state';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
-import ShopMethodDropdown from './shop-method-dropdown';
+import PurchaseMethodDropdown from './purchase-method-dropdown';
 
-export default function ShopMethodNavbar({ children }: { children: ReactNode }) {
+export default function PurchaseMethodNavbar({ children }: { children: ReactNode }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
-  return shoppingMethod === '' ?
+  return purchaseMethod === '' ?
     (
       <>
         <button className='text-white border border-white py-2 px-4 h-full rounded text-xl align-middle'
@@ -23,6 +23,6 @@ export default function ShopMethodNavbar({ children }: { children: ReactNode }) 
       </>
     ) :
     (
-      <ShopMethodDropdown>{children}</ShopMethodDropdown>
+      <PurchaseMethodDropdown>{children}</PurchaseMethodDropdown>
     );
 }

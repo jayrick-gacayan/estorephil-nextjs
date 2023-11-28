@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
 import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from './navbar-search';
-import ShopMethodNavbar from './shop-method-navbar';
+import PurchaseMethodNavbar from './purchase-method-navbar';
 
 export default function MainHeader() {
 
@@ -23,13 +23,13 @@ export default function MainHeader() {
             </Link>
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
-              <ShopMethodNavbar>
+              <PurchaseMethodNavbar>
                 <Image alt='profile-image'
                   src='/static_images/static_profile_img.png'
                   width={48}
                   height={48}
                   className='rounded-full border border-white w-12 h-12 inline-block' />
-              </ShopMethodNavbar>
+              </PurchaseMethodNavbar>
             </div>
           </div>
           <div className='flex py-2 text-primary-light text-sm'>

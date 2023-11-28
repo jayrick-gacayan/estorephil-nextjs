@@ -8,39 +8,39 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import { BalikbayanBox } from '@/models/balikbayan-box';
-import { ShopMethodState } from '../_redux/shop-method-state';
+import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import SelectAll from '../_components/select-all';
 import ShopMethodCollapsible from '../_components/shop-method-collapsible';
-import { isSelectAllProductsGoingToCheckout, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged, productItemQuantitySet } from '../_redux/shop-method-slice';
+import { isSelectAllProductsGoingToCheckout, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged, productItemQuantitySet } from '../_redux/purchase-method-slice';
 
 export default function CartItemsContainer() {
-  const shopMethodState: ShopMethodState = useAppSelector((state: RootState) => { return state.shopMethod; })
+  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; })
   const dispatch: AppDispatch = useAppDispatch();
-  const shopMethodItems = useMemo(() => { return shopMethodState.shopMethodItems }, [shopMethodState.shopMethodItems]);
+  const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
 
   const sellers = useMemo(() => {
-    return shopMethodState.shopMethodItems.length === 0 ? [] :
-      shopMethodState.shopMethodItems.map((valueShopMethod: Cart | BalikbayanBox) => {
+    return purchaseMethodState.purchaseMethodItems.length === 0 ? [] :
+      purchaseMethodState.purchaseMethodItems.map((valueShopMethod: Cart | BalikbayanBox) => {
         return valueShopMethod.seller;
       }).filter((valueSeller: Seller, index: number, arrayCurrent: Seller[]) => {
         let arrayCurrentTemp = arrayCurrent.map((current: Seller) => { return current.id });
         return arrayCurrentTemp.indexOf(valueSeller.id) === index;
       })
 
-  }, [shopMethodState.shopMethodItems]);
+  }, [purchaseMethodState.purchaseMethodItems]);
 
-  return sellers.length === 0 || shopMethodItems.length === 0 ? (<div>No Items</div>) : (
+  return sellers.length === 0 || purchaseMethodItems.length === 0 ? (<div>No Items</div>) : (
     <>
-      <SelectAll current={shopMethodItems.every((value: Cart | BalikbayanBox) => { return value.isGoingToCheckout; })}
+      <SelectAll current={purchaseMethodItems.every((value: Cart | BalikbayanBox) => { return value.isGoingToCheckout; })}
         onCheckboxChanged={(value: boolean) => {
-          dispatch(isSelectAllProductsGoingToCheckout(shopMethodItems.every((value: Cart | BalikbayanBox) => { return value.isGoingToCheckout; })))
+          dispatch(isSelectAllProductsGoingToCheckout(purchaseMethodItems.every((value: Cart | BalikbayanBox) => { return value.isGoingToCheckout; })))
         }} />
       <div className='space-y-8'>
         <div className='space-y-8'>
           {
             sellers.map((seller: Seller) => {
 
-              let currentCheckAllItemsSeller = shopMethodItems.filter((shopMethodValue: Cart | BalikbayanBox) => {
+              let currentCheckAllItemsSeller = purchaseMethodItems.filter((shopMethodValue: Cart | BalikbayanBox) => {
                 return shopMethodValue.seller.id === seller.id;
               }).every((shopMethodValue: Cart | BalikbayanBox) => {
                 return shopMethodValue.isGoingToCheckout;
@@ -67,7 +67,7 @@ export default function CartItemsContainer() {
                       <div className='flex-none w-28'>TOTAL</div>
                     </div>
                     {
-                      shopMethodItems.filter((shopMethodValue: Cart | BalikbayanBox) => {
+                      purchaseMethodItems.filter((shopMethodValue: Cart | BalikbayanBox) => {
                         return shopMethodValue.seller.id === seller.id;
                       }).map((valueCart: Cart) => {
                         return (

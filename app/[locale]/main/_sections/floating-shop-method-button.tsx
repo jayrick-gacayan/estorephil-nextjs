@@ -11,9 +11,9 @@ export default function FloatingCardButton(): JSX.Element | null {
   const dispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
-  const shoppingMethod = useMemo(() => { return mainState.shoppingMethod; }, [mainState.shoppingMethod]);
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
-  return shoppingMethod === '' ? null :
+  return purchaseMethod === '' ? null :
     (
 
       <div className='fixed bottom-8 right-[184px] z-[1999] cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4'
@@ -21,8 +21,8 @@ export default function FloatingCardButton(): JSX.Element | null {
           dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeShopMethod' }));
         }}>
         <div className='space-y-1 '>
-          <Image alt={`${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
-            src={`/others/${shoppingMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
+          <Image alt={`${purchaseMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
+            src={`/others/${purchaseMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
             width={88}
             height={88}
             className='h-[88px] w-[88px] block m-auto' />

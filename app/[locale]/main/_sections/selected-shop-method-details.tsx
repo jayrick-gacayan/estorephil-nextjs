@@ -1,7 +1,7 @@
 'use client';
 
 import { HiInformationCircle } from "react-icons/hi";
-import ShoppingMethod from "./shopping-method";
+import PurchaseMethod from "./purchase-method";
 import Image from 'next/image';
 import Tabs from "../../_components/tabs";
 import TabItem from "../../_components/tab-item";
@@ -32,7 +32,7 @@ export default function SelectedShopMethodDetails({
     return tab === currentTab ? 'bg-primary-dark text-white' : 'bg-primary-light';
   }
   return (
-    <ShoppingMethod onClose={onClose} isSetShopMethod={false}>
+    <PurchaseMethod onClose={onClose} isSetPurchaseMethod={false}>
       <div className="block space-y-1">
         <div className="block space-y-1">
           <h4 className="font-semibold text-[18px] leading-0 text-left">Couriers</h4>
@@ -98,6 +98,6 @@ export default function SelectedShopMethodDetails({
           </h4>
         </div>
       </div>
-    </ShoppingMethod>
+    </PurchaseMethod>
   )
 }

@@ -13,14 +13,14 @@ export function ProductItem({
     onRedirectProductClick && onRedirectProductClick(product);
   }
   return (
-    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden cursor-pointer'
+    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden cursor-pointer space-y-4'
       onClick={clickRedirect}>
-      <div className='transition-all delay-200 ease-in w-full h-60 hover:scale-125'>
+      <div className='transition-all delay-200 ease-in w-full h-60 hover:scale-125 overflow-hidden'>
         <Image alt={`product-image-${product.id}`}
           src={product.productImage}
           width={240}
           height={240}
-          className='w-full h-full' />
+          className='w-auto h-auto' />
       </div>
       <div className='p-2'>
         <div className='font-bold'>{product.name}</div>

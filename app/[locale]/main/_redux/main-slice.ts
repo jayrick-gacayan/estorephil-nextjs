@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { MainState } from "./main_state";
 
 const initialState: MainState = {
-  shoppingMethod: '',
+  purchaseMethod: '',
   modalProductDeliveryAddressInfo: {
     open: false,
     type: ''
@@ -13,9 +13,9 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    shoppingMethodChanged: (state: MainState, action: PayloadAction<string>) => {
+    purchaseMethodChanged: (state: MainState, action: PayloadAction<string>) => {
       return {
-        ...state, shoppingMethod: action.payload
+        ...state, purchaseMethod: action.payload
       };
     },
     modalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
@@ -32,7 +32,7 @@ export const mainSlice = createSlice({
 
 export const {
   modalProductDeliveryAddressOpened,
-  shoppingMethodChanged
+  purchaseMethodChanged,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
