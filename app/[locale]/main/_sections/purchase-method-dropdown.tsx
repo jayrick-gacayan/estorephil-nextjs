@@ -17,7 +17,7 @@ import { PurchaseMethodState } from '../purchase-method/[slug]/_redux/purchase-m
 import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
 import { removeFromToPurchaseMethodItem } from '../purchase-method/[slug]/_redux/purchase-method-slice';
-import { CiCirclePlus, CiCircleRemove } from 'react-icons/ci';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 
 export default function PurchaseMethodDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,9 +62,6 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
     }
     prevCountRef.current = purchaseMethodItems.length;
   }, [purchaseMethodItems.length]);
-
-
-
 
   useEffect(() => {
     if (purchaseMethod !== '') {
@@ -111,18 +108,21 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
                 purchaseMethodItemToToast &&
                 (
                   <div className={`${purchaseMethodItems.length > prevCountRef.current ? `bg-success` : `bg-danger`} px-2 py-1 text-white flex items-center gap-2 overflow-hidden rounded`}>
-                    <div className='flex-none w-12 h-12 relative'>
-                      <Image alt='shop-method-toast-on-dropdown'
-                        src={purchaseMethodItemToToast!.product.productImage}
-                        fill
-                        className='object-fill' />
+                    <div className='flex-none w-20 h-20'>
+                      <div className='relative w-20 h-20'>
+                        <Image alt='shop-method-toast-on-dropdown'
+                          src={purchaseMethodItemToToast!.product.productImage}
+                          fill
+                          className='object-cover rounded border-2 border-primary' />
+                      </div>
+
                     </div>
-                    <div className='flex-1 space-x-2 '>
-                      <span className='align-middle'>{purchaseMethodItems.length > prevCountRef.current ? 'Added to' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
+                    <div className='flex-1 space-x-2'>
+                      <span className='align-middle'>{purchaseMethodItems.length > prevCountRef.current ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
                       </span>
                       {
                         purchaseMethodItems.length > prevCountRef.current ?
-                          (<CiCirclePlus className='inline-block w-5 h-5' />) :
+                          (<CiCircleCheck className='inline-block w-5 h-5' />) :
                           (<CiCircleRemove className='inline-block w-5 h-5' />)
                       }
                     </div>
@@ -161,7 +161,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
               )
           }
         </div>
-        <Link href={`/shop-method/${purchaseMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+        <Link href={`/purchase-method/${purchaseMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {

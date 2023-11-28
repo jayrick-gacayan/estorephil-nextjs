@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             className='object-fill' />
         </div>
         <div className='relative z-10 h-full w-full py-4'>
-          <div className='bg-white w-full h-full' style={{ clipPath: 'polygon(0 0, 40% 0, 30% 100%, 0% 100%)' }}>
+          <div className='bg-white w-full h-full' style={{ clipPath: 'polygon(0 0, 35% 0, 30% 100%, 0% 100%)' }}>
             <div className='max-w-screen-2xl m-auto h-full'>
               <div className='py-2 h-full'>
                 <div className='flex w-fit gap-4 h-full'>

@@ -9,6 +9,7 @@ import { Breadcrumbs } from '../../_components/bread-crumbs';
 import { Product } from '@/models/product';
 import { notFound } from 'next/navigation';
 import ProductButtonsContainer from './_section/product-buttons-container';
+import Link from 'next-intl/link';
 
 export async function generateStaticParams() {
   let products = (await import('@/app/_data/product.json')).default;
@@ -56,16 +57,17 @@ export default async function ProductPage({ params }: { params: { id: string } }
               </div>
               <div className='py-2 border-b border-b-tertiary'>
                 <span className='block'>Seller</span>
-                <div className='flex gap-2 items-center'>
+                <Link href={`/stores/${product.seller.id}`}
+                  className='group/store flex gap-2 items-center'>
                   <div className='flex-none w-auto'>
                     <div className='rounded-full border-2 border-primary relative h-[72px] w-[72px]'>
                       <Image alt='seller-product-info' src={product.seller.sellerImage} fill className='rounded-full object-fill' />
                     </div>
                   </div>
                   <div>
-                    <h6 className='font-semibold'>{product.seller.name}</h6>
+                    <h6 className='transition-all duration-100 font-semibold group-hover/store:text-primary'>{product.seller.name}</h6>
                   </div>
-                </div>
+                </Link>
               </div>
               <div className='flex py-2 border-b border-b-tertiary text-sm'>
                 <div className='w-full'>

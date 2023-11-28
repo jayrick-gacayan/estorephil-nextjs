@@ -4,11 +4,13 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { ReactNode, useEffect, useMemo } from 'react';
 import { MainState } from '../main/_redux/main_state';
-import ShopMethodItemsJSON from '@/app/_data/cart.json';
+import PurchaseMethodItemsJSON from '@/app/_data/cart.json';
 import { purchaseMethodItemsSet } from '../main/purchase-method/[slug]/_redux/purchase-method-slice';
+import { BalikbayanBox } from '@/models/balikbayan-box';
+import { Cart } from '@/models/cart';
 
 
-export default function ShopMethodProviders({ children }: { children: ReactNode; }) {
+export default function PurchaseMethodProviders({ children }: { children: ReactNode; }) {
   const dispatch: AppDispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
@@ -19,7 +21,11 @@ export default function ShopMethodProviders({ children }: { children: ReactNode;
   useEffect(() => {
     if (purchaseMethod !== '') {
       dispatch(
-        purchaseMethodItemsSet([])
+        purchaseMethodItemsSet(
+          PurchaseMethodItemsJSON.carts.map((purchaseMethod: Cart | BalikbayanBox) => {
+            return { ...purchaseMethod, isGoingToCheckout: false }
+          })
+        )
       );
     }
   }, [purchaseMethod, dispatch]);
