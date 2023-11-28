@@ -3,6 +3,7 @@ import { FaCcMastercard, FaCcPaypal, FaCcStripe, FaCcVisa, FaFacebook, FaInstagr
 import { FooterLinksContainer } from '../_components/footer_links_container';
 import { LinkProps } from '@/types/props/link-props';
 import { FooterLinksContainerWithIcons } from '../_components/footer-links-container-with-icons';
+import Image from 'next/image';
 
 const customerCareLinks: LinkProps[] = [
   { link: '#', text: 'Order Tracking' },
@@ -33,6 +34,27 @@ const paymentTypeLinks: LinkProps[] = [
   { link: '#', icon: <FaCcMastercard className='w-5 h-5' /> },
 ]
 
+const deliveryServicesLinks: LinkProps[] = [
+  {
+    link: '#',
+    icon: <Image alt='delivery-services-lbc'
+      src='/others/lbc_logo.svg'
+      height={24}
+      width={24}
+      className='w-6 h-6'
+    />
+  },
+  {
+    link: '#',
+    icon: <Image alt='delivery-services-lbc'
+      src='/others/dhl_logo.svg'
+      height={24}
+      width={24}
+      className='w-6 h-6'
+    />
+  },
+];
+
 export function Footer() {
   return (
     <div className='w-full bg-primary-dark text-white p-8'>
@@ -41,12 +63,13 @@ export function Footer() {
           <div className='w-full'>
             <FooterLinksContainer headerText='CUSTOMER CARE' links={customerCareLinks} />
           </div>
-          <div className='w-full space-y-2'>
+          <div className='w-full space-y-4'>
             <FooterLinksContainer headerText='ABOUT ESTOREPHIL' links={aboutEstorePhilLinks} />
             <FooterLinksContainerWithIcons headerText='SOCIALS' links={socialLinks} linkChildrenClassName='p-1' />
           </div>
-          <div className='w-full space-y-2'>
+          <div className='w-full space-y-4'>
             <FooterLinksContainerWithIcons headerText='PAYMENT' links={paymentTypeLinks} linkChildrenClassName='bg-white text-primary-dark p-1 rounded' />
+            <FooterLinksContainerWithIcons headerText='DELIVERY SERVICES' links={deliveryServicesLinks} linkChildrenClassName='bg-white text-primary-dark p-1 rounded' />
           </div>
           <div className='w-full space-y-2'>
             <h1 className='font-bold'>Promotions</h1>
