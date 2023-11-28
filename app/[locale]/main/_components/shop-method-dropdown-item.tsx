@@ -1,5 +1,4 @@
 import { Product } from '@/models/product';
-import { ShopMethod } from '@/models/shop-method';
 import Image from 'next/image';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
@@ -14,7 +13,7 @@ export default function ShopMethodDropdownItem(props: Product & { onDelete: () =
       </div>
       <div className='flex-none'>{props.price.toFixed(2)}</div>
       <div className='flex-none'>
-        <FaRegTrashCan className='text-danger w-6 h-6 cursor-pointer' sizes={25} onClick={props.onDelete} />
+        <FaRegTrashCan className='text-danger cursor-pointer' size={24} onClick={props.onDelete} />
       </div>
     </div>
   )

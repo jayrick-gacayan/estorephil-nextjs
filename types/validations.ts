@@ -1,5 +1,6 @@
 import { ValidationResponse, ValidationStatus } from "@/models/validation-response"
 export default class Validations {
+
     constructor() {
 
     }

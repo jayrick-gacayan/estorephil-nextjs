@@ -6,6 +6,7 @@ import { FooterLinksContainerWithIcons } from '../_components/footer-links-conta
 import Image from 'next/image';
 import { RiVisaLine } from 'react-icons/ri';
 import { FaStripe } from 'react-icons/fa6';
+import CustomValidation from '@/types/helpers/custom-validation';
 
 const customerCareLinks: LinkProps[] = [
   { link: '#', text: 'Order Tracking' },
@@ -58,6 +59,13 @@ const deliveryServicesLinks: LinkProps[] = [
 ];
 
 export function Footer() {
+
+  function sample() {
+    let getError = new CustomValidation();
+    console.log(getError.setErrorType('djsfdjsf', ['required']))
+
+  }
+
   return (
     <div className='w-full bg-primary-dark text-white p-8'>
       <div className='max-w-screen-2xl m-auto py-8'>
