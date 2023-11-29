@@ -9,7 +9,7 @@ export default function SummaryCheckout({
   onRedirectToCheckout: () => void;
 }) {
   return (
-    <div className='w-[384px] bg-[#F8FBFE] border-l border-secondary-light'>
+    <div className='w-[384px] bg-default border-l border-secondary-light'>
       <div className="p-8">
         <div className='border-b border-b-transparent'>
           <div className='text-[44px] leading-0 font-[500]'>SUMMARY</div>

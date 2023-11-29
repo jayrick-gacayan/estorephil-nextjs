@@ -48,7 +48,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 <div className='flex w-fit gap-4 h-full'>
                   <div className='flex-none w-32 h-full relative'>
                     <Image alt={`store-image-alt-${seller.id}`}
-                      src={seller.sellerImage}
+                      src={seller.image}
                       fill
                       className='z-10' />
                   </div>
@@ -90,7 +90,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-      <div className='bg-tertiary-light'>
+      <div className='bg-default'>
         <div className='p-8'>
           <div className='max-w-screen-2xl m-auto space-y-4'>
             <div className='flex justify-between items-center gap-2'>

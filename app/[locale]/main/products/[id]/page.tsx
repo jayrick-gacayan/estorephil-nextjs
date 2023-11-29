@@ -19,7 +19,6 @@ export async function generateStaticParams() {
   });
 }
 
-
 export default async function ProductPage({ params }: { params: { id: string } }) {
 
   let product = (await import('@/app/_data/product.json')).default.products.find((product: Product) => {
@@ -38,7 +37,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
   ];
 
   return (
-    <div className='bg-[#ECF0F1] p-8'>
+    <div className='bg-default p-8'>
       <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>
         <div className='flex w-full divide-x-2 divide-secondary-light items-stretch'>
           <div className='basis-1/2 py-6 px-8 '>
@@ -61,7 +60,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                   className='group/store flex gap-2 items-center'>
                   <div className='flex-none w-auto'>
                     <div className='rounded-full border-2 border-primary relative h-[72px] w-[72px]'>
-                      <Image alt='seller-product-info' src={product.seller.sellerImage} fill className='rounded-full object-fill' />
+                      <Image alt='seller-product-info' src={product.seller.image} fill className='rounded-full object-fill' />
                     </div>
                   </div>
                   <div>

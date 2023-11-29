@@ -16,7 +16,7 @@ export default async function AllCategories({ searchParams }: {
     })
 
   return (
-    <div className='p-4 bg-[#F7F9FC] space-y-4'>
+    <div className='p-4 bg-default space-y-4'>
       <CategoryProductListResult headerText='Featured Products' products={categoryProducts} />
     </div>
   )
