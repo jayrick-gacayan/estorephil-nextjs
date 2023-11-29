@@ -1,6 +1,6 @@
 import { FaCcVisa } from "react-icons/fa6";
 import { IoAirplaneSharp } from "react-icons/io5";
-
+import PersonTransactionInfo from "./_components/person-transaction-info";
 
 export default function Page() {
   return (
@@ -28,7 +28,6 @@ export default function Page() {
             <hr className="bg-primary-dark h-[6px]" />
             <div className="flex gap-2 items-stretch">
               <div className="rounded border border-secondary-light p-2 space-y-4 w-full">
-
                 <h4 className="font-semibold">ORDER INFO</h4>
                 <table className="table-auto">
                   <tr>
@@ -50,16 +49,11 @@ export default function Page() {
                 </table>
               </div>
               <div className="rounded border border-secondary-light p-2 space-y-4 w-full">
-
-                <div className="space-y-2">
-                  <h4 className="font-semibold">BILLING INFO</h4>
-                  <div className="block text-sm">
-                    <p className="text-primary font-semibold">Martha Chavez</p>
-                    <p>403-534-2342</p>
-                    <p>Martha.chavez@gmail.com</p>
-                    <p>3482 Port Washington Road Arrowwood Alberta T0L 0B0</p>
-                  </div>
-                </div>
+                <PersonTransactionInfo headerText='BILLING'
+                  name='Martha Chavez'
+                  phoneNumber='403-534-2342'
+                  address='3482 Port Washington Road Arrowwood Alberta T0L 0B0'
+                  email='Martha.chavez@gmail.com' />
                 <div className="space-y-1">
                   <h4 className="font-semibold">PAYMENT METHOD</h4>
                   <div className="block text-sm space-x-1">
@@ -69,16 +63,11 @@ export default function Page() {
                 </div>
               </div>
               <div className="rounded border border-secondary-light p-2 space-y-2 w-full">
-
-                <div className="space-y-2">
-                  <h4 className="font-semibold">RECEIVER INFO</h4>
-                  <div className="block text-sm">
-                    <p className="text-primary font-semibold">Rebecca Chavez</p>
-                    <p>0932 123 4567</p>
-                    <p>Martha.chavez@gmail.com</p>
-                    <p>253 M.L. Quezon Street Santo Niño Tukuran 7019 Zamboanga del Sur Philippines</p>
-                  </div>
-                </div>
+                <PersonTransactionInfo headerText='RECEIVER'
+                  name='Rebecca Chavez'
+                  phoneNumber='0932 123 4567'
+                  address='253 M.L. Quezon Street Santo Niño Tukuran 7019 Zamboanga del Sur Philippines'
+                  email='Martha.chavez@gmail.com' />
                 <div className="space-y-1">
                   <h4 className="font-semibold">DELIVERY METHOD</h4>
                   <div className="w-fit block text-sm space-x-2 rounded bg-primary text-white py-1 px-2">
@@ -87,6 +76,9 @@ export default function Page() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+
             </div>
           </div>
         </div>
