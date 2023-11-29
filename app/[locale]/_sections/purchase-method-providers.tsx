@@ -9,14 +9,11 @@ import { purchaseMethodItemsSet } from '../main/purchase-method/[slug]/_redux/pu
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 
-
 export default function PurchaseMethodProviders({ children }: { children: ReactNode; }) {
   const dispatch: AppDispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
-  const purchaseMethod = useMemo(() => {
-    return mainState.purchaseMethod;
-  }, [mainState.purchaseMethod])
+  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   useEffect(() => {
     if (purchaseMethod !== '') {
@@ -31,7 +28,5 @@ export default function PurchaseMethodProviders({ children }: { children: ReactN
   }, [purchaseMethod, dispatch]);
 
 
-  return (
-    <>{children}</>
-  )
+  return (<>{children}</>);
 }

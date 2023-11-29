@@ -17,8 +17,8 @@ export function Checkbox<T>({
     <div className='flex w-fit gap-2 items-center justify-start cursor-pointer'
       onClick={() => { onCheckboxChanged(value) }}>
       <div className='flex-none w-auto'>
-        <div className={`border -leading-1  ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-5 h-5`} >
-          <FaCheck className={`${current === value ? 'block' : 'hidden'} w-4 h-4 translate-x-[1.5px] translate-y-[.5px]`} />
+        <div className={`border -leading-1  ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`} >
+          <FaCheck size={16} className={`${current === value ? 'block' : 'hidden'} translate-x-[1.5px] translate-y-[.5px]`} />
         </div>
       </div>
       {

@@ -11,11 +11,7 @@ type tabItemsProps = {
   otherText: string;
 }
 
-export default function SelectedShopMethodDetails({
-  onClose
-}: {
-  onClose: () => void;
-}) {
+export default function SelectedShopMethodDetails({ onClose }: { onClose: () => void; }) {
   const deliveryMethods: tabItemsProps[] =
     [
       { labelText: 'Vessel', otherText: `\u0024${(50).toFixed(2)} \u002D \u0024${(100).toFixed(2)}` },

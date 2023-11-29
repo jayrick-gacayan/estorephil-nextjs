@@ -67,8 +67,8 @@ export function OurSellers() {
       <div className="flex mb-2">
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
-          <FaChevronLeft className='w-5 h-5 inline-block' onClick={() => { moveSellersSlider(-140) }} />
-          <FaChevronRight className='w-5 h-5 inline-block' onClick={() => { moveSellersSlider(140) }} />
+          <FaChevronLeft size={20} className='inline-block' onClick={() => { moveSellersSlider(-140) }} />
+          <FaChevronRight size={20} className='inline-block' onClick={() => { moveSellersSlider(140) }} />
         </div>
       </div>
 

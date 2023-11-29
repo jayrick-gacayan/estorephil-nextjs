@@ -9,6 +9,22 @@ export default class CustomValidation {
     this.validationStatus = ValidationStatus.NONE
   }
 
+  setErrorText(field: string,
+    options?: {
+      min?: number;
+      compareMatch?: string;
+      max?: number;
+    }) {
+    switch (this.validationStatus) {
+      case ValidationStatus.EMPTY:
+        this.errorText = `${field} is required`;
+        break;
+      case ValidationStatus.INVALID_FORMAT:
+        this.errorText = `${field} is in invalid format.`;
+        break;
+    }
+  }
+
   setErrorType<T>(value: T, options?: string[]) {
     if (Array.isArray(value)) {
       if (value.length === 0) {

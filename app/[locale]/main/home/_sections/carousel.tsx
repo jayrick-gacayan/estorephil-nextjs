@@ -49,9 +49,10 @@ export function Carousel() {
     const isTouchEvent = event.type === "touchstart";
 
     const initialX = isTouchEvent ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX;
-    document.addEventListener('mousemove', onPointerMove as any);
+
+    document.addEventListener('mousemove', onPointerMove as (moveEvent: any) => void);
     document.addEventListener('mouseup', onPointerEnd);
-    document.addEventListener('touchmove', onPointerMove as any);
+    document.addEventListener('touchmove', onPointerMove as (moveEvent: any) => void);
     document.addEventListener('touchend', onPointerEnd);
 
     function onPointerMove(moveEvent: MouseEvent | TouchEvent) {
@@ -80,9 +81,9 @@ export function Carousel() {
         card.style.left = "0px";
       }
 
-      document.removeEventListener('mousemove', onPointerMove as any);
+      document.removeEventListener('mousemove', onPointerMove as (moveEvent: any) => void);
       document.removeEventListener('mouseup', onPointerEnd);
-      document.removeEventListener('touchmove', onPointerMove as any);
+      document.removeEventListener('touchmove', onPointerMove as (moveEvent: any) => void);
       document.removeEventListener('touchend', onPointerEnd);
     }
   }
@@ -95,14 +96,14 @@ export function Carousel() {
             clearCarouselInterval();
             carouselMoveToLeft();
           }}>
-          <FaChevronLeft className='w-6 h-6 block text-white/100' />
+          <FaChevronLeft size={24} className='block text-white/100' />
         </div>
         <div className='absolute top-[50%] right-[12px] z-20 text-white/100 cursor-pointer'
           onClick={() => {
             clearCarouselInterval();
             carouselMoveToRight();
           }}>
-          <FaChevronRight className='w-6 h-6 block' />
+          <FaChevronRight size={24} className='block' />
         </div>
         <div className='w-full relative h-full transition-all duration-100' >
           {
@@ -123,7 +124,8 @@ export function Carousel() {
             carouselItems.map((carouselItem: CarouselItemProps) => {
               return (
                 <div key={`carousel-item-main-${carouselItem.index}`}
-                  className={`h-1 w-6 rounded  cursor-pointer ${carouselCurrentSlide === carouselItem.index ? `bg-primary` : `bg-white`}`}
+                  className={`h-1 w-6 rounded  cursor-pointer 
+                  ${carouselCurrentSlide === carouselItem.index ? `bg-primary` : `bg-white`}`}
                   onClick={() => { setCarouselCurrentSide(carouselItem.index) }} />
               )
             })

@@ -5,11 +5,8 @@ import PurchaseMethodProviders from './_sections/purchase-method-providers';
 
 
 async function getMessages(locale: string) {
-  try {
-    return (await import(`../../messages/${locale}.json`)).default;
-  } catch (error) {
-    notFound();
-  }
+  try { return (await import(`../../messages/${locale}.json`)).default; }
+  catch (error) { notFound(); }
 }
 
 export function generateStaticParams() {

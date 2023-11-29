@@ -51,14 +51,7 @@ export default function PurchaseMethod({
             purchaseMethodActiveClass={setPurchaseMethodClass}
             onShoppingMethodSet={onPurchaseMethodSet} />
         </div>
-        {
-          children &&
-          (
-            <div className='space-y-2'>
-              {children}
-            </div>
-          )
-        }
+        {children && (<div className='space-y-2'>{children}</div>)}
         <div className="space-y-3 w-full">
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {

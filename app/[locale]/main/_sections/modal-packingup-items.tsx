@@ -23,7 +23,7 @@ export default function ModalPickingUpItems({ open }: { open: boolean; }) {
         }, 300);
       }
     }
-  }, [open, dispatch]);
+  }, [open]);
 
   return (
     <Modal ref={modalWrapperRef} open={open}>

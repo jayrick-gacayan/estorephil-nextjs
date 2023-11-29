@@ -24,11 +24,14 @@ export default function MainHeader() {
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
               <PurchaseMethodNavbar>
-                <Image alt='profile-image'
-                  src='/static_images/static_profile_img.png'
-                  width={48}
-                  height={48}
-                  className='rounded-full border border-white w-12 h-12 inline-block' />
+                <div className='relative inline'>
+                  <Image alt='profile-image'
+                    src='/static_images/static_profile_img.png'
+                    width={48}
+                    height={48}
+                    className='rounded-full border border-white w-12 h-12 inline-block' />
+                </div>
+
               </PurchaseMethodNavbar>
             </div>
           </div>

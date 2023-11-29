@@ -11,7 +11,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
 
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+  const purchaseMethod: string = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">

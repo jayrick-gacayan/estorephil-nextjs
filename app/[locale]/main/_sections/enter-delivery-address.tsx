@@ -14,10 +14,6 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
   const [citySelectVisible, setCitySelectVisible] = useState<boolean>(false);
   const dispatch: AppDispatch = useAppDispatch();
 
-  function onCloseModal() {
-    dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
-  }
-
   return (
     <div className="py-8 space-y-3 w-[512px] m-auto">
       <h3 className="text-primary text-[32px] leading-0">Enter Delivery Address</h3>
@@ -26,7 +22,8 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
         width={96}
         height={96}
         className='w-24 h-24 m-auto block' />
-      <p className='leading-0 text-sm'>As some of our products have limited areas where it can be delivered,
+      <p className='leading-0 text-sm'>
+        As some of our products have limited areas where it can be delivered,
         we suggest that you enter your delivery address so we can filter out the products that cannot be delivered on your area.
       </p>
       <p className='leading-0 text-sm italic'>You can skip this to view all of our products in store.</p>

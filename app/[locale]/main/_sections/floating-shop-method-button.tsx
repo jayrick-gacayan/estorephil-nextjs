@@ -3,15 +3,15 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
-import { RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
 import { useMemo } from 'react';
 
 export default function FloatingCardButton(): JSX.Element | null {
-  const dispatch = useAppDispatch();
+  const dispatch: AppDispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+  const purchaseMethod: string = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
 
   return purchaseMethod === '' ? null :
     (

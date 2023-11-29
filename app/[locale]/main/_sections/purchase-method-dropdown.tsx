@@ -60,7 +60,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
         }
       }
     }
-  }, [purchaseMethodItems.length]);
+  }, [purchaseMethodItems.length, prevCountRef]);
 
   useEffect(() => {
     if (purchaseMethod !== '') {
