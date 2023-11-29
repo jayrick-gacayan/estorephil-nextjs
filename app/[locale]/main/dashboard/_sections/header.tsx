@@ -17,7 +17,7 @@ export default function Header() {
                         : translate('reports')
     return (
         <>
-            <div className={`flex items-center ${onDetailsPage || onSpecificReportPage && `justify-between`} w-full px-[153px] py-8 border-b-[2px] border-[#D4D4D4]`}>
+            <div className={`flex items-center ${onDetailsPage && `justify-between` || onSpecificReportPage && `justify-between`} w-full px-[153px] py-8 border-b-[2px] border-[#D4D4D4]`}>
                 <div className="text-gray-700 text-[30px]"> {onDetailsPage ? translate('order') : onSpecificReportPage ? translate("specificReport^") : section} </div>
                 {onDetailsPage &&
                     (
