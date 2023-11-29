@@ -7,7 +7,9 @@ import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { MainState } from '../../../_redux/main_state';
 import ShopMethodHeader from './purchase-method-header';
 import SummaryCheckout from './summary-checkout';
-
+import { BalikbayanBox } from '@/models/balikbayan-box';
+import { Cart } from '@/models/cart';
+import { useRouter } from 'next-intl/client';
 
 export default function LayoutContainer({
   checkoutSlug,
@@ -16,7 +18,7 @@ export default function LayoutContainer({
   checkoutSlug: string;
   children: ReactNode;
 }): JSX.Element | null {
-
+  const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
 
@@ -35,7 +37,17 @@ export default function LayoutContainer({
               {children}
             </div>
           </div>
-          <SummaryCheckout />
+          <SummaryCheckout
+            totalItems={
+              purchaseMethodItems.filter((value: Cart | BalikbayanBox) => {
+                return value.isGoingToCheckout
+              }).length
+            }
+            onRedirectToCheckout={
+              () => {
+                router.push('/checkout/sender');
+              }
+            } />
         </div>
       )
 }

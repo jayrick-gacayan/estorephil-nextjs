@@ -108,7 +108,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
             </div>
             <div ref={toastOnDropdownRef}
               className={`absolute top-[120%] right-0 w-64 hidden after:content-[""]
-                after:absolute after:bottom-full after:right-24 after:z-[20002] after:border-solid after:border-[6px] after:border-transparent
+                after:absolute after:bottom-full after:right-24 after:z-[9999] after:border-solid after:border-[6px] after:border-transparent
                 ${purchaseMethodItems.length > prevCountRef! ? `after:border-b-success` : `after:border-b-danger`}`}>
               {
                 purchaseMethodItemToToast &&
@@ -143,7 +143,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
       </div>
 
 
-      <div id="dropdown-shop-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 text-secondary top-[250%] right-0 z-[20000] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
+      <div id="dropdown-shop-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 text-secondary top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
         <div className='p-2 border-b-2 border-b-secondary-light flex gap-2 items-center'>
           <div className='flex-1 font-semibold text-lg leading-0'>{purchaseMethodHeaderText.includes('BAYAN') ? `${purchaseMethodHeaderText} BOX` : purchaseMethodHeaderText}</div>
           {purchaseMethodItems.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{purchaseMethodItems.length}</div>)}

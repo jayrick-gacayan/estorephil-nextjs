@@ -1,4 +1,5 @@
 import { FieldInput } from "@/models/field-input"
+import { RequestStatus } from "@/types/enums/request-status"
 
 export interface PaymentMethodState {
     card: {
@@ -13,4 +14,5 @@ export interface PaymentMethodState {
     billingAddress: FieldInput
     contactNumber: FieldInput
     emailAddress: FieldInput
+    requestStatus: RequestStatus;
 }
