@@ -25,7 +25,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|register|login).*)',
+        source: '/:locale/:path((?!admin|register|login|verify-login).*)',
         destination: '/:locale/main/:path*',
       },
     ]
