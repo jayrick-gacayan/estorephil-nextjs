@@ -32,7 +32,7 @@ export default function MainLayoutModal() {
         dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
       }, 300);
     }
-  }, [open, dispatch]);
+  }, [dispatch]);
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 

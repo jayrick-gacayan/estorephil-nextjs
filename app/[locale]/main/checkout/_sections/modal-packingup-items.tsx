@@ -8,8 +8,15 @@ import { PaymentMethodState } from '../(pages)/payment-method/_redux/payment-met
 import { RequestStatus } from '@/types/enums/request-status';
 import { useRouter } from 'next-intl/client';
 import { paymentMethodRequestStatusChanged } from '../(pages)/payment-method/_redux/payment-method-slice';
+import { useRive } from '@rive-app/react-canvas';
 
 export default function ModalPackingUpItems() {
+  const { RiveComponent } = useRive({
+    src: '/rive/packing_up_box.riv',
+    stateMachines: 'State Machine 1',
+    autoplay: true,
+  });
+
   const paymentMethodState: PaymentMethodState = useAppSelector((state: RootState) => {
     return state.paymentMethod;
   });
@@ -45,7 +52,9 @@ export default function ModalPackingUpItems() {
       <div ref={modalContentRef}
         className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
         <div className='py-8 space-y-3 w-[512px] m-auto'>
-
+          <div className='w-full h-72 block'>
+            <RiveComponent className='w-full h-full' />
+          </div>
           <h1 className='font-semibold text-[36px] leading-0'>PACKING-UP ITEMS</h1>
           <p className='text-sm'>
             Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.

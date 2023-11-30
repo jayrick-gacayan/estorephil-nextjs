@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from '@/redux/store';
 import PurchaseMethodType from '../_components/shop-method-type';
 import { modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
 import { HiInformationCircle } from 'react-icons/hi';
+import { Miltonian } from 'next/font/google';
 
 export default function PurchaseMethod({
   onClose,
@@ -56,7 +57,10 @@ export default function PurchaseMethod({
         <div>
           <h4 className="text-danger font-[500] space-x-1 p-1">
             <HiInformationCircle className='inline-block' />
-            <span className="inline-block align-middle">Changing couriers on check out will not be allowed.</span>
+            <span className="inline-block align-middle">
+              {type === 'purchaseMethod' && 'Choosing shopping cart will automatically set the box where your checked out items will fit.'}
+              {type === 'shopMethodDetails' && 'Changing couriers on check out will not be allowed.'}
+            </span>
           </h4>
         </div>
         <div className="space-y-3 w-full">

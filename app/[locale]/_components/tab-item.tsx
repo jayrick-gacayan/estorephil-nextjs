@@ -14,7 +14,7 @@ export default function TabItem<T>({
   children: ReactNode;
 }) {
   return (
-    <div className={`${tabClassName(tab, currentTab)} w-full`}
+    <div className={`${tabClassName(tab, currentTab)} transition-all delay-100 w-full cursor-pointer`}
       onClick={() => { onTabChange(tab); }}>
       {children}
     </div>

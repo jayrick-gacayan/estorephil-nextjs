@@ -7,7 +7,7 @@ import TabItem from '../../_components/tab-item';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 type tabItemsProps = {
   labelText: string;
@@ -15,6 +15,8 @@ type tabItemsProps = {
 }
 
 export default function SelectedShopMethodDetails({ onClose }: { onClose: () => void; }) {
+  const [tempDeliveryMethod, setTempDeliveryMethod] = useState<string>('Vessel');
+  const [sizeBox, setSizeBox] = useState<string>('Small');
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
   const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
@@ -64,9 +66,11 @@ export default function SelectedShopMethodDetails({ onClose }: { onClose: () => 
                       return (
                         <TabItem<string> key={`delivery-method-${deliveryMethod.labelText}`}
                           tab={deliveryMethod.labelText}
-                          currentTab='Vessel'
+                          currentTab={tempDeliveryMethod}
                           tabClassName={tabClassName}
-                          onTabChange={(tab: string) => { return; }}>
+                          onTabChange={(tab: string) => {
+                            setTempDeliveryMethod(tab)
+                          }}>
                           <div className='w-full text-center text-sm p-2'>
                             <div>{deliveryMethod.labelText}</div>
                             <div>{deliveryMethod.otherText}</div>
@@ -85,9 +89,9 @@ export default function SelectedShopMethodDetails({ onClose }: { onClose: () => 
                       return (
                         <TabItem<string> key={`box-sizes-${boxSizes.labelText}`}
                           tab={boxSizes.labelText}
-                          currentTab='Small'
+                          currentTab={sizeBox}
                           tabClassName={tabClassName}
-                          onTabChange={(tab: string) => { return; }}>
+                          onTabChange={(tab: string) => { setSizeBox(tab) }}>
                           <div className='w-full text-center leading-0 text-[10px] p-2'>
                             <div className='text-sm'>{boxSizes.labelText}</div>
                             <div>{boxSizes.otherText}</div>
@@ -98,7 +102,6 @@ export default function SelectedShopMethodDetails({ onClose }: { onClose: () => 
                   }
                 </Tabs>
               </div>
-
             </div>
           ) : (<></>)
       }
