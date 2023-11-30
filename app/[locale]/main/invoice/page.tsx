@@ -174,7 +174,7 @@ export default async function Page() {
                   <div className='flex'>
                     <div className='flex-1'>PH</div>
                     <div className='flex-none w-auto'>
-                      <span className='text-secondary'>10&#37;</span>
+                      <span>10&#37;</span>
                     </div>
                   </div>
                 </div>
