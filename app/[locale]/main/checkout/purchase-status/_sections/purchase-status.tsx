@@ -9,7 +9,7 @@ export default function PurchaseStatus({ status }: { status: string; }
   const router = useRouter();
 
   return (
-    <div className='bg-[#F5F5F5]'>
+    <div className='bg-default'>
       <div className='max-w-screen-2xl m-auto p-8'>
         <div className="w-[512px] block m-auto">
           <div className='flex flex-col h-[640px] items-center justify-between w-full'>
