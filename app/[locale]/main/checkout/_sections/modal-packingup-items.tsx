@@ -26,6 +26,10 @@ export default function ModalPackingUpItems() {
   useEffect(() => {
     if (paymentMethodRequestStatus === RequestStatus.IN_PROGRESS) {
       setTimeout(() => {
+        if (modalContentRef.current) {
+          modalContentRef.current.classList.remove('animate-slide-up');
+          modalContentRef.current.classList.add('animate-slide-down');
+        }
         dispatch(paymentMethodRequestStatusChanged(RequestStatus.NONE));
 
         router.push('/checkout/purchase-status')
@@ -35,12 +39,12 @@ export default function ModalPackingUpItems() {
   }, [paymentMethodRequestStatus, dispatch, router])
 
   return (
-    <Modal ref={modalWrapperRef} open={
+    <Modal open={
       (paymentMethodRequestStatus === RequestStatus.WAITING ||
         paymentMethodRequestStatus === RequestStatus.IN_PROGRESS)
     }>
       <div ref={modalContentRef}
-        className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
+        className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
         <div className='py-8 space-y-3 w-[512px] m-auto'>
 
           <h1 className='font-semibold text-[36px] leading-0'>PACKING-UP ITEMS</h1>

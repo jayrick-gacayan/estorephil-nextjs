@@ -28,37 +28,21 @@ function MainLayoutModal() {
   const cbOnModalClose = useCallback(() => {
     if (modalContentRef.current) {
       if (open) {
-        modalContentRef.current.classList.add('animate-slide-bottom-down');
-        modalContentRef.current.classList.remove('animate-slide-bottom-up');
+        modalContentRef.current.classList.remove('animate-slide-up');
+        modalContentRef.current.classList.add('animate-slide-down');
         setTimeout(() => {
-          modalWrapperRef.current?.classList.remove('flex');
-          modalWrapperRef.current?.classList.add('hidden');
           dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
         }, 300);
       }
     }
   }, [open, dispatch]);
 
-  useEffect(() => {
-    if (modalContentRef.current) {
-      if (open) {
-        setTimeout(() => {
-          if (modalContentRef.current) {
-            modalContentRef.current.classList.remove('animate-slide-bottom-down');
-            modalContentRef.current.classList.add('animate-slide-bottom-up');
-          }
-        }, 300)
-
-      }
-    }
-  }, [open]);
-
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 
   return (
-    <Modal ref={modalWrapperRef} open={open}>
+    <Modal open={open}>
       <div ref={modalContentRef}
-        className={`modal-content flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
+        className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
         {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={cbOnModalClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={cbOnModalClose} />)}
         {(open && type === 'purchaseMethod') && (<PurchaseMethod onClose={cbOnModalClose} />)}

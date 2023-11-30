@@ -48,7 +48,7 @@ export default function NextButton() {
             url.includes('sender') ? router.push('/checkout/receiver')
                 : url.includes('receiver') ? router.push('/checkout/order-summary')
                     : url.includes('order-summary') ? router.push('/checkout/payment-method')
-                        : router.push('checkout')
+                        : null
         }
     }, [senderState.valid])
 
@@ -58,8 +58,7 @@ export default function NextButton() {
                 console.log('next button clicked')
                 url.includes('sender') ? dispatch(validateSender())
                     : url.includes('receiver') ? router.push('/checkout/order-summary')
-                        : url.includes('order-summary') ? router.push('/checkout/payment-method')
-                            : router.push('/')
+                        : url.includes('order-summary') ? router.push('/checkout/payment-method') : null
                 initiateValidate()
             }}
         // disabled={disabled}
