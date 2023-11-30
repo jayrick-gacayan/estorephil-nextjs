@@ -43,7 +43,9 @@ export default function MainHeader() {
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
               <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
               <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-              <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
+              <Link href="/dashboard/agency-information" className='inline-block'>
+                <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
+              </Link>
             </div>
           </div>
         </nav>

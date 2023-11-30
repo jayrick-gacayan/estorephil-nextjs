@@ -22,7 +22,7 @@ export function ProductItem({
       </div>
       <div className='p-2'>
         <div className='font-bold'>{product.name}</div>
-        <div className='block space-x-1'>
+        <div className='block space-x-2'>
           <div className='w-20 inline-block relative'>
             <div className='relative z-0 block text-[20px] leading-0'>
               &#9733;&#9733;&#9733;&#9733;&#9733;
@@ -32,7 +32,7 @@ export function ProductItem({
               &#9733;&#9733;&#9733;&#9733;&#9733;
             </div>
           </div>
-          <span>&#40;{product.raters}&#41;</span>
+          <span className='inline-block'>&#40;{product.raters}&#41;</span>
         </div>
         <div className='font-bold text-primary'>
           &#8369; {product.price.toFixed(2)}
