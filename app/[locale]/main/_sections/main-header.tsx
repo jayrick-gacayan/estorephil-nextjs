@@ -31,7 +31,6 @@ export default function MainHeader() {
                     height={48}
                     className='rounded-full border border-white w-12 h-12 inline-block' />
                 </div>
-
               </PurchaseMethodNavbar>
             </div>
           </div>
