@@ -41,7 +41,9 @@ export default function MainHeader() {
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
+              <Link href="/dashboard/orders" className='inline-block'>
+                <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
+              </Link>
               <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
               <Link href="/dashboard/agency-information" className='inline-block'>
                 <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
