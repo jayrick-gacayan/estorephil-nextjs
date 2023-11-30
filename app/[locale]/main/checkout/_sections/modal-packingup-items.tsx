@@ -20,7 +20,6 @@ export default function ModalPackingUpItems() {
     return paymentMethodState.requestStatus;
   }, [paymentMethodState.requestStatus])
 
-  const modalWrapperRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -40,8 +40,6 @@ const config: Config = {
       animation: {
         'slide-up': 'slide-up 0.5s ease-out forwards',
         'slide-down': 'slide-down 0.5s ease-out forwards',
-        'slide-botttom-up': 'slide-bottom-up 0.3s ease-in forwards',
-        'slide-bottom-down': 'slide-bottom-down 0.3s ease-out forwards',
         'fadeIn': 'fadeIn 0.5s ease-in forwards',
         'fadeOut': 'fadeOut 0.5s ease-out backwards',
         'customSpin': 'customSpin 0.5s linear forwards',
@@ -70,14 +68,6 @@ const config: Config = {
             transform: 'translateY(100%)',
             opacity: '0',
           }
-        },
-        'slide-bottom-up': {
-          '0%': { transform: 'translateY(300%)' },
-          '100%': { transform: 'translateY(-2px)' },
-        },
-        'slide-bottom-down': {
-          '0%': { transform: 'translateY(-2px)' },
-          '100%': { transform: 'translateY(300%)' },
         },
         'customSpin': {
           '0%': { transform: 'rotate(0deg)' },

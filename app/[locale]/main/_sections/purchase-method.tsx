@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import PurchaseMethodType from '../_components/shop-method-type';
 import { modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
+import { HiInformationCircle } from 'react-icons/hi';
 
 export default function PurchaseMethod({
   onClose,
@@ -31,7 +32,7 @@ export default function PurchaseMethod({
   }
 
   function onPurchaseMethodSet(purchaseMethodType: string) {
-    if (!isSetPurchaseMethod) { setPurchaseMethod(purchaseMethodType) }
+    if (isSetPurchaseMethod === undefined) { setPurchaseMethod(purchaseMethodType) }
     else return;
   }
 
@@ -52,15 +53,24 @@ export default function PurchaseMethod({
             onShoppingMethodSet={onPurchaseMethodSet} />
         </div>
         {children && (<div className='space-y-2'>{children}</div>)}
+        <div>
+          <h4 className="text-danger font-[500] space-x-1 p-1">
+            <HiInformationCircle className='inline-block' />
+            <span className="inline-block align-middle">Changing couriers on check out will not be allowed.</span>
+          </h4>
+        </div>
         <div className="space-y-3 w-full">
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {
               onClose();
               if (!children) {
                 dispatch(purchaseMethodChanged(purchaseMethod));
-                setTimeout(() => {
-                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shopMethodDetails' }));
-                }, 1000)
+                if (purchaseMethod === 'Balikbayan Box') {
+                  setTimeout(() => {
+                    dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shopMethodDetails' }));
+                  }, 1000)
+                }
+
               }
             }}>
             {type === 'purchaseMethod' && 'Next'}

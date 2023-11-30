@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Modal from '../../_components/modal';
 import { AppDispatch, RootState } from '@/redux/store';
 import { MainState } from '../_redux/main_state';
-import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import EnterDeliveryAddress from './enter-delivery-address';
@@ -13,8 +13,7 @@ import PurchaseMethod from './purchase-method';
 import ChangeShopMethod from './change-shop-method';
 import SelectedShopMethodDetails from './selected-shop-method-details';
 
-function MainLayoutModal() {
-  const modalWrapperRef = useRef<HTMLDivElement>(null);
+export default function MainLayoutModal() {
   const modalContentRef = useRef<HTMLDivElement>(null);
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const dispatch: AppDispatch = useAppDispatch();
@@ -27,13 +26,11 @@ function MainLayoutModal() {
 
   const cbOnModalClose = useCallback(() => {
     if (modalContentRef.current) {
-      if (open) {
-        modalContentRef.current.classList.remove('animate-slide-up');
-        modalContentRef.current.classList.add('animate-slide-down');
-        setTimeout(() => {
-          dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
-        }, 300);
-      }
+      modalContentRef.current.classList.remove('animate-slide-up');
+      modalContentRef.current.classList.add('animate-slide-down');
+      setTimeout(() => {
+        dispatch(modalProductDeliveryAddressOpened({ open: false, type: '' }));
+      }, 300);
     }
   }, [open, dispatch]);
 
@@ -52,5 +49,3 @@ function MainLayoutModal() {
     </Modal>
   )
 }
-
-export default memo(MainLayoutModal)
