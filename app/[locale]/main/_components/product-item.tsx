@@ -22,8 +22,8 @@ export function ProductItem({
       </div>
       <div className='p-2'>
         <div className='font-bold'>{product.name}</div>
-        <div className='block space-x-2'>
-          <div className='w-20 inline-block relative'>
+        <div className='block'>
+          <div className='w-20 inline-block relative mr-2'>
             <div className='relative z-0 block text-[20px] leading-0'>
               &#9733;&#9733;&#9733;&#9733;&#9733;
             </div>
