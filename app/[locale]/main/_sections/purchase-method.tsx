@@ -29,7 +29,7 @@ export default function PurchaseMethod({
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   function setPurchaseMethodClass(purchaseMethodType: string) {
-    return purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-primary-light';
+    return purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-default';
   }
 
   function onPurchaseMethodSet(purchaseMethodType: string) {
