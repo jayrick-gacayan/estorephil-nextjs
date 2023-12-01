@@ -8,9 +8,11 @@ export function ProductsContainer({
   headerText,
   products,
   children,
+  withRatingEvents
 }: {
   headerText: string;
   products: Product[];
+  withRatingEvents?: boolean;
   children?: ReactNode;
 }): JSX.Element {
 
@@ -26,7 +28,9 @@ export function ProductsContainer({
             <div className='flex flex-row flex-wrap gap-4'>
               {
                 products.map((product: Product) => {
-                  return (<ProductItem key={`product-item-${product.id}`} product={product} />)
+                  return (<ProductItem key={`product-item-${product.id}`}
+                    product={product}
+                    withRatingEvents={withRatingEvents ? true : false} />)
                 })
               }
             </div>

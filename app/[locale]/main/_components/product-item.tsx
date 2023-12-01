@@ -5,12 +5,14 @@ import Rating from '../../_components/rating';
 
 export function ProductItem({
   product,
+  withRatingEvents,
 }: {
   product: Product;
+  withRatingEvents: boolean;
 }) {
 
   return (
-    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden cursor-pointer space-y-4'>
+    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden space-y-4'>
       <div className=' w-full h-60 overflow-hidden'>
         <div className='transition-all delay-200 ease-in hover:scale-125 h-full'>
           <Image alt={`product-image-${product.id}`}
@@ -21,9 +23,10 @@ export function ProductItem({
         </div>
       </div>
       <div className='p-2'>
-        <Link href={`/products/${product.id}`} className='font-bold block hover:text-primary'>{product.name}</Link>
+        <Link href={`/products/${product.id}`}
+          className='font-bold block hover:text-primary cursor-pointer'>{product.name}</Link>
         <div className='block space-x-1'>
-          <Rating id={product.id} rating={product.rating} />
+          <Rating id={product.id} rating={product.rating} withRatingEvents={withRatingEvents} />
           <span className='inline-block align-top'>&#40;{product.raters}&#41;</span>
         </div>
 

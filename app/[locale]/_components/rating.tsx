@@ -6,9 +6,11 @@ import { FaRegStar, FaStar } from 'react-icons/fa6';
 export default function Rating({
   id,
   rating,
+  withRatingEvents,
 }: {
   id: number;
   rating: number;
+  withRatingEvents: boolean;
 }) {
   const [activeStar, setActiveStar] = useState<number>(rating);
   const [hoverActiveStar, setHoverActiveStar] = useState(-1);
@@ -28,22 +30,28 @@ export default function Rating({
   }
 
   function handleRatingOnClick(event: MouseEvent<HTMLDivElement>) {
-    setActiveStar(calculateRating(event));
+    if (withRatingEvents) {
+      setActiveStar(calculateRating(event));
+    }
   }
 
   function handleRatingMouseMove(event: MouseEvent<HTMLDivElement>) {
-    setIsHovered(true);
-    setHoverActiveStar(calculateRating(event));
+    if (withRatingEvents) {
+      setIsHovered(true);
+      setHoverActiveStar(calculateRating(event));
+    }
   };
 
   function handleMouseLeave(event: MouseEvent<HTMLDivElement>) {
-    setHoverActiveStar(-1); // Reset to default state
-    setIsHovered(false);
+    if (withRatingEvents) {
+      setHoverActiveStar(-1); // Reset to default state
+      setIsHovered(false);
+    }
   };
 
   return (
     <div ref={ratingContainerRef}
-      className='inline-flex relative cursor-pointer text-left'
+      className={`inline-flex relative text-left ${withRatingEvents ? 'cursor-pointer' : 'cursor-default'}`}
       onClick={handleRatingOnClick}
       onMouseMove={handleRatingMouseMove}
       onMouseLeave={handleMouseLeave}>
@@ -59,7 +67,7 @@ export default function Rating({
           const showRatingWithPrecision = isActiveRating && isRatingWithPrecision && isRatingEqualToIndex;
           return (
             <div key={`product-${id}-${index}`}
-              className='relative cursor-pointer inline text-[#FAD115]'>
+              className={`relative inline text-[#FAD115] ${withRatingEvents ? 'cursor-pointer' : 'cursor-default'}`}>
               <div className={`absolute overflow-hidden z-10`}
                 style={{ width: showRatingWithPrecision ? `${(activeState % 1) * 100}%` : `0%` }}>
                 <FaStar size={20} />
