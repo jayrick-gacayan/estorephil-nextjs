@@ -1,9 +1,15 @@
 import Link from 'next-intl/link';
 import { FaCcAmex, FaCcDiscover, FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from 'react-icons/fa6';
 
-export default function SummaryCheckout() {
+export default function SummaryCheckout({
+  totalItems,
+  onRedirectToCheckout,
+}: {
+  totalItems: number;
+  onRedirectToCheckout: () => void;
+}) {
   return (
-    <div className='w-[384px] bg-[#F8FBFE] border-l border-secondary-light'>
+    <div className='w-[384px] bg-default border-l border-secondary-light'>
       <div className="p-8">
         <div className='border-b border-b-transparent'>
           <div className='text-[44px] leading-0 font-[500]'>SUMMARY</div>
@@ -14,7 +20,7 @@ export default function SummaryCheckout() {
           <div className="space-y-2 pb-2 border-b border-tertiary">
             <div className="flex">
               <div className="flex-1">ITEMS</div>
-              <div className="text-primary">10</div>
+              <div className="text-primary">{totalItems}</div>
             </div>
             <div className="flex">
               <div className="flex-1">SUBTOTAL</div>
@@ -86,7 +92,9 @@ export default function SummaryCheckout() {
           </div>
         </div>
         <Link href="/" className="text-primary block text-right text-sm py-2 underline cursor-pointer hover:text-primary-light">APPLY A PROMO CODE</Link>
-        <button className='border border-tertiary-dark w-full bg-tertiary-dark rounded text-white text-center p-4 hover:bg-secondary-light'>
+        <button disabled={totalItems === 0}
+          className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
+          onClick={onRedirectToCheckout}>
           CHECK OUT
         </button>
       </div>

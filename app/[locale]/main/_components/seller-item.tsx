@@ -8,7 +8,7 @@ export function SellerItem({ seller }: { seller: Seller }) {
       <Link href={`/stores/${seller.id}`}
         className='block w-full h-full'>
         {<Image alt={`seller-${seller.id}`}
-          src={seller.sellerImage}
+          src={seller.image}
           width={128}
           height={128}
           className='w-full h-full' />}

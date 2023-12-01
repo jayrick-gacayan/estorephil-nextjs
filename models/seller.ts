@@ -1,5 +1,5 @@
 export interface Seller {
   id: number;
-  sellerImage: string;
+  image: string;
   name: string;
 }

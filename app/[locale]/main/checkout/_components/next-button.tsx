@@ -1,15 +1,18 @@
-'use client'
-import { usePathname, useRouter } from "next-intl/client";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { validateSender } from "../(pages)/sender/_redux/sender-slice";
+'use client';
+
+import { usePathname, useRouter } from 'next-intl/client';
+import { useEffect } from 'react';
+import { RootState } from '@/redux/store';
+import { validateSender } from '../(pages)/sender/_redux/sender-slice';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { paymentMethodRequestStatusChanged } from '../(pages)/payment-method/_redux/payment-method-slice';
+import { RequestStatus } from '@/types/enums/request-status';
 
 export default function NextButton() {
     const url = usePathname();
     const router = useRouter();
-    const dispatch = useDispatch()
-    const senderState = useSelector((state: RootState) => state.sender)
+    const dispatch = useAppDispatch()
+    const senderState = useAppSelector((state: RootState) => state.sender)
     var valid = false;
     const initiateValidate = (() => {
         if (url.includes('sender')) {
@@ -45,7 +48,7 @@ export default function NextButton() {
             url.includes('sender') ? router.push('/checkout/receiver')
                 : url.includes('receiver') ? router.push('/checkout/order-summary')
                     : url.includes('order-summary') ? router.push('/checkout/payment-method')
-                        : router.push('checkout')
+                        : null
         }
     }, [senderState.valid])
 
@@ -55,13 +58,15 @@ export default function NextButton() {
                 console.log('next button clicked')
                 url.includes('sender') ? dispatch(validateSender())
                     : url.includes('receiver') ? router.push('/checkout/order-summary')
-                        : url.includes('order-summary') ? router.push('/checkout/payment-method')
-                            : router.push('/')
+                        : url.includes('order-summary') ? router.push('/checkout/payment-method') : null
                 initiateValidate()
             }}
         // disabled={disabled}
         >
-            {url.includes('payment-method') ? <p>Checkout </p> : <p>Next</p>}
+            {url.includes('payment-method') ? <p onClick={() => {
+                dispatch(paymentMethodRequestStatusChanged(RequestStatus.WAITING));
+                dispatch(paymentMethodRequestStatusChanged(RequestStatus.IN_PROGRESS));
+            }}>Checkout </p> : <p>Next</p>}
         </button>
     )
 }

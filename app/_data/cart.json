@@ -11,14 +11,14 @@
         "productImage": "/products/product_one.png",
         "seller": {
           "id": 4,
-          "sellerImage": "/sellers/apple.png",
+          "image": "/sellers/apple.png",
           "name": "Apple"
         },
         "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
       },
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "quantity": 2,
@@ -35,14 +35,14 @@
         "productImage": "/products/product_three.png",
         "seller": {
           "id": 4,
-          "sellerImage": "/sellers/apple.png",
+          "image": "/sellers/apple.png",
           "name": "Apple"
         },
         "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
       },
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "quantity": 2,
@@ -59,14 +59,14 @@
         "productImage": "/products/product_two.png",
         "seller": {
           "id": 3,
-          "sellerImage": "/sellers/samsung.png",
+          "image": "/sellers/samsung.png",
           "name": "Samsung"
         },
         "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
       },
       "seller": {
         "id": 3,
-        "sellerImage": "/sellers/samsung.png",
+        "image": "/sellers/samsung.png",
         "name": "Samsung"
       },
       "quantity": 2,

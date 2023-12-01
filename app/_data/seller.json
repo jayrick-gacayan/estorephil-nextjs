@@ -2,27 +2,27 @@
   "sellers": [
     {
       "id": 1,
-      "sellerImage": "/sellers/jollibee.png",
+      "image": "/sellers/jollibee.png",
       "name": "Jollibee"
     },
     {
       "id": 2,
-      "sellerImage": "/sellers/asianhome.png",
+      "image": "/sellers/asianhome.png",
       "name": "Asian Home"
     },
     {
       "id": 3,
-      "sellerImage": "/sellers/samsung.png",
+      "image": "/sellers/samsung.png",
       "name": "Samsung"
     },
     {
       "id": 4,
-      "sellerImage": "/sellers/apple.png",
+      "image": "/sellers/apple.png",
       "name": "Apple"
     },
     {
       "id": 5,
-      "sellerImage": "/sellers/mcdonald.png",
+      "image": "/sellers/mcdonald.png",
       "name": "McDonald"
     }
   ]

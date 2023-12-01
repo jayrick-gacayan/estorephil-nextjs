@@ -33,7 +33,7 @@ export default function ShopMethodCollapsible({
           }
 
           <Image alt={`cart-image-seller-${seller.id}`}
-            src={seller.sellerImage}
+            src={seller.image}
             width={48}
             height={48}
             className='w-12 h-12 inline-block align-middle' />

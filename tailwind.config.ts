@@ -21,6 +21,8 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
+        default: '#F5F5F5',
+        'default-dark': '#2F353D',
         primary: '#1186FF',
         'primary-dark': '#0D2D82',
         'primary-light': '#8bb8f1',
@@ -36,8 +38,8 @@ const config: Config = {
         'warning-light': '#FFD046',
       },
       animation: {
-        'slide-botttom-up': 'slide-bottom-up 0.3s ease-in forwards',
-        'slide-bottom-down': 'slide-bottom-down 0.3s ease-out forwards',
+        'slide-up': 'slide-up 0.5s ease-out forwards',
+        'slide-down': 'slide-down 0.5s ease-out forwards',
         'fadeIn': 'fadeIn 0.5s ease-in forwards',
         'fadeOut': 'fadeOut 0.5s ease-out backwards',
         'customSpin': 'customSpin 0.5s linear forwards',
@@ -47,13 +49,25 @@ const config: Config = {
         'fade-out': 'fade-out 0.5s ease-out backwards'
       },
       keyframes: {
-        'slide-bottom-up': {
-          '0%': { transform: 'translateY(300%)' },
-          '100%': { transform: 'translateY(-2px)' },
+        'slide-up': {
+          '0%': {
+            transform: 'translateY(100%)',
+            opacity: '0',
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1',
+          }
         },
-        'slide-bottom-down': {
-          '0%': { transform: 'translateY(-2px)' },
-          '100%': { transform: 'translateY(300%)' },
+        'slide-down': {
+          '0%': {
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'translateY(100%)',
+            opacity: '0',
+          }
         },
         'customSpin': {
           '0%': { transform: 'rotate(0deg)' },

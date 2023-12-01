@@ -7,7 +7,7 @@ export default async function SearchPage({ searchParams }: {
   let tempProducts = (await import('@/app/_data/product.json')).default.products;
 
   return (
-    <div className='p-4 bg-[#F7F9FC]'>
+    <div className='p-4 bg-default'>
       <SearchProducts products={tempProducts} />
     </div>
   )

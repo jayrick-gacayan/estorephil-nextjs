@@ -10,7 +10,7 @@
       "productImage": "/products/product_one.png",
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -25,7 +25,7 @@
       "productImage": "/products/product_two.png",
       "seller": {
         "id": 3,
-        "sellerImage": "/sellers/samsung.png",
+        "image": "/sellers/samsung.png",
         "name": "Samsung"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -40,7 +40,7 @@
       "productImage": "/products/product_three.png",
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -55,7 +55,7 @@
       "productImage": "/products/product_four.png",
       "seller": {
         "id": 3,
-        "sellerImage": "/sellers/samsung.png",
+        "image": "/sellers/samsung.png",
         "name": "Samsung"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -70,7 +70,7 @@
       "productImage": "/products/product_five.png",
       "seller": {
         "id": 5,
-        "sellerImage": "/sellers/mcdonald.png",
+        "image": "/sellers/mcdonald.png",
         "name": "McDonald"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -85,7 +85,7 @@
       "productImage": "/products/product_five.png",
       "seller": {
         "id": 1,
-        "sellerImage": "/sellers/jollibee.png",
+        "image": "/sellers/jollibee.png",
         "name": "Jollibee"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -100,7 +100,7 @@
       "productImage": "/products/product_six.png",
       "seller": {
         "id": 2,
-        "sellerImage": "/sellers/asianhome.png",
+        "image": "/sellers/asianhome.png",
         "name": "Asian Home"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -115,7 +115,7 @@
       "productImage": "/products/product_one.png",
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -130,7 +130,7 @@
       "productImage": "/products/product_two.png",
       "seller": {
         "id": 3,
-        "sellerImage": "/sellers/samsung.png",
+        "image": "/sellers/samsung.png",
         "name": "Samsung"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -145,7 +145,7 @@
       "productImage": "/products/product_three.png",
       "seller": {
         "id": 4,
-        "sellerImage": "/sellers/apple.png",
+        "image": "/sellers/apple.png",
         "name": "Apple"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -160,7 +160,7 @@
       "productImage": "/products/product_four.png",
       "seller": {
         "id": 3,
-        "sellerImage": "/sellers/samsung.png",
+        "image": "/sellers/samsung.png",
         "name": "Samsung"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -175,7 +175,7 @@
       "productImage": "/products/product_five.png",
       "seller": {
         "id": 5,
-        "sellerImage": "/sellers/mcdonald.png",
+        "image": "/sellers/mcdonald.png",
         "name": "McDonald"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -190,7 +190,7 @@
       "productImage": "/products/product_five.png",
       "seller": {
         "id": 1,
-        "sellerImage": "/sellers/jollibee.png",
+        "image": "/sellers/jollibee.png",
         "name": "Jollibee"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
@@ -205,7 +205,7 @@
       "productImage": "/products/product_six.png",
       "seller": {
         "id": 2,
-        "sellerImage": "/sellers/asianhome.png",
+        "image": "/sellers/asianhome.png",
         "name": "Asian Home"
       },
       "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."

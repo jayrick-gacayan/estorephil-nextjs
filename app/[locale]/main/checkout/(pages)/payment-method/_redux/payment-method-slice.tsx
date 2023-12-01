@@ -3,6 +3,7 @@ import { PaymentMethodState } from "./payment-method-state"
 import Validations from "@/types/validations"
 import { ValidationStatus } from "@/models/validation-response"
 import { SenderState } from "../../sender/_redux/sender-state"
+import { RequestStatus } from "@/types/enums/request-status"
 
 
 export const initialState: PaymentMethodState = {
@@ -46,13 +47,19 @@ export const initialState: PaymentMethodState = {
     emailAddress: {
         value: '',
         error: '',
-    }
+    },
+    requestStatus: RequestStatus.NONE
 }
 export const paymentMethodSlice = createSlice({
     name: "paymentMethod",
     initialState,
     reducers: {
-
+        paymentMethodRequestStatusChanged: (state: PaymentMethodState, action: PayloadAction<RequestStatus>) => {
+            return {
+                ...state,
+                requestStatus: action.payload
+            }
+        },
         selectPaymentMethod: (state: PaymentMethodState, action: PayloadAction<string>) => {
             return {
                 ...state,
@@ -214,7 +221,8 @@ export const {
     cardExpiryDateChanged, cardHolderNameChanged,
     cardNumberChanged, ccvChanged, billingAddressChanged,
     contactNumberChanged, emailAddressChanged, firstNameChanged,
-    lastNameChanged,billingInformationCheckboxClicked
+    lastNameChanged, billingInformationCheckboxClicked,
+    paymentMethodRequestStatusChanged
 } = paymentMethodSlice.actions
 
 export default paymentMethodSlice.reducer

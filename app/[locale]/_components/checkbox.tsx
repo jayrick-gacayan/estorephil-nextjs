@@ -18,7 +18,7 @@ export function Checkbox<T>({
       onClick={() => { onCheckboxChanged(value) }}>
       <div className='flex-none w-auto'>
         <div className={`border -leading-1  ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`} >
-          <FaCheck size={16} className={`${current === value ? 'block' : 'hidden'} translate-x-[1.5px] translate-y-[.5px]`} />
+          <FaCheck size={20} className={`${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`} />
         </div>
       </div>
       {
