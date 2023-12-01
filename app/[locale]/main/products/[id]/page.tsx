@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                           <BiCheckShield size={64} className='inline-block text-success' />
                         </div>
                         <div className='flex-1 space-y-1'>
-                          <h6 className='font-bold'>Refund Guarantee</h6>
+                          <h6 className='font-bold'>Warranty Available</h6>
                           <div>
                             Nulla eleifend pulvinar purus, molestie euismod odio imperdiet ac.
                             Ut sit amet erat nec nibh rhoncus varius in non lorem.
