@@ -170,7 +170,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {
-              let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
+              let querySelector = dropdownRef.current.querySelector('#dropdown-purchase-method');
               if (querySelector) {
                 querySelector.classList.add('hidden')
               }
