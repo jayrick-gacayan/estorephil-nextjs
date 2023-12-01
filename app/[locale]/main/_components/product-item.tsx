@@ -1,6 +1,7 @@
 import { Product } from '@/models/product';
 import Image from 'next/image';
-import Link from 'next-intl/link';
+import Link from 'next-intl/link'; import { FaRegStar, FaStar } from 'react-icons/fa6';
+0
 
 export function ProductItem({
   product,
@@ -22,18 +23,60 @@ export function ProductItem({
       </div>
       <div className='p-2'>
         <div className='font-bold'>{product.name}</div>
-        <div className='block'>
-          <div className='w-20 inline-block relative mr-2'>
-            <div className='relative z-0 block text-[20px] leading-0'>
-              &#9733;&#9733;&#9733;&#9733;&#9733;
-            </div>
-            <div className='absolute flex top-0 left-0 text-[20px] overflow-hidden text-[#FAD115] z-10'
+        <div className='block space-x-1'>
+          <div className='inline-flex relative cursor-pointer align-middle'>
+            {
+              [...new Array(5)].map((value: any, index: number) => {
+
+                const activeState = product.rating;
+                const showEmptyIcon = activeState < (index + 1);
+                console.log('dsfjsdfd', index, activeState, showEmptyIcon, product.rating)
+
+                const isActiveRating = activeState !== 1;
+                const isRatingWithPrecision = activeState % 1 !== 0;
+                const isRatingEqualToIndex = Math.ceil(activeState) === index + 1;
+                const showRatingWithPrecision = isActiveRating && isRatingWithPrecision && isRatingEqualToIndex;
+                return (
+                  <div key={`product-${product.id}-${index}`}
+                    className='relative cursor-pointer inline text-[#FAD115]'>
+                    <div className={`absolute overflow-hidden z-10`}
+                      style={{ width: showRatingWithPrecision ? `${(activeState % 1) * 100}%` : `0%` }}>
+                      <FaStar />
+                    </div>
+                    <div className={`relative`}>
+                      {showEmptyIcon ? <FaRegStar /> : <FaStar />}
+                    </div>
+                  </div>
+                )
+              })
+            }
+
+            {/* <div className='block absolute z-10 top-0 left-0 overflow-hidden'>
+              {
+                Array.from({ length: 5 }, (_value, index: number) => {
+                  return index + 1;
+                }).map((value: number) => {
+                  return <FaStar className="inline align-middle"
+                    style={{
+                      width: rating
+                    }} />
+                })
+              }
+            </div> */}
+            {/* <div className='relative flex top-0 left-0 text-[20px] overflow-hidden text-[#FAD115] z-10'
               style={{ width: Math.round((product.rating / 5) * 80) }}>
-              &#9733;&#9733;&#9733;&#9733;&#9733;
-            </div>
+              {
+                Array.from({ length: 5 }, (_value, index: number) => {
+                  return index + 1;
+                }).map((value: number) => {
+                  return <FaStar size={24} className="inline" />
+                })
+              }
+            </div> */}
           </div>
-          <span className='inline-block'>&#40;{product.raters}&#41;</span>
+          <span className='inline-block align-middle'>&#40;{product.raters}&#41;</span>
         </div>
+
         <div className='font-bold text-primary'>
           &#8369; {product.price.toFixed(2)}
         </div>
