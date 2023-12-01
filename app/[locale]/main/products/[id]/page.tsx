@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <Breadcrumbs breadcrumbs={breadCrumbsItems} />
             <div className='block'>
               <h3 className='font-semibold py-2 border-b border-b-tertiary'>
-                <div className='w-full text-ellipsis overflow-hidden h-full'>
+                <div className='w-full text-ellipsis overflow-hidden h-full text-[20px]'>
                   {product.name}
                 </div>
               </h3>
@@ -60,7 +60,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 <Link href={`/stores/${product.seller.id}`}
                   className='group/store flex gap-2 items-center'>
                   <div className='flex-none w-auto'>
-                    <div className='rounded-full border-2 border-primary relative h-[72px] w-[72px]'>
+                    <div className='rounded-full border-2 border-primary relative h-[56px] w-[56px]'>
                       <Image alt='seller-product-info' src={product.seller.image} fill className='rounded-full object-fill' />
                     </div>
                   </div>
