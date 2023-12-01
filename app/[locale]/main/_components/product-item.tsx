@@ -21,11 +21,10 @@ export function ProductItem({
         </div>
       </div>
       <div className='p-2'>
-
         <Link href={`/products/${product.id}`} className='font-bold block hover:text-primary'>{product.name}</Link>
         <div className='block space-x-1'>
           <Rating id={product.id} rating={product.rating} />
-          <span className='inline-block align-middle'>&#40;{product.raters}&#41;</span>
+          <span className='inline-block align-top'>&#40;{product.raters}&#41;</span>
         </div>
 
         <div className='font-bold text-primary'>

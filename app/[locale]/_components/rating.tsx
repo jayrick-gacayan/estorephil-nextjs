@@ -62,10 +62,10 @@ export default function Rating({
               className='relative cursor-pointer inline text-[#FAD115]'>
               <div className={`absolute overflow-hidden z-10`}
                 style={{ width: showRatingWithPrecision ? `${(activeState % 1) * 100}%` : `0%` }}>
-                <FaStar />
+                <FaStar size={20} />
               </div>
               <div className='relative'>
-                {showEmptyIcon ? <FaRegStar /> : <FaStar />}
+                {showEmptyIcon ? <FaRegStar size={20} /> : <FaStar size={20} />}
               </div>
             </div>
           )
