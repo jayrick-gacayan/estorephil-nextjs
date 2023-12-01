@@ -48,7 +48,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             <Breadcrumbs breadcrumbs={breadCrumbsItems} />
             <div className='block'>
               <h3 className='font-semibold py-2 border-b border-b-tertiary'>
-                <div className='w-full text-ellipsis overflow-hidden h-full text-[20px]'>
+                <div className='w-full text-ellipsis overflow-hidden h-full text-3xl'>
                   {product.name}
                 </div>
               </h3>
