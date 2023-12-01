@@ -10,6 +10,7 @@ import { Product } from '@/models/product';
 import { notFound } from 'next/navigation';
 import ProductButtonsContainer from './_section/product-buttons-container';
 import Link from 'next-intl/link';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 export async function generateStaticParams() {
   let products = (await import('@/app/_data/product.json')).default;
@@ -74,7 +75,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     <div className='w-full'>
                       <div className='flex gap-x-1.5'>
                         <div className='flex-none'>
-                          <RiRefund2Fill className='inline-block text-success w-16 h-16' />
+                          <RiRefund2Fill size={64} className='inline-block text-success' />
                         </div>
                         <div className='flex-1 space-y-1'>
                           <h6 className='font-bold'>Refund Guarantee</h6>
@@ -88,7 +89,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     <div className='w-full'>
                       <div className='flex gap-x-1.5'>
                         <div className='flex-none'>
-                          <BiCheckShield className='inline-block text-success w-16 h-16' />
+                          <BiCheckShield size={64} className='inline-block text-success' />
                         </div>
                         <div className='flex-1 space-y-1'>
                           <h6 className='font-bold'>Refund Guarantee</h6>
@@ -101,43 +102,48 @@ export default async function ProductPage({ params }: { params: { id: string } }
                     </div>
                   </div>
                 </div>
-
               </div>
-              <div className='py-2 border-b border-b-tertiary'>
-                <div className='flex text-sm items-center'>
-                  <div className='space-y-2 basis-1/2'>
-                    <div className='space-x-4'>
-                      <RiShipLine className='inline-block' />
-                      <div className='inline-block space-x-2 align-middle'>
-                        <span>Ships from Canada</span>
-                        <HiInformationCircle className='inline-block align-middle' />
+              <div className='flex py-2 border-b border-b-tertiary text-sm'>
+                <div className='w-full'>
+                  <div className='flex items-center justify-center gap-8'>
+                    <div className='w-full'>
+                      <div className='flex gap-1.5 flex-col'>
+                        <div className='w-full'>
+                          <div className='flex gap-2 items-center w-[200px]'>
+                            <div className='flex-1 space-x-2'>
+                              <RiShipLine size={24} className='inline-block' />
+                              <span className='align-middle'>Ships from Canada</span>
+                            </div>
+                            <div className='flex-none w-auto'>
+                              <HiInformationCircle size={24} className='inline-block align-middle' />
+                            </div>
+                          </div>
+                        </div>
+                        <div className='w-full'>
+                          <div className='flex gap-2 items-center w-[200px]'>
+                            <div className='flex-1 space-x-2'>
+                              <FaCalendarAlt size={24} className='inline-block' />
+                              <span className='align-middle'>July 25-30, 2022</span>
+                            </div>
+                            <div className='flex-none w-auto'>
+                              <HiInformationCircle size={24} className='inline-block align-middle' />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className='space-x-4'>
-                      <RiShipLine className='inline-block' />
-                      <div className='inline-block space-x-2 align-middle'>
-                        <span>July 25-30, 2022</span>
-                        <HiInformationCircle className='inline-block align-middle' />
-                      </div>
-                    </div>
-                  </div>
-                  <div className='basis-1/2'>
-                    <div className='flex gap-x-1 items-center'>
-                      <div className='flex-none'>
-                        <Image alt='map-marker-image'
-                          src='/others/map_marker.png'
-                          width={48}
-                          height={64}
-                          className='inline-block w-16 h-16' />
-
-                      </div>
-                      <div className='flex-1 space-y-1'>
-                        <h6 className='font-bold space-x-2'>
-                          <span className='align-middle'>Deliverable Locations</span>
-                          <HiInformationCircle className='inline-block' />
-                        </h6>
-                        <div>
-                          Caloocan, Las Pinas, Makati, Malabon, Mandaluyong, Cebu, Davao, 25+ more...
+                    <div className='w-full'>
+                      <div className='flex gap-x-1.5'>
+                        <div className='flex-none'>
+                          <Image alt='map-marker-image'
+                            src='/others/marker.svg'
+                            width={64}
+                            height={64}
+                            className='inline-block w-16 h-16' />
+                        </div>
+                        <div className='flex-1 space-y-1'>
+                          <h6 className='font-bold'>Deliverable Locations</h6>
+                          <div>Caloocan, Las Pinas, Makati, Malabon, Mandaluyong, Cebu, Davao, 25+ more...</div>
                         </div>
                       </div>
                     </div>
