@@ -2,11 +2,12 @@
 
 import { Seller } from '@/models/seller';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { SellerItem } from '../../_components/seller-item';
 import Sellers from "@/app/_data/seller.json";
 
 export function OurSellers() {
+  const [pressDirection, setPressDirection] = useState('');
   const sliderContainerRef = useRef<HTMLDivElement>(null);
   const innerSliderContainerRef = useRef<HTMLDivElement>(null);
 
@@ -67,8 +68,12 @@ export function OurSellers() {
       <div className="flex mb-2">
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
-          <FaChevronLeft size={20} className='inline-block' onClick={() => { moveSellersSlider(-140) }} />
-          <FaChevronRight size={20} className='inline-block' onClick={() => { moveSellersSlider(140) }} />
+          <FaChevronLeft size={20} className='inline-block'
+
+            onClick={() => { moveSellersSlider(-140) }}
+          />
+          <FaChevronRight size={20} className='inline-block'
+            onClick={() => { moveSellersSlider(140) }} />
         </div>
       </div>
 
