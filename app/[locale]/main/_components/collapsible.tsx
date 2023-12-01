@@ -14,16 +14,18 @@ export default function Collapsible({
   data,
   checkAllData,
   onCheckboxChanged,
+  collapsibleOpen,
   isNotCollapsible,
   children,
 }: {
   data: Data;
   checkAllData?: boolean;
   onCheckboxChanged?: (value: boolean) => void;
+  collapsibleOpen?: boolean;
   isNotCollapsible?: boolean;
   children: ReactNode;
 }) {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(collapsibleOpen ? true : false);
   return (
     <div className='border border-secondary-light'>
       <div className='flex items-center p-4 bg-tertiary-dark border-b-2 border-secondary-light'>

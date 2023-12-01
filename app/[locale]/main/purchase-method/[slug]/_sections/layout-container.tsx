@@ -27,12 +27,13 @@ export default function LayoutContainer({
     return purchaseMethodState.purchaseMethodItems;
   }, [purchaseMethodState.purchaseMethodItems]);
 
+  console.log('sdjfklsdjf', checkoutSlug)
   return purchaseMethod === '' ? null :
     purchaseMethodItems.length === 0 ? (<>{children}</>) :
       (
         <div className='flex'>
           <div className='flex-1 bg-white'>
-            <ShopMethodHeader text={checkoutSlug.toUpperCase()} />
+            <ShopMethodHeader text={checkoutSlug === 'balikbayan' ? 'BALIKBAYAN' : 'CART'} />
             <div className='p-8 space-y-3'>
               {children}
             </div>
