@@ -36,7 +36,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
 
   const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
-      let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
+      let querySelector = dropdownRef.current.querySelector('#dropdown-purchase-method');
       if (querySelector) {
         querySelector.classList.add('hidden')
       }
