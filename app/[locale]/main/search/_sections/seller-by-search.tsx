@@ -13,7 +13,8 @@ export default function SellerBySearch() {
       {
         SellersJSON.sellers.map((seller: Seller) => {
           return (
-            <div className="w-32 h-32 flex-none">
+            <div key={`seller-by-search-${seller.id}`}
+              className="w-32 h-32 flex-none">
               <Image alt={`product-category-seller-${seller.id}`}
                 src={seller.image}
                 width={128}
