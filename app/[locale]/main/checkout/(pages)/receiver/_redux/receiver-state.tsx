@@ -1,4 +1,5 @@
 import { FieldInput } from "@/models/field-input"
+import { RequestStatus } from "@/types/enums/request-status"
 
 export interface ReceiverState {
     firstName: FieldInput
@@ -13,6 +14,7 @@ export interface ReceiverState {
     mobileNumber: FieldInput
     emailAddress: FieldInput
     deliveryNotes: FieldInput
-    valid: boolean
+    valid: boolean;
+    requestStatus: RequestStatus;
 
 }
