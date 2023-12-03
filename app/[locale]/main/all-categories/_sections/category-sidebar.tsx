@@ -9,28 +9,30 @@ export function CategorySidebar() {
   const searchParams = useSearchParams();
 
   return (
-    <div className='flex-none bg-white w-[292px] border-r-2 border-r-secondary-light py-2'>
-      <div className='space-y-3 w-fit m-auto'>
+    <div className='flex-none bg-white w-[320px] border-r-2 border-r-secondary-light py-2'>
+      <div className='space-y-3 w-3/4 m-auto'>
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>
           {
             [
               '3D Printed Products',
-              'Automotive & Powerparts',
-              'Baby Products',
+              'Baby Products \u0028excluding Baby Apparel\u0029',
               'Beauty',
               'Books',
-              'Camera & Photo',
-              'Cell Phone Devices',
-              'Clothing & Accessories',
+              'Camera \u0026 Photo',
               'Collectibles \u2212 Books',
               'Collectibles \u2212 Coins',
+              'Collectibles \u2212 Entertainment or Sports',
               'Consumer Electronics',
               'Electronics Accessories',
             ].map((category: string, index: number) => {
               return (
-                <Checkbox key={`category-${index}-${category}`}
+                <Checkbox<string> key={`category-${index}-${category}`}
                   labelText={category}
+                  labelClassname={(value: string, current: string) => {
+                    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+                  }}
+                  value={category}
                   current={searchParams.get('keyword') ?? ''}
                   onCheckboxChanged={(text: string) => {
                     let queryStringSearch = new URLSearchParams();

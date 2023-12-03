@@ -1,161 +1,135 @@
 'use client';
 
-import { getRefValue, useStateRef } from '@/app/_hooks/use_ref_hooks';
-import { MouseEvent, useRef, useState } from 'react';
-import { PointerEvent } from 'react';
+import { useEffect, useRef, useState, MouseEvent, TouchEvent, useCallback } from 'react';
 import { CarouselItem } from '../_components/carousel-item';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { CarouselItemProps } from '@/types/props/carousel-item-props';
 
-// function getTouchEventData(
-//   e:
-//     | TouchEvent
-//     | MouseEvent
-//     | React.TouchEvent<HTMLElement>
-//     | React.MouseEvent<HTMLElement>
-// ) {
-//   return 'changedTouches' in e ? e.changedTouches[0] : e;
-// }
-
-// const MIN_SWIPE_REQUIRED = 40;
+const carouselItems: CarouselItemProps[] = [
+  { index: 0, image: '/static_images/carousel_image_one.jpg' },
+  { index: 1, image: '/static_images/carousel_image_two.png' },
+  { index: 2, image: '/static_images/carousel_image_three.jpg' },
+  { index: 3, image: '/static_images/carousel_image_four.jpg' },
+  { index: 4, image: '/static_images/carousel_image_five.png' }
+]
 
 export function Carousel() {
+  const carouselIntervalRef = useRef<any>(null);
   const [carouselCurrentSlide, setCarouselCurrentSide] = useState<number>(0);
-  const [currentDragTranslate, setCurrentDragTranslate] = useState<number>(0);
-  // const containerRef = useRef<HTMLDivElement>(null);
-  // const containerWidthRef = useRef(0);
-  // const minOffsetXRef = useRef(0);
-  // const currentOffsetXRef = useRef(0);
-  // const startXRef = useRef(0);
-  // const [offsetX, setOffsetX, offsetXRef] = useStateRef(0);
-  // const [isSwiping, setIsSwiping] = useState(false);
-  // const [currentIdx, setCurrentIdx] = useState(0);
 
-  // const onTouchMove = (e: TouchEvent | MouseEvent) => {
-  //   const currentX = getTouchEventData(e).clientX;
-  //   const diff = getRefValue(startXRef) - currentX;
-  //   let newOffsetX = getRefValue(currentOffsetXRef) - diff;
+  const carouselMoveToRight = useCallback(() => {
+    setCarouselCurrentSide(carouselCurrentSlide === (carouselItems.length - 1) ? 0 : carouselCurrentSlide + 1)
+  }, [setCarouselCurrentSide, carouselCurrentSlide]);
 
-  //   const maxOffsetX = 0;
-  //   const minOffsetX = getRefValue(minOffsetXRef);
+  const carouselMoveToLeft = useCallback(() => {
+    setCarouselCurrentSide(carouselCurrentSlide === 0 ? (carouselItems.length - 1) : carouselCurrentSlide - 1);
+  }, [setCarouselCurrentSide, carouselCurrentSlide])
 
-  //   if (newOffsetX > maxOffsetX) {
-  //     newOffsetX = maxOffsetX;
-  //   }
+  const clearCarouselInterval = useCallback(() => {
+    clearInterval(carouselIntervalRef.current)
+    carouselIntervalRef.current = null;
+  }, [carouselIntervalRef])
 
-  //   if (newOffsetX < minOffsetX) {
-  //     newOffsetX = minOffsetX;
-  //   }
+  useEffect(() => {
+    carouselIntervalRef.current = setInterval(() => {
+      carouselMoveToRight();
+    }, 3000);
 
-  //   setOffsetX(newOffsetX);
-  // };
-  // const onTouchEnd = () => {
-  //   const currentOffsetX = getRefValue(currentOffsetXRef);
-  //   const containerWidth = getRefValue(containerWidthRef);
-  //   let newOffsetX = getRefValue(offsetXRef);
+    return () => {
+      clearCarouselInterval();
+    }
+  }, [carouselMoveToRight, clearCarouselInterval]);
 
-  //   const diff = currentOffsetX - newOffsetX;
 
-  //   // we need to check difference in absolute/positive value (if diff is more than 40px)
-  //   if (Math.abs(diff) > MIN_SWIPE_REQUIRED) {
-  //     if (diff > 0) {
-  //       // swipe to the right if diff is positive
-  //       newOffsetX = Math.floor(newOffsetX / containerWidth) * containerWidth;
-  //     } else {
-  //       // swipe to the left if diff is negative
-  //       newOffsetX = Math.ceil(newOffsetX / containerWidth) * containerWidth;
-  //     }
-  //   } else {
-  //     // remain in the current image
-  //     newOffsetX = Math.round(newOffsetX / containerWidth) * containerWidth;
-  //   }
+  function handlePointerEvent(event: MouseEvent | TouchEvent) {
+    clearCarouselInterval();
 
-  //   setIsSwiping(false);
-  //   setOffsetX(newOffsetX);
-  //   setCurrentIdx(Math.abs(newOffsetX / containerWidth));
+    const card = event.target as HTMLDivElement;
+    let offset = 0;
+    const isTouchEvent = event.type === "touchstart";
 
-  //   window.removeEventListener('touchend', onTouchEnd);
-  //   window.removeEventListener('touchmove', onTouchMove);
-  //   window.removeEventListener('mouseup', onTouchEnd);
+    const initialX = isTouchEvent ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX;
 
-  //   //@ts-ignore
-  //   window.removeEventListener('mousemove', onTouchMove);
-  // };
-  // const onTouchStart = (
-  //   e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
-  // ) => {
-  //   setIsSwiping(true);
+    document.addEventListener('mousemove', onPointerMove as (moveEvent: any) => void);
+    document.addEventListener('mouseup', onPointerEnd);
+    document.addEventListener('touchmove', onPointerMove as (moveEvent: any) => void);
+    document.addEventListener('touchend', onPointerEnd);
 
-  //   currentOffsetXRef.current = getRefValue(offsetXRef);
-  //   startXRef.current = getTouchEventData(e).clientX;
+    function onPointerMove(moveEvent: MouseEvent | TouchEvent) {
+      offset = (isTouchEvent ? (moveEvent as TouchEvent).touches[0].clientX : (moveEvent as MouseEvent).clientX) - initialX;
 
-  //   const containerEl = getRefValue(containerRef);
-  //   const containerWidth = containerEl.offsetWidth;
+      if (offset <= -200) {
+        carouselMoveToRight();
+        card.style.left = "0px";
+        return;
+      }
 
-  //   containerWidthRef.current = containerWidth;
-  //   minOffsetXRef.current = containerWidth - containerEl.scrollWidth;
+      if (offset >= 200) {
+        carouselMoveToLeft();
+        card.style.left = "0px";
+        return;
+      }
 
-  //   window.addEventListener('touchmove', onTouchMove);
-  //   window.addEventListener('touchend', onTouchEnd);
-  //   //@ts-ignore
-  //   window.addEventListener('mousemove', onTouchMove);
-  //   window.addEventListener('mouseup', onTouchEnd);
-  // };
+      card.style.left = `${offset}px`;
+    }
 
-  // const indicatorOnClick = (idx: number) => {
-  //   const containerEl = getRefValue(containerRef);
-  //   const containerWidth = containerEl.offsetWidth;
+    function onPointerEnd() {
+      if (offset < 0 && offset > -200) {
+        card.style.left = "0px";
+      }
+      if (offset > 0 && offset < 200) {
+        card.style.left = "0px";
+      }
 
-  //   setCurrentIdx(idx);
-  //   setOffsetX(-(containerWidth * idx));
-  // };
+      document.removeEventListener('mousemove', onPointerMove as (moveEvent: any) => void);
+      document.removeEventListener('mouseup', onPointerEnd);
+      document.removeEventListener('touchmove', onPointerMove as (moveEvent: any) => void);
+      document.removeEventListener('touchend', onPointerEnd);
+    }
+  }
 
   return (
     <div className='flex-1 h-full w-full'>
-      <div className='relative h-full w-full overflow-hidden'
-        onMouseDown={(event: MouseEvent<HTMLDivElement>) => {
-          console.log('client x', event.clientX);
-          console.log('client y', event.clientY);
-        }}
-        onMouseMove={(event: MouseEvent<HTMLDivElement>) => {
-          console.log('client x', event.clientX);
-          console.log('client y', event.clientY);
-        }}
-        onMouseLeave={() => { }}
-        onMouseUp={() => { }}
-      >
+      <div className='relative h-full w-full overflow-hidden'>
         <div className='absolute top-[50%] left-[12px] z-20 text-white/100 cursor-pointer'
           onClick={() => {
-            setCarouselCurrentSide((currentSlide: number) => {
-              return currentSlide === 0 ? 2 : (currentSlide = currentSlide - 1);
-            })
+            clearCarouselInterval();
+            carouselMoveToLeft();
           }}>
-          <FaChevronLeft className='w-6 h-6 block text-white/100' />
+          <FaChevronLeft size={24} className='block text-white/100' />
         </div>
         <div className='absolute top-[50%] right-[12px] z-20 text-white/100 cursor-pointer'
           onClick={() => {
-            setCarouselCurrentSide((currentSlide: number) => {
-              return currentSlide === 2 ? 0 : (currentSlide = currentSlide + 1);
-            })
+            clearCarouselInterval();
+            carouselMoveToRight();
           }}>
-          <FaChevronRight className='w-6 h-6 block' />
+          <FaChevronRight size={24} className='block' />
         </div>
-        <div className='w-full relative h-full'
-          style={{ transform: `translateX(${currentDragTranslate}%)` }}>
-          <CarouselItem imgSrc='/static_images/carousel_image_two.jpg' imgAlt='carousel-img-1' index={0} currentSlide={carouselCurrentSlide} />
-          <CarouselItem imgSrc='/static_images/estorephil_for_carousel.png' imgAlt='carousel-img-2' index={1} currentSlide={carouselCurrentSlide} />
-          <CarouselItem imgSrc='/static_images/carousel_image_two.jpg' imgAlt='carousel-img-3' index={2} currentSlide={carouselCurrentSlide} />
-        </div>
-        <div className='absolute bottom-3 left-0 flex gap-2 items-center w-full justify-center'>
+        <div className='w-full relative h-full transition-all duration-100' >
           {
-            [0, 1, 2].map((value: number) => {
+            carouselItems.map((carouselItem: CarouselItemProps) => {
               return (
-                <div key={`carousel-item-main-${value}`}
-                  className={`h-1 w-6 rounded  cursor-pointer ${carouselCurrentSlide === value ? `bg-primary` : `bg-white`}`}
-                  onClick={() => { setCarouselCurrentSide(value) }} />
+                <CarouselItem key={`carousel-item-${carouselItem.index + 1}`}
+                  imgSrc={carouselItem.image}
+                  imgAlt={`carousel-img-${carouselItem.index + 1}`}
+                  index={carouselItem.index}
+                  currentSlide={carouselCurrentSlide}
+                  onPointerEvent={handlePointerEvent} />
               )
             })
           }
-
+        </div>
+        <div className='absolute bottom-3 left-0 flex gap-2 items-center w-full justify-center'>
+          {
+            carouselItems.map((carouselItem: CarouselItemProps) => {
+              return (
+                <div key={`carousel-item-main-${carouselItem.index}`}
+                  className={`h-1 w-6 rounded  cursor-pointer 
+                  ${carouselCurrentSlide === carouselItem.index ? `bg-primary` : `bg-white`}`}
+                  onClick={() => { setCarouselCurrentSide(carouselItem.index) }} />
+              )
+            })
+          }
         </div>
       </div>
     </div>

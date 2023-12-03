@@ -1,14 +1,14 @@
 
-import { LinkProps } from '@/types/props/link_props';
+import { LinkProps } from '@/types/props/link-props';
 import { FaHome, FaRegHeart, FaUser } from 'react-icons/fa';
 import { FaCartShopping } from 'react-icons/fa6';
 import { MobileLinkFooterItem } from '../_components/mobile-link-footer-item';
 
 const mobileFooterLinks: LinkProps[] = [
-  { link: '#', text: 'HOME', icon: <FaHome className='w-8 h-8 block m-auto' /> },
-  { link: '#', text: 'FAVORITES', icon: <FaRegHeart className='w-8 h-8 block m-auto' /> },
-  { link: '#', text: 'CART', icon: <FaCartShopping className='w-8 h-8 block m-auto' /> },
-  { link: '#', text: 'PROFILE', icon: <FaUser className='w-8 h-8 block m-auto' /> }
+  { link: '#', text: 'HOME', icon: <FaHome size={32} className='block m-auto' /> },
+  { link: '#', text: 'FAVORITES', icon: <FaRegHeart size={32} className='block m-auto' /> },
+  { link: '#', text: 'CART', icon: <FaCartShopping size={32} className='block m-auto' /> },
+  { link: '#', text: 'PROFILE', icon: <FaUser size={32} className='block m-auto' /> }
 ]
 
 export function MobileStickyFooter() {

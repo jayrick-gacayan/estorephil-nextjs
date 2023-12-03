@@ -2,33 +2,16 @@
 
 import { Seller } from '@/models/seller';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useEffect, useRef } from 'react';
+import { useRef, useState } from 'react';
 import { SellerItem } from '../../_components/seller-item';
+import Sellers from "@/app/_data/seller.json";
 
 export function OurSellers() {
+  const [pressDirection, setPressDirection] = useState('');
   const sliderContainerRef = useRef<HTMLDivElement>(null);
   const innerSliderContainerRef = useRef<HTMLDivElement>(null);
 
-  const sellers: Seller[] = [
-    { id: 1, sellerImage: '/sellers/jollibee.png' },
-    { id: 2, sellerImage: '/sellers/asianhome.png' },
-    { id: 3, sellerImage: '/sellers/samsung.png' },
-    { id: 4, sellerImage: '/sellers/jollibee.png' },
-    { id: 5, sellerImage: '/sellers/asianhome.png' },
-    { id: 6, sellerImage: '/sellers/samsung.png' },
-    { id: 7, sellerImage: '/sellers/jollibee.png' },
-    { id: 8, sellerImage: '/sellers/asianhome.png' },
-    { id: 9, sellerImage: '/sellers/samsung.png' },
-    { id: 10, sellerImage: '/sellers/jollibee.png' },
-    { id: 11, sellerImage: '/sellers/asianhome.png' },
-    { id: 12, sellerImage: '/sellers/samsung.png' },
-    { id: 13, sellerImage: '/sellers/jollibee.png' },
-    { id: 14, sellerImage: '/sellers/asianhome.png' },
-    { id: 15, sellerImage: '/sellers/samsung.png' },
-    { id: 16, sellerImage: '/sellers/jollibee.png' },
-    { id: 17, sellerImage: '/sellers/samsung.png' },
-    { id: 18, sellerImage: '/sellers/jollibee.png' },
-  ];
+  const sellers: Seller[] = Sellers.sellers;
 
   function moveSellersSlider(moveTo: number) {
     if (sliderContainerRef.current) {
@@ -85,8 +68,12 @@ export function OurSellers() {
       <div className="flex mb-2">
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
-          <FaChevronLeft className='w-5 h-5 inline-block' onClick={() => { moveSellersSlider(-140) }} />
-          <FaChevronRight className='w-5 h-5 inline-block' onClick={() => { moveSellersSlider(140) }} />
+          <FaChevronLeft size={20} className='inline-block'
+
+            onClick={() => { moveSellersSlider(-140) }}
+          />
+          <FaChevronRight size={20} className='inline-block'
+            onClick={() => { moveSellersSlider(140) }} />
         </div>
       </div>
 

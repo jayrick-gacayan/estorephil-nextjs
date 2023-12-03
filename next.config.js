@@ -1,5 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*",
+        port: "",
+      },
+      {
+        protocol: "http",
+        hostname: "*",
+        port: "8001",
+      },
+    ],
+  },
   async rewrites() {
     return [
       {
@@ -11,7 +25,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin$).*)',
+        source: '/:locale/:path((?!admin|register|login).*)',
         destination: '/:locale/main/:path*',
       },
     ]

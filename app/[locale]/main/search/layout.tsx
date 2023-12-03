@@ -1,6 +1,7 @@
 import { SearchSidebar } from './_sections/search-sidebar';
 import { ReactNode } from 'react';
 import BreadcrumbsContainer from '../all-categories/_sections/breadcrumbs-container';
+import SellerBySearch from './_sections/seller-by-search';
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
 
@@ -11,6 +12,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
             <BreadcrumbsContainer basePath='search' text='Search' />
+            <SellerBySearch />
           </div>
           {children}
         </div>

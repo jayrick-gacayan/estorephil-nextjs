@@ -1,5 +1,6 @@
 import { ValidationResponse, ValidationStatus } from "@/models/validation-response"
 export default class Validations {
+
     constructor() {
 
     }
@@ -43,6 +44,19 @@ export default class Validations {
         const expiryDate = new Date(value)
         return this.validationResponse = value.length == 0 ? { status: ValidationStatus.EMPTY, errorText: `${field} is required` }
             : expiryDate <= currentDate ? { status: ValidationStatus.INVALID_INPUT, errorText: `date should be in the future` }
+                : { status: ValidationStatus.VALID, errorText: `` }
+    }
+    passwordValid(value: string) {
+        const hasSpecialOrNumeric = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(value) || /\d+/.test(value);
+        return this.validationResponse = value.length == 0 ? { status: ValidationStatus.EMPTY, errorText: `password required` }
+            : value.length < 8 ? { status: ValidationStatus.INVALID_FORMAT, errorText: ` minimum of 8 characters` }
+                : value.length > 16 ? { status: ValidationStatus.INVALID_FORMAT, errorText: ` maximum of 16 characters` }
+                    : !hasSpecialOrNumeric ? { status: ValidationStatus.INVALID_FORMAT, errorText: `Password should contain at least one special or numeric character` }
+                        : { status: ValidationStatus.VALID, errorText: '' };
+    }
+    confirmPasswordValid(value: string, password: string) {
+        return this.validationResponse = value.length == 0 ? { status: ValidationStatus.EMPTY, errorText: `confirm password required` }
+            : value != password ? { status: ValidationStatus.INVALID_INPUT, errorText: `does not match password` }
                 : { status: ValidationStatus.VALID, errorText: `` }
     }
 }

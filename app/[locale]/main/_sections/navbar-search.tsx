@@ -11,7 +11,7 @@ export function NavbarSearch() {
   return (
     <div className='flex-1 flex justify-between item-stretch overflow-hidden rounded bg-white w-full'>
       <div className='p-3'>
-        <FaSearch className='w-4 h-4 align-middle inline-block text-secondary' />
+        <FaSearch size={16} className='align-middle inline-block text-secondary' />
       </div>
       <div className='p-3 w-full'>
         <input type='text'

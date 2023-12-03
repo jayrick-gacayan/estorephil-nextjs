@@ -1,6 +1,6 @@
 'use client';
 
-import { BreadcrumbProps } from '@/types/props/breadcrumb_props';
+import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { useSearchParams } from 'next/navigation';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
 

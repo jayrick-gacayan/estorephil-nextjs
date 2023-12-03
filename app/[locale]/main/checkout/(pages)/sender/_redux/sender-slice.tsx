@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { SenderState } from "./sender-state";
 import Validations from "@/types/validations";
 import { ValidationStatus } from "@/models/validation-response";
+import { RequestStatus } from "@/types/enums/request-status";
 
 
 export const initialState: SenderState = {
@@ -50,11 +51,17 @@ export const initialState: SenderState = {
         error: '',
     },
     valid: false,
+    requestStatus: RequestStatus.NONE
 }
 export const senderSlice = createSlice({
     name: "sender",
     initialState,
     reducers: {
+        requestStatusSet: (state: SenderState, action: PayloadAction<RequestStatus>) => {
+            return {
+                ...state, requestStatus: action.payload
+            }
+        },
         validateSender: (state: SenderState) => {
             var validation = new Validations()
             const validateFirstName = validation.isValidName({ name: state.firstName.value, nameColumn: 'first name' });
@@ -71,10 +78,11 @@ export const senderSlice = createSlice({
                 && validateCity.status == ValidationStatus.VALID
                 && validateZipCode.status == ValidationStatus.VALID
                 && validateCountry.status == ValidationStatus.VALID
-            console.log('is valid: ', isValid)
+
             return {
                 ...state,
                 valid: isValid,
+                requestStatus: isValid ? RequestStatus.SUCCESS : RequestStatus.FAILURE,
                 firstName: {
                     ...state.firstName,
                     valid: validateFirstName.status === ValidationStatus.VALID,
@@ -222,6 +230,7 @@ export const {
     lastNameChanged, emailChanged,
     validateSender, address1Changed, address2Changed,
     cityChanged, countryChanged, mobileNumberChanged, phoneNumberChanged,
-    provinceChanged, zipCodeChanged
+    provinceChanged, zipCodeChanged,
+    requestStatusSet,
 } = senderSlice.actions
 export default senderSlice.reducer

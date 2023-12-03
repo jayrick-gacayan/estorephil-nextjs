@@ -1,78 +1,23 @@
-import { Product } from '@/models/product'
-import { ProductsContainer } from '../_components/products-container'
-import CategoryProductListResult from './_sections/category-product-list-result'
+import { Product } from '@/models/product';
+import CategoryProductListResult from './_sections/category-product-list-result';
 
-const featuredProducts: Product[] = [
-  {
-    id: 1,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 3.7,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 2,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 3,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 4,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 5,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 6,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  },
-  {
-    id: 7,
-    name: 'CUK ROG Zephyrus Duo 16 Gaming Notebook',
-    category: 'Consumer Electronics',
-    price: 5458,
-    rating: 4.0,
-    raters: 123,
-    productImage: '/products/laptop_image.png'
-  }
-]
+export default async function AllCategories({ searchParams }: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  let tempProducts = (await import('@/app/_data/product.json')).default.products;
 
-export default function AllCategories() {
+  let categoryProducts = Object.keys(searchParams).length === 0 ? tempProducts :
+    tempProducts.filter((product: Product) => {
+      if (searchParams.keyword && searchParams.keyword.includes('Baby')) {
+        return product.category.includes('Baby')
+      }
+
+      return product.category === searchParams.keyword;
+    })
 
   return (
-    <div className='p-4 bg-[#F7F9FC] space-y-4'>
-      <CategoryProductListResult headerText='Featured Products' products={featuredProducts} />
+    <div className='p-4 bg-default space-y-4'>
+      <CategoryProductListResult headerText='Featured Products' products={categoryProducts} />
     </div>
   )
 }

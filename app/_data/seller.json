@@ -1,0 +1,29 @@
+{
+  "sellers": [
+    {
+      "id": 1,
+      "image": "/sellers/jollibee.png",
+      "name": "Jollibee"
+    },
+    {
+      "id": 2,
+      "image": "/sellers/asianhome.png",
+      "name": "Asian Home"
+    },
+    {
+      "id": 3,
+      "image": "/sellers/samsung.png",
+      "name": "Samsung"
+    },
+    {
+      "id": 4,
+      "image": "/sellers/apple.png",
+      "name": "Apple"
+    },
+    {
+      "id": 5,
+      "image": "/sellers/mcdonald.png",
+      "name": "McDonald"
+    }
+  ]
+}

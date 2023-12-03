@@ -1,4 +1,4 @@
-import { LinkProps } from '@/types/props/link_props';
+import { LinkProps } from '@/types/props/link-props';
 
 export function FooterLinksContainerWithIcons({
   headerText,
@@ -16,7 +16,7 @@ export function FooterLinksContainerWithIcons({
         {
           links.map((link: LinkProps, index: number) => {
             return (
-              <div className={linkChildrenClassName} key={`${link.text}-${index}`}>
+              <div className={`${linkChildrenClassName} relative`} key={`${link.text}-${index}`}>
                 {link.icon}
               </div>
             );

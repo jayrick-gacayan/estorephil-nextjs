@@ -11,6 +11,7 @@ export function BayanSection() {
                 <Image alt={`${value}-image`}
                   src={`/static_images/${value}.png`}
                   fill
+                  sizes="100vh"
                 />
               </div>
             )

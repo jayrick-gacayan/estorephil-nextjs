@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { AdminPageHeader } from './_components/admin_page_header';
-import { LinkProps } from '@/types/props/link_props';
+import { LinkProps } from '@/types/props/link-props';
 import { FaChartBar, FaChartLine, FaFilter, FaImages, FaMoneyCheck, FaShoppingBasket, FaShoppingCart, FaThLarge } from 'react-icons/fa';
 import { AdminNavbarHeader } from './_sections/admin_navbar_header';
 import { AdminSidebar } from './_sections/admin_sidebar';
