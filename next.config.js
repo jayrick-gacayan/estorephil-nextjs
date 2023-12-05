@@ -32,9 +32,13 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|register|login|verify-login).*)',
+        source: '/:locale/:path((?!admin|register|login|verify-login|courier).*)',
         destination: '/:locale/main/:path*',
       },
+      {
+        source: '/:locale/courier',
+        destination: '/:locale/courier/dashboard'
+      }
     ]
   },
 }
