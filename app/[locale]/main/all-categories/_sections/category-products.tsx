@@ -1,34 +1,32 @@
 'use client';
 
 import { Product } from '@/models/product';
+import { useRef, useState } from 'react';
 import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { useState, useRef } from 'react';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
 
-export function SearchProducts({
+export default function CategoryProducts({
+  headerText,
   products
 }: {
-  products: Product[]
-}): JSX.Element {
-  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  headerText: string;
+  products: Product[];
+}) {
   const [visible, setVisible] = useState<boolean>(false);
-  const searchSelectRef = useRef<HTMLDivElement>(null);
+  const categorySelectRef = useRef<HTMLDivElement>(null);
 
-  let keyword = searchParams.get('keyword') ?? '';
-
-  useOutsideClick(searchSelectRef, () => { setVisible(false); })
+  useOutsideClick(categorySelectRef, () => { setVisible(false); })
 
   return (
     <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
       <div className='flex mb-2'>
-        <ProductHeaderText text={searchParams && keyword !== '' ? `Results of \u0022${keyword}\u0022` : ``} />
+        <ProductHeaderText text={headerText} />
         <div className='flex-none space-x-2'>
           <span>Sort</span>
           <div className='inline-block w-36'>
-            <CustomSelect ref={searchSelectRef} items={['Top Seller', 'Low Seller']}
+            <CustomSelect ref={categorySelectRef} items={['Top Seller', 'Low Seller']}
               value={undefined}
               placeholder='Sort by:'
               labelText={''}

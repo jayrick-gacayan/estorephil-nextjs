@@ -1,5 +1,5 @@
 import { Product } from '@/models/product';
-import CategoryProductListResult from './_sections/category-product-list-result';
+import CategoryProducts from './_sections/category-products';
 
 export default async function AllCategories({ searchParams }: {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -17,7 +17,7 @@ export default async function AllCategories({ searchParams }: {
 
   return (
     <div className='p-4 bg-default space-y-4'>
-      <CategoryProductListResult headerText='Featured Products' products={categoryProducts} />
+      <CategoryProducts headerText='Featured Products' products={categoryProducts} />
     </div>
   )
 }
