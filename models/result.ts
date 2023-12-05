@@ -1,4 +1,4 @@
-export enum Result {
+export enum ResultStatus {
     SUCCESS,
     UNAUTHORIZED,
     REQUEST_TIMEOUT,
@@ -6,6 +6,7 @@ export enum Result {
     INVALID_REQUEST,
     SERVER_ERROR,
     NOT_FOUND,
+    NO_CONTENT,
 }
 export enum RequestStatus {
     SUCCESS,
@@ -13,23 +14,33 @@ export enum RequestStatus {
     IN_PROGRESS,
     WAITING
 }
+export type ApiResponse = {
+    data?: any;
+    errors?: any;
+    error?: any;
+    status?: any;
+    message?: string;
+    pagination?: any;
+}
 export const getResultStatus = (statusCode: number) => {
     switch (statusCode) {
         case 200:
-            return Result.SUCCESS;
+            return ResultStatus.SUCCESS;
+        case 204:
+            return ResultStatus.NO_CONTENT;
         case 400:
-            return Result.INVALID_REQUEST;
+            return ResultStatus.INVALID_REQUEST;
         case 401:
-            return Result.UNAUTHORIZED;
+            return ResultStatus.UNAUTHORIZED;
         case 403:
-            return Result.UNAUTHORIZED;
+            return ResultStatus.UNAUTHORIZED;
         case 404:
-            return Result.NOT_FOUND;
+            return ResultStatus.NOT_FOUND;
         case 408:
-            return Result.REQUEST_TIMEOUT;
+            return ResultStatus.REQUEST_TIMEOUT;
         case 500:
-            return Result.SERVER_ERROR;
+            return ResultStatus.SERVER_ERROR;
         default:
-            return Result.NONE;
+            return ResultStatus.NONE;
     }
 }

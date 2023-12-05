@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { useDispatch } from "react-redux";
 import { closeCountryPicker, countryPickerValueChanged, openCountryPicker } from "../_redux/main-slice";
 import { useTranslations } from "next-intl";
+import { getMainCategories } from "../home/_redux/home-thunk";
+import { store } from "@/redux/store";
+import { homeContainer } from "@/inversify/inversify.config";
+import { TYPES } from "@/inversify/types";
+import { HomeRepository } from "@/repositories/home-repository";
 export default function CountryPicker({
     value,
     show,
@@ -26,6 +31,7 @@ export default function CountryPicker({
     const countries = avaiableCountries
     const dispatch = useDispatch()
     const translate = useTranslations()
+    const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
     return (
         <>
             <div className="flex relative bg-transparent w-full h-full px-2" onClick={() => {
@@ -40,6 +46,7 @@ export default function CountryPicker({
                                 e.preventDefault()
                                 console.log('value', value)
                                 dispatch(countryPickerValueChanged(country.code))
+                                store.dispatch(getMainCategories(homeRepository, country.code))
                             }} className="w-full flex items-center hover:cursor-pointer border-t-[1px] border-slate-800 text-slate-800"> {country.icon} {country.code}</li>
                         )}
                     </ul>

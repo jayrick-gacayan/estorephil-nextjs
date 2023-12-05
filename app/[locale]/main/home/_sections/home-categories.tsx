@@ -1,45 +1,40 @@
 'use client';
 
+import { RootState, store } from '@/redux/store';
 import { LinkProps } from '@/types/props/link-props';
 import { useRouter } from 'next-intl/client';
 import Link from 'next-intl/link';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { getMainCategories } from '../_redux/home-thunk';
+import { TYPES } from '@/inversify/types';
+import { HomeRepository } from '@/repositories/home-repository';
+import { homeContainer } from '@/inversify/inversify.config';
+import { RequestStatus } from '@/models/result';
+import Loading from '../../_components/loading';
 
 export function HomeCategories() {
   const router = useRouter();
-
-  const allCategoriesLinks: LinkProps[] = [
-    { link: '/all-categories', text: `3D Printed Products` },
-    { link: '/all-categories', text: `Baby Products \u0028excluding Baby Apparel\u0029` },
-    { link: '/all-categories', text: `Beauty` },
-    { link: '/all-categories', text: `Books` },
-    { link: '/all-categories', text: `Camera \u0026 Photo` },
-    { link: '/all-categories', text: `Collectibles \u2212 Books` },
-    { link: '/all-categories', text: `Collectibles \u2212 Coins` },
-    { link: '/all-categories', text: `Collectibles \u2212 Entertainment or Sports` },
-    { link: '/all-categories', text: `Consumer Electronics` },
-    { link: '/all-categories', text: `Electronics Accessories` },
-  ]
-
+  const state = useSelector((state: RootState) => state.home)
+  const mainState = useSelector((state: RootState) => state.main)
+  const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
+  useEffect(() => {
+    store.dispatch(getMainCategories(homeRepository, mainState.countryPicker.value))
+  }, [])
   return (
-    <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-3 space-y-2 bg-white'>
+    <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-3 space-y-2 bg-white w-64'>
       <div className='flex'>
-        <div className='flex-1 font-bold'>CATEGORIES</div>
+        <div className='flex-1 font-semibold'>CATEGORIES</div>
         <button className='w-auto flex-none underline text-primary hover:text-primary-dark'
           onClick={() => { router.push('/all-categories') }}>View All</button>
       </div>
-      <div className='block text-secondary'>
-        {
-          allCategoriesLinks.map((categoryLink: LinkProps) => {
-            return (
-              <Link key={`all-categories-link-text-${categoryLink.text}`}
-                href={{
-                  pathname: categoryLink.link,
-                  query: { keyword: categoryLink.text }
-                }}
-                className='block hover:text-primary'>{categoryLink.text}
-              </Link>
-            )
-          })
+      <div className='flex flex-col gap-[4px] text-secondary'>
+        {state.getMainCategoriesStatus === RequestStatus.SUCCESS ?
+          state.categories.map((category, index) =>
+            <><Link key={index} className='block text-sm hover:text-primary hover:underline' href={'/all-categories'}>{category.name}</Link>
+            </>
+          )
+          : <Loading />
         }
       </div>
     </div>
