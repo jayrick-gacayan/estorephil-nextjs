@@ -63,8 +63,8 @@ export default function ProductButtonsContainer({
         </div>
       </div>
       <div className='w-full flex justify-around gap-4'>
-        <button className={`transition border duration-100 rounded-full flex-1 text-[14px] leading-0 h-auto text-white space-x-2 px-6 py-3 hover:bg-primary-light 
-          ${purchaseMethod !== '' && productMemo ? 'border-danger hover:border-danger-light bg-danger' : 'bg-primary border-primary hover:bg-primary-light'}`}
+        <button className={`transition border duration-100 rounded-full flex-1 text-[14px] leading-0 h-auto space-x-2 px-6 py-3
+          ${purchaseMethod !== '' && productMemo ? 'border-danger text-white hover:text-danger bg-danger hover:bg-danger-light' : 'bg-primary border-primary hover:bg-primary-light text-white'}`}
           onClick={() => {
             if (purchaseMethod === '') {
               dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' }))

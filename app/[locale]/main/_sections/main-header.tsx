@@ -10,9 +10,25 @@ import PurchaseMethodNavbar from './purchase-method-navbar';
 import CountryPicker from '../_components/country-picker';
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
+import Dropdown from '../../_components/dropdown';
+import { useCallback, useRef } from 'react';
+import { useOutsideClick } from '@/app/_hooks/use-outside-click';
+
 
 export default function MainHeader() {
+  const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
   const state = useSelector((state: RootState) => state.main)
+  const closeDropdown = useCallback(() => {
+    if (dropdownProfileImageRef.current) {
+      let querySelector = dropdownProfileImageRef.current.querySelector('#dropdown-profile-image');
+      if (querySelector) {
+        querySelector.classList.add('hidden')
+      }
+    }
+  }, []);
+
+  useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
+
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
@@ -27,13 +43,30 @@ export default function MainHeader() {
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
               <PurchaseMethodNavbar>
-                <div className='relative inline'>
+                <Dropdown ref={dropdownProfileImageRef}
+                  className='relative inline'>
                   <Image alt='profile-image'
                     src='/static_images/static_profile_img.png'
                     width={48}
                     height={48}
-                    className='rounded-full border border-white w-12 h-12 inline-block' />
-                </div>
+                    className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'
+                    onClick={() => {
+                      if (dropdownProfileImageRef.current) {
+                        dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
+                      }
+                    }} />
+                  <div id="dropdown-profile-image" className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
+                    <div className='block'>
+                      <Link href='/dashboard/agency-information'
+                        className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white'>
+                        PROFILE
+                      </Link>
+                      <span className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white'>
+                        SIGNOUT
+                      </span>
+                    </div>
+                  </div>
+                </Dropdown>
               </PurchaseMethodNavbar>
             </div>
           </div>

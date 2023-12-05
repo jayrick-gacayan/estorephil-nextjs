@@ -52,6 +52,7 @@ export default function CartItemsContainer() {
                 <Collapsible data={seller}
                   key={`seller-method-${seller.name}`}
                   checkAllData={currentCheckAllItemsSeller}
+                  collapsibleOpen={true}
                   onCheckboxChanged={(value: boolean) => {
                     dispatch(isAllProductsGoingToCheckoutBySeller({ seller: seller, isAllGoingToCheckOut: currentCheckAllItemsSeller }));
                   }}>

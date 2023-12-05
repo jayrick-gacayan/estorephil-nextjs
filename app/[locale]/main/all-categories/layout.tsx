@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { CategorySidebar } from './_sections/category-sidebar';
 import Image from 'next/image'
 import BreadcrumbsContainer from './_sections/breadcrumbs-container';
+import SellerByCategory from './_sections/seller-by-category';
 
 export default function CategoriesLayout({ children }: { children: ReactNode }): JSX.Element {
 
@@ -12,36 +13,7 @@ export default function CategoriesLayout({ children }: { children: ReactNode }):
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b-2 border-b-secondary-light'>
             <BreadcrumbsContainer basePath='all-categories' text='All Categories' />
-            <div className='flex gap-4'>
-              <div className="w-32 h-32 flex-none">
-                {<Image alt={`product-category`}
-                  src='/others/costco.png'
-                  width={128}
-                  height={128}
-                  className='w-full h-full' />}
-              </div>
-              <div className="w-32 h-32 flex-none">
-                {<Image alt={`product-category`}
-                  src='/others/costco.png'
-                  width={128}
-                  height={128}
-                  className='w-full h-full' />}
-              </div>
-              <div className="w-32 h-32 flex-none">
-                {<Image alt={`product-category`}
-                  src='/others/costco.png'
-                  width={128}
-                  height={128}
-                  className='w-full h-full' />}
-              </div>
-              <div className="w-32 h-32 flex-none">
-                {<Image alt={`product-category`}
-                  src='/others/costco.png'
-                  width={128}
-                  height={128}
-                  className='w-full h-full' />}
-              </div>
-            </div>
+            <SellerByCategory />
           </div>
           {children}
         </div>

@@ -15,7 +15,7 @@ export default function PurchaseMethodNavbar({ children }: { children: ReactNode
   return purchaseMethod === '' ?
     (
       <>
-        <button className='text-white border border-white py-2 px-4 h-full rounded text-xl align-middle'
+        <button className='transition-all delay-50 text-white border border-white py-2 px-4 h-full rounded text-xl align-middle hover:border-primary-dark hover:bg-white hover:text-primary-dark'
           onClick={() => { dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' })) }}>
           Create Order
         </button>

@@ -6,16 +6,18 @@ export default function PurchaseMethodType({
   purchaseMethodImage,
   purchaseMethodActiveClass,
   onShoppingMethodSet,
+  isSetPurchaseMethod,
 }: {
   purchaseMethodType: string;
   otherText: string;
   purchaseMethodImage: string;
   purchaseMethodActiveClass: (purchaseMethodType: string) => string;
   onShoppingMethodSet: (purchaseMethodType: string) => void;
+  isSetPurchaseMethod?: boolean;
 }): JSX.Element {
 
   return (
-    <div className={`cursor-pointer hover:bg-primary transition-all duration-75 ${purchaseMethodActiveClass(purchaseMethodType)} w-48 space-y-8 h-full p-4`}
+    <div className={`transition-all duration-75 ${purchaseMethodActiveClass(purchaseMethodType)} w-48 space-y-8 h-full p-4`}
       onClick={() => { onShoppingMethodSet && onShoppingMethodSet(purchaseMethodType); }}>
       <Image alt={`${purchaseMethodImage}-shopping-method`}
         src={`/others/${purchaseMethodImage}`}

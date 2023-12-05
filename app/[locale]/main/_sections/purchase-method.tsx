@@ -7,7 +7,6 @@ import { AppDispatch, RootState } from '@/redux/store';
 import PurchaseMethodType from '../_components/shop-method-type';
 import { modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
 import { HiInformationCircle } from 'react-icons/hi';
-import { Miltonian } from 'next/font/google';
 
 export default function PurchaseMethod({
   onClose,
@@ -29,7 +28,10 @@ export default function PurchaseMethod({
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   function setPurchaseMethodClass(purchaseMethodType: string) {
-    return purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-primary-light';
+    if (isSetPurchaseMethod !== undefined) {
+      return purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-default';
+    }
+    return `${purchaseMethodType === purchaseMethod ? 'bg-primary-dark text-white' : 'bg-default'} cursor-pointer hover:bg-primary-dark hover:text-white`;
   }
 
   function onPurchaseMethodSet(purchaseMethodType: string) {

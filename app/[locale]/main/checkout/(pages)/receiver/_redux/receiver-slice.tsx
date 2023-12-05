@@ -5,6 +5,7 @@ import { ReceiverState } from "./receiver-state";
 import { SenderState } from "../../sender/_redux/sender-state";
 import { RootState, store } from "@/redux/store";
 import { useSelector } from "react-redux";
+import { RequestStatus } from "@/types/enums/request-status";
 
 
 export const initialState: ReceiverState = {
@@ -57,11 +58,18 @@ export const initialState: ReceiverState = {
         error: '',
     },
     valid: false,
+
+    requestStatus: RequestStatus.NONE
 }
 export const receiverSlice = createSlice({
     name: "receiver",
     initialState,
     reducers: {
+        requestStatusSet: (state: ReceiverState, action: PayloadAction<RequestStatus>) => {
+            return {
+                ...state, requestStatus: action.payload
+            }
+        },
         validateReceiver: (state: ReceiverState) => {
             var validation = new Validations()
             const validateFirstName = validation.isValidName({ name: state.firstName.value, nameColumn: 'first name' });
@@ -280,6 +288,7 @@ export const {
     address1Changed, address2Changed, cityChanged,
     countryChanged, mobileNumberChanged, phoneNumberChanged,
     provinceChanged, zipCodeChanged, checkBoxReceiverInfoClicked,
-    validateReceiver, checkBoxReceiverAddressClicked, checkBoxReceiverContactClicked
+    validateReceiver, checkBoxReceiverAddressClicked, checkBoxReceiverContactClicked,
+    requestStatusSet
 } = receiverSlice.actions
 export default receiverSlice.reducer

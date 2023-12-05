@@ -36,7 +36,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
 
   const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
-      let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
+      let querySelector = dropdownRef.current.querySelector('#dropdown-purchase-method');
       if (querySelector) {
         querySelector.classList.add('hidden')
       }
@@ -68,9 +68,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
     }
   }, [purchaseMethod, closeDropdown]);
 
-  useOutsideClick(dropdownRef, () => {
-    closeDropdown();
-  });
+  useOutsideClick(dropdownRef, () => { closeDropdown(); });
 
   return (
     <Dropdown ref={dropdownRef}
@@ -83,7 +81,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
                 <div className='block'
                   onClick={() => {
                     if (dropdownRef.current) {
-                      dropdownRef.current.querySelector('#dropdown-shop-method')?.classList.toggle('hidden')
+                      dropdownRef.current.querySelector('#dropdown-purchase-method')?.classList.toggle('hidden')
                     }
                   }}>
                   {
@@ -143,7 +141,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
       </div>
 
 
-      <div id="dropdown-shop-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 text-secondary top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
+      <div id="dropdown-purchase-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 text-secondary top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
         <div className='p-2 border-b-2 border-b-secondary-light flex gap-2 items-center'>
           <div className='flex-1 font-semibold text-lg leading-0'>{purchaseMethodHeaderText.includes('BAYAN') ? `${purchaseMethodHeaderText} BOX` : purchaseMethodHeaderText}</div>
           {purchaseMethodItems.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{purchaseMethodItems.length}</div>)}
@@ -172,7 +170,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {
-              let querySelector = dropdownRef.current.querySelector('#dropdown-shop-method');
+              let querySelector = dropdownRef.current.querySelector('#dropdown-purchase-method');
               if (querySelector) {
                 querySelector.classList.add('hidden')
               }
