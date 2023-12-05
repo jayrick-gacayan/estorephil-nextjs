@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useDispatch } from "react-redux";
 import { closeCountryPicker, countryPickerValueChanged, openCountryPicker } from "../_redux/main-slice";
 import { useTranslations } from "next-intl";
-import { getMainCategories } from "../home/_redux/home-thunk";
+import { getMainCategories, getMainProducts, getMainStores } from "../home/_redux/home-thunk";
 import { store } from "@/redux/store";
 import { homeContainer } from "@/inversify/inversify.config";
 import { TYPES } from "@/inversify/types";
@@ -34,7 +34,7 @@ export default function CountryPicker({
     const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
     return (
         <>
-            <div className="flex relative bg-transparent w-full h-full px-2" onClick={() => {
+            <div className="flex relative bg-transparent w-full h-full px-2 hover:cursor-pointer" onClick={() => {
                 show ? dispatch(closeCountryPicker()) : dispatch(openCountryPicker())
             }}>
                 <div className="flex items-center gap-2 text-white">{icon} {value}</div>
@@ -47,6 +47,8 @@ export default function CountryPicker({
                                 console.log('value', value)
                                 dispatch(countryPickerValueChanged(country.code))
                                 store.dispatch(getMainCategories(homeRepository, country.code))
+                                store.dispatch(getMainStores(homeRepository, country.code))
+                                store.dispatch(getMainProducts(homeRepository, country.code))
                             }} className="w-full flex items-center hover:cursor-pointer border-t-[1px] border-slate-800 text-slate-800"> {country.icon} {country.code}</li>
                         )}
                     </ul>

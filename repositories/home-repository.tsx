@@ -14,5 +14,11 @@ export class HomeRepository {
     async getMainCategories(locale: string) {
         return await this.homeService.getMainCategories(locale)
     }
+    async getMainStores(locale: string) {
+        return await this.homeService.getMainStores(locale)
+    }
+    async getMainProducts(locale: string) {
+        return await this.homeService.getMainProducts(locale)
+    }
 
 }

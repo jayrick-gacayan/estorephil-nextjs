@@ -4,9 +4,12 @@ import { RequestStatus } from "@/models/result";
 
 const initialState: HomeState = {
     categories: [{}],
-    getMainCategoriesStatus: RequestStatus.WAITING
+    products: [{}],
+    stores: [{}],
+    getMainCategoriesStatus: RequestStatus.WAITING,
+    getMainStoresStatus: RequestStatus.WAITING,
+    getMainProductsStatus: RequestStatus.WAITING,
 }
-
 export const homeSlice = createSlice({
     name: 'home',
     initialState,
@@ -24,13 +27,42 @@ export const homeSlice = createSlice({
                 categories: action.payload,
                 getMainCategoriesStatus: RequestStatus.SUCCESS
             }
+        },
+        getMainStoresLoaded: (state: HomeState) => {
+            return {
+                ...state,
+                getMainStoresStatus: RequestStatus.IN_PROGRESS
+            }
+        },
+        getMainStoresSuccess: (state: HomeState, action: PayloadAction<any>) => {
+            console.log('action payload: ', action.payload)
+            return {
+                ...state,
+                stores: action.payload,
+                getMainStoresStatus: RequestStatus.SUCCESS
+            }
+        },
+        getMainProductsLoaded: (state: HomeState) => {
+            return {
+                ...state,
+                getMainProductsStatus: RequestStatus.IN_PROGRESS
+            }
+        },
+        getMainProductsSuccess: (state: HomeState, action: PayloadAction<any>) => {
+            console.log('action payload: ', action.payload)
+            return {
+                ...state,
+                products: action.payload,
+                getMainProductsStatus: RequestStatus.SUCCESS
+            }
         }
     }
 })
 
 export const {
     getMainCategoriesLoaded,
-    getMainCategoriesSuccess
+    getMainCategoriesSuccess, getMainProductsLoaded,
+    getMainProductsSuccess, getMainStoresLoaded, getMainStoresSuccess
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

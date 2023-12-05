@@ -24,8 +24,8 @@ export function HomeCategories() {
   return (
     <div className='lg:block hidden flex-none border rounded border-[#9CB4CC] p-3 space-y-2 bg-white w-64'>
       <div className='flex'>
-        <div className='flex-1 font-semibold'>CATEGORIES</div>
-        <button className='w-auto flex-none underline text-primary hover:text-primary-dark'
+        <div className='flex-1 font-semibold text-sm'>CATEGORIES</div>
+        <button className='w-auto flex-none underline text-primary text-xs hover:text-primary-dark'
           onClick={() => { router.push('/all-categories') }}>View All</button>
       </div>
       <div className='flex flex-col gap-[4px] text-secondary'>
