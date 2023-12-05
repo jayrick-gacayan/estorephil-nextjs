@@ -15,10 +15,11 @@ import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
 import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_redux/purchase-method-slice';
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
-
+import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 export const store = configureStore({
     reducer: {
         main: mainReducer,
+        login: loginReducer,
         purchaseMethod: purchaseMethodReducer,
         register: registerReducer,
         checkout: checkoutReducer,

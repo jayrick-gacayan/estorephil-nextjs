@@ -14,11 +14,18 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    API_URL: process.env.API_URL,
+  },
   async rewrites() {
     return [
       {
         source: '/:locale',
         destination: '/:locale/main/home',
+      },
+      {
+        source: `/api/:path*`,
+        destination: `/api/:path*`,
       },
       {
         source: '/:locale/home',

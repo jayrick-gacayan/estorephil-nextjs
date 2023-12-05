@@ -11,7 +11,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@rive-app/react-canvas": "^4.5.5",
+    "inversify": "^6.0.2",
     "next": "14.0.1",
+    "next-auth": "^4.24.5",
     "next-intl": "^2.22.1",
     "next-themes": "^0.2.1",
     "react": "^18",
@@ -24,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/reflect-metadata": "^0.1.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.1",
