@@ -7,9 +7,12 @@ import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icon
 import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from './navbar-search';
 import PurchaseMethodNavbar from './purchase-method-navbar';
+import CountryPicker from '../_components/country-picker';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 
 export default function MainHeader() {
-
+  const state = useSelector((state: RootState) => state.main)
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
@@ -47,6 +50,32 @@ export default function MainHeader() {
               <Link href="/dashboard/agency-information" className='inline-block'>
                 <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
               </Link>
+              <div className='inline-block'>
+                <CountryPicker
+                  value={state.countryPicker.value}
+                  show={state.countryPicker.show}
+                  icon={
+                    state.countryPicker.value == 'CA' ? <Image
+                      src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ca.svg"
+                      height={25}
+                      width={25}
+                      alt=''
+                    /> :
+                      state.countryPicker.value == 'PH' ? <Image
+                        src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ph.svg"
+                        height={25}
+                        width={25}
+                        alt=''
+                      />
+                        : <Image
+                          src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/us.svg"
+                          height={25}
+                          width={25}
+                          alt=''
+                        />
+                  }
+                />
+              </div>
             </div>
           </div>
         </nav>

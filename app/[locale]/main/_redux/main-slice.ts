@@ -6,6 +6,10 @@ const initialState: MainState = {
   modalProductDeliveryAddressInfo: {
     open: false,
     type: ''
+  },
+  countryPicker: {
+    value: 'CA',
+    show: false
   }
 }
 
@@ -26,13 +30,44 @@ export const mainSlice = createSlice({
           type
         }
       }
+    },
+    openCountryPicker: (state: MainState) => {
+      return {
+        ...state,
+        countryPicker: {
+          ...state.countryPicker,
+          value: state.countryPicker.value,
+          show: true,
+        }
+      }
+    },
+    closeCountryPicker: (state: MainState) => {
+      return {
+        ...state,
+        countryPicker: {
+          ...state.countryPicker,
+          value: state.countryPicker.value,
+          show: false,
+        }
+      }
+    },
+    countryPickerValueChanged: (state: MainState, action: PayloadAction<string>) => {
+      console.log('country picked', action.payload)
+      return {
+        ...state,
+        countryPicker: {
+          ...state.countryPicker,
+          value: action.payload
+        }
+      }
     }
   }
 })
 
 export const {
   modalProductDeliveryAddressOpened,
-  purchaseMethodChanged,
+  purchaseMethodChanged, closeCountryPicker, countryPickerValueChanged,
+  openCountryPicker
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
