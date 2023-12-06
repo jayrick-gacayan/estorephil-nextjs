@@ -6,7 +6,7 @@ export default function Tabs({
   children: ReactNode;
 }) {
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full justify-evenly">
       {children}
     </div>
   )

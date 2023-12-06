@@ -69,6 +69,12 @@ export default function CartItemsContainer() {
                                 <div className='flex-none w-auto'>
                                   <Checkbox<boolean> value={true}
                                     current={valuePurchaseMethod.isGoingToCheckout!}
+                                    checkBoxClassName={(value: boolean, current: boolean) => {
+                                      return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+                                    }}
+                                    checkClassName={(value: boolean, current: boolean) => {
+                                      return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                                    }}
                                     onCheckboxChanged={(value: boolean) => {
                                       dispatch(productItemisGoingToCheckoutChanged(valuePurchaseMethod))
                                     }} />

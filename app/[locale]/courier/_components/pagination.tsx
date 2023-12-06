@@ -11,15 +11,16 @@ export default function Pagination({
 }) {
 
   return (
-    <div className="block ">
-      <div className="ml-auto w-fit border-[.5px] border-[#DEE2E6] flex divide-x divide-[#DEE2E6] rounded overflow-hidden">
+    <div className="block">
+      <div className="ml-auto bg-white w-fit border-[.5px] border-[#DEE2E6] flex divide-x divide-[#DEE2E6] rounded overflow-hidden">
         <div className="inline p-2">
           <FaCaretLeft className='inline' />
         </div>
         {
-          totalPageNumbers.map((value: number) => {
+          totalPageNumbers.map((value: number, index: number) => {
             return (
-              <div className={`text-[#DEE2E6] inline p-2 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
+              <div key={`pagination-${index}-${value}`}
+                className={`text-[#DEE2E6] inline p-2 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
                 {value}
               </div>
             )
