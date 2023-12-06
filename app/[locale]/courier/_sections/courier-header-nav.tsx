@@ -14,7 +14,7 @@ export default function CourierHeaderNav({
     <header
       className='sticky w-full top-0 left-0 z-[999]'>
       <nav className={`${bgColor} text-white w-full`}>
-        <div className='flex'>
+        <div className='flex items-center'>
           <div className='flex-none w-[256px] p-3'>
             <Link href='/home' className='w-[256px] relative block h-8 md:px-8 px-0'>
               <Image alt='estorephil-logo'

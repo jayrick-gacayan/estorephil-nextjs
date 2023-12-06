@@ -27,7 +27,13 @@ export default function ShopMethodCollapsible({
               <div className='inline-block align-middle'>
                 <Checkbox<boolean> value={true}
                   current={currentCheckAllItemsSeller}
-                  onCheckboxChanged={onCheckboxChanged!} />
+                  onCheckboxChanged={onCheckboxChanged!}
+                  checkBoxClassName={(value: boolean, current: boolean) => {
+                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+                  }}
+                  checkClassName={(value: boolean, current: boolean) => {
+                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                  }} />
               </div>
             )
           }

@@ -6,7 +6,10 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
 ) {
   return (
     <div className='block w-full'>
-      <button className="flex gap-2 p-2 w-full items-center">
+      <button className={`flex gap-2 p-2 w-full items-center hover:bg-tertiary-light 
+        ${props.subMenus && props.subMenus.some((value: MenuProps) => {
+        return props.segment === value.alt;
+      }) ? `text-primary` : ``}`}>
         {props.icon && <div className="flex-none w-auto">{props.icon}</div>}
         <div className="flex-1 text-left">{props.text}</div>
       </button>

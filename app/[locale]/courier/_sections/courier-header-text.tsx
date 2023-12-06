@@ -1,9 +1,20 @@
-export default function CourierHeaderText({ text }: { text: string; }) {
+import { ReactNode } from "react";
+
+export default function CourierHeaderText({
+  text,
+  children,
+}: {
+  text: string;
+  children?: ReactNode;
+}) {
 
   return (
-    <div className='border-b-[.5px] border-secondary-dark'>
-      <div className="p-4">
-        <h1 className="text-4xl text-secondary-dark">{text}</h1>
+    <div className='border-b-[.5px] border-secondary-dark bg-white'>
+      <div className="flex p-4 justify-between items-center">
+        <div className="flex-none w-auto">
+          <h1 className="text-4xl text-secondary-dark">{text}</h1>
+        </div>
+        {children && children}
       </div>
     </div>
   )

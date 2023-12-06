@@ -22,7 +22,9 @@ export const authOptions: AuthOptions = {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         });
-        console.log('login route -----',data.json())
+
+
+        console.log('login route -----', data.json())
         const res = await data.json();
         if (res?.status !== 200) {
           throw new Error(res?.status);

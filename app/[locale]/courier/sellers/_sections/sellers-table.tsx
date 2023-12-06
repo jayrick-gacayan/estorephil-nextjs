@@ -1,5 +1,6 @@
 'use client';
 
+import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import Image from 'next/image';
 import { FaRegEye } from 'react-icons/fa6';
 
@@ -49,15 +50,72 @@ const sellers = [
     packages: 3312,
     status: 'active'
   },
+  {
+    id: 'QUR9284',
+    logo: '/sellers/apple.png',
+    name: 'Rhoncus tincidunt',
+    address: '2132 Halsey Avenue Toronto, Canada',
+    phone: '(443)827-7869',
+    packages: 3974,
+    status: 'active'
+  },
+  {
+    id: 'JEN1022',
+    logo: '/sellers/apple.png',
+    name: 'Fermentum aliquam',
+    address: '2132 Halsey Avenue Toronto, Canada',
+    phone: '(865)597-7855',
+    packages: 609,
+    status: 'active'
+  },
+  {
+    id: 'HOT0045',
+    logo: '/sellers/apple.png',
+    name: 'Libero dapibus arcu',
+    address: '2132 Halsey Avenue Toronto, Canada',
+    phone: '(602)698-5884',
+    packages: 153,
+    status: 'active'
+  },
+  {
+    id: 'HIM0032',
+    logo: '/sellers/apple.png',
+    name: 'Pellentesque fermentum adipiscing',
+    address: '2132 Halsey Avenue Toronto, Canada',
+    phone: '(900)919-3711',
+    packages: 835,
+    status: 'active'
+  },
+  {
+    id: 'HIM0035',
+    logo: '/sellers/apple.png',
+    name: 'Morbi nunc',
+    address: '2132 Halsey Avenue Toronto, Canada',
+    phone: '(317)569-8065',
+    packages: 1213,
+    status: 'active'
+  },
+];
 
-]
 export default function SellersTable() {
   return (
-    <div className="block overflow-auto h-[640px]">
+    <div className="block overflow-auto h-[816px]">
       <table className="min-w-[768px] w-full">
         <thead>
-          <tr className="text-left [&>th]:px-2 [&>th]:py-3 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
-            <th></th>
+          <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-6 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
+            <th>
+              <Checkbox<boolean> current={false}
+                value={true}
+                checkBoxClassName={(value: boolean, current: boolean) => {
+                  return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-[#707070]'} rounded w-6 h-6`;
+                }}
+                checkClassName={(value: boolean, current: boolean) => {
+                  return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                }}
+                onCheckboxChanged={function (value: boolean): void {
+                  throw new Error('Function not implemented.');
+                }} />
+            </th>
             <th>SELLER ID</th>
             <th>LOGO</th>
             <th>SELLER NAME</th>
@@ -73,9 +131,21 @@ export default function SellersTable() {
             sellers.map((value: any) => {
               return (
                 <tr key={`sellers-courier-${value.id}`}
-                  className="[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inhert even:bg-[#F8FAFC]">
-                  <td></td>
-                  <td>{value.id}</td>
+                  className="[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
+                  <td>
+                    <Checkbox<boolean> current={false}
+                      value={true}
+                      checkBoxClassName={(value: boolean, current: boolean) => {
+                        return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-[#707070]'} rounded w-6 h-6`;
+                      }}
+                      checkClassName={(value: boolean, current: boolean) => {
+                        return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                      }}
+                      onCheckboxChanged={function (value: boolean): void {
+                        throw new Error('Function not implemented.');
+                      }} />
+                  </td>
+                  <td className='text-primary'>{value.id}</td>
                   <td className='w-24'>
                     <Image alt={`alt-seller-image-${value.id}`}
                       src={value.logo}
@@ -99,7 +169,6 @@ export default function SellersTable() {
               )
             })
           }
-
         </tbody>
       </table>
     </div>

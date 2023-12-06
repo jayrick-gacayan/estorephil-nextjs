@@ -12,6 +12,14 @@ export function SearchSidebar() {
     return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
   }
 
+  function checkBoxClassName(value: string, current: string) {
+    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+  }
+
+  function checkClassName(value: string, current: string) {
+    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+  }
+
   return (
     <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[320px] border-r-2 border-r-secondary-light'>
 
@@ -34,6 +42,8 @@ export function SearchSidebar() {
                     labelClassname={checkboxLabelClassname}
                     value={relatedCategory}
                     current={searchParams.get('keyword') ?? ''}
+                    checkBoxClassName={checkBoxClassName}
+                    checkClassName={checkClassName}
                     onCheckboxChanged={(text: string) => {
                       let queryStringSearch = new URLSearchParams();
 
@@ -70,6 +80,8 @@ export function SearchSidebar() {
                     labelClassname={checkboxLabelClassname}
                     current=''
                     value={shipFrom}
+                    checkBoxClassName={checkBoxClassName}
+                    checkClassName={checkClassName}
                     onCheckboxChanged={(text: string) => {
                       return;
                     }} />
