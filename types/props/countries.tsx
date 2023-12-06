@@ -1,11 +1,8 @@
 'use client'
-import { ImBooks, ImClipboard } from 'react-icons/im'
-import { ReactNode } from "react";
-import { FlagIcon } from "react-flag-kit";
 import Image from 'next/image';
 export const avaiableCountries = [
     {
-        code: "US",
+        code: "us",
         code3: "USA",
         name: "United States of America",
         number: "840",
@@ -18,7 +15,7 @@ export const avaiableCountries = [
             />,
     },
     {
-        code: "CA",
+        code: "ca",
         code3: "CAN",
         name: "Canada",
         number: "124",
@@ -31,7 +28,7 @@ export const avaiableCountries = [
             />,
     },
     {
-        code: "PH",
+        code: "ph",
         code3: "PHL",
         name: "Philippines",
         number: "608",

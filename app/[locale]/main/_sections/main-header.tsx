@@ -88,13 +88,13 @@ export default function MainHeader() {
                   value={state.countryPicker.value}
                   show={state.countryPicker.show}
                   icon={
-                    state.countryPicker.value == 'CA' ? <Image
+                    state.countryPicker.value == 'ca' ? <Image
                       src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ca.svg"
                       height={25}
                       width={25}
                       alt=''
                     /> :
-                      state.countryPicker.value == 'PH' ? <Image
+                      state.countryPicker.value == 'ph' ? <Image
                         src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ph.svg"
                         height={25}
                         width={25}
