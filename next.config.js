@@ -9,8 +9,18 @@ const nextConfig = {
       },
       {
         protocol: "http",
+        hostname: "127.0.0.1",
+        port: "",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "",
+      },
+      {
+        protocol: "http",
         hostname: "*",
-        port: "8001",
+        port: "3000",
       },
     ],
   },

@@ -8,7 +8,7 @@ const initialState: MainState = {
     type: ''
   },
   countryPicker: {
-    value: 'CA',
+    value: 'ph',
     show: false
   }
 }
