@@ -9,11 +9,11 @@ export default function CourierSellersFieldsContainer() {
           <SearchContainer />
         </div>
         <div className='flex-none w-auto space-x-2'>
-          <span className='p-2 rounded border-[.5px] border-[#707070] inline'>Set Status</span>
-          <span className='p-2 rounded border-[.5px] border-[#707070] inline'>
+          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>Set Status</span>
+          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>
             <FaCheck className='inline-block' />
           </span>
-          <span className='p-2 rounded border-[.5px] border-[#707070] inline'>
+          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>
             <FaRegTrashCan className='inline-block' />
           </span>
         </div>

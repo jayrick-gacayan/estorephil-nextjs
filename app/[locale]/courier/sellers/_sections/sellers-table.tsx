@@ -99,10 +99,10 @@ const sellers = [
 
 export default function SellersTable() {
   return (
-    <div className="block overflow-auto h-[816px]">
+    <div className="block overflow-auto">
       <table className="min-w-[768px] w-full">
         <thead>
-          <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-6 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
+          <tr className="text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
             <th>
               <Checkbox<boolean> current={false}
                 value={true}
@@ -131,7 +131,7 @@ export default function SellersTable() {
             sellers.map((value: any) => {
               return (
                 <tr key={`sellers-courier-${value.id}`}
-                  className="[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
+                  className="[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
                   <td>
                     <Checkbox<boolean> current={false}
                       value={true}
@@ -146,12 +146,12 @@ export default function SellersTable() {
                       }} />
                   </td>
                   <td className='text-primary'>{value.id}</td>
-                  <td className='w-24'>
+                  <td className='w-6'>
                     <Image alt={`alt-seller-image-${value.id}`}
                       src={value.logo}
-                      width={48}
-                      height={48}
-                      className='w-12 h-12' />
+                      width={24}
+                      height={24}
+                      className='w-6 h-6' />
                   </td>
                   <td>{value.name}</td>
                   <td>{value.address}</td>

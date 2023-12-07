@@ -8,7 +8,7 @@ export default function SearchContainer() {
       </div>
       <div className='flex-1 w-full'>
         <input type='text'
-          className='border-[.5px] border-[#707070] p-2 w-full rounded' />
+          className='border-[.5px] border-[#707070] px-1.5 py-1 w-full rounded' />
       </div>
     </div>
   )

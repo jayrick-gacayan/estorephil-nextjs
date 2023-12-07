@@ -21,7 +21,7 @@ export default function StaffTable() {
     <div className='block overflow-auto'>
       <table className='min-w-[768px] w-full'>
         <thead>
-          <tr className='text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-6 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]'>
+          <tr className='text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]'>
             <th>ID</th>
             <th>PHOTO</th>
             <th>LASTNAME</th>
@@ -37,14 +37,14 @@ export default function StaffTable() {
             staffs.map((value: any) => {
               return (
                 <tr key={`orders-completed-${value.id}`}
-                  className='[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]'>
+                  className='[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]'>
                   <td className='text-primary'>{value.id}</td>
-                  <td className='w-24'>
+                  <td className='w-6'>
                     <Image alt={`alt-staff-image-${value.id}`}
                       src={value.photo}
-                      width={48}
-                      height={48}
-                      className='w-12 h-12 rounded-full' />
+                      width={24}
+                      height={24}
+                      className='w-6 h-6 rounded-full' />
                   </td>
                   <td>{value.lastName}</td>
                   <td>{value.firstName}</td>

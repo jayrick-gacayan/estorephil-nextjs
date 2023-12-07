@@ -6,7 +6,7 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
 ) {
   return (
     <div className='block w-full'>
-      <button className={`flex gap-2 p-2 w-full items-center hover:bg-tertiary-light 
+      <button className={`flex gap-2 px-4 py-2 w-full items-center hover:bg-tertiary-light 
         ${props.subMenus && props.subMenus.some((value: MenuProps) => {
         return props.segment === value.alt;
       }) ? `text-primary` : ``}`}>
@@ -15,7 +15,7 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
       </button>
       {
         props.subMenus &&
-        (<div className="p-2">
+        (<div className="px-4 py-2">
           {
             props.subMenus && props.subMenus.map((subMenu: MenuProps) => {
               return subMenu.subMenus ?
@@ -30,7 +30,7 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
                 (<CourierMenuItemLink key={`sub-menu-items-${subMenu.text}`}
                   segment={props.segment}
                   onActiveMenu={(alt: string, segment: string) => {
-                    return segment === alt ? 'text-primary' : ''
+                    return segment === alt ? 'text-primary border-l-2 border-l-primary' : ''
                   }}
                   {...subMenu} />)
             })
