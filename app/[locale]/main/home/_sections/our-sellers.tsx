@@ -11,6 +11,8 @@ import { homeContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { HomeRepository } from '@/repositories/home-repository';
 import { getMainCategories, getMainStores } from '../_redux/home-thunk';
+import { RequestStatus } from '@/models/result';
+import Loading from '../../_components/loading';
 
 export function OurSellers() {
   const [pressDirection, setPressDirection] = useState('');
@@ -24,7 +26,7 @@ export function OurSellers() {
 
   useEffect(() => {
     store.dispatch(getMainStores(homeRepository, mainState.countryPicker.value))
-    console.log('state stores',stores)
+    console.log('state stores', stores)
   }, [])
   function moveSellersSlider(moveTo: number) {
     if (sliderContainerRef.current) {
@@ -82,7 +84,6 @@ export function OurSellers() {
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
           <FaChevronLeft size={20} className='inline-block'
-
             onClick={() => { moveSellersSlider(-140) }}
           />
           <FaChevronRight size={20} className='inline-block'
@@ -92,10 +93,11 @@ export function OurSellers() {
 
       <div ref={sliderContainerRef} className='w-full overflow-hidden'>
         <div ref={innerSliderContainerRef} className="flex flex-nowrap gap-3 w-[150%]">
-          {
+          {state.getMainStoresStatus === RequestStatus.SUCCESS ? (
             stores.map((store, index) => {
               return (<Store key={`store-${store.id}`} store={store} />)
-            })
+            }))
+            : <Loading />
           }
         </div>
       </div>

@@ -24,7 +24,7 @@ export function ProductInformation() {
     <div className='block p-4 w-full space-y-2'>
       <h4 className='font-bold text-danger'>Product Information</h4>
       <div className='flex w-full'>
-        <ProductInfoItem labelText='Package Dimensions' info={`${product.length} x ${product.width} x ${product.height}`} />
+        <ProductInfoItem labelText='Package Dimensions' info={`${product.length} ${product.unit_measure} x ${product.width} ${product.unit_measure} x ${product.height} ${product.unit_measure}`} />
         <ProductInfoItem labelText='Item Weight' info={`${product.weight} ${product.weight_type}`} />
         <ProductInfoItem labelText='Manufacturer' info={product.manufacturer} />
         <ProductInfoItem labelText='EstorePhil Item Num' info={product.unique_identifier} />
