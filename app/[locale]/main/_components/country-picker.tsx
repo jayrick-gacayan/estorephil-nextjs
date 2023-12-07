@@ -37,7 +37,7 @@ export default function CountryPicker({
             <div className="flex relative bg-transparent w-full h-full px-2 hover:cursor-pointer" onClick={() => {
                 show ? dispatch(closeCountryPicker()) : dispatch(openCountryPicker())
             }}>
-                <div className="flex items-center gap-2 text-white">{icon} {value}</div>
+                <div className="flex items-center gap-2 text-white">{icon} {value?.toUpperCase()}</div>
                 <div className={`${show ? `block` : `hidden`} absolute top-6 -right-12 shadow-md w-[100px] bg-white h-full`}>
                     <ul className="decoration-none bg-white border-[1px] border-slate-800">
                         <li className="text-gray-400"> {translate("sellersFrom:")}</li>
@@ -49,7 +49,9 @@ export default function CountryPicker({
                                 store.dispatch(getMainCategories(homeRepository, country.code))
                                 store.dispatch(getMainStores(homeRepository, country.code))
                                 store.dispatch(getMainProducts(homeRepository, country.code))
-                            }} className="w-full flex items-center hover:cursor-pointer border-t-[1px] border-slate-800 text-slate-800"> {country.icon} {country.code}</li>
+                            }} className="w-full flex items-center hover:cursor-pointer border-t-[1px] border-slate-800 text-slate-800">
+                                {country.icon} {country.code.toUpperCase()}
+                            </li>
                         )}
                     </ul>
                 </div>

@@ -17,11 +17,13 @@ import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_r
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
+import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
 export const store = configureStore({
     reducer: {
         main: mainReducer,
         home: homeReducer,
         login: loginReducer,
+        store: storeReducer,
         purchaseMethod: purchaseMethodReducer,
         register: registerReducer,
         checkout: checkoutReducer,
