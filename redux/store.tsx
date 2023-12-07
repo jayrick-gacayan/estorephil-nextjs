@@ -18,12 +18,14 @@ import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slic
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
 import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
+import productReducer from '@/app/[locale]/main/products/[id]/_redux/product-slice'
 export const store = configureStore({
     reducer: {
         main: mainReducer,
         home: homeReducer,
         login: loginReducer,
         store: storeReducer,
+        product: productReducer,
         purchaseMethod: purchaseMethodReducer,
         register: registerReducer,
         checkout: checkoutReducer,

@@ -21,6 +21,7 @@ export const storeSlice = createSlice({
         getStoreDetailsSuccess: (state: StoreState, action: PayloadAction<any>) => {
             return {
                 ...state,
+                getStoreDetailsStatus: RequestStatus.SUCCESS,
                 store: action.payload.store,
                 products: action.payload.products
             }
