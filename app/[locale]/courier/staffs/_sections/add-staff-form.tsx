@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import CourierInputField from '../../_components/courier-input-field';
-import CourierCustomSelectInput from '../../_components/courier-custom-select-input';
+import CourierGoogleLikeInputField from '../../_components/courier-google-like-input-field';
+import CourierCustomGoogleLikeSelectInput from '../../_components/courier-custom-google-like-select-input';
 
 export default function AddStaffForm({
   onClose
@@ -15,10 +15,10 @@ export default function AddStaffForm({
     <div className='py-8 space-y-4 w-[512px] m-auto'>
       <h3 className='text-[32px] leading-0 text-left'>Add Staff</h3>
       <div className='space-y-4 text-left'>
-        <CourierInputField inputId='firstName' labelText='Firstname' />
-        <CourierInputField inputId='lastName' labelText='Lastname' />
-        <CourierInputField inputId='email' labelText='Email' />
-        <CourierCustomSelectInput<string> inputId='courierRole'
+        <CourierGoogleLikeInputField inputId='firstName' labelText='Firstname' />
+        <CourierGoogleLikeInputField inputId='lastName' labelText='Lastname' />
+        <CourierGoogleLikeInputField inputId='email' labelText='Email' />
+        <CourierCustomGoogleLikeSelectInput<string> inputId='courierRole'
           labelText='Role'
           items={['Admin', 'Staff']}
           value={courierRole}
