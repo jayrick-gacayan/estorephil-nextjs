@@ -8,4 +8,6 @@ export interface MainState {
     value: string,
     show: boolean
   }
+  deliveryAddressCountry: string,
+  deliveryAddressCity: string,
 }

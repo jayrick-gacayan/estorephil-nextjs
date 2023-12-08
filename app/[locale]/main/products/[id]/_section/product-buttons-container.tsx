@@ -7,7 +7,7 @@ import { Product } from '@/models/product';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useEffect, useMemo, useState } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
 import { BsBox2 } from 'react-icons/bs';
 import { modalProductDeliveryAddressOpened } from '../../../_redux/main-slice';
 import { Seller } from '@/models/seller';

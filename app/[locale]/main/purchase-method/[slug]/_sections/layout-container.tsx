@@ -4,7 +4,7 @@ import { ReactNode, useMemo } from 'react';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { PurchaseMethodState } from '../_redux/purchase-method-state';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
 import ShopMethodHeader from './purchase-method-header';
 import SummaryCheckout from './summary-checkout';
 import { BalikbayanBox } from '@/models/balikbayan-box';

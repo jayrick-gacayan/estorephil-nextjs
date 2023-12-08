@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Modal from '../../_components/modal';
 import { AppDispatch, RootState } from '@/redux/store';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { useCallback, useMemo, useRef } from 'react';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';

@@ -5,7 +5,7 @@ import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
 import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
 import CartItemsContainer from './cart-items-container';
 import Image from 'next/image';
 

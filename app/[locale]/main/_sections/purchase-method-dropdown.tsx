@@ -5,7 +5,7 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import { BsBox2 } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import DropdownItem from '../../_components/dropdown-item';
 import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
 import Dropdown from '../../_components/dropdown';

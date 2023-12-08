@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
 import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { useMemo } from 'react';
 
 export default function FloatingCardButton(): JSX.Element | null {

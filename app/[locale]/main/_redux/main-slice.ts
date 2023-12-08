@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MainState } from "./main_state";
+import { MainState } from "./main-state";
 
 const initialState: MainState = {
   purchaseMethod: '',
@@ -10,7 +10,9 @@ const initialState: MainState = {
   countryPicker: {
     value: 'ph',
     show: false
-  }
+  },
+  deliveryAddressCity: '',
+  deliveryAddressCountry: ''
 }
 
 export const mainSlice = createSlice({
@@ -60,6 +62,18 @@ export const mainSlice = createSlice({
           value: action.payload
         }
       }
+    },
+    deliveryAddressCountryChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        deliveryAddressCountry: action.payload,
+      }
+    },
+    deliveryAddressCityChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        deliveryAddressCity: action.payload
+      }
     }
   }
 })
@@ -67,7 +81,7 @@ export const mainSlice = createSlice({
 export const {
   modalProductDeliveryAddressOpened,
   purchaseMethodChanged, closeCountryPicker, countryPickerValueChanged,
-  openCountryPicker
+  openCountryPicker, deliveryAddressCityChanged, deliveryAddressCountryChanged
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

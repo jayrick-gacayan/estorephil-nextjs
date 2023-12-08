@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode, useMemo, useState } from 'react';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import PurchaseMethodType from '../_components/shop-method-type';
