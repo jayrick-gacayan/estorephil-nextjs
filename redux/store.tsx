@@ -17,6 +17,10 @@ import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_r
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
+
+import courierDeliveryRatesReducer from '@/app/[locale]/courier/delivery-rates/_redux/courier-delivery-rates-slice';
+import courierStaffReducer from '@/app/[locale]/courier/staffs/_redux/courier-staff-slice';
+
 export const store = configureStore({
     reducer: {
         main: mainReducer,
@@ -37,8 +41,11 @@ export const store = configureStore({
         staff: staffReducer,
         staffDetail: staffDetailReducer,
         staffAdd: staffAddReducer,
+
+        courierDeliveryRates: courierDeliveryRatesReducer,
+        courierStaff: courierStaffReducer,
     }
 });
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
