@@ -4,7 +4,7 @@ import WeightSizeRates from "./weight-size-rates";
 
 export default function NormalCargoRatesTabContent() {
   return (
-    <div className="p-4 rounded bg-white space-y-4">
+    <>
       <div className="flex justify-evenly items-center gap-2">
         <div className="w-full">
           <div className="w-[448px]">
@@ -25,14 +25,8 @@ export default function NormalCargoRatesTabContent() {
             </div>
           </div>
         </div>
-
       </div>
       <WeightSizeRates />
-      <div className="w-72">
-        <button className="w-full p-2 rounded bg-info text-white">
-          Update Rates
-        </button>
-      </div>
-    </div>
+    </>
   )
 }

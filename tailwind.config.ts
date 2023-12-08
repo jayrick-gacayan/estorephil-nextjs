@@ -28,6 +28,7 @@ const config: Config = {
         'primary-light': '#8bb8f1',
         info: '#32BCE6',
         'info-light': '#D8EBFF',
+        'info-dark': '#1BA5CF',
         secondary: '#2F353D',
         'secondary-light': '#77620038',
         'secondary-dark': '#929292',
