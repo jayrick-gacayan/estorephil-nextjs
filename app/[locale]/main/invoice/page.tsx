@@ -95,7 +95,7 @@ export default async function Page() {
             </div>
             <div className='font-[500]'>
               ITEMS &#40;{orders.reduce((prev: number, current: Order, index: number) => {
-                return prev + current.orderDetails.length;
+                return prev + current.orderDetails!.length;
               }, 0)}&#41;
             </div>
             <div className='space-y-6'>
@@ -103,10 +103,10 @@ export default async function Page() {
                 orders.map((order: Order) => {
                   return (
                     <OrderByStore key={`order-by-store-container-${order.id}`} orderNo={order.id}
-                      seller={order.seller}>
+                      seller={order.seller!}>
                       <div className='p-2 divide-y divide-secondary-light'>
                         {
-                          order.orderDetails.map((orderDetail: OrderDetail) => {
+                          order.orderDetails!.map((orderDetail: OrderDetail) => {
                             return (
                               <OrderDetailsRow key={`order-details-${orderDetail.orderNo}-${orderDetail.product.id}`} orderDetail={orderDetail} />
                             )

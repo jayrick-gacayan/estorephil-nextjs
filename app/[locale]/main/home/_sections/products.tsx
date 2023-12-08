@@ -26,7 +26,7 @@ export default function Products() {
             <div className="flex mb-2 gap-4">
                 {
                     products.map((product, index) =>
-                        <Product product={product} />
+                        <Product key={`products-${product.id}-${index}`} product={product} />
                     )
                 }
             </div>

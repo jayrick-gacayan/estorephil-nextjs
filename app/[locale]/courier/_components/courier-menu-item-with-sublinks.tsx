@@ -6,16 +6,16 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
 ) {
   return (
     <div className='block w-full'>
-      <button className={`flex gap-2 p-2 w-full items-center hover:bg-tertiary-light 
+      <button className={`flex gap-2 px-4 py-2 w-full items-center hover:bg-tertiary-light 
         ${props.subMenus && props.subMenus.some((value: MenuProps) => {
         return props.segment === value.alt;
-      }) ? `text-primary` : ``}`}>
+      }) ? `text-primary bg-tertiary-light` : ``}`}>
         {props.icon && <div className="flex-none w-auto">{props.icon}</div>}
         <div className="flex-1 text-left">{props.text}</div>
       </button>
       {
         props.subMenus &&
-        (<div className="p-2">
+        (<div className="">
           {
             props.subMenus && props.subMenus.map((subMenu: MenuProps) => {
               return subMenu.subMenus ?
@@ -24,13 +24,13 @@ export default function CourierMenuItemWithSubLinks(props: MenuProps &
                     {...subMenu}
                     segment={props.segment}
                     onActiveMenu={(alt: string, segment: string) => {
-                      return segment === alt ? 'text-primary' : ''
+                      return segment === alt ? 'text-primary bg-tertiary-light' : ''
                     }} />
                 ) :
                 (<CourierMenuItemLink key={`sub-menu-items-${subMenu.text}`}
                   segment={props.segment}
                   onActiveMenu={(alt: string, segment: string) => {
-                    return segment === alt ? 'text-primary' : ''
+                    return segment === alt ? 'text-primary border-l-2 border-l-primary bg-tertiary-light' : ''
                   }}
                   {...subMenu} />)
             })

@@ -42,6 +42,7 @@ export const avaiableCountries = [
         ,
     },
 ];
+
 export const Countries = [
     { "code": "AF", "code3": "AFG", "name": "Afghanistan", "number": "004" },
     { "code": "AL", "code3": "ALB", "name": "Albania", "number": "008" },

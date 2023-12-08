@@ -111,10 +111,10 @@ const toPickUpOrders = [
 
 export default function OrdersPickUpTable() {
   return (
-    <div className="block overflow-auto h-[816px]">
+    <div className="block overflow-auto">
       <table className="min-w-[768px] w-full">
         <thead>
-          <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-6 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
+          <tr className="text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
             <th>
               <Checkbox<boolean> current={false}
                 value={true}
@@ -144,7 +144,7 @@ export default function OrdersPickUpTable() {
             toPickUpOrders.map((value: any) => {
               return (
                 <tr key={`orders-completed-${value.id}`}
-                  className="[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
+                  className="[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
                   <td>
                     <Checkbox<boolean> current={false}
                       value={true}
