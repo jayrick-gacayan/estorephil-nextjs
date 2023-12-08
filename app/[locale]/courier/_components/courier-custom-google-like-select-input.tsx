@@ -1,4 +1,4 @@
-export default function CourierCustomSelectInput<T>({
+export default function CourierCustomGoogleLikeSelectInput<T>({
   inputId,
   labelText,
   items,

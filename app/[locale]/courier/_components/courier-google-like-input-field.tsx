@@ -1,4 +1,4 @@
-export default function CourierInputField({
+export default function CourierGoogleLikeInputField({
   inputId,
   labelText,
 }: {
