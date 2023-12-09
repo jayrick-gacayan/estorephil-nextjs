@@ -21,8 +21,10 @@ export default function NextButton() {
     const dispatch: AppDispatch = useAppDispatch()
 
     const checkoutState: SenderState | ReceiverState | PaymentMethodState = useAppSelector((state: RootState) => {
-        if (pathname.includes('sender')) { return state.sender; }
-        else if (pathname.includes('receiver')) { return state.receiver; }
+        if (segment) {
+            if (segment.includes('sender')) { return state.sender; }
+            else if (segment.includes('receiver')) { return state.receiver; }
+        }
         return state.paymentMethod;
     });
 
@@ -92,7 +94,7 @@ export default function NextButton() {
                 return 'Next';
             }
         }
-
+        return null;
     }
 
     return (

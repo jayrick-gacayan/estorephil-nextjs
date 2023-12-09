@@ -6,10 +6,14 @@ export function Checkbox<T>({
   value,
   labelText,
   labelClassname,
+  checkBoxClassName,
+  checkClassName,
 }: {
   current: T;
   value: T
   onCheckboxChanged: (value: T) => void;
+  checkBoxClassName: (value: T, current: T) => string;
+  checkClassName: (value: T, current: T) => string;
   labelText?: string;
   labelClassname?: (value: T, current: T) => string;
 }) {

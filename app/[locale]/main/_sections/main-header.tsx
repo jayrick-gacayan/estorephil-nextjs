@@ -7,13 +7,17 @@ import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icon
 import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from './navbar-search';
 import PurchaseMethodNavbar from './purchase-method-navbar';
+import CountryPicker from '../_components/country-picker';
+import { RootState } from '@/redux/store';
+import { useSelector } from 'react-redux';
 import Dropdown from '../../_components/dropdown';
 import { useCallback, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 
+
 export default function MainHeader() {
   const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
-
+  const state = useSelector((state: RootState) => state.main)
   const closeDropdown = useCallback(() => {
     if (dropdownProfileImageRef.current) {
       let querySelector = dropdownProfileImageRef.current.querySelector('#dropdown-profile-image');
@@ -79,6 +83,32 @@ export default function MainHeader() {
               <Link href="/dashboard/agency-information" className='inline-block'>
                 <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
               </Link>
+              <div className='inline-block'>
+                <CountryPicker
+                  value={state.countryPicker.value}
+                  show={state.countryPicker.show}
+                  icon={
+                    state.countryPicker.value == 'ca' ? <Image
+                      src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ca.svg"
+                      height={25}
+                      width={25}
+                      alt=''
+                    /> :
+                      state.countryPicker.value == 'ph' ? <Image
+                        src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ph.svg"
+                        height={25}
+                        width={25}
+                        alt=''
+                      />
+                        : <Image
+                          src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/us.svg"
+                          height={25}
+                          width={25}
+                          alt=''
+                        />
+                  }
+                />
+              </div>
             </div>
           </div>
         </nav>

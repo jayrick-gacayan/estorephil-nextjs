@@ -9,10 +9,23 @@ const nextConfig = {
       },
       {
         protocol: "http",
+        hostname: "127.0.0.1",
+        port: "",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "",
+      },
+      {
+        protocol: "http",
         hostname: "*",
-        port: "8001",
+        port: "3000",
       },
     ],
+  },
+  env: {
+    API_URL: process.env.API_URL,
   },
   async rewrites() {
     return [
@@ -21,13 +34,21 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
+        source: `/api/:path*`,
+        destination: `/api/:path*`,
+      },
+      {
         source: '/:locale/home',
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|register|login).*)',
+        source: '/:locale/:path((?!admin|register|login|verify-login|courier).*)',
         destination: '/:locale/main/:path*',
       },
+      {
+        source: '/:locale/courier',
+        destination: '/:locale/courier/dashboard'
+      }
     ]
   },
 }

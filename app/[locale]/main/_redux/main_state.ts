@@ -4,4 +4,8 @@ export interface MainState {
     open: boolean;
     type: string;
   };
+  countryPicker: {
+    value: string,
+    show: boolean
+  }
 }

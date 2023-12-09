@@ -33,6 +33,12 @@ export function CategorySidebar() {
                     return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
                   }}
                   value={category}
+                  checkBoxClassName={(value: string, current: string) => {
+                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+                  }}
+                  checkClassName={(value: string, current: string) => {
+                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                  }}
                   current={searchParams.get('keyword') ?? ''}
                   onCheckboxChanged={(text: string) => {
                     let queryStringSearch = new URLSearchParams();
