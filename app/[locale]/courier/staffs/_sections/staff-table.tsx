@@ -64,7 +64,10 @@ export default function StaffTable() {
                         }}>
                         <FaRegEye />
                       </div>
-                      <div className='cursor-pointer inline-block p-2 m-auto rounded border border-danger w-fit text-danger'>
+                      <div className='cursor-pointer inline-block p-2 m-auto rounded border border-danger w-fit text-danger'
+                        onClick={() => {
+
+                        }}>
                         <RxCircleBackslash />
                       </div>
                     </div>

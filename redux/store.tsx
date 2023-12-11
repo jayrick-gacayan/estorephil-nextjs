@@ -21,6 +21,7 @@ import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
 import courierDeliveryRatesReducer from '@/app/[locale]/courier/delivery-rates/_redux/courier-delivery-rates-slice';
 import courierStaffReducer from '@/app/[locale]/courier/staffs/_redux/courier-staff-slice';
 import courierBoxesReducer from '@/app/[locale]/courier/boxes/_redux/courier-boxes-slice';
+import courierStaffInfoReducer from '@/app/[locale]/courier/staffs/[id]/_redux/courier-staff-info-slice';
 
 export const store = configureStore({
     reducer: {
@@ -46,6 +47,7 @@ export const store = configureStore({
         courierDeliveryRates: courierDeliveryRatesReducer,
         courierStaff: courierStaffReducer,
         courierBoxes: courierBoxesReducer,
+        courierStaffInfo: courierStaffInfoReducer
     }
 });
 
