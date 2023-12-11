@@ -6,14 +6,16 @@ import Image from 'next/image';
 
 export default function EditStaffForm({ onClose }: { onClose: () => void; }) {
   return (<div className='py-8 space-y-4 w-[768px] m-auto'>
-    <h3 className='text-[32px] leading-0 text-left'>Edit Basic Information</h3>
+    <div className="border-b border-secondary-light pb-2">
+      <h3 className='text-[32px] leading-0 text-center'>Edit Basic Information</h3>
+    </div>
     <div className="flex items-stretch gap-4">
       <div className="flex-none w-64">
         <Image alt='edit-profile-image-info'
           src='/static_images/profile_image_default.jpg'
           width={256}
-          height={192}
-          className='w-64 h-48 rounded' />
+          height={224}
+          className='w-64 h-56 rounded' />
       </div>
       <div className="flex-1 space-y-4">
         <CourierGoogleLikeInputField labelText='Email'

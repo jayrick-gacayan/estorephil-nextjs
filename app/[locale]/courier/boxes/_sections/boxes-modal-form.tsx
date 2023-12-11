@@ -20,7 +20,7 @@ export default function BoxesModalForm({
 
   return (
     <div className='py-8 space-y-8 w-[768px] m-auto'>
-      <div className="border-b border-secondary-light py-2">
+      <div className="border-b border-secondary-light pb-2">
         <h3 className='text-[32px] leading-0 text-center'>{type === 'createBox' ? 'Create Box' : 'Update Box'}</h3>
       </div>
       <div className="space-y-6 relative z-0">

@@ -43,8 +43,8 @@ const config: Config = {
         'warning-light': '#FFD046',
       },
       animation: {
-        'slide-up': 'slide-up 0.5s ease-out forwards',
-        'slide-down': 'slide-down 0.5s ease-out forwards',
+        'slide-up': 'slide-up 0.3s ease-out forwards',
+        'slide-down': 'slide-down 0.3s ease-out forwards',
         'fadeIn': 'fadeIn 0.5s ease-in forwards',
         'fadeOut': 'fadeOut 0.5s ease-out backwards',
         'customSpin': 'customSpin 0.5s linear forwards',

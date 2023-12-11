@@ -13,7 +13,9 @@ function AddStaffForm({
 
   return (
     <div className='py-8 space-y-4 w-[512px] m-auto'>
-      <h3 className='text-[32px] leading-0 text-left'>Add Staff</h3>
+      <div className="border-b border-secondary-light pb-2">
+        <h3 className='text-[32px] leading-0 text-center'>Add Staff</h3>
+      </div>
       <div className='space-y-4 text-left'>
         <CourierGoogleLikeInputField labelText='Firstname'
           inputProps={{
