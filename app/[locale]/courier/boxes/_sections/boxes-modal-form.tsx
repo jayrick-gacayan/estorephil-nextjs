@@ -4,7 +4,7 @@ import { philippinesRegions } from "@/types/props/philippine-regions";
 import CourierInputField from "../../_components/courier-custom-input";
 import CourierCustomSelectField from "../../_components/courier-custom-select-field";
 import CourierGoogleLikeInputField from "../../_components/courier-google-like-input-field";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import LabelTextWithAmountTrash from "../../deliveries/_components/labeltext-with-amount-trash";
 
@@ -61,9 +61,33 @@ export default function BoxesModalForm({
           <div className="flex-none w-56 font-semibold">Dimension</div>
           <div className="flex-1">
             <div className="flex items-center gap-1">
-              <CourierGoogleLikeInputField inputId='dimension-length' labelText="Length" />
-              <CourierGoogleLikeInputField inputId='dimension-width' labelText="Width" />
-              <CourierGoogleLikeInputField inputId='dimension-height' labelText="Height" />
+              <CourierGoogleLikeInputField labelText="Length"
+                inputProps={{
+                  id: 'dimension-length',
+                  type: 'number',
+                  min: 0,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
+              <CourierGoogleLikeInputField labelText="Width"
+                inputProps={{
+                  id: 'dimension-width',
+                  type: 'number',
+                  min: 0,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
+              <CourierGoogleLikeInputField labelText="Height"
+                inputProps={{
+                  id: 'dimension-height',
+                  type: 'number',
+                  min: 0,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
             </div>
           </div>
           <div className="flex-none w-20">
@@ -78,7 +102,13 @@ export default function BoxesModalForm({
         <div className="flex items-center gap-4 text-left">
           <div className="flex-none w-56 font-semibold">Referral &#37;</div>
           <div className="flex-1">
-            <CourierInputField />
+            <CourierInputField inputProps={{
+              type: 'number',
+              min: 0,
+              onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                return
+              }
+            }} />
           </div>
         </div>
         <div className="space-y-4 text-left">

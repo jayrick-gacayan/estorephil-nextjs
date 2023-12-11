@@ -1,7 +1,10 @@
 'use client';
 
+import { useAppDispatch } from "@/app/_hooks/redux_hooks";
+import { AppDispatch } from "@/redux/store";
 import { FaRegPenToSquare, FaXmark } from "react-icons/fa6";
 import { RxCircleBackslash } from "react-icons/rx";
+import { modalBoxesOpened } from "../_redux/courier-boxes-slice";
 
 const boxesInfos = [
   {
@@ -44,6 +47,8 @@ const boxesInfos = [
   }
 ]
 export default function BoxesTable() {
+  const dispatch: AppDispatch = useAppDispatch();
+
   return (
     <div className="block overflow-auto">
       <table className="min-w-[768px] w-full">
@@ -85,10 +90,12 @@ export default function BoxesTable() {
                   </td>
                   <td>
                     <div className="space-x-2">
-                      <div className='inline-block p-2 m-auto rounded border border-primary w-fit text-primary'>
+                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
+                        onClick={() => { dispatch(modalBoxesOpened('updateBox')); }}>
                         <FaRegPenToSquare />
                       </div>
-                      <div className='inline-block p-2 m-auto rounded border border-danger w-fit text-danger'>
+                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'
+                        onClick={() => { }}>
                         <RxCircleBackslash />
                       </div>
                     </div>

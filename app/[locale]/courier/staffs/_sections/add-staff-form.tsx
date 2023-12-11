@@ -1,23 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent, memo, useState } from 'react';
 import CourierGoogleLikeInputField from '../../_components/courier-google-like-input-field';
 import CourierCustomGoogleLikeSelectInput from '../../_components/courier-custom-google-like-select-input';
 
-export default function AddStaffForm({
+function AddStaffForm({
   onClose
 }: {
   onClose: () => void;
 }) {
-  const [courierRole, setCourierRole] = useState<string>('')
+  const [courierRole, setCourierRole] = useState<string>('');
 
   return (
     <div className='py-8 space-y-4 w-[512px] m-auto'>
       <h3 className='text-[32px] leading-0 text-left'>Add Staff</h3>
       <div className='space-y-4 text-left'>
-        <CourierGoogleLikeInputField inputId='firstName' labelText='Firstname' />
-        <CourierGoogleLikeInputField inputId='lastName' labelText='Lastname' />
-        <CourierGoogleLikeInputField inputId='email' labelText='Email' />
+        <CourierGoogleLikeInputField labelText='Firstname'
+          inputProps={{
+            id: 'firstName',
+            type: 'text',
+            onChange: (event: ChangeEvent<HTMLInputElement>) => {
+              return;
+            }
+          }} />
+        <CourierGoogleLikeInputField labelText='Lastname'
+          inputProps={{
+            id: 'lastName',
+            type: 'text',
+            onChange: (event: ChangeEvent<HTMLInputElement>) => {
+              return;
+            }
+          }} />
+        <CourierGoogleLikeInputField labelText='Email'
+          inputProps={{
+            id: 'email',
+            type: 'email',
+            onChange: (event: ChangeEvent<HTMLInputElement>) => {
+              return;
+            }
+          }} />
         <CourierCustomGoogleLikeSelectInput<string> inputId='courierRole'
           labelText='Role'
           items={['Admin', 'Staff']}
@@ -38,3 +59,5 @@ export default function AddStaffForm({
     </div>
   )
 }
+
+export default memo(AddStaffForm);
