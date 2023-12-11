@@ -1,12 +1,20 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next-intl/client';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next-intl/client';
 import { Checkbox } from '@/app/[locale]/_components/checkbox';
+import { useMemo } from 'react';
 
 export function CategorySidebar() {
+  const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  let searchParams: ReadonlyURLSearchParams = useSearchParams();
+
+  const searchParamsMemo = useMemo(() => {
+    return new URLSearchParams(searchParams);
+  }, [searchParams])
+
+  console.log('search params', searchParamsMemo.toString());
 
   return (
     <div className='flex-none bg-white w-[320px] border-r-2 border-r-secondary-light py-2'>
@@ -41,11 +49,38 @@ export function CategorySidebar() {
                   }}
                   current={searchParams.get('keyword') ?? ''}
                   onCheckboxChanged={(text: string) => {
-                    let queryStringSearch = new URLSearchParams();
+                    console.log('search params on checkbox', searchParamsMemo.toString())
 
-                    queryStringSearch.set('keyword', text);
+                    if (searchParamsMemo.toString() === '') {
+                      searchParamsMemo.append('keyword', text)
+                    }
+                    else {
+                      if (searchParamsMemo.has('keyword') && searchParamsMemo.get('keyword') === text) {
+                        searchParamsMemo.delete('keyword')
+                      }
+                      else {
+                        searchParamsMemo.set('keyword', text)
+                      }
+                    }
 
-                    router.push(window.location.pathname + '?' + queryStringSearch.toString());
+                    router.replace(pathname + '' + searchParamsMemo.toString() === '' ? '' : `?${searchParamsMemo.toString()}`)
+                    // let paramsSearch = searchParams;
+                    // let queryStringSearch = searchParams !== null ?
+                    //   new URLSearchParams() : new URLSearchParams(paramsSearch);
+
+                    // console.log('query search string', queryStringSearch.toString())
+                    // if (searchParamsMemo.has('keyword') && searchParams.get('keyword') === text) {
+                    //   searchParamsMemo.delete();
+                    // }
+                    // else {
+                    //   searchParamsMemo.append.set('keyword', text);
+                    // }
+
+                    // let queryStringURL = queryStringSearch.toString() === '' ? '' :
+                    //   '?' + queryStringSearch.toString();
+
+
+                    // router.push(pathname + queryStringURL);
                   }} />
               )
             })
