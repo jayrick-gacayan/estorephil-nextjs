@@ -64,23 +64,6 @@ export function CategorySidebar() {
                     }
 
                     router.replace(pathname + '' + searchParamsMemo.toString() === '' ? '' : `?${searchParamsMemo.toString()}`)
-                    // let paramsSearch = searchParams;
-                    // let queryStringSearch = searchParams !== null ?
-                    //   new URLSearchParams() : new URLSearchParams(paramsSearch);
-
-                    // console.log('query search string', queryStringSearch.toString())
-                    // if (searchParamsMemo.has('keyword') && searchParams.get('keyword') === text) {
-                    //   searchParamsMemo.delete();
-                    // }
-                    // else {
-                    //   searchParamsMemo.append.set('keyword', text);
-                    // }
-
-                    // let queryStringURL = queryStringSearch.toString() === '' ? '' :
-                    //   '?' + queryStringSearch.toString();
-
-
-                    // router.push(pathname + queryStringURL);
                   }} />
               )
             })

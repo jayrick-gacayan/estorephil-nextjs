@@ -12,16 +12,8 @@ export default function CourierHeaderNav({
   children: ReactNode;
 }) {
 
-  const headerNavRef = useRef<HTMLHeadElement>(null);
-
-  useEffect(() => {
-    if (headerNavRef.current) {
-      console.log('dsfjsdkfjsdf', headerNavRef.current.clientHeight);
-    }
-  }, [])
   return (
-    <header ref={headerNavRef}
-      className='sticky w-full top-0 left-0 z-[999]'>
+    <header className='sticky w-full top-0 left-0 z-[999]'>
       <nav className={`${bgColor} text-white w-full p-1.5`}>
         <div className='flex items-center'>
           <div className='flex-none w-[256px]'>

@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import CourierInputField from '../../../_components/courier-custom-input';
+import { ChangeEvent } from 'react';
 
 export default function CourierDetails() {
   return (
@@ -22,7 +23,12 @@ export default function CourierDetails() {
                 Courier Name
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
             <div className='flex items-center gap-6 border-b border-[#DDE6E9] pb-4'>
@@ -30,7 +36,12 @@ export default function CourierDetails() {
                 Contact Person
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
             <div className='flex items-center gap-6 border-b border-[#DDE6E9] pb-4'>
@@ -38,7 +49,12 @@ export default function CourierDetails() {
                 Contact Number
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
           </div>
@@ -48,7 +64,12 @@ export default function CourierDetails() {
                 Business Address
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
             <div className='flex items-center gap-6 border-b border-[#DDE6E9] pb-4'>
@@ -56,7 +77,12 @@ export default function CourierDetails() {
                 Business License
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
             <div className='flex items-center gap-6 border-b border-[#DDE6E9] pb-4'>
@@ -64,7 +90,12 @@ export default function CourierDetails() {
                 Contact Number
               </div>
               <div className='flex-1'>
-                <CourierInputField />
+                <CourierInputField inputProps={{
+                  type: 'text',
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    return;
+                  }
+                }} />
               </div>
             </div>
           </div>
