@@ -3,6 +3,7 @@
 import { FaRegEye } from 'react-icons/fa6';
 import { RxCircleBackslash } from 'react-icons/rx';
 import Image from 'next/image';
+import { useRouter } from 'next-intl/client';
 
 const staffs = [
   {
@@ -17,6 +18,8 @@ const staffs = [
 ]
 
 export default function StaffTable() {
+  const router = useRouter();
+
   return (
     <div className='block overflow-auto'>
       <table className='min-w-[768px] w-full'>
@@ -55,10 +58,13 @@ export default function StaffTable() {
                   <td>{value.role}</td>
                   <td>
                     <div className='space-x-2'>
-                      <div className='inline-block p-2 m-auto rounded border border-primary w-fit text-primary'>
+                      <div className='cursor-pointer inline-block p-2 m-auto rounded border border-primary w-fit text-primary'
+                        onClick={() => {
+                          router.push(`/courier/staffs/${value.id}`);
+                        }}>
                         <FaRegEye />
                       </div>
-                      <div className='inline-block p-2 m-auto rounded border border-danger w-fit text-danger'>
+                      <div className='cursor-pointer inline-block p-2 m-auto rounded border border-danger w-fit text-danger'>
                         <RxCircleBackslash />
                       </div>
                     </div>
