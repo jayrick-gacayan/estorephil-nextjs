@@ -2,6 +2,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import StaffInfoHeader from "./_sections/sfaff-info-header";
 import Link from 'next-intl/link';
 import StaffDetails from "./_sections/staff-details";
+import ModalEditStaffInfo from "./_sections/modal-edit-staff-info";
 
 export default function Page() {
   return (
@@ -19,7 +20,7 @@ export default function Page() {
           <StaffDetails />
         </div>
       </div>
-
+      <ModalEditStaffInfo />
     </>
   )
 }
