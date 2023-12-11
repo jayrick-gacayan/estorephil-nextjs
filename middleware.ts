@@ -1,16 +1,50 @@
+import { withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
 
+const locales = ['en', 'ph'];
+const publicPages = ['/', '/home', '/all-categories', '/login'];
+
 const intlMiddleware = createMiddleware({
-  locales: ['en', 'ph'],
+  locales: locales,
   defaultLocale: 'en'
 });
 
+// export default function middleware(req: NextRequest) {
+//   return intlMiddleware(req);
+// }
+
+const authMiddleware = withAuth(
+  // Note that this callback is only invoked if
+  // the `authorized` callback has returned `true`
+  // and not for pages listed in `pages`.
+  function onSuccess(req) {
+    return intlMiddleware(req);
+  },
+  {
+    callbacks: {
+      authorized: ({ token }) => token != null
+    },
+    pages: {
+      signIn: '/login'
+    }
+  }
+);
 export default function middleware(req: NextRequest) {
-  return intlMiddleware(req);
+  const publicPathnameRegex = RegExp(
+    `^(/(${locales.join('|')}))?(${publicPages
+      .flatMap((p) => (p === '/' ? ['', '/'] : p))
+      .join('|')})/?$`,
+    'i'
+  );
+  const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
+
+  if (isPublicPage) {
+    return intlMiddleware(req);
+  } else {
+    return (authMiddleware as any)(req);
+  }
 }
-
-
 export const config = {
   // Skip all paths that should not be internationalized
   matcher: ['/((?!api|_next/static|favicon.ico|_vercel|.*\\..*).*)']

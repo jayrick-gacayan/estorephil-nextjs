@@ -34,4 +34,4 @@ staffContainer.bind<StaffService>(TYPES.StaffService).to(StaffService)
 orderContainer.bind<OrderRepository>(TYPES.OrderRepository).to(OrderRepository)
 orderContainer.bind<OrderService>(TYPES.OrderService).to(OrderService)
 
-export { accountContainer, staffContainer, homeContainer, storeContainer, productContainer }
+export { accountContainer, staffContainer, homeContainer, storeContainer, productContainer, orderContainer }

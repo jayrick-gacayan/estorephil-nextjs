@@ -13,11 +13,14 @@ import { useSelector } from 'react-redux';
 import Dropdown from '../../_components/dropdown';
 import { useCallback, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 
 export default function MainHeader() {
   const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
   const state = useSelector((state: RootState) => state.main)
+  const { push } = useRouter()
   const closeDropdown = useCallback(() => {
     if (dropdownProfileImageRef.current) {
       let querySelector = dropdownProfileImageRef.current.querySelector('#dropdown-profile-image');
@@ -26,7 +29,13 @@ export default function MainHeader() {
       }
     }
   }, []);
-
+  const { data: sessionData } = useSession()
+  const userFullName = `${sessionData?.user.first_name} ${sessionData?.user.last_name}`
+  const onSession = !!sessionData
+  console.log('sessionData:', sessionData)
+  const removeSession = async () => {
+    await signOut({ callbackUrl: `/login` })
+  }
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
 
   return (
@@ -43,30 +52,44 @@ export default function MainHeader() {
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
               <PurchaseMethodNavbar>
-                <Dropdown ref={dropdownProfileImageRef}
-                  className='relative inline'>
-                  <Image alt='profile-image'
-                    src='/static_images/static_profile_img.png'
-                    width={48}
-                    height={48}
-                    className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'
-                    onClick={() => {
-                      if (dropdownProfileImageRef.current) {
-                        dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
-                      }
-                    }} />
-                  <div id="dropdown-profile-image" className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
-                    <div className='block'>
-                      <Link href='/dashboard/agency-information'
-                        className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white'>
-                        PROFILE
-                      </Link>
-                      <span className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white'>
-                        SIGNOUT
-                      </span>
+                {onSession
+                  ? <Dropdown ref={dropdownProfileImageRef}
+                    className='relative inline'>
+                    <Image alt='profile-image'
+                      src={sessionData.user.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
+                      width={48}
+                      height={48}
+                      className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'
+                      onClick={() => {
+                        if (dropdownProfileImageRef.current) {
+                          dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
+                        }
+                      }} />
+                    <div 
+                    id="dropdown-profile-image" 
+                    className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
+                      <div className='block'>
+                        <button
+                          onClick={() => {
+                            push('/dashboard/agency-information')
+                          }}
+                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
+                          PROFILE
+                        </button>
+                        <button
+                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
+                          type='button'
+                          onClick={() => {
+                            removeSession()
+                          }}
+                        >
+                          SIGNOUT
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </Dropdown>
+                  </Dropdown>
+                  : <Link href={'/login'}>Login</Link>
+                }
               </PurchaseMethodNavbar>
             </div>
           </div>
@@ -81,7 +104,7 @@ export default function MainHeader() {
               </Link>
               <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
               <Link href="/dashboard/agency-information" className='inline-block'>
-                <TextWithIcon text='JAYRICK GACAYAN' icon={<FaUser className='inline-block' />} />
+                <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
               </Link>
               <div className='inline-block'>
                 <CountryPicker

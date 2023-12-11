@@ -7,4 +7,5 @@ export class StoreService {
         var result = await response.json();
         return result;
     }
+    
 }

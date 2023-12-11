@@ -14,5 +14,8 @@ export class OrderRepository {
     ) {
         this.orderService = orderService;
     }
+    async getAgentOrders(token: string, page: number, limit: number) {
+        return await this.orderService.getAgentOrders(token, page, limit)
+    }
 
 }

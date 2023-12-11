@@ -37,11 +37,24 @@ export const loginSlice = createSlice({
                     value: action.payload.trim()
                 }
             }
+        },
+        loginSuccess: (state: LoginState) => {
+            return {
+                ...state,
+                requestStatus: RequestStatus.SUCCESS
+            }
+        },
+        loginFailed: (state: LoginState) => {
+            return {
+                ...state,
+                requestStatus: RequestStatus.FAILURE
+            }
         }
     }
 })
 export const {
     loginLoaded,
     emailChanged, passwordChanged
+    , loginSuccess, loginFailed
 } = loginSlice.actions
 export default loginSlice.reducer
