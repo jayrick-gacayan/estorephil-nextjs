@@ -24,32 +24,26 @@ export default function BoxesModalForm({
         <h3 className='text-[32px] leading-0 text-center'>{type === 'createBox' ? 'Create Box' : 'Update Box'}</h3>
       </div>
       <div className="space-y-6 relative z-0">
-        <div className="flex items-center gap-4">
-          <div className="w-full text-left">
-            <div className="flex items-center">
-              <div className="flex-none w-36 font-semibold">Cargo Type</div>
-              <div className="flex-1">
-                <CourierCustomSelectField inputId='select-box-type'
-                  items={['Air', 'Vessel']}
-                  value={undefined}
-                  onSelectChange={function (value: unknown): void {
-                    return;
-                  }} />
-              </div>
-            </div>
+        <div className="flex items-center gap-4 text-left">
+          <div className="flex-none w-56 font-semibold">Cargo Type</div>
+          <div className="flex-1">
+            <CourierCustomSelectField inputId='select-measurement-system'
+              items={['Air', 'Vessel']}
+              value={undefined}
+              onSelectChange={function (value: unknown): void {
+                return;
+              }} />
           </div>
-          <div className="w-full text-left">
-            <div className="flex items-center">
-              <div className="flex-none w-36 font-semibold">Box Type</div>
-              <div className="flex-1">
-                <CourierCustomSelectField inputId='select-cargo-type'
-                  items={['Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
-                  value={undefined}
-                  onSelectChange={function (value: unknown): void {
-                    return;
-                  }} />
-              </div>
-            </div>
+        </div>
+        <div className="flex items-center gap-4 text-left">
+          <div className="flex-none w-56 font-semibold">Box Type</div>
+          <div className="flex-1">
+            <CourierCustomSelectField inputId='select-measurement-system'
+              items={['Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
+              value={undefined}
+              onSelectChange={function (value: unknown): void {
+                return;
+              }} />
           </div>
         </div>
         <div className="flex items-center gap-4 text-left">
@@ -64,7 +58,7 @@ export default function BoxesModalForm({
           </div>
         </div>
         <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-40 font-semibold">Dimension</div>
+          <div className="flex-none w-56 font-semibold">Dimension</div>
           <div className="flex-1">
             <div className="flex items-center gap-1">
               <CourierGoogleLikeInputField inputId='dimension-length' labelText="Length" />
@@ -82,15 +76,15 @@ export default function BoxesModalForm({
           </div>
         </div>
         <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-40 font-semibold">Referral &#37;</div>
+          <div className="flex-none w-56 font-semibold">Referral &#37;</div>
           <div className="flex-1">
             <CourierInputField />
           </div>
         </div>
         <div className="space-y-4 text-left">
           <div className="text-3xl">Region Rates</div>
-          <div className="flex items-center w-full">
-            <div className="flex-none w-40 font-semibold">
+          <div className="flex items-center w-full gap-4">
+            <div className="flex-none w-56 font-semibold">
               Region
             </div>
             <div className="relative w-full">
