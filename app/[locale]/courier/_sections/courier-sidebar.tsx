@@ -102,6 +102,7 @@ export default function CourierSidebar() {
                 }
 
                 return (<CourierMenuItemWithSubLinks segment={segment}
+                  key={`menu-sublink-items-${courierDashboardMenu.text}`}
                   onActiveMenu={function (alt: string, segment: string): string {
                     return segment === alt ? `text-primary bg-tertiary-light` : ``;
                   }}
