@@ -19,9 +19,11 @@ export default function BoxesModalForm({
   const [regions, setRegions] = useState<any[]>([]);
 
   return (
-    <div className='py-8 space-y-4 w-[768px] m-auto'>
-      <h3 className='text-[32px] leading-0 text-left'>{type === 'createBox' ? 'Create Box' : 'Update Box'}</h3>
-      <div className="space-y-4 relative z-0">
+    <div className='py-8 space-y-8 w-[768px] m-auto'>
+      <div className="border-b border-secondary-light py-2">
+        <h3 className='text-[32px] leading-0 text-center'>{type === 'createBox' ? 'Create Box' : 'Update Box'}</h3>
+      </div>
+      <div className="space-y-6 relative z-0">
         <div className="flex items-center gap-4">
           <div className="w-full text-left">
             <div className="flex items-center">
@@ -86,7 +88,7 @@ export default function BoxesModalForm({
           </div>
         </div>
         <div className="space-y-4 text-left">
-          <div className="font-semibold">Region Rates</div>
+          <div className="text-3xl">Region Rates</div>
           <div className="flex items-center w-full">
             <div className="flex-none w-40 font-semibold">
               Region
