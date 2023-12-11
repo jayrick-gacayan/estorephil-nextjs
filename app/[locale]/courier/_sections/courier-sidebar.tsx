@@ -6,12 +6,12 @@ import { BsBox2 } from 'react-icons/bs';
 import { FaCogs, FaShoppingCart } from 'react-icons/fa';
 import CourierMenuItemLink from '../_components/courier-menu-item-link';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { useMemo, useState, MouseEvent } from 'react';
-import { FaMoneyBill1Wave, FaUserTie, FaUsers } from 'react-icons/fa6';
+import { useMemo, useState, MouseEvent, memo } from 'react';
+import { FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'react-icons/fa6';
 import CourierMenuItemWithSubLinks from '../_components/courier-menu-item-with-sublinks';
 import { useRouter } from 'next-intl/client';
 
-const courierDashboardMenus: MenuProps[] = [
+let courierDashboardMenus: MenuProps[] = [
   {
     link: '/courier',
     text: 'Dashboard',
@@ -64,14 +64,23 @@ const courierDashboardMenus: MenuProps[] = [
     alt: 'delivery-rates',
     icon: <FaMoneyBill1Wave />
   },
+  {
+    link: '/courier/profile/4',
+    text: 'Courier Info',
+    alt: 'profile',
+    icon: <FaTruck />
+  },
 ];
 
-export default function CourierSidebar() {
+function CourierSidebar() {
   const [currentDropdownMenu, setCurrentDropdownMenu] = useState<string>('');
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
 
   const segment = useMemo(() => {
+    if (segments.includes('profile')) {
+      return 'profile'
+    }
     if (segments.length > 1) {
       return segments[segments.length - 1];
     }
@@ -135,3 +144,5 @@ export default function CourierSidebar() {
     </div>
   )
 }
+
+export default memo(CourierSidebar);
