@@ -6,8 +6,10 @@ import { BsBox2 } from 'react-icons/bs';
 import { FaCogs, FaShoppingCart } from 'react-icons/fa';
 import CourierMenuItemLink from '../_components/courier-menu-item-link';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { useMemo } from 'react';
+import { useMemo, useState, MouseEvent } from 'react';
 import { FaMoneyBill1Wave, FaUserTie, FaUsers } from 'react-icons/fa6';
+import CourierMenuItemWithSubLinks from '../_components/courier-menu-item-with-sublinks';
+import { useRouter } from 'next-intl/client';
 
 const courierDashboardMenus: MenuProps[] = [
   {
@@ -41,6 +43,7 @@ const courierDashboardMenus: MenuProps[] = [
     icon: <FaUserTie />
   },
   {
+    link: '/courier/orders',
     text: 'Orders',
     alt: 'orders',
     icon: <FaShoppingCart />,
@@ -64,7 +67,8 @@ const courierDashboardMenus: MenuProps[] = [
 ];
 
 export default function CourierSidebar() {
-
+  const [currentDropdownMenu, setCurrentDropdownMenu] = useState<string>('');
+  const router = useRouter();
   const segments = useSelectedLayoutSegments();
 
   const segment = useMemo(() => {
@@ -81,12 +85,48 @@ export default function CourierSidebar() {
         <div className='block'>
           {
             courierDashboardMenus.map((courierDashboardMenu: MenuProps) => {
+
+              if (courierDashboardMenu.subMenus) {
+                let objectToCourierMenuItemWithSubLinksProps: any = courierDashboardMenu;
+                if (courierDashboardMenu.link) {
+                  objectToCourierMenuItemWithSubLinksProps = {
+                    ...objectToCourierMenuItemWithSubLinksProps,
+                    currentDropdownMenu: currentDropdownMenu,
+                    currentDropdownMenuSet: (currentMenu: string) => {
+                      setCurrentDropdownMenu(currentDropdownMenu === currentMenu ? '' : courierDashboardMenu.alt)
+                    },
+                    onLinkClicked: () => {
+                      router.push(courierDashboardMenu.link!);
+                    }
+                  }
+                }
+
+                return (<CourierMenuItemWithSubLinks segment={segment}
+                  onActiveMenu={function (alt: string, segment: string): string {
+                    return segment === alt ? `text-primary bg-tertiary-light` : ``;
+                  }}
+                  {...objectToCourierMenuItemWithSubLinksProps}>
+                  {courierDashboardMenu.alt === 'orders' && <div className='rounded-full w-auto bg-danger text-white px-1.5 inline-block text-sm'>4</div>}
+                </CourierMenuItemWithSubLinks>)
+              }
+
+              let objectToCourierMenuItemLinkProps: any = courierDashboardMenu;
+
+              if (courierDashboardMenu.alt === 'delivery-rates') {
+                objectToCourierMenuItemLinkProps = {
+                  ...objectToCourierMenuItemLinkProps,
+                  onDisabledLink: (event: MouseEvent<HTMLAnchorElement>) => {
+                    event.preventDefault();
+                  }
+                }
+              }
+
               return (<CourierMenuItemLink key={`menu-items-${courierDashboardMenu.text}`}
                 segment={segment!}
                 onActiveMenu={(alt: string, segment: string) => {
                   return segment === alt ? 'text-primary border-l-4 border-l-primary bg-tertiary-light' : ''
                 }}
-                {...courierDashboardMenu} />)
+                {...objectToCourierMenuItemLinkProps} />)
             })
           }
         </div>
