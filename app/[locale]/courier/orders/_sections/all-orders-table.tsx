@@ -112,7 +112,7 @@ export default function AllOrdersTable() {
                   <td>{value.dateOrdered}</td>
                   <td>{value.customerName}</td>
                   <td>{value.totalItems}</td>
-                  <td>C{value.payment.toFixed(2)}</td>
+                  <td>C&#36; {value.payment.toFixed(2)}</td>
                   <td>{value.instructions}</td>
                   <td>
                     <span className={`${colorForStatus} text-white px-2 py-1 rounded`}>{value.status}</span>
