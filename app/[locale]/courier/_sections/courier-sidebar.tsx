@@ -7,7 +7,7 @@ import { FaCogs, FaShoppingCart } from 'react-icons/fa';
 import CourierMenuItemLink from '../_components/courier-menu-item-link';
 import { useSelectedLayoutSegments } from 'next/navigation';
 import { useMemo, useState, MouseEvent, memo } from 'react';
-import { FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'react-icons/fa6';
+import { FaCalculator, FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'react-icons/fa6';
 import CourierMenuItemWithSubLinks from '../_components/courier-menu-item-with-sublinks';
 import { useRouter } from 'next-intl/client';
 
@@ -63,6 +63,12 @@ let courierDashboardMenus: MenuProps[] = [
     text: 'Delivery Rates',
     alt: 'delivery-rates',
     icon: <FaMoneyBill1Wave />
+  },
+  {
+    link: '/courier/accounting',
+    text: 'Accounting',
+    alt: 'calculator',
+    icon: <FaCalculator />
   },
   {
     link: '/courier/profile/4',
