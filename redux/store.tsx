@@ -20,6 +20,12 @@ import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
 import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
 import productReducer from '@/app/[locale]/main/products/[id]/_redux/product-slice'
 import allCategoriesReducer from '@/app/[locale]/main/all-categories/_redux/all-categories-slice'
+
+import courierDeliveryRatesReducer from '@/app/[locale]/courier/delivery-rates/_redux/courier-delivery-rates-slice';
+import courierStaffReducer from '@/app/[locale]/courier/staffs/_redux/courier-staff-slice';
+import courierBoxesReducer from '@/app/[locale]/courier/boxes/_redux/courier-boxes-slice';
+import courierStaffInfoReducer from '@/app/[locale]/courier/staffs/[id]/_redux/courier-staff-info-slice';
+
 export const store = configureStore({
     reducer: {
         main: mainReducer,
@@ -43,8 +49,12 @@ export const store = configureStore({
         staff: staffReducer,
         staffDetail: staffDetailReducer,
         staffAdd: staffAddReducer,
+        courierDeliveryRates: courierDeliveryRatesReducer,
+        courierStaff: courierStaffReducer,
+        courierBoxes: courierBoxesReducer,
+        courierStaffInfo: courierStaffInfoReducer
     }
 });
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

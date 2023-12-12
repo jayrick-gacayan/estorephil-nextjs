@@ -15,12 +15,14 @@ export type SelectProps<T, P> = {
 export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
   { labelText, items, value, placeholder, visible, setVisible }, ref
 ) => {
+
+  let selectValue = typeof value === 'string' ? (value === '' ? placeholder : value) : typeof value === 'number' ? value : value ? Object.assign(value, {} as any).name : `${placeholder}`;
   return (
     <div ref={ref} className='block space-y-1 w-full'>
       {labelText && <div className='block'>{labelText}</div>}
       <div className='block relative'>
-        <div className='flex border border-secondary-light rounded overflow-hidden bg-white p-2 hover:cursor-pointer'>
-          <div className='flex-1' onClick={() => {
+        <div className='flex border border-tertiary-dark rounded overflow-hidden bg-white p-2 hover:cursor-pointer'>
+          <div className={`flex-1 ${selectValue === placeholder ? 'text-tertiary-dark' : 'text-inherit'}`} onClick={() => {
             if (items.length > 0) { setVisible(true); }
           }}>
             {typeof value === 'string' ? (value === '' ? placeholder : value) : typeof value === 'number' ? value : value ? Object.assign(value, {} as any).name : `${placeholder}`}
@@ -33,7 +35,7 @@ export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
             <HiChevronDown className={`transition-all duration-100 w-8 h-6 ${visible ? `-rotate-90` : `rotate-0`}`} />
           </div>
         </div>
-        <div className={`overflow-auto rounded border border-secondary-light absolute top-[110%] z-50 w-full bg-white left-0 ${visible ? `block` : `hidden`}`}>
+        <div className={`overflow-auto rounded border border-tertiary-dark absolute top-[110%] z-50 w-full bg-white left-0 ${visible ? `block` : `hidden`}`}>
           {
             items.map((item: any, index: number) => {
               let itemValue = typeof item === 'string' ? item : typeof item === 'number' ? item : item.name;

@@ -1,7 +1,10 @@
 'use client';
 
+import { useAppDispatch } from "@/app/_hooks/redux_hooks";
+import { AppDispatch } from "@/redux/store";
 import { FaRegPenToSquare, FaXmark } from "react-icons/fa6";
 import { RxCircleBackslash } from "react-icons/rx";
+import { modalBoxesOpened } from "../_redux/courier-boxes-slice";
 
 const boxesInfos = [
   {
@@ -44,11 +47,13 @@ const boxesInfos = [
   }
 ]
 export default function BoxesTable() {
+  const dispatch: AppDispatch = useAppDispatch();
+
   return (
     <div className="block overflow-auto">
       <table className="min-w-[768px] w-full">
         <thead>
-          <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-6 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
+          <tr className="text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
             <th>ID</th>
             <th>DIMENSION</th>
             <th>TYPE</th>
@@ -66,7 +71,7 @@ export default function BoxesTable() {
             boxesInfos.map((value: any) => {
               return (
                 <tr key={`orders-completed-${value.id}`}
-                  className="[&>td]:px-2 [&>td]:py-3 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
+                  className="[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
                   <td className="text-primary">{value.id}</td>
                   <td>&#40;{`${value.dimension.length} \u00D7 ${value.dimension.width} \u00D7 ${value.dimension.height}`}&#41; {value.dimension.unit}</td>
                   <td>{value.type.toUpperCase()}</td>
@@ -85,10 +90,12 @@ export default function BoxesTable() {
                   </td>
                   <td>
                     <div className="space-x-2">
-                      <div className='inline-block p-2 m-auto rounded border border-primary w-fit text-primary'>
+                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
+                        onClick={() => { dispatch(modalBoxesOpened('updateBox')); }}>
                         <FaRegPenToSquare />
                       </div>
-                      <div className='inline-block p-2 m-auto rounded border border-danger w-fit text-danger'>
+                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'
+                        onClick={() => { }}>
                         <RxCircleBackslash />
                       </div>
                     </div>

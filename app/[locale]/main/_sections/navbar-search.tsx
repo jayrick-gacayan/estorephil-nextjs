@@ -10,12 +10,12 @@ export function NavbarSearch() {
 
   return (
     <div className='flex-1 flex justify-between item-stretch overflow-hidden rounded bg-white w-full'>
-      <div className='p-3'>
-        <FaSearch size={16} className='align-middle inline-block text-secondary' />
+      <div className='p-3 text-tertiary-dark'>
+        <FaSearch size={20} className='align-middle inline-block ' />
       </div>
       <div className='p-3 w-full'>
         <input type='text'
-          className='w-full text-black placeholder:text-secondary outline-none focus:outline-none'
+          className='w-full text-black placeholder:text-tertiary-dark outline-none focus:outline-none'
           placeholder='Search products'
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setNavbarSearchText(event.target.value)

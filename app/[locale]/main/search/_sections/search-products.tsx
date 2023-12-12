@@ -22,7 +22,7 @@ export function SearchProducts({
   useOutsideClick(searchSelectRef, () => { setVisible(false); })
 
   return (
-    <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
+    <div className='max-w-screen-2xl m-auto py-4'>
       <div className='flex mb-2'>
         <ProductHeaderText text={searchParams && keyword !== '' ? `Results of \u0022${keyword}\u0022` : ``} />
         <div className='flex-none space-x-2'>

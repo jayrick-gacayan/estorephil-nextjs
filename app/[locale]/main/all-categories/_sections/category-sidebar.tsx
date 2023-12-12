@@ -1,7 +1,7 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next-intl/client';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next-intl/client';
 import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import { useEffect } from 'react';
 import { RootState, store } from '@/redux/store';
@@ -12,6 +12,7 @@ import { HomeRepository } from '@/repositories/home-repository';
 import { useSelector } from 'react-redux';
 
 export function CategorySidebar() {
+  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
   const mainState = useSelector((state: RootState) => state.main)
@@ -21,7 +22,7 @@ export function CategorySidebar() {
     store.dispatch(getMainCategories(homeRepository, mainState.countryPicker.value))
   }, [])
   return (
-    <div className='flex-none bg-white w-[320px] border-r-2 border-r-secondary-light py-2'>
+    <div className='flex-none bg-white w-[320px] border-r border-r-tertiary-dark py-2'>
       <div className='space-y-3 w-3/4 m-auto'>
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>

@@ -2,6 +2,7 @@ import BoxesHeader from "./_sections/boxes-header";
 import BoxesPagination from "./_sections/boxes-pagination";
 import BoxesSearchContainer from "./_sections/boxes-search-container";
 import BoxesTable from "./_sections/boxes-table";
+import ModalBoxesContainer from "./_sections/modal-boxes-container";
 
 export default function Page() {
   return (
@@ -14,6 +15,7 @@ export default function Page() {
           <BoxesPagination />
         </div>
       </div>
+      <ModalBoxesContainer />
     </>
   )
 }

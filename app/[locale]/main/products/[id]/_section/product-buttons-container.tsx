@@ -49,7 +49,7 @@ export default function ProductButtonsContainer({
         <div className='flex-none w-auto'>Quantity</div>
         <div className='flex-1'>
           <div className='flex items-center justify-between gap-4 text-center'>
-            <div className={`transition duration-100 rounded px-4 py-2 bg-tertiary text-secondary text-2xl 
+            <div className={`transition duration-100 rounded px-4 py-2 bg-tertiary-dark text-2xl 
             ${quantity > 1 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={() => { setQuantity(quantity === 1 ? 1 : quantity - 1); }}>
               &#8722;

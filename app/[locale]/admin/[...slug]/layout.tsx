@@ -34,7 +34,7 @@ export default function Layout({
   return (
     <>
       <AdminNavbarHeader />
-      <main className='h-[calc(100vh-48px)] flex w-full text-secondary relative'>
+      <main className='h-[calc(100vh-48px)] flex w-full text-default-dark relative'>
         <AdminSidebar currentLink={currentLink} />
         <div className='flex-1 h-full overflow-auto bg-neutral-200'>
           <div className='border-b-2 border-neutral-300'>

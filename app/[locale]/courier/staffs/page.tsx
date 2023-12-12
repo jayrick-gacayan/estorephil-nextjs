@@ -1,4 +1,5 @@
 
+import ModalAddStaff from "./_sections/modal-add-staff";
 import StaffHeader from "./_sections/staff-header";
 import StaffPagination from "./_sections/staff-pagination";
 import StaffSearchContainer from "./_sections/staff-search-container";
@@ -15,6 +16,7 @@ export default function Page() {
           <StaffPagination />
         </div>
       </div>
+      <ModalAddStaff />
     </>
   )
 }

@@ -23,7 +23,7 @@ export default function Products() {
         console.log('state stores', products)
     }, [])
     return (
-        <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
+        <div className='max-w-screen-2xl m-auto py-4'>
             <h1 className="font-[500] text-2xl">Our Products</h1>
             <div className="flex mb-2 gap-4">
                 {state.getMainStoresStatus === RequestStatus.SUCCESS

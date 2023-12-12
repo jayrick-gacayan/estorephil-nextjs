@@ -6,10 +6,12 @@ import { BsBox2 } from 'react-icons/bs';
 import { FaCogs, FaShoppingCart } from 'react-icons/fa';
 import CourierMenuItemLink from '../_components/courier-menu-item-link';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { useMemo } from 'react';
-import { FaMoneyBill1Wave, FaUserTie, FaUsers } from 'react-icons/fa6';
+import { useMemo, useState, MouseEvent, memo } from 'react';
+import { FaCalculator, FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'react-icons/fa6';
+import CourierMenuItemWithSubLinks from '../_components/courier-menu-item-with-sublinks';
+import { useRouter } from 'next-intl/client';
 
-const courierDashboardMenus: MenuProps[] = [
+let courierDashboardMenus: MenuProps[] = [
   {
     link: '/courier',
     text: 'Dashboard',
@@ -41,6 +43,7 @@ const courierDashboardMenus: MenuProps[] = [
     icon: <FaUserTie />
   },
   {
+    link: '/courier/orders',
     text: 'Orders',
     alt: 'orders',
     icon: <FaShoppingCart />,
@@ -61,13 +64,29 @@ const courierDashboardMenus: MenuProps[] = [
     alt: 'delivery-rates',
     icon: <FaMoneyBill1Wave />
   },
+  {
+    link: '/courier/accounting',
+    text: 'Accounting',
+    alt: 'calculator',
+    icon: <FaCalculator />
+  },
+  {
+    link: '/courier/profile/4',
+    text: 'Courier Info',
+    alt: 'profile',
+    icon: <FaTruck />
+  },
 ];
 
-export default function CourierSidebar() {
-
+function CourierSidebar() {
+  const [currentDropdownMenu, setCurrentDropdownMenu] = useState<string>('');
+  const router = useRouter();
   const segments = useSelectedLayoutSegments();
 
   const segment = useMemo(() => {
+    if (segments.includes('profile')) {
+      return 'profile'
+    }
     if (segments.length > 1) {
       return segments[segments.length - 1];
     }
@@ -76,17 +95,54 @@ export default function CourierSidebar() {
 
   return (
     <div className='lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-[.5px] border-r-secondary-dark'>
-      <div className='p-4 space-y-2'>
-        <div className='text-sm'>Menu</div>
+      <div className='space-y-2'>
+        <div className='px-4 py-2'>Menu</div>
         <div className='block'>
           {
             courierDashboardMenus.map((courierDashboardMenu: MenuProps) => {
+
+              if (courierDashboardMenu.subMenus) {
+                let objectToCourierMenuItemWithSubLinksProps: any = courierDashboardMenu;
+                if (courierDashboardMenu.link) {
+                  objectToCourierMenuItemWithSubLinksProps = {
+                    ...objectToCourierMenuItemWithSubLinksProps,
+                    currentDropdownMenu: currentDropdownMenu,
+                    currentDropdownMenuSet: (currentMenu: string) => {
+                      setCurrentDropdownMenu(currentDropdownMenu === currentMenu ? '' : courierDashboardMenu.alt)
+                    },
+                    onLinkClicked: () => {
+                      router.push(courierDashboardMenu.link!);
+                    }
+                  }
+                }
+
+                return (<CourierMenuItemWithSubLinks segment={segment}
+                  key={`menu-sublink-items-${courierDashboardMenu.text}`}
+                  onActiveMenu={function (alt: string, segment: string): string {
+                    return segment === alt ? `text-primary bg-tertiary-light` : ``;
+                  }}
+                  {...objectToCourierMenuItemWithSubLinksProps}>
+                  {courierDashboardMenu.alt === 'orders' && <div className='rounded-full w-auto bg-danger text-white px-1.5 inline-block text-sm'>4</div>}
+                </CourierMenuItemWithSubLinks>)
+              }
+
+              let objectToCourierMenuItemLinkProps: any = courierDashboardMenu;
+
+              if (courierDashboardMenu.alt === 'delivery-rates') {
+                objectToCourierMenuItemLinkProps = {
+                  ...objectToCourierMenuItemLinkProps,
+                  onDisabledLink: (event: MouseEvent<HTMLAnchorElement>) => {
+                    event.preventDefault();
+                  }
+                }
+              }
+
               return (<CourierMenuItemLink key={`menu-items-${courierDashboardMenu.text}`}
                 segment={segment!}
                 onActiveMenu={(alt: string, segment: string) => {
-                  return segment === alt ? 'text-primary' : ''
+                  return segment === alt ? 'text-primary border-l-4 border-l-primary bg-tertiary-light' : ''
                 }}
-                {...courierDashboardMenu} />)
+                {...objectToCourierMenuItemLinkProps} />)
             })
           }
         </div>
@@ -94,3 +150,5 @@ export default function CourierSidebar() {
     </div>
   )
 }
+
+export default memo(CourierSidebar);

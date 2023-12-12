@@ -13,20 +13,20 @@ export default function Pagination({
   return (
     <div className="block">
       <div className="ml-auto bg-white w-fit border-[.5px] border-[#DEE2E6] flex divide-x divide-[#DEE2E6] rounded overflow-hidden">
-        <div className="inline p-2">
+        <div className="inline p-1.5">
           <FaCaretLeft className='inline' />
         </div>
         {
           totalPageNumbers.map((value: number, index: number) => {
             return (
               <div key={`pagination-${index}-${value}`}
-                className={`text-[#DEE2E6] inline p-2 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
+                className={`text-[#DEE2E6] inline p-1.5 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
                 {value}
               </div>
             )
           })
         }
-        <div className="inline p-2">
+        <div className="inline p-1.5">
           <FaCaretRight className='inline' />
         </div>
       </div>

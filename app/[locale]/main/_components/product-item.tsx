@@ -12,7 +12,7 @@ export function ProductItem({
 }) {
 
   return (
-    <div className='w-60 bg-white border border-neutral-200 rounded overflow-hidden space-y-4'>
+    <div className='w-60 bg-white border border-tertiary-dark rounded overflow-hidden space-y-4'>
       <div className=' w-full h-60 overflow-hidden'>
         <div className='transition-all delay-200 ease-in hover:scale-125 h-full'>
           <Image alt={`product-image-${product.id}`}

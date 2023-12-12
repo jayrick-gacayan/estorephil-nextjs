@@ -8,7 +8,7 @@ export default function Page() {
     <>
       <CourierHeaderText text="Sellers" />
       <div className='bg-[#F5F7FA] p-4 space-y-4 flex-1 overflow-auto'>
-        <div className="space-y-4 text-[#2F353D80] rounded">
+        <div className="bg-white p-4 space-y-4 text-[#2F353D80] rounded">
           <CourierSellersFieldsContainer />
           <SellersTable />
           <CourierSellersPagination />

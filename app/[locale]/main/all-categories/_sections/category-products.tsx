@@ -20,8 +20,8 @@ export default function CategoryProducts({
   useOutsideClick(categorySelectRef, () => { setVisible(false); })
 
   return (
-    <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
-      <div className='flex mb-2'>
+    <div className='max-w-screen-2xl m-auto py-4 space-y-4'>
+      <div className='flex'>
         <ProductHeaderText text={headerText} />
         <div className='flex-none space-x-2'>
           <span>Sort</span>

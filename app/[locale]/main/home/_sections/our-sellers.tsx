@@ -79,7 +79,7 @@ export function OurSellers() {
   }
 
   return (
-    <div className='max-w-screen-2xl m-auto py-4 text-secondary h-auto'>
+    <div className='max-w-screen-2xl m-auto py-4 h-auto'>
       <div className="flex mb-2">
         <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
