@@ -23,6 +23,8 @@ import courierStaffReducer from '@/app/[locale]/courier/staffs/_redux/courier-st
 import courierBoxesReducer from '@/app/[locale]/courier/boxes/_redux/courier-boxes-slice';
 import courierStaffInfoReducer from '@/app/[locale]/courier/staffs/[id]/_redux/courier-staff-info-slice';
 
+import agentAgencyInfoReducer from '@/app/[locale]/main/dashboard/(pages)/agency-information/_redux/agent-agency-information-slice';
+
 export const store = configureStore({
     reducer: {
         main: mainReducer,
@@ -43,6 +45,8 @@ export const store = configureStore({
         staff: staffReducer,
         staffDetail: staffDetailReducer,
         staffAdd: staffAddReducer,
+
+        agentAgencyInfo: agentAgencyInfoReducer,
 
         courierDeliveryRates: courierDeliveryRatesReducer,
         courierStaff: courierStaffReducer,
