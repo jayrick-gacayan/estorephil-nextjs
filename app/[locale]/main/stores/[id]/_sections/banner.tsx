@@ -46,7 +46,7 @@ export default function Banner() {
                                         <div className='flex flex-col '>
                                             <h3 className='p-0.5 font-semibold text-[24px] leading-0'>{state.store?.business_name}</h3>
                                             <div className='text-tertiary text-sm'>{state.store?.sales_count === 0 ? 'No Product/s yet.' : `${state.store?.product_count} Products`}</div>
-                                            <div className='text-tertiary text-sm'>{state.store?.sales_count.toLocaleString()} Sales</div>
+                                            <div className='text-tertiary text-sm'>{state.store?.sales_count?.toLocaleString()} Sales</div>
                                         </div>
                                         <div className='w-auto'>
                                             <button className='w-auto py-2 px-6 border border-danger text-danger'>

@@ -50,9 +50,13 @@ export default function OrderTable() {
                             </>)}
                     </tbody>
                 </table>
-                <div className="w-full flex items-center justify-center">
-                    <PaginationControl page={state.pagination.currentPage} />
-                </div>
+                {
+                    state.pagination.totalPages > 1 &&
+                    <div className="w-full flex items-center justify-center">
+                        <PaginationControl page={state.pagination.currentPage} />
+                    </div>
+                }
+
             </div>
         </>
     )

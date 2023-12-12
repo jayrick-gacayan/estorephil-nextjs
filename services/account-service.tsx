@@ -8,7 +8,4 @@ export class AccountService {
     console.log('account service login', res)
     return res
   }
-  async logout() {
-
-  }
 }

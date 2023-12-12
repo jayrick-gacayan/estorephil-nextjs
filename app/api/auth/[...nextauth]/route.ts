@@ -40,12 +40,10 @@ const authOptions: AuthOptions = {
       return token;
     },
     session: async ({ session, token, trigger, newSession }) => {
-      console.log('sessionUser', session.user)
       session.user = (token.user as any).user as any
       session.company = (token.user as any).company as any || null
       session.store = (token.user as any).store as any || null
       session.token = (token.user as any).token as any
-      console.log('tokenUser', token.user)
       return session;
     },
     signIn: async () => {
