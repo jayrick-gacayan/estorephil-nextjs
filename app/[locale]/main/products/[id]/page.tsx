@@ -39,23 +39,23 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
   return (
     <div className='bg-default p-8'>
-      <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>
-        <div className='flex w-full divide-x-2 divide-secondary-light items-stretch'>
-          <div className='basis-1/2 py-6 px-8 '>
+      <div className='max-w-screen-2xl m-auto bg-white border border-tertiary-dark divide-y divide-tertiary-dark'>
+        <div className='flex w-full divide-x-2 divide-tertiary-dark items-stretch'>
+          <div className='basis-1/2 py-6 px-8'>
             <ProductPreviewImage productImage={product.productImage} />
           </div>
           <div className='basis-1/2 py-6 px-16 space-y-4'>
             <Breadcrumbs breadcrumbs={breadCrumbsItems} />
             <div className='block'>
-              <h3 className='font-semibold py-2 border-b border-b-tertiary'>
+              <h3 className='font-semibold py-2 border-b border-b-tertiary-dark'>
                 <div className='w-full text-ellipsis overflow-hidden h-full text-3xl'>
                   {product.name}
                 </div>
               </h3>
-              <div className='py-2 border-b border-b-tertiary text-sm'>
+              <div className='py-2 border-b border-b-tertiary-dark text-sm'>
                 {product.description}
               </div>
-              <div className='py-2 border-b border-b-tertiary'>
+              <div className='py-2 border-b border-b-tertiary-dark'>
                 <span className='block'>Seller</span>
                 <Link href={`/stores/${product.seller.id}`}
                   className='group/store flex gap-2 items-center'>
@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                   </div>
                 </Link>
               </div>
-              <div className='flex py-2 border-b border-b-tertiary text-sm'>
+              <div className='flex py-2 border-b border-b-tertiary-dark text-sm'>
                 <div className='w-full'>
                   <div className='flex items-center justify-center gap-8'>
                     <div className='w-full'>
@@ -103,7 +103,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                   </div>
                 </div>
               </div>
-              <div className='flex py-2 border-b border-b-tertiary text-sm'>
+              <div className='flex py-2 border-b border-b-tertiary-dark text-sm'>
                 <div className='w-full'>
                   <div className='flex items-center justify-center gap-8'>
                     <div className='w-full'>

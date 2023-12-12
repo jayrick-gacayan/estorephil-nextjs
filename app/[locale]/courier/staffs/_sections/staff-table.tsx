@@ -24,7 +24,7 @@ export default function StaffTable() {
     <div className='block overflow-auto'>
       <table className='min-w-[768px] w-full'>
         <thead>
-          <tr className='text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]'>
+          <tr className='text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#EFF0F0] bg-[#F8FAFC]'>
             <th>ID</th>
             <th>PHOTO</th>
             <th>LASTNAME</th>
@@ -40,7 +40,7 @@ export default function StaffTable() {
             staffs.map((value: any) => {
               return (
                 <tr key={`orders-completed-${value.id}`}
-                  className='[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]'>
+                  className='[&>td]:p-2 border-b-[.5px] border-b-[#EFF0F0] odd:bg-inherit even:bg-[#EFF0F0] hover:bg-tertiary-light'>
                   <td className='text-primary'>{value.id}</td>
                   <td className='w-6'>
                     <Image alt={`alt-staff-image-${value.id}`}

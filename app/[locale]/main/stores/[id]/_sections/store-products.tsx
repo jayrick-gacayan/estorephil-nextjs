@@ -8,7 +8,7 @@ export default function StoreProducts({
 }) {
 
   return (
-    <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
+    <div className='max-w-screen-2xl m-auto py-4'>
       {
         products.length === 0 ? <div>NO ITEMS</div> :
           (

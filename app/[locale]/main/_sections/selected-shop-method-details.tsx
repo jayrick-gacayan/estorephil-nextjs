@@ -34,7 +34,7 @@ export default function SelectedShopMethodDetails({ onClose }: { onClose: () => 
   ];
 
   function tabClassName(tab: string, currentTab: string) {
-    return tab === currentTab ? 'bg-primary-dark text-white' : 'bg-default';
+    return tab === currentTab ? 'bg-primary-dark text-white' : 'bg-default hover:bg-primary-dark hover:text-white';
   }
 
   return (

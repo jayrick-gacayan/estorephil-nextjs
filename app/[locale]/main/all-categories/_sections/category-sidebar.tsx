@@ -17,7 +17,7 @@ export function CategorySidebar() {
   console.log('search params', searchParamsMemo.toString());
 
   return (
-    <div className='flex-none bg-white w-[320px] border-r-2 border-r-secondary-light py-2'>
+    <div className='flex-none bg-white w-[320px] border-r border-r-tertiary-dark py-2'>
       <div className='space-y-3 w-3/4 m-auto'>
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>
@@ -42,7 +42,7 @@ export function CategorySidebar() {
                   }}
                   value={category}
                   checkBoxClassName={(value: string, current: string) => {
-                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
                   }}
                   checkClassName={(value: string, current: string) => {
                     return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;

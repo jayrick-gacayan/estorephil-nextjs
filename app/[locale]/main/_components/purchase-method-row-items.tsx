@@ -13,7 +13,7 @@ export default function PurchaseMethodRowItems({
   withQuantityComponent: ReactNode;
 }) {
   return (
-    <div className='flex gap-2 p-2 text-secondary items-center'>
+    <div className='flex gap-2 p-2 items-center'>
       {withCheckboxComponent && withCheckboxComponent}
 
       <div className='flex-none w-24 text-center overflow-hidden'>

@@ -1,6 +1,9 @@
 import Image from 'next/image';
-export default function Loading() {
-    return (<>
-        <Image className='' src='/loader.gif' height={30} width={30} alt='loading' />
-    </>)
+
+export default function LoaderImageIcon({
+    size
+}: {
+    size: number
+}) {
+    return (<Image src='/loader.gif' height={size} width={size} alt='loading' />);
 }

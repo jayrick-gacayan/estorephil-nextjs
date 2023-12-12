@@ -25,7 +25,7 @@ export default function SummaryCheckout({
             <div className="flex">
               <div className="flex-1">SUBTOTAL</div>
               <div className="flex-none w-auto">
-                C&#36; <span className="text-secondary">{(228).toFixed(2)}</span>
+                C&#36; <span>{(228).toFixed(2)}</span>
               </div>
             </div>
             <div className="flex">
@@ -39,19 +39,19 @@ export default function SummaryCheckout({
               <div className="flex">
                 <div className="flex-1">No. of Boxes</div>
                 <div className="flex-none w-auto">
-                  <span className="text-secondary">2</span>
+                  <span>2</span>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex-1">Unit Cost: Box 1</div>
                 <div className="flex-none w-auto">
-                  C&#36; <span className="text-secondary">{(25).toFixed(2)}</span>
+                  C&#36; <span>{(25).toFixed(2)}</span>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex-1">Unit Cost: Box 2</div>
                 <div className="flex-none w-auto">
-                  C&#36; <span className="text-secondary">{(25).toFixed(2)}</span>
+                  C&#36; <span>{(25).toFixed(2)}</span>
                 </div>
               </div>
               <div className="flex">
@@ -63,13 +63,13 @@ export default function SummaryCheckout({
               <div className="flex">
                 <div className="flex-1">Additional Import Tax</div>
                 <div className="flex-none w-auto">
-                  <span className="text-secondary">10&#37;</span>
+                  <span>10&#37;</span>
                 </div>
               </div>
               <div className="flex">
                 <div className="flex-1">Total Shipping Cost</div>
                 <div className="flex-none w-auto">
-                  C&#36; <span className="text-secondary">{(25).toFixed(2)}</span>
+                  C&#36; <span>{(25).toFixed(2)}</span>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@ export default function SummaryCheckout({
             <div className="flex">
               <div className="flex-1">PH</div>
               <div className="flex-none w-auto">
-                <span className="text-secondary">10&#37;</span>
+                <span>10&#37;</span>
               </div>
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function SummaryCheckout({
             <div className="flex items-center">
               <div className="flex-1">TOTAL</div>
               <div className="flex-none w-auto text-[20px]">
-                C&#36; <span className="text-secondary">{(25).toFixed(2)}</span>
+                C&#36; <span>{(25).toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function SummaryCheckout({
       </div>
       <div className="px-8 pt-20 space-y-8">
         <div className='block space-y-2 text-tertiary'>
-          <h3 className='font-[500] text-[26px] leading-0 text-secondary'>SUPPORTED CARDS</h3>
+          <h3 className='font-[500] text-[26px] leading-0'>SUPPORTED CARDS</h3>
           <div className='block space-x-2'>
             <FaCcVisa className='inline-block w-10 h-10' />
             <FaCcMastercard className='inline-block w-10 h-10' />
@@ -111,7 +111,7 @@ export default function SummaryCheckout({
           </div>
         </div>
         <div className='block space-y-2 text-tertiary'>
-          <h3 className='font-[500] text-[26px] leading-0 text-secondary'>NEED HELP?</h3>
+          <h3 className='font-[500] text-[26px] leading-0'>NEED HELP?</h3>
           <div className='block space-y-1'>
             <div>WHAT PAYMENT METHODS CAN I USE?</div>
             <div>HOW DO I USE A PROMO CODE?</div>

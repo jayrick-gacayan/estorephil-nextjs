@@ -18,7 +18,7 @@ export default function SearchContainer({
       </div>
       <div className='flex-1 w-full'>
         <input type='text'
-          className='border-[.5px] border-[#707070] px-1.5 py-1 w-full rounded'
+          className='border-[.5px] border-[#EFF0F0] px-1.5 py-1 w-full rounded'
           onChange={onChange}
           onKeyDown={onKeyDown} />
       </div>

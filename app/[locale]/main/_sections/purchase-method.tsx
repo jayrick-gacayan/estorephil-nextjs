@@ -56,15 +56,15 @@ export default function PurchaseMethod({
             onShoppingMethodSet={onPurchaseMethodSet} />
         </div>
         {children && (<div className='space-y-2'>{children}</div>)}
-        <div>
-          <h4 className="text-danger font-[500] space-x-1 p-1">
-            <HiInformationCircle className='inline-block' />
-            <span className="inline-block align-middle">
-              {type === 'purchaseMethod' && 'Choosing shopping cart will automatically set the box where your checked out items will fit.'}
-              {type === 'shopMethodDetails' && 'Changing couriers on check out will not be allowed.'}
-            </span>
-          </h4>
-        </div>
+
+        <h4 className="text-danger font-[500] space-x-1 px-1 py-2">
+          <HiInformationCircle size={20} className='inline align-middle' />
+          <span className="inline">
+            {type === 'purchaseMethod' && 'Choosing shopping cart will automatically set the box where your checked out items will fit.'}
+            {type === 'shopMethodDetails' && 'Changing couriers on check out will not be allowed.'}
+          </span>
+        </h4>
+
         <div className="space-y-3 w-full">
           <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
             onClick={() => {
