@@ -7,10 +7,10 @@ import { ChangeEvent } from 'react';
 export default function AgentEditBasicInfoForm() {
   return (
     <>
-      <div className="border-b border-secondary-light pb-2">
+      <div className="border-b border-secondary-light py-2">
         <h3 className='text-[32px] leading-0 text-center'>Edit Basic Information</h3>
       </div>
-      <div className="flex items-stretch gap-4">
+      <div className="flex items-stretch gap-4 py-4">
         <div className="flex-none w-64">
           <Image alt='edit-profile-image-info'
             src='/static_images/profile_image_default.jpg'
