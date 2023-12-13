@@ -3,10 +3,15 @@
 import { ReactNode, useMemo, useState } from 'react';
 import { MainState } from '../_redux/main-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
-import { AppDispatch, RootState } from '@/redux/store';
+import { AppDispatch, RootState, store } from '@/redux/store';
 import PurchaseMethodType from '../_components/shop-method-type';
-import { modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
+import { cartTypeChanged, modalProductDeliveryAddressOpened, purchaseMethodChanged } from '../_redux/main-slice';
 import { HiInformationCircle } from 'react-icons/hi';
+import { useSession } from 'next-auth/react';
+import { OrderRepository } from '@/repositories/order-repository';
+import { orderContainer } from '@/inversify/inversify.config';
+import { TYPES } from '@/inversify/types';
+import { setCart } from '../_redux/main-thunk';
 
 export default function PurchaseMethod({
   onClose,
@@ -17,6 +22,7 @@ export default function PurchaseMethod({
   isSetPurchaseMethod?: boolean;
   children?: ReactNode;
 }): JSX.Element {
+
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const [purchaseMethod, setPurchaseMethod] = useState<string>(mainState.purchaseMethod);
   const dispatch: AppDispatch = useAppDispatch();
@@ -24,6 +30,9 @@ export default function PurchaseMethod({
   const { type } = useMemo(() => {
     return mainState.modalProductDeliveryAddressInfo
   }, [mainState.modalProductDeliveryAddressInfo]);
+
+  const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
+  const { data: sessionData } = useSession();
 
   function setPurchaseMethodClass(purchaseMethodType: string) {
     if (isSetPurchaseMethod !== undefined) {
@@ -33,7 +42,12 @@ export default function PurchaseMethod({
   }
 
   function onPurchaseMethodSet(purchaseMethodType: string) {
-    if (isSetPurchaseMethod === undefined) { setPurchaseMethod(purchaseMethodType) }
+    if (isSetPurchaseMethod === undefined) {
+      const cartType = purchaseMethodType === 'Shopping Cart' ? `shopping_cart` : purchaseMethodType === 'Balikbayan Box' ? 'balikbayan_box' : ''
+      setPurchaseMethod(purchaseMethodType)
+      dispatch(cartTypeChanged(cartType))
+      console.log('method type', cartType)
+    }
     else return;
   }
 
@@ -74,11 +88,12 @@ export default function PurchaseMethod({
                     dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'shopMethodDetails' }));
                   }, 1000)
                 }
-
+                else {
+                  store.dispatch(setCart(orderRepository, sessionData?.token ?? ``, sessionData?.company?.id ?? 0))
+                }
               }
             }}>
-            {type === 'purchaseMethod' && 'Next'}
-            {type === 'shopMethodDetails' && 'Confirm'}
+            {mainState.cartType === 'shopping_cart' ? `CONFIRM` : `NEXT`}
           </button>
           <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
             onClick={() => {

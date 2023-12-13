@@ -1,3 +1,5 @@
+import { RequestStatus } from "@/models/result";
+
 export interface MainState {
   purchaseMethod: string;
   modalProductDeliveryAddressInfo: {
@@ -8,6 +10,10 @@ export interface MainState {
     value: string,
     show: boolean
   }
+  cart: any,
+  cartType: string,
+  deliveryType: string,
   deliveryAddressCountry: string,
   deliveryAddressCity: string,
+  setCartStatus: RequestStatus
 }
