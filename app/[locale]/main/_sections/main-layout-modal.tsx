@@ -19,9 +19,7 @@ export default function MainLayoutModal() {
   const dispatch: AppDispatch = useAppDispatch();
 
   const { open, type } = useMemo(() => {
-    let { open, type } = mainState.modalProductDeliveryAddressInfo;
-    return { open, type };
-
+    return mainState.modalProductDeliveryAddressInfo;
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   const cbOnModalClose = useCallback(() => {

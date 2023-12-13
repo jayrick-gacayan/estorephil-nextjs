@@ -22,9 +22,7 @@ export default function PurchaseMethod({
   const dispatch: AppDispatch = useAppDispatch();
 
   const { type } = useMemo(() => {
-    let { type } = mainState.modalProductDeliveryAddressInfo;
-    return { type };
-
+    return mainState.modalProductDeliveryAddressInfo
   }, [mainState.modalProductDeliveryAddressInfo]);
 
   function setPurchaseMethodClass(purchaseMethodType: string) {
