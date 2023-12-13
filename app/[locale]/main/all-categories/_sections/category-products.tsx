@@ -1,7 +1,7 @@
 'use client';
 
 import { Product } from '@/models/product';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { ProductItem } from '../../_components/product-item';
@@ -18,7 +18,8 @@ export default function CategoryProducts({
   const categorySelectRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(categorySelectRef, () => { setVisible(false); })
-
+  useEffect(() => {
+  })
   return (
     <div className='max-w-screen-2xl m-auto py-4 space-y-4'>
       <div className='flex'>
