@@ -7,8 +7,8 @@ export class ProductService {
         var result = await response.json();
         return result;
     }
-    async searchProducts(locale: string, query?: string, category?: string, sort?: string) {
-        const response = await fetch(`${process.env.API_URL}/${locale}/?search=${query}&category=${category}&sort=${sort}`)
+    async searchProducts(locale: string, params: string) {
+        const response = await fetch(`${process.env.API_URL}/${locale}/products?${params}`)
         var result = await response.json();
         return result;
     }

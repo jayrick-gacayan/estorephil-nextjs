@@ -5,7 +5,7 @@ import Link from 'next-intl/link';
 import Image from 'next/image';
 import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
 import { TextWithIcon } from '../_components/text-with-icon';
-import { NavbarSearch } from './navbar-search';
+import { NavbarSearch } from '../_components/navbar-search';
 import PurchaseMethodNavbar from './purchase-method-navbar';
 import CountryPicker from '../_components/country-picker';
 import { RootState } from '@/redux/store';
@@ -15,7 +15,6 @@ import { useCallback, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
 
 export default function MainHeader() {
   const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
@@ -32,7 +31,6 @@ export default function MainHeader() {
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user.first_name} ${sessionData?.user.last_name}`
   const onSession = !!sessionData
-  console.log('sessionData:', sessionData)
   const removeSession = async () => {
     await signOut({ callbackUrl: `/login` })
   }

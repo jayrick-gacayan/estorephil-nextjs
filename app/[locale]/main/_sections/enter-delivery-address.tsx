@@ -32,9 +32,8 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
         <div className='w-full'>
           <CountrySelect
             countries={availableCountries}
-            className='block space-y-1 py-[2px]'
+            className='block space-y-1'
             placeholder={"Select Country:"}
-            paddingHeight={8}
             onChange={(e) => dispatch(deliveryAddressCountryChanged(e.target.value))}
           />
         </div>
@@ -44,8 +43,7 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
             value={citySelected}
             required={false}
             onChange={(e) => dispatch(deliveryAddressCityChanged(e.target.value))}
-            className='block space-y-1 py-[2px]'
-            paddingHeight={8}
+            className='block space-y-1'
             placeholder={'Select City:'}
           />
         </div>

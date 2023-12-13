@@ -194,7 +194,7 @@ export default function CitySelect({
                             placeholder={placeholder}
                             defaultValue={placeholder}
                             value={value}
-                            className={`${!!paddingHeight ? `py-[${paddingHeight}px]` : `py-[4px]`} ${!!paddingWidth ? `py-[${paddingWidth}px]` : `px-[2px]`
+                            className={`${!!paddingHeight ? `py-[${paddingHeight}px]` : `py-[10px]`} ${!!paddingWidth ? `py-[${paddingWidth}px]` : `px-[2px]`
                                 } border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `}
                             onChange={onChange}
                         >

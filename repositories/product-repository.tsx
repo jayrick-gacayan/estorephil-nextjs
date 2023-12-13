@@ -14,7 +14,19 @@ export class ProductRepository {
     async getProductDetails(id: string) {
         return await this.productService.getProductDetails(id)
     }
-    async searchProducts(locale: string, query: string, category: string, sort: string) {
-        return await this.productService.searchProducts(locale, query, category, sort)
+    async searchProducts({ locale, query, categories, sort }: { locale: string, query?: string, categories?: string[], sort?: string }) {
+        const params = new URLSearchParams();
+        if (!!query) {
+            params.set('search', query)
+        }
+        if (!!categories && categories.length > 0) {
+            categories.forEach((category, index) => {
+                params.set(`category[${index}]`, category);
+            });
+        }
+        if (!!sort) {
+            params.set('sort', sort)
+        }
+        return await this.productService.searchProducts(locale, params.toString())
     }
 }
