@@ -3,157 +3,20 @@ import Validations from "@/types/validations"
 import { ValidationStatus } from "@/models/validation-response"
 import { error } from "console"
 import { StaffState } from "./staff-state"
+import { RequestStatus } from "@/models/result"
 
 
 export const initialState: StaffState = {
-    staffs: [
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        }, {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-        {
-            photo: 'https://b.fssta.com/uploads/application/nba/headshots/1120.vresize.350.350.medium.77.png',
-            name: 'Lebron James',
-            email: 'james@gmail.com',
-            role: 'Owner',
-        },
-    ],
+    staff: [{}],
     pagination: {
-        totalResults: 23,
-        totalPages: 3,
+        totalResults: 1,
+        totalPages: 1,
         currentPage: 1,
     },
-
+    getStaffStatus: RequestStatus.WAITING
 }
 export const staffSlice = createSlice({
-    name: "order",
+    name: "staff",
     initialState,
     reducers: {
         nextPage: (state: StaffState) => {
@@ -183,12 +46,33 @@ export const staffSlice = createSlice({
                 }
             }
         },
+        getStaffLoaded: (state: StaffState) => {
+            return {
+                ...state,
+                getStaffStatus: RequestStatus.IN_PROGRESS
+            }
+        },
+        getStaffSuccess: (state: StaffState, action: PayloadAction<any>) => {
+            return {
+                ...state,
+                staff: action.payload.data,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: action.payload.pagination.current_page,
+                    totalPages: action.payload.pagination.total_pages,
+                    totalResults: action.payload.pagination.total_entries,
+                },
+                getStaffStatus: RequestStatus.SUCCESS
+            }
+        }
 
     }
 })
 
 export const {
-    nextPage, pageNumberPressed, previousPage
+    nextPage,
+    pageNumberPressed, previousPage,
+    getStaffLoaded, getStaffSuccess
 } = staffSlice.actions
 
 export default staffSlice.reducer

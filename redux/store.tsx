@@ -17,19 +17,23 @@ import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_r
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
-
+import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
+import productReducer from '@/app/[locale]/main/products/[id]/_redux/product-slice'
+import allCategoriesReducer from '@/app/[locale]/main/all-categories/_redux/all-categories-slice'
 import courierDeliveryRatesReducer from '@/app/[locale]/courier/delivery-rates/_redux/courier-delivery-rates-slice';
 import courierStaffReducer from '@/app/[locale]/courier/staffs/_redux/courier-staff-slice';
 import courierBoxesReducer from '@/app/[locale]/courier/boxes/_redux/courier-boxes-slice';
 import courierStaffInfoReducer from '@/app/[locale]/courier/staffs/[id]/_redux/courier-staff-info-slice';
-
 import agentAgencyInfoReducer from '@/app/[locale]/main/dashboard/(pages)/agency-information/_redux/agent-agency-information-slice';
 
 export const store = configureStore({
     reducer: {
         main: mainReducer,
         home: homeReducer,
+        allCategories: allCategoriesReducer,
         login: loginReducer,
+        store: storeReducer,
+        product: productReducer,
         purchaseMethod: purchaseMethodReducer,
         register: registerReducer,
         checkout: checkoutReducer,
@@ -45,9 +49,7 @@ export const store = configureStore({
         staff: staffReducer,
         staffDetail: staffDetailReducer,
         staffAdd: staffAddReducer,
-
         agentAgencyInfo: agentAgencyInfoReducer,
-
         courierDeliveryRates: courierDeliveryRatesReducer,
         courierStaff: courierStaffReducer,
         courierBoxes: courierBoxesReducer,

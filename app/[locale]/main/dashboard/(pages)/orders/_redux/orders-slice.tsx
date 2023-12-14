@@ -3,9 +3,11 @@ import Validations from "@/types/validations"
 import { ValidationStatus } from "@/models/validation-response"
 import { OrderState } from "./orders-state"
 import { error } from "console"
+import { RequestStatus } from "@/models/result"
 
 
 export const initialState: OrderState = {
+    getAgentOrdersStatus: RequestStatus.WAITING,
     orderFilterDateRange: {
         value: {
             startDate: new Date(),
@@ -13,237 +15,7 @@ export const initialState: OrderState = {
         },
         error: ''
     },
-    orders: [
-        {
-            orderNumber: '001',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        }, {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-        {
-            orderNumber: '002',
-            dateOrderd: '2023-01-15',
-            dateDelivered: '2023-01-20',
-            agent: 'Agent Jack',
-            numberOfItems: 3,
-            referralFee: 20.50,
-            totalPaid: 150.00,
-            status: 'completed',
-        },
-    ],
+    orders: [{}],
     pagination: {
         totalResults: 23,
         totalPages: 3,
@@ -292,12 +64,38 @@ export const orderSlice = createSlice({
                 }
             }
         },
+        getAgentOrdersLoaded: (state: OrderState) => {
+            return {
+                ...state,
+                getAgentOrdersStatus: RequestStatus.IN_PROGRESS,
+            }
+        },
+        getAgentOrdersSuccess: (state: OrderState, action: PayloadAction<any>) => {
+            return {
+                ...state,
+                getAgentOrdersStatus: RequestStatus.SUCCESS,
+                orders: action.payload.data,
+                pagination: {
+                    ...state.pagination,
+                    currentPage: action.payload.pagination.current_page,
+                    totalPages: action.payload.pagination.total_pages,
+                    totalResults: action.payload.pagination.total_entries,
+                },
+            }
+        },
+        getAgentOrdersFailed: (state: OrderState, action: PayloadAction<any>) => {
+            return {
+                ...state,
+                getAgentOrdersStatus: RequestStatus.FAILURE
+            }
+        }
     }
 })
 
 export const {
     orderFilterDateChanged,
-    nextPage, pageNumberPressed, previousPage
+    getAgentOrdersFailed, getAgentOrdersLoaded,
+    nextPage, pageNumberPressed, previousPage, getAgentOrdersSuccess
 } = orderSlice.actions
 
 export default orderSlice.reducer

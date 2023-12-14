@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { ReactNode, useEffect, useMemo } from 'react';
-import { MainState } from '../main/_redux/main_state';
+import { MainState } from '../main/_redux/main-state';
 import PurchaseMethodItemsJSON from '@/app/_data/cart.json';
 import { purchaseMethodItemsSet } from '../main/purchase-method/[slug]/_redux/purchase-method-slice';
 import { BalikbayanBox } from '@/models/balikbayan-box';

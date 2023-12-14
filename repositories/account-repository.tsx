@@ -14,10 +14,12 @@ export class AccountRepository {
         this.accountService = accountService;
     }
     async login({ email, password }: { email: string, password: string }) {
-        const body = {
+        const body: SignInOptions = {
             email,
             password,
+            redirect: false,
         }
+        console.log('login repo body', body)
         return await this.accountService.login({ body })
     }
 }

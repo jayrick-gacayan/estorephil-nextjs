@@ -1,9 +1,14 @@
 import Image from 'next/image';
-
-export default function LoaderImageIcon({
-    size
-}: {
-    size: number
+export default function Loading({ emptyPage = false, height, width }: {
+    emptyPage?: boolean
+    height?: number,
+    width?: number,
 }) {
-    return (<Image src='/loader.gif' height={size} width={size} alt='loading' />);
+    return (<>
+        {emptyPage ? (
+            <div className='flex items-center justify-center h-screen w-screen'>
+                <Image className='' src='/loader.gif' height={100} width={100} alt='loading' />
+            </div>) : (<Image className='' src='/loader.gif' height={height ?? 30} width={width ?? 30} alt='loading' />)}
+
+    </>)
 }

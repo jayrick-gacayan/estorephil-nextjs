@@ -6,7 +6,7 @@ import Tabs from '../../_components/tabs';
 import TabItem from '../../_components/tab-item';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { useMemo, useState } from 'react';
 
 type tabItemsProps = {

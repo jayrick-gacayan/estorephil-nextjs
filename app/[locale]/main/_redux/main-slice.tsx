@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MainState } from "./main_state";
+import { MainState } from "./main-state";
+import { RequestStatus } from "@/models/result";
 
 const initialState: MainState = {
   purchaseMethod: '',
@@ -10,13 +11,44 @@ const initialState: MainState = {
   countryPicker: {
     value: 'ph',
     show: false
-  }
+  },
+  cart: {},
+  cartType: '',
+  deliveryType: '',
+  deliveryAddressCity: '',
+  deliveryAddressCountry: '',
+  setCartStatus: RequestStatus.WAITING
 }
 
 export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
+    setCartLoaded: (state: MainState) => {
+      return {
+        ...state,
+        setCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    cartTypeChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        cartType: action.payload,
+      }
+    },
+    deliveryTypeChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        deliveryTypeChanged: action.payload
+      }
+    },
+    setCartSuccess: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        setCartStatus: RequestStatus.SUCCESS,
+        cart: action.payload
+      }
+    },
     purchaseMethodChanged: (state: MainState, action: PayloadAction<string>) => {
       return {
         ...state, purchaseMethod: action.payload
@@ -60,6 +92,18 @@ export const mainSlice = createSlice({
           value: action.payload
         }
       }
+    },
+    deliveryAddressCountryChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        deliveryAddressCountry: action.payload,
+      }
+    },
+    deliveryAddressCityChanged: (state: MainState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        deliveryAddressCity: action.payload
+      }
     }
   }
 })
@@ -67,7 +111,8 @@ export const mainSlice = createSlice({
 export const {
   modalProductDeliveryAddressOpened,
   purchaseMethodChanged, closeCountryPicker, countryPickerValueChanged,
-  openCountryPicker
+  openCountryPicker, deliveryAddressCityChanged, deliveryAddressCountryChanged,
+  cartTypeChanged, deliveryTypeChanged, setCartLoaded, setCartSuccess
 } = mainSlice.actions;
 
 export default mainSlice.reducer;
