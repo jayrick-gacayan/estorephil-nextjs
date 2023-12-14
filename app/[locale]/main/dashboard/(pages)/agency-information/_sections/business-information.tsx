@@ -14,7 +14,7 @@ export default function BusinessInformation() {
     return (
         <div className='space-y-4 py-4'>
             <div className='flex items-center justify-between w-full'>
-                <h3 className="font-semibold text-[20px]">{translate('businessInformation')}</h3>
+                <h3 className="font-semibold text-[24px]">{translate('businessInformation')}</h3>
                 <button className='underline hover:no-underline text-primary'
                     onClick={() => {
                         dispatch(modalUpdateFormOpened('businessInfo'));

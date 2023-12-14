@@ -31,7 +31,7 @@ export default function Documents() {
 
     return (
         <div className="space-y-4 py-4">
-            <h3 className="font-semibold text-[20px]">DOCUMENTS</h3>
+            <h3 className="font-semibold text-[24px]">DOCUMENTS</h3>
             <div className="flex gap-4">
                 {
                     documents.map((document: FileCustomBlobString, index: number) => {
