@@ -1,6 +1,6 @@
 export default function BannerInput() {
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       <div>Upload Banner Images</div>
       <div className="bg-white w-[30rem] h-[3rem] flex items-center px-5 rounded-xl">
         <input
