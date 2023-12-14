@@ -21,6 +21,8 @@ export default function MainLayoutModal() {
     return mainState.mainModalInfo;
   }, [mainState.mainModalInfo]);
 
+  const isToChange = useMemo(() => { return mainState.isToChange }, [mainState.isToChange])
+
   const cbOnModalClose = useCallback(() => {
     if (modalContentRef.current) {
       modalContentRef.current.classList.remove('animate-slide-up');
@@ -37,7 +39,7 @@ export default function MainLayoutModal() {
     <Modal open={open}>
       <div ref={modalContentRef}
         className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
-        {(open && type === 'enterAddress') && (<DeliveryAddressForm onClose={cbOnModalClose} />)}
+        {(open && type === 'deliveryAddress') && (<DeliveryAddressForm isToChange={isToChange} onClose={cbOnModalClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={cbOnModalClose} />)}
         {(open && type === 'cartType') && (<CartTypeContainer onClose={cbOnModalClose} />)}
         {(open && type === 'changeCartType') && (<ChangeCartType onClose={cbOnModalClose} />)}

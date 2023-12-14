@@ -3,13 +3,19 @@
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
 import { AppDispatch, RootState } from '@/redux/store';
-import { deliveryAddressCityChanged, deliveryAddressCountryChanged, mainModalOpened } from '../_redux/main-slice';
+import { deliveryAddressCityChanged, deliveryAddressCountryChanged, isToChangeSet, mainModalOpened } from '../_redux/main-slice';
 import { avaiableCountries } from '@/types/props/countries';
 import CountrySelect from '../_components/country-select';
 import CitySelect from '../_components/city-select';
 import { useSelector } from 'react-redux';
 
-export default function DeliveryAddressForm({ onClose }: { onClose: () => void; }): JSX.Element {
+export default function DeliveryAddressForm({
+  isToChange,
+  onClose
+}: {
+  isToChange: boolean;
+  onClose: () => void;
+}): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
   const countrySelected = useSelector((state: RootState) => state.main).deliveryAddressCountry
   const citySelected = useSelector((state: RootState) => state.main).deliveryAddressCity
@@ -52,13 +58,20 @@ export default function DeliveryAddressForm({ onClose }: { onClose: () => void; 
         onClick={() => {
           onClose();
           setTimeout(() => {
-            dispatch(mainModalOpened({ open: true, type: 'cartType' }));
+            dispatch(mainModalOpened({ open: true, type: isToChange ? 'changeAddress' : 'cartType' }));
           }, 1000)
         }}>
         Next
       </button>
       <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
-        onClick={onClose}>
+        onClick={() => {
+          onClose();
+          if (isToChange) {
+            setTimeout(() => {
+              dispatch(mainModalOpened({ open: true, type: 'cartType' }));
+            }, 1000)
+          }
+        }}>
         Skip
       </button>
     </div>

@@ -2,6 +2,7 @@ import { RequestStatus } from "@/types/enums/request-status";
 
 export interface MainState {
   cartType: string;
+  isToChange: boolean;
 
   mainModalInfo: {
     open: boolean;

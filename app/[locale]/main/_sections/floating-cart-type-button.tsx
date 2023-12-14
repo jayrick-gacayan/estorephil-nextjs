@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
-import { mainModalOpened } from '../_redux/main-slice';
+import { isToChangeSet, mainModalOpened } from '../_redux/main-slice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import { MainState } from '../_redux/main_state';
@@ -22,7 +22,8 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
       <div className='fixed bottom-8 right-[184px] z-[1999] cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4
         hover:border-primary-dark hover:bg-white hover:text-primary-dark'
         onClick={() => {
-          dispatch(mainModalOpened({ open: true, type: 'changeCartType' }));
+          dispatch(isToChangeSet(true));
+          dispatch(mainModalOpened({ open: true, type: 'deliveryAddress' }));
         }}>
         <div className='space-y-1 '>
           <Image alt={`${cartType === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}

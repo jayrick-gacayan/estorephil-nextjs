@@ -3,6 +3,7 @@ import { RequestStatus } from "@/models/result";
 import { MainState } from "./main_state";
 
 const initialState: MainState = {
+  isToChange: false,
   mainModalInfo: {
     open: false,
     type: ''
@@ -23,6 +24,9 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
+    isToChangeSet: (state: MainState, action: PayloadAction<boolean>) => {
+      return { ...state, isToChange: action.payload }
+    },
     setCartLoaded: (state: MainState) => {
       return {
         ...state,
@@ -102,6 +106,7 @@ export const mainSlice = createSlice({
 
 export const {
   mainModalOpened,
+  isToChangeSet,
   closeCountryPicker,
   countryPickerValueChanged,
   openCountryPicker,

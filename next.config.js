@@ -48,6 +48,10 @@ const nextConfig = {
       {
         source: '/:locale/courier',
         destination: '/:locale/courier/dashboard'
+      },
+      {
+        source: '/:locale/admin',
+        destination: '/:locale/admin/dashboard'
       }
     ]
   },
