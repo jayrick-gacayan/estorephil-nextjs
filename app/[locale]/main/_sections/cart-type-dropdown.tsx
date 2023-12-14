@@ -27,7 +27,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod });
   const cartType = useMemo(() => {
-    const { cartType } = mainState;
+    const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);

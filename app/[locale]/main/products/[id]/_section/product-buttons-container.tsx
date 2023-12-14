@@ -7,13 +7,12 @@ import { Product } from '@/models/product';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useEffect, useMemo, useState } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
-import { MainState } from '../../../_redux/main-state';
 import { BsBox2 } from 'react-icons/bs';
 import { mainModalOpened } from '../../../_redux/main-slice';
 import { Seller } from '@/models/seller';
 import { PurchaseMethodState } from '../../../purchase-method/[slug]/_redux/purchase-method-state';
 import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../purchase-method/[slug]/_redux/purchase-method-slice';
-
+import { MainState } from '../../../_redux/main_state';
 
 export default function ProductButtonsContainer({
   product,
@@ -35,7 +34,12 @@ export default function ProductButtonsContainer({
   }, [product, shopMethod.purchaseMethodItems]);
 
   const [quantity, setQuantity] = useState<number>(!productMemo ? 1 : productMemo.quantity);
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+
+  const cartType = useMemo(() => {
+    const cartType = mainState.cartType;
+    return cartType === 'shopping_cart' ? 'Shopping Cart' :
+      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+  }, [mainState.cartType]);
 
   useEffect(() => {
     if (productMemo) {
@@ -64,9 +68,9 @@ export default function ProductButtonsContainer({
       </div>
       <div className='w-full flex justify-around gap-4'>
         <button className={`transition border duration-100 rounded-full flex-1 text-[14px] leading-0 h-auto space-x-2 px-6 py-3
-          ${purchaseMethod !== '' && productMemo ? 'border-danger text-white hover:text-danger bg-danger hover:bg-danger-light' : 'bg-primary border-primary hover:bg-primary-light text-white'}`}
+          ${cartType !== '' && productMemo ? 'border-danger text-white hover:text-danger bg-danger hover:bg-danger-light' : 'bg-primary border-primary hover:bg-primary-light text-white'}`}
           onClick={() => {
-            if (purchaseMethod === '') {
+            if (cartType === '') {
               dispatch(mainModalOpened({ open: true, type: 'enterAddress' }))
             }
             else {
@@ -83,15 +87,15 @@ export default function ProductButtonsContainer({
             }
           }}>
           {
-            purchaseMethod === '' ? (<span>Create An Order</span>) :
+            cartType === '' ? (<span>Create An Order</span>) :
               (
                 <>
                   {
-                    purchaseMethod === 'Shopping Cart' ?
+                    cartType === 'Shopping Cart' ?
                       (<FaCartShopping className='inline-block' />) :
                       (<BsBox2 className='inline-block' />)
                   }
-                  <span className='align-middle'>{productMemo ? 'Remove From' : 'Add to'} {purchaseMethod === 'Shopping Cart' ? 'Cart' : 'Box'}</span>
+                  <span className='align-middle'>{productMemo ? 'Remove From' : 'Add to'} {cartType === 'Shopping Cart' ? 'Cart' : 'Box'}</span>
                 </>
               )
           }

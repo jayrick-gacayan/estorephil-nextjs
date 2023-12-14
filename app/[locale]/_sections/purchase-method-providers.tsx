@@ -3,7 +3,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { ReactNode, useEffect, useMemo } from 'react';
-
 import PurchaseMethodItemsJSON from '@/app/_data/cart.json';
 import { purchaseMethodItemsSet } from '../main/purchase-method/[slug]/_redux/purchase-method-slice';
 import { BalikbayanBox } from '@/models/balikbayan-box';
@@ -14,18 +13,24 @@ export default function PurchaseMethodProviders({ children }: { children: ReactN
   const dispatch: AppDispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
-  const purchaseMethod = useMemo(() => { return mainState.cartType; }, [mainState.cartType]);
+  const cartType = useMemo(() => {
+    const cartType = mainState.cartType;
+    return cartType === 'shopping_cart' ? 'Shopping Cart' :
+      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+  }, [mainState.cartType]);
 
   useEffect(() => {
-    if (purchaseMethod !== '') {
+    if (cartType !== '') {
       dispatch(
         purchaseMethodItemsSet(
-          PurchaseMethodItemsJSON.carts.map((purchaseMethod: Cart | BalikbayanBox) => {
-            return { ...purchaseMethod, isGoingToCheckout: false }
+          PurchaseMethodItemsJSON.carts.map((cartType: Cart | BalikbayanBox) => {
+            return { ...cartType, isGoingToCheckout: false }
           })
         )
       );
     }
-  }, [purchaseMethod, dispatch]);
+  }, [cartType, dispatch]);
+
+
   return (<>{children}</>);
 }
