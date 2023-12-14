@@ -20,7 +20,7 @@ export default function CartTypeNavbar({ children }: { children: ReactNode }) {
     (
       <>
         <button className='transition-all delay-50 text-white border border-white py-2 px-4 h-full rounded text-xl align-middle hover:border-primary-dark hover:bg-white hover:text-primary-dark'
-          onClick={() => { dispatch(mainModalOpened({ open: true, type: 'enterAddress' })) }}>
+          onClick={() => { dispatch(mainModalOpened({ open: true, type: 'deliveryAddress' })) }}>
           Create Order
         </button>
         {children}
