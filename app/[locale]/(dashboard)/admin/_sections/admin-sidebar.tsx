@@ -30,7 +30,7 @@ let adminDashboardMenus: MenuProps[] = [
     icon: <FaMoneyCheck />
   },
   {
-    link: '/admin/trade_rates',
+    link: '/admin/trade-rates',
     alt: 'trade-rates',
     text: 'Trade Rates',
     icon: <FaChartBar />
@@ -138,15 +138,6 @@ function AdminSidebar() {
               }
 
               let objectToAdminMenuItemLinkProps: any = adminDashboardMenu;
-
-              if (adminDashboardMenu.alt === 'delivery-rates') {
-                objectToAdminMenuItemLinkProps = {
-                  ...objectToAdminMenuItemLinkProps,
-                  onDisabledLink: (event: MouseEvent<HTMLAnchorElement>) => {
-                    event.preventDefault();
-                  }
-                }
-              }
 
               return (<DashboardMenuItemLink key={`menu-items-${adminDashboardMenu.text}`}
                 segment={segment!}
