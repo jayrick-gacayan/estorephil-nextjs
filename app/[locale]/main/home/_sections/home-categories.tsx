@@ -10,7 +10,7 @@ import { TYPES } from '@/inversify/types';
 import { HomeRepository } from '@/repositories/home-repository';
 import { homeContainer } from '@/inversify/inversify.config';
 import { RequestStatus } from '@/models/result';
-import LoaderImageIcon from '../../_components/loading';
+import Loading from '../../_components/loading';
 
 export function HomeCategories() {
   const router = useRouter();
@@ -42,7 +42,7 @@ export function HomeCategories() {
             :
             (
               <div className='flex items-center h-full justify-center'>
-                <LoaderImageIcon size={64} />
+                <Loading height={64} width={64} />
               </div>
             )
         }

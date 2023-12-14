@@ -12,7 +12,7 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
 
   const cartType = useMemo(() => {
-    const { cartType } = mainState;
+    const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);

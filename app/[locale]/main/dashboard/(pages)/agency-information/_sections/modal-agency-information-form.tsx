@@ -30,7 +30,7 @@ export default function ModalAgencyInformationForm() {
         dispatch(modalUpdateFormOpened(''));
       }, 300);
     }
-  }, []);
+  }, [dispatch]);
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 

@@ -51,12 +51,11 @@ export default function CartTypeContainer({
 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
-
   const cartType = useMemo(() => {
-    const { cartType } = mainState;
+    const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
-  }, [mainState.cartType])
+  }, [mainState.cartType]);
 
   function setCartTypeClass(cartTypeMethod: string) {
     return `${cartTypeMethod === cartType ? 'bg-primary-dark text-white' : 'bg-default'} cursor-pointer hover:bg-primary-dark hover:text-white`;
