@@ -5,70 +5,94 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineLockReset } from "react-icons/md";
 import Image from "next/image";
-export default function AdminItems() {
+export default function SellerItems() {
   const orders = [
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
     {
-      userID: "1",
-      photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      logo: "",
+      businessName: "Bikini Bottom",
+      businessEmail: "jessah.pepito@kodakollectiv.com",
+      ownerName: "Jessah Pepito",
+      ownerEmail: "jessah.pepito@kodakollectiv.com",
+      mobileNo: "	09770136298",
+      phoneNo: "N/A",
+      dateRegistered: "14 Nov 2023",
       status: "Active",
     },
   ];
@@ -76,8 +100,8 @@ export default function AdminItems() {
   return (
     <div className="flex flex-col h-full ">
       <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
-        <div className="flex items-center h-[3.5rem]">
-          <div className="py-3 px-2 flex items-center gap-2 w-full  ">
+        <div className="flex items-center h-[3.5rem] justify-between px-4 ">
+          <div className="py-3 px-2 flex items-center gap-2    ">
             <span className="text-xl">
               <CiSearch />
             </span>
@@ -87,16 +111,30 @@ export default function AdminItems() {
               className="border   focus:border-blue-500 focus:outline-none w-[20rem] h-[2rem]"
             />
           </div>
+          <div className="flex text-xs">
+            <button className="bg-gray-100 py-2 px-4 border">Active</button>
+            <button className="bg-gray-100 py-2 px-4 border">Pending</button>
+            <button className="bg-gray-100 py-2 px-4 border">
+              Interviewed
+            </button>
+            <button className="bg-gray-100 py-2 px-4 border">Invited</button>
+          </div>
         </div>
         <div className="h-[41.125rem] overflow-auto">
           <table className={`w-full `}>
             <thead>
-              <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-sm">
-                <th className="px-4 py-2 ">ID</th>
-                <th className="px-4 py-2 ">PHOTO</th>
-                <th className="px-4 py-2 ">LAST NAME</th>
-                <th className="px-4 py-2 ">FIRST NAME</th>
-                <th className="px-4 py-2 ">EMAIL</th>
+              <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-xs">
+                <th className="px-4 py-2 ">
+                  <input type="checkbox" id="some_id" />
+                </th>
+                <th className="px-4 py-2 ">LOGO</th>
+                <th className="px-4 py-2 ">BUSINESS NAME</th>
+                <th className="px-4 py-2 ">BUSINESS EMAIL ADDRESS</th>
+                <th className="px-4 py-2 ">OWNER NAME</th>
+                <th className="px-4 py-2 ">OWNER EMAIL ADDRESS</th>
+                <th className="px-4 py-2 ">MOBILE NO.</th>
+                <th className="px-4 py-2 ">PHONE NO.</th>
+                <th className="px-4 py-2 ">DATE REGISTERED</th>
                 <th className="px-4 py-2 text-center">STATUS</th>
                 <th className="px-4 py-2 text-center">ACTIONS</th>
               </tr>
@@ -118,9 +156,11 @@ export default function AdminItems() {
                 }
                 return (
                   <tr
-                    key={order.userID}
+                    key={order.logo}
                     className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-50 text-xs">
-                    <td className={`${rowHeight}`}>{order.userID}</td>
+                    <td className="px-4 py-2 ">
+                      <input type="checkbox" id="some_id" />
+                    </td>
                     <td className={`${rowHeight}`}>
                       <div className="w-10 h-10 rounded-full overflow-hidden ">
                         <Image
@@ -132,9 +172,13 @@ export default function AdminItems() {
                         />
                       </div>
                     </td>
-                    <td className={`${rowHeight}`}>{order.lastName}</td>
-                    <td className={`${rowHeight}`}>{order.firstName}</td>
-                    <td className={`${rowHeight}`}>{order.email}</td>
+                    <td className={`${rowHeight}`}>{order.businessName}</td>
+                    <td className={`${rowHeight}`}>{order.businessEmail}</td>
+                    <td className={`${rowHeight}`}>{order.ownerName}</td>
+                    <td className={`${rowHeight}`}>{order.ownerEmail}</td>
+                    <td className={`${rowHeight}`}>{order.mobileNo}</td>
+                    <td className={`${rowHeight}`}>{order.phoneNo}</td>
+                    <td className={`${rowHeight}`}>{order.dateRegistered}</td>
                     <td className={`${rowHeight}`}>
                       <div
                         className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}>

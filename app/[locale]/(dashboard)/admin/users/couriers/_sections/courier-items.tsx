@@ -5,70 +5,86 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineLockReset } from "react-icons/md";
 import Image from "next/image";
-export default function AdminItems() {
+export default function CourierItems() {
   const orders = [
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
     {
       userID: "1",
       photo: "",
-      lastName: "Quilla",
-      firstName: "Dwight Dennis",
-      email: "dwight.aton+2@kodakollectiv.com",
+      company: "Koda Magic Store",
+      lastName: "Villamor",
+      firstName: "Jezzel",
+      email: "villamorjezzel@kodakollectiv.com",
+      referral: "	1.5",
       status: "Active",
     },
   ];
@@ -94,9 +110,11 @@ export default function AdminItems() {
               <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-sm">
                 <th className="px-4 py-2 ">ID</th>
                 <th className="px-4 py-2 ">PHOTO</th>
+                <th className="px-4 py-2 ">COMPANY</th>
                 <th className="px-4 py-2 ">LAST NAME</th>
                 <th className="px-4 py-2 ">FIRST NAME</th>
                 <th className="px-4 py-2 ">EMAIL</th>
+                <th className="px-4 py-2 ">REFERRAL FEE</th>
                 <th className="px-4 py-2 text-center">STATUS</th>
                 <th className="px-4 py-2 text-center">ACTIONS</th>
               </tr>
@@ -132,9 +150,12 @@ export default function AdminItems() {
                         />
                       </div>
                     </td>
+                    <td className={`${rowHeight}`}>{order.company}</td>
                     <td className={`${rowHeight}`}>{order.lastName}</td>
                     <td className={`${rowHeight}`}>{order.firstName}</td>
                     <td className={`${rowHeight}`}>{order.email}</td>
+                    <td className={`${rowHeight}`}>{order.referral}</td>
+
                     <td className={`${rowHeight}`}>
                       <div
                         className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}>
