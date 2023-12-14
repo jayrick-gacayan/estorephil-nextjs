@@ -7,7 +7,7 @@ import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
 import CartItemsContainer from './cart-items-container';
 import Image from 'next/image';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
 
 export default function PageContainer({
   checkoutSlug

@@ -12,4 +12,26 @@ export class ProductService {
         var result = await response.json();
         return result;
     }
+    async addToCart(token: string, body: string) {
+        const response = await fetch(`${process.env.API_URL}/add_to_cart`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+        var result = await response.json()
+        return result;
+    }
+    async removeFromCart(token: string, productId: number) {
+        const response = await fetch(`${process.env.API_URL}/${productId}/remove_from_cart`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+        var result = await response.json()
+        return result;
+    }
 }

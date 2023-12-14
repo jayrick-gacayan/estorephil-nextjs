@@ -3,7 +3,7 @@
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useMemo } from 'react';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { mainModalOpened } from '../_redux/main-slice';
 import CartTypeDropdown from './cart-type-dropdown';
 

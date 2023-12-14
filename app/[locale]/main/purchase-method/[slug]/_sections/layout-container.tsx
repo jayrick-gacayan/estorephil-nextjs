@@ -10,7 +10,7 @@ import SummaryCheckout from './summary-checkout';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { useRouter } from 'next-intl/client';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
 
 export default function LayoutContainer({
   checkoutSlug,

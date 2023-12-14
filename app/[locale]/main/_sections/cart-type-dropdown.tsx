@@ -17,7 +17,8 @@ import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
 import { removeFromToPurchaseMethodItem } from '../purchase-method/[slug]/_redux/purchase-method-slice';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
+import { useSelector } from 'react-redux';
 
 export default function CartTypeDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -31,13 +32,14 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
-
-  const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
-  const prevCountRef = usePrevious(purchaseMethodItems.length);
+  const productImage = useSelector((state: RootState) => state.product)?.product?.gallery?.[0]?.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`
+  // const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
+  const cartProducts = mainState.cart?.cart_products
+  // const prevCountRef = usePrevious(purchaseMethodItems.length);
+  const prevCountRef = usePrevious(cartProducts?.length)
   const purchaseMethodItemToToast = useMemo(() => { return purchaseMethodState.purchaseMethodItemToInteract; }, [purchaseMethodState.purchaseMethodItemToInteract])
-
+  const cart = mainState.cart
   let cartTypeHeaderText = cartType === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
-
   const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
       let querySelector = dropdownRef.current.querySelector('#dropdown-purchase-method');
@@ -46,12 +48,12 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
       }
     }
   }, []);
-
+  console.log('cart products:', cartProducts)
   useEffect(() => {
     if (toastOnDropdownRef.current) {
       if (prevCountRef) {
-        if (prevCountRef > purchaseMethodItems.length ||
-          prevCountRef < purchaseMethodItems.length) {
+        if (prevCountRef > cartProducts?.length ||
+          prevCountRef < cartProducts?.length) {
           toastOnDropdownRef.current.classList.remove('hidden');
           toastOnDropdownRef.current.classList.add('block');
 
@@ -60,11 +62,11 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
               toastOnDropdownRef.current.classList.remove('block');
               toastOnDropdownRef.current.classList.add('hidden');
             }
-          }, 1000)
+          }, 2000)
         }
       }
     }
-  }, [purchaseMethodItems.length, prevCountRef]);
+  }, [cartProducts?.length, prevCountRef]);
 
   useEffect(() => {
     if (cartType !== '') {
@@ -76,7 +78,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
 
   return (
     <Dropdown ref={dropdownRef}
-      className='relative inline z-0'>
+      className='relative inline z-[100]'>
       <div className='relative inline w-fit'>
         <div className='inline-flex gap-4 items-center text-sm'>
           <div className='flex-none w-auto relative'>
@@ -95,42 +97,42 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
                   }
                 </div>
                 {
-                  purchaseMethodItems.length > 0 &&
+                  cart?.cart_products?.length > 0 &&
                   (<span className='absolute -top-3 -right-2 w-7 h-7 bg-danger rounded-full flex justify-center items-center'>
                     <div className='flex-none w-auto'>
-                      {purchaseMethodItems.length}
+                      {cart?.cart_products?.length}
                     </div>
                   </span>)
                 }
               </div>
               <div className='space-y-1'>
                 <span className='block'>{cartTypeHeaderText}</span>
-                <span className='block'>C&#36; {(9999).toFixed(2)}</span>
+                <span className='block'>C&#36; {cart?.cart_products?.total?.toFixed(2) ?? 0}</span>
               </div>
             </div>
             <div ref={toastOnDropdownRef}
               className={`absolute top-[120%] right-0 w-64 hidden after:content-[""]
                 after:absolute after:bottom-full after:right-24 after:z-[9999] after:border-solid after:border-[6px] after:border-transparent
-                ${purchaseMethodItems.length > prevCountRef! ? `after:border-b-success` : `after:border-b-danger`}`}>
+                ${cartProducts?.length > prevCountRef! ? `after:border-b-success` : `after:border-b-danger`}`}>
               {
                 purchaseMethodItemToToast &&
                 (
-                  <div className={`${purchaseMethodItems.length > prevCountRef! ? `bg-success` : `bg-danger`} 
+                  <div className={`${cartProducts?.length > prevCountRef! ? `bg-success` : `bg-danger`} 
                     px-2 py-1 text-white w-full flex items-center gap-2 overflow-hidden rounded`}>
                     <div className='flex-none w-12 h-12'>
                       <div className='relative w-12 h-12'>
                         <Image alt='shop-method-toast-on-dropdown'
-                          src={purchaseMethodItemToToast!.product.productImage}
+                          src={productImage}
                           fill
                           className='object-fill rounded' />
                       </div>
 
                     </div>
                     <div className='flex-1 space-x-2 w-full flex justify-between items-center'>
-                      <span className='block'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${cartTypeHeaderText.at(0)}${cartTypeHeaderText.slice(1).toLowerCase()}`}
+                      <span className='block'>{cartProducts?.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${cartTypeHeaderText.at(0)}${cartTypeHeaderText.slice(1).toLowerCase()}`}
                       </span>
                       {
-                        purchaseMethodItems.length > prevCountRef! ?
+                        cartProducts?.length > prevCountRef! ?
                           (<CiCircleCheck className='inline-block w-5 h-5 mr-auto' />) :
                           (<CiCircleRemove className='inline-block w-5 h-5 mr-auto' />)
                       }
@@ -144,23 +146,24 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
         </div>
       </div>
 
-      <div id="dropdown-purchase-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
+      <div id="dropdown-purchase-method"
+        className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
         <div className='p-2 border-b-2 border-b-secondary-light flex gap-2 items-center'>
           <div className='flex-1 font-semibold text-lg leading-0'>{cartTypeHeaderText.includes('BAYAN') ? `${cartTypeHeaderText} BOX` : cartTypeHeaderText}</div>
-          {purchaseMethodItems.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{purchaseMethodItems.length}</div>)}
+          {cartProducts?.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{cartProducts?.length}</div>)}
         </div>
         <div className='space-y-2'>
           {
-            purchaseMethodItems.length === 0 ? (<div className='text-center font-semibold text-[24px] leading-0'>No Items</div>) :
+            cartProducts?.length === 0 ? (<div className='text-center font-semibold text-[24px] leading-0'>No Items</div>) :
               (
                 <>
                   {
-                    purchaseMethodItems.slice(0, 4).map((shopMethodItem: Cart | BalikbayanBox) => {
+                    cartProducts?.slice(0, 4)?.map((product: any) => {
                       return (
-                        <DropdownItem key={`shop-method-key-${shopMethodItem.product.name}-${shopMethodItem.product.id}`}>
+                        <DropdownItem key={`shop-method-key-${product.name}-${product.id}`}>
                           <ShopMethodDropdownItem onDelete={() => {
-                            dispatch(removeFromToPurchaseMethodItem(shopMethodItem));
-                          }} {...shopMethodItem.product} />
+                            dispatch(removeFromToPurchaseMethodItem(product));
+                          }} {...product} />
                         </DropdownItem>
                       )
                     })

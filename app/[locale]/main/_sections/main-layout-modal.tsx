@@ -10,7 +10,7 @@ import DeliveryAddressForm from './enter-delivery-address';
 import ChangeAddress from './change-address';
 import CartTypeContainer from './cart-type-container';
 import ChangeCartType from './change-cart-type';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 
 export default function MainLayoutModal() {
   const modalContentRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatus } from "@/models/result";
-import { MainState } from "./main_state";
+import { MainState } from "./main-state";
 
 const initialState: MainState = {
   isToChange: false,
@@ -17,6 +17,9 @@ const initialState: MainState = {
   deliveryType: '',
   deliveryAddressCity: '',
   deliveryAddressCountry: '',
+  addToCartQuantity: 0,
+  addToCartStatus: RequestStatus.WAITING,
+  removeFromCartStatus: RequestStatus.WAITING,
   setCartStatus: RequestStatus.WAITING
 }
 
@@ -31,6 +34,38 @@ export const mainSlice = createSlice({
       return {
         ...state,
         setCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    addToCartLoaded: (state: MainState) => {
+      return {
+        ...state,
+        addToCartStatus: RequestStatus.IN_PROGRESS,
+      }
+    },
+    removeFromCartLoaded: (state: MainState) => {
+      return {
+        ...state,
+        removeFromCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    addToCartQuantityChanged: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        addToCartQuantity: action.payload
+      }
+    },
+    addToCartSuccess: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        addToCartStatus: RequestStatus.SUCCESS,
+        cart: action.payload
+      }
+    },
+    removeFromCartSuccess: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        removeFromCartStatus: RequestStatus.SUCCESS,
+        cart: action.payload
       }
     },
     cartTypeChanged: (state: MainState, action: PayloadAction<string>) => {
@@ -52,6 +87,7 @@ export const mainSlice = createSlice({
         cart: action.payload
       }
     },
+
     mainModalOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
       const { open, type } = action.payload;
       return {
@@ -106,10 +142,10 @@ export const mainSlice = createSlice({
 
 export const {
   mainModalOpened,
-  isToChangeSet,
-  closeCountryPicker,
-  countryPickerValueChanged,
-  openCountryPicker,
+  isToChangeSet, addToCartLoaded,
+  closeCountryPicker, addToCartSuccess,
+  countryPickerValueChanged, removeFromCartLoaded,
+  openCountryPicker, removeFromCartSuccess, addToCartQuantityChanged,
   deliveryAddressCityChanged,
   deliveryAddressCountryChanged,
   cartTypeChanged,
