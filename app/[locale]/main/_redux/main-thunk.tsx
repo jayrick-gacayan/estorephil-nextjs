@@ -1,14 +1,13 @@
 import { ApiResponse, getResultStatus, ResultStatus } from "@/models/result"
 import { AppDispatch, store } from "@/redux/store"
 import { OrderRepository } from "@/repositories/order-repository"
-import { getMainStoresSuccess } from "../home/_redux/home-slice"
-import { MainState } from "./main-state"
 import { setCartSuccess } from "./main-slice"
+import { MainState } from "./main_state"
 
 export function setCart(orderRepository: OrderRepository, token: string, companyId: number) {
-    return async function setCart(dispatch: AppDispatch, getState: typeof store.getState) {
-        const state = getState().main as MainState
-        console.log('set cart dispatch')
+    return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+        const state: MainState = getState().main;
+
         const result: ApiResponse = await orderRepository.setCart({
             token: token,
             cartType: state.cartType,

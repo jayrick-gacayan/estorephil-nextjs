@@ -1,10 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { MainState } from "./main-state";
 import { RequestStatus } from "@/models/result";
+import { MainState } from "./main_state";
 
 const initialState: MainState = {
-  purchaseMethod: '',
-  modalProductDeliveryAddressInfo: {
+  mainModalInfo: {
     open: false,
     type: ''
   },
@@ -49,18 +48,11 @@ export const mainSlice = createSlice({
         cart: action.payload
       }
     },
-    purchaseMethodChanged: (state: MainState, action: PayloadAction<string>) => {
-      return {
-        ...state, purchaseMethod: action.payload
-      };
-    },
-    modalProductDeliveryAddressOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
+    mainModalOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
       const { open, type } = action.payload;
       return {
-        ...state, modalProductDeliveryAddressInfo: {
-          open,
-          type
-        }
+        ...state,
+        mainModalInfo: { open, type }
       }
     },
     openCountryPicker: (state: MainState) => {
@@ -109,10 +101,16 @@ export const mainSlice = createSlice({
 })
 
 export const {
-  modalProductDeliveryAddressOpened,
-  purchaseMethodChanged, closeCountryPicker, countryPickerValueChanged,
-  openCountryPicker, deliveryAddressCityChanged, deliveryAddressCountryChanged,
-  cartTypeChanged, deliveryTypeChanged, setCartLoaded, setCartSuccess
+  mainModalOpened,
+  closeCountryPicker,
+  countryPickerValueChanged,
+  openCountryPicker,
+  deliveryAddressCityChanged,
+  deliveryAddressCountryChanged,
+  cartTypeChanged,
+  deliveryTypeChanged,
+  setCartLoaded,
+  setCartSuccess
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

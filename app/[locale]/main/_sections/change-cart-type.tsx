@@ -3,15 +3,15 @@
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
-import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
-import { MainState } from '../_redux/main-state';
+import { mainModalOpened } from '../_redux/main-slice';
+import { MainState } from '../_redux/main_state';
 import { useMemo } from 'react';
 
-export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) {
+export default function ChangeCartType({ onClose }: { onClose: () => void; }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
 
-  const purchaseMethod: string = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+  const cartType: string = useMemo(() => { return mainState.cartType; }, [mainState.cartType]);
 
   return (
     <div className="py-8 space-y-3 w-[512px] h-[448px] m-auto">
@@ -19,7 +19,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
         <h3 className="text-primary-dark text-[32px] leading-0">Change Shopping Method</h3>
         <div className='relative w-56 h-40'>
           <Image alt='change-shop-method-overlay-alt'
-            src={`/others/${purchaseMethod === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
+            src={`/others/${cartType === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
             fill
             className='z-10' />
           <Image alt='change-shop-method-overlay-alt'
@@ -40,7 +40,7 @@ export default function ChangeShopMethod({ onClose }: { onClose: () => void; }) 
               onClick={() => {
                 onClose();
                 setTimeout(() => {
-                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'purchaseMethod' }));
+                  dispatch(mainModalOpened({ open: true, type: 'cartType' }));
                 }, 1000)
               }}>
               Continue

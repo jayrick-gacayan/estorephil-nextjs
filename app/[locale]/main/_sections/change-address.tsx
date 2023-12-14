@@ -3,7 +3,7 @@
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { AppDispatch } from '@/redux/store';
 import Image from 'next/image';
-import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { mainModalOpened } from '../_redux/main-slice';
 
 export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
   const dispatch: AppDispatch = useAppDispatch();
@@ -30,7 +30,7 @@ export default function ChangeAddress({ onClose }: { onClose: () => void; }) {
               onClick={() => {
                 onClose();
                 setTimeout(() => {
-                  dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'purchaseMethod' }));
+                  dispatch(mainModalOpened({ open: true, type: 'purchaseMethod' }));
                 }, 1000)
               }}>
               Continue

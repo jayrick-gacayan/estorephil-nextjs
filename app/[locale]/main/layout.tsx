@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Footer } from './_sections/footer';
 import MainHeader from './_sections/main-header';
 import { MobileStickyFooter } from './_sections/mobile-sticky-footer';
-import FloatingCardButton from './_sections/floating-purchase-method-button';
+import FloatingCartTypeButton from './_sections/floating-cart-type-button';
 import MainLayoutModal from './_sections/main-layout-modal';
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <MainHeader />
       {children}
       <Footer />
-      <FloatingCardButton />
+      <FloatingCartTypeButton />
       <MobileStickyFooter />
       <MainLayoutModal />
     </>

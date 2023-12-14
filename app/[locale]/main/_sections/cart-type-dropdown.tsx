@@ -5,7 +5,6 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import { BsBox2 } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
-import { MainState } from '../_redux/main-state';
 import DropdownItem from '../../_components/dropdown-item';
 import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
 import Dropdown from '../../_components/dropdown';
@@ -18,21 +17,26 @@ import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
 import { removeFromToPurchaseMethodItem } from '../purchase-method/[slug]/_redux/purchase-method-slice';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import { MainState } from '../_redux/main_state';
 
-export default function PurchaseMethodDropdown({ children }: { children: ReactNode }) {
+export default function CartTypeDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toastOnDropdownRef = useRef<HTMLDivElement>(null);
   const dispatch: AppDispatch = useAppDispatch();
 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod });
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+  const cartType = useMemo(() => {
+    const { cartType } = mainState;
+    return cartType === 'shopping_cart' ? 'Shopping Cart' :
+      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+  }, [mainState.cartType]);
 
   const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
   const prevCountRef = usePrevious(purchaseMethodItems.length);
   const purchaseMethodItemToToast = useMemo(() => { return purchaseMethodState.purchaseMethodItemToInteract; }, [purchaseMethodState.purchaseMethodItemToInteract])
 
-  let purchaseMethodHeaderText = purchaseMethod === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
+  let cartTypeHeaderText = cartType === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
 
   const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
@@ -63,10 +67,10 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
   }, [purchaseMethodItems.length, prevCountRef]);
 
   useEffect(() => {
-    if (purchaseMethod !== '') {
+    if (cartType !== '') {
       closeDropdown();
     }
-  }, [purchaseMethod, closeDropdown]);
+  }, [cartType, closeDropdown]);
 
   useOutsideClick(dropdownRef, () => { closeDropdown(); });
 
@@ -85,7 +89,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
                     }
                   }}>
                   {
-                    purchaseMethod === 'Shopping Cart' ?
+                    cartType === 'Shopping Cart' ?
                       (<FaCartShopping className='w-10 h-10 inline-block align-middle cursor-pointer' />) :
                       (<BsBox2 className='w-10 h-10 inline-block align-middle cursor-pointer' />)
                   }
@@ -100,7 +104,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
                 }
               </div>
               <div className='space-y-1'>
-                <span className='block'>{purchaseMethodHeaderText}</span>
+                <span className='block'>{cartTypeHeaderText}</span>
                 <span className='block'>C&#36; {(9999).toFixed(2)}</span>
               </div>
             </div>
@@ -123,7 +127,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
 
                     </div>
                     <div className='flex-1 space-x-2 w-full flex justify-between items-center'>
-                      <span className='block'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${purchaseMethodHeaderText.at(0)}${purchaseMethodHeaderText.slice(1).toLowerCase()}`}
+                      <span className='block'>{purchaseMethodItems.length > prevCountRef! ? 'Added to ' : 'Removed from '}{`${cartTypeHeaderText.at(0)}${cartTypeHeaderText.slice(1).toLowerCase()}`}
                       </span>
                       {
                         purchaseMethodItems.length > prevCountRef! ?
@@ -140,10 +144,9 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
         </div>
       </div>
 
-
       <div id="dropdown-purchase-method" className='space-y-3 text-[12px] leading-0 absolute shadow-lg shadow-secondary p-4 top-[250%] right-0 z-[9999] rounded-xl overflow-hidden bg-white h-auto w-[384px]'>
         <div className='p-2 border-b-2 border-b-secondary-light flex gap-2 items-center'>
-          <div className='flex-1 font-semibold text-lg leading-0'>{purchaseMethodHeaderText.includes('BAYAN') ? `${purchaseMethodHeaderText} BOX` : purchaseMethodHeaderText}</div>
+          <div className='flex-1 font-semibold text-lg leading-0'>{cartTypeHeaderText.includes('BAYAN') ? `${cartTypeHeaderText} BOX` : cartTypeHeaderText}</div>
           {purchaseMethodItems.length > 0 && (<div className='flex-none w-auto text-secondary-light text-base'>{purchaseMethodItems.length}</div>)}
         </div>
         <div className='space-y-2'>
@@ -166,7 +169,7 @@ export default function PurchaseMethodDropdown({ children }: { children: ReactNo
               )
           }
         </div>
-        <Link href={`/purchase-method/${purchaseMethod === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+        <Link href={`/purchase-method/${cartType === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {

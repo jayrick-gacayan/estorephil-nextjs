@@ -1,8 +1,9 @@
-import { RequestStatus } from "@/models/result";
+import { RequestStatus } from "@/types/enums/request-status";
 
 export interface MainState {
-  purchaseMethod: string;
-  modalProductDeliveryAddressInfo: {
+  cartType: string;
+
+  mainModalInfo: {
     open: boolean;
     type: string;
   };
@@ -11,7 +12,6 @@ export interface MainState {
     show: boolean
   }
   cart: any,
-  cartType: string,
   deliveryType: string,
   deliveryAddressCountry: string,
   deliveryAddressCity: string,
