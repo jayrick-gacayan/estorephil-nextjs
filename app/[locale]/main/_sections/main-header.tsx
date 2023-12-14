@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icons/fa6';
 import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from '../_components/navbar-search';
-import PurchaseMethodNavbar from './purchase-method-navbar';
+import CartTypeNavbar from './cart-type-navbar';
 import CountryPicker from '../_components/country-picker';
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
@@ -49,7 +49,7 @@ export default function MainHeader() {
             </Link>
             <NavbarSearch />
             <div className='md:block hidden space-x-3 w-auto'>
-              <PurchaseMethodNavbar>
+              <CartTypeNavbar>
                 {onSession
                   ? <Dropdown ref={dropdownProfileImageRef}
                     className='relative inline'>
@@ -63,9 +63,9 @@ export default function MainHeader() {
                           dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
                         }
                       }} />
-                    <div 
-                    id="dropdown-profile-image" 
-                    className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
+                    <div
+                      id="dropdown-profile-image"
+                      className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
                       <div className='block'>
                         <button
                           onClick={() => {
@@ -88,7 +88,7 @@ export default function MainHeader() {
                   </Dropdown>
                   : <Link href={'/login'}>Login</Link>
                 }
-              </PurchaseMethodNavbar>
+              </CartTypeNavbar>
             </div>
           </div>
           <div className='flex py-2 text-primary-light text-sm'>
@@ -133,7 +133,7 @@ export default function MainHeader() {
             </div>
           </div>
         </nav>
-      </div>
-    </header>
+      </div >
+    </header >
   )
 }

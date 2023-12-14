@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
 import { MainState } from '../../../_redux/main-state';
 import { BsBox2 } from 'react-icons/bs';
-import { modalProductDeliveryAddressOpened } from '../../../_redux/main-slice';
+import { mainModalOpened } from '../../../_redux/main-slice';
 import { Seller } from '@/models/seller';
 import { PurchaseMethodState } from '../../../purchase-method/[slug]/_redux/purchase-method-state';
 import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../purchase-method/[slug]/_redux/purchase-method-slice';
@@ -67,7 +67,7 @@ export default function ProductButtonsContainer({
           ${purchaseMethod !== '' && productMemo ? 'border-danger text-white hover:text-danger bg-danger hover:bg-danger-light' : 'bg-primary border-primary hover:bg-primary-light text-white'}`}
           onClick={() => {
             if (purchaseMethod === '') {
-              dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'enterAddress' }))
+              dispatch(mainModalOpened({ open: true, type: 'enterAddress' }))
             }
             else {
               dispatch(!productMemo ?

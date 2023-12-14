@@ -3,18 +3,24 @@
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 import Image from 'next/image';
 import { AppDispatch, RootState } from '@/redux/store';
-import { deliveryAddressCityChanged, deliveryAddressCountryChanged, modalProductDeliveryAddressOpened } from '../_redux/main-slice';
+import { deliveryAddressCityChanged, deliveryAddressCountryChanged, isToChangeSet, mainModalOpened } from '../_redux/main-slice';
 import { avaiableCountries } from '@/types/props/countries';
 import CountrySelect from '../_components/country-select';
 import CitySelect from '../_components/city-select';
 import { useSelector } from 'react-redux';
 
-export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
-
+export default function DeliveryAddressForm({
+  isToChange,
+  onClose
+}: {
+  isToChange: boolean;
+  onClose: () => void;
+}): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
   const countrySelected = useSelector((state: RootState) => state.main).deliveryAddressCountry
   const citySelected = useSelector((state: RootState) => state.main).deliveryAddressCity
-  const availableCountries = avaiableCountries
+  const availableCountries = avaiableCountries;
+
   return (
     <div className="py-8 space-y-3 w-[512px] m-auto">
       <h3 className="text-primary text-[32px] leading-0">Enter Delivery Address</h3>
@@ -51,15 +57,21 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
       <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
         onClick={() => {
           onClose();
-
           setTimeout(() => {
-            dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
+            dispatch(mainModalOpened({ open: true, type: isToChange ? 'changeAddress' : 'cartType' }));
           }, 1000)
         }}>
         Next
       </button>
       <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
-        onClick={onClose}>
+        onClick={() => {
+          onClose();
+          if (isToChange) {
+            setTimeout(() => {
+              dispatch(mainModalOpened({ open: true, type: 'cartType' }));
+            }, 1000)
+          }
+        }}>
         Skip
       </button>
     </div>
