@@ -16,7 +16,6 @@ const allOrders = [
     status: 'For Pickup'
   },
   {
-
     id: 32,
     dateOrdered: '12/03/2023',
     customerName: 'Gabi Niel',
@@ -55,8 +54,105 @@ const allOrders = [
     instructions: 'notes',
     status: 'Completed'
   },
-]
+  {
 
+    id: 37,
+    dateOrdered: '12/03/2023',
+    customerName: 'John Lennon',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+
+    id: 33,
+    dateOrdered: '12/03/2023',
+    customerName: 'Gabi Niel',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+    id: 27,
+    dateOrdered: '12/03/2023',
+    customerName: 'Testing Test',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+
+    id: 24,
+    dateOrdered: '12/03/2023',
+    customerName: 'Fname Lname',
+    totalItems: 1,
+    payment: 2158.0,
+    instructions: 'notes',
+    status: 'Confirm'
+  },
+  {
+
+    id: 35,
+    dateOrdered: '12/03/2023',
+    customerName: 'Miku Hatsune',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: 'notes',
+    status: 'Completed'
+  },
+  {
+
+    id: 37,
+    dateOrdered: '12/03/2023',
+    customerName: 'John Lennon',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+
+    id: 33,
+    dateOrdered: '12/03/2023',
+    customerName: 'Gabi Niel',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+    id: 27,
+    dateOrdered: '12/03/2023',
+    customerName: 'Testing Test',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: '',
+    status: 'For Pickup'
+  },
+  {
+
+    id: 24,
+    dateOrdered: '12/03/2023',
+    customerName: 'Fname Lname',
+    totalItems: 1,
+    payment: 2158.0,
+    instructions: 'notes',
+    status: 'Confirm'
+  },
+  {
+
+    id: 35,
+    dateOrdered: '12/03/2023',
+    customerName: 'Miku Hatsune',
+    totalItems: 1,
+    payment: 50.0,
+    instructions: 'notes',
+    status: 'Completed'
+  },
+]
 
 export default function AllOrdersTable() {
   return (

@@ -14,7 +14,8 @@ export default function LoginSuccess() {
             setTimeout(() => {
                 push("/");
             }, 2000);
-    }, [loginStatus])
+    }, [loginStatus]);
+
     return (
         <>
             <motion.div

@@ -38,7 +38,7 @@ export default function Layout({
           </div>
         </div>
       </CourierHeaderNav>
-      <main className='h-[calc(100vh-52px)] flex w-full text-default-dark relative'>
+      <main className='h-[calc(100vh-60px)] flex w-full text-default-dark relative'>
         <CourierSidebar />
         <div className='flex-1 h-full flex flex-col w-full bg-white relative'>
           {children}

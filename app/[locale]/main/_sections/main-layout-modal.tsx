@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { useCallback, useMemo, useRef } from 'react';
 import { mainModalOpened } from '../_redux/main-slice';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import EnterDeliveryAddress from './enter-delivery-address';
+import DeliveryAddressForm from './enter-delivery-address';
 import ChangeAddress from './change-address';
 import CartTypeContainer from './cart-type-container';
 import ChangeCartType from './change-cart-type';
@@ -37,7 +37,7 @@ export default function MainLayoutModal() {
     <Modal open={open}>
       <div ref={modalContentRef}
         className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
-        {(open && type === 'enterAddress') && (<EnterDeliveryAddress onClose={cbOnModalClose} />)}
+        {(open && type === 'enterAddress') && (<DeliveryAddressForm onClose={cbOnModalClose} />)}
         {(open && type === 'changeAddress') && (<ChangeAddress onClose={cbOnModalClose} />)}
         {(open && type === 'cartType') && (<CartTypeContainer onClose={cbOnModalClose} />)}
         {(open && type === 'changeCartType') && (<ChangeCartType onClose={cbOnModalClose} />)}

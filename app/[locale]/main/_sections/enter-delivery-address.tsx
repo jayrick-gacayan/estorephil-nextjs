@@ -9,7 +9,7 @@ import CountrySelect from '../_components/country-select';
 import CitySelect from '../_components/city-select';
 import { useSelector } from 'react-redux';
 
-export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
+export default function DeliveryAddressForm({ onClose }: { onClose: () => void; }): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
   const countrySelected = useSelector((state: RootState) => state.main).deliveryAddressCountry
   const citySelected = useSelector((state: RootState) => state.main).deliveryAddressCity
@@ -52,7 +52,7 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
         onClick={() => {
           onClose();
           setTimeout(() => {
-            dispatch(mainModalOpened({ open: true, type: 'changeAddress' }));
+            dispatch(mainModalOpened({ open: true, type: 'cartType' }));
           }, 1000)
         }}>
         Next
