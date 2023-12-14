@@ -17,7 +17,9 @@ const authMiddleware = withAuth(
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        if (req.nextUrl.pathname.includes('courier') || req.nextUrl.pathname.includes('admin')) {
+        if (req.nextUrl.pathname.includes('courier')
+          || req.nextUrl.pathname.includes('admin') ||
+          req.nextUrl.pathname.includes('dashboard')) {
           return true;
         }
 

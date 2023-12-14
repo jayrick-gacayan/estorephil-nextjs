@@ -7,7 +7,7 @@ import ModalAgencyInformationForm from "./_sections/modal-agency-information-for
 export default function Page() {
     return (
         <>
-            <div className="bg-[#f7f9fc] w-full px-[40px] py-[30px]">
+            <div className="w-full p-8 space-y-8 divide-y-2 divide-tertiary-dark">
                 <BasicInformation />
                 <BusinessInformation />
                 <Contacts />
