@@ -50,7 +50,6 @@ export function searchProducts(productRepository: ProductRepository, locale: str
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(getProductsSuccess(result.data))
-                console.log('search products result: ', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
                 dispatch(getProductsSuccess([]))

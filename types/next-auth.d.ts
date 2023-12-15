@@ -69,6 +69,7 @@ declare module "next-auth" {
             address_1?:string,
             address_2?: string,
             zip_code?: string,
+            cart_products: any[]
         },
         store?: {
             id: 83,
@@ -144,6 +145,7 @@ declare module "next-auth" {
             address_1?:string,
             address_2?: string,
             zip_code?: string,
+            cart_products: any[]
         },
         company?: {
             id: number,

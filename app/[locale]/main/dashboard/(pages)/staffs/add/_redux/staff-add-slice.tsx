@@ -31,7 +31,6 @@ export const staffAddSlice = createSlice({
         firstNameChanged: (state: StaffAddState, action: PayloadAction<string>) => {
             var validation = new Validations()
             var validationResponse = validation.isValidName({ name: action.payload, nameColumn: 'first name' })
-            console.log('first name changed dispatched', action.payload, validationResponse)
             return {
                 ...state,
                 firstName: {

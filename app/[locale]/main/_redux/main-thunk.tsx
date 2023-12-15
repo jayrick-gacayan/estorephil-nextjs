@@ -21,7 +21,6 @@ export function setCart(orderRepository: OrderRepository, token: string, company
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(setCartSuccess(result.data))
-                console.log('set cart thunk', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
                 dispatch(setCartSuccess({}))
@@ -38,7 +37,6 @@ export function addToCart(productRepository: ProductRepository, token: string) {
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(addToCartSuccess(result.data.cart))
-                console.log('product added to cart successfully')
                 break;
         }
     }
@@ -47,12 +45,10 @@ export function removeFromCart(productRepository: ProductRepository, token: stri
     return async function getProductDetails(dispatch: AppDispatch, getState: typeof store.getState) {
         const state = getState().product as ProductState
         dispatch(removeFromCartLoaded())
-        console.log('thunk dispatch get store detail loaded:')
         const result: ApiResponse = await productRepository.removeFromCart(token, state.product.id)
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(removeFromCartSuccess(result.data.cart))
-                console.log('product removed from cart successfully')
                 break;
         }
     }

@@ -43,7 +43,6 @@ export function NavbarSearch() {
             router.push(`${pathName}?search=${navbarSearchText}`);
           }
           else {
-            console.log('nav bar searc:', navbarSearchText)
             router.push(`all-categories?search=${navbarSearchText}`);
           }
 

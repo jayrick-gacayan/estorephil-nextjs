@@ -11,7 +11,7 @@ import CountryPicker from '../_components/country-picker';
 import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import Dropdown from '../../_components/dropdown';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -29,13 +29,13 @@ export default function MainHeader() {
     }
   }, []);
   const { data: sessionData } = useSession()
-  const userFullName = `${sessionData?.user.first_name} ${sessionData?.user.last_name}`
+  const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
   const onSession = !!sessionData
   const removeSession = async () => {
     await signOut({ callbackUrl: `/login` })
   }
+  useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
-
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
@@ -54,7 +54,7 @@ export default function MainHeader() {
                   ? <Dropdown ref={dropdownProfileImageRef}
                     className='relative inline'>
                     <Image alt='profile-image'
-                      src={sessionData.user.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
+                      src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
                       width={48}
                       height={48}
                       className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'

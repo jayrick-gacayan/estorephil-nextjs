@@ -43,7 +43,6 @@ export default function Form() {
                                     </div>
                                     <form onSubmit={(e) => {
                                         e.preventDefault()
-                                        console.log('form submitted')
                                         store.dispatch(login(accountRepository))
                                     }}>
                                         <div className="flex flex-col items-center justify-center px-8 py-2">

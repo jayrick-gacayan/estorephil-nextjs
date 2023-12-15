@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
 import { BsBox2 } from 'react-icons/bs';
-import { addToCartQuantityChanged, mainModalOpened } from '../../../_redux/main-slice';
+import { addToCartQuantityChanged, cartChanged, mainModalOpened } from '../../../_redux/main-slice';
 import { PurchaseMethodState } from '../../../purchase-method/[slug]/_redux/purchase-method-state';
 import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../purchase-method/[slug]/_redux/purchase-method-slice';
 import { MainState } from '../../../_redux/main-state';
@@ -18,11 +18,7 @@ import { TYPES } from '@/inversify/types';
 import { ProductRepository } from '@/repositories/product-repository';
 import { addToCart, removeFromCart } from '../../../_redux/main-thunk';
 
-export default function ProductButtonsContainer({
-
-}: {
-
-  }) {
+export default function ProductButtonsContainer({ }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethod: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
   const dispatch: AppDispatch = useAppDispatch();
@@ -32,25 +28,57 @@ export default function ProductButtonsContainer({
     let productShopMethod = shopMethod.purchaseMethodItems.find((value: Cart | BalikbayanBox) => {
       return currentProduct.id === value.product.id;
     });
-
     return productShopMethod;
   }, [currentProduct, shopMethod.purchaseMethodItems]);
-  const { data: sessionData } = useSession()
-  const cartProducts: [] = mainState?.cart?.cart_products
+  const { data: sessionData, update: updateSession } = useSession()
+  const cartProducts: [] = !!sessionData?.cart ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
   const productExistsOnCart = cartProducts?.find((product: { id: number; }) => product.id === currentProduct?.id ?? 0);
   const [quantity, setQuantity] = useState<number>(!productMemo ? 1 : productMemo.quantity);
   const cartType = useMemo(() => {
-    const cartType = mainState.cartType;
+    const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
-
+  const updateCartSession = async () => {
+    if (!!sessionData) {
+      await updateSession({
+        user: {
+          ...sessionData,
+          cart: mainState.cart,
+        },
+      })
+    }
+  }
   useEffect(() => {
     if (productMemo) {
       dispatch(productItemQuantitySet({ product: currentProduct, quantity: quantity }));
     }
   }, [quantity, productMemo, dispatch, currentProduct]);
-  console.log('cart', mainState.cart)
+
+  useEffect(() => {
+    if (!!sessionData) {
+      if (mainState.cart === undefined) {
+        console.log('update -1st condition called')
+        return
+      }
+      else if (mainState.cart != undefined && sessionData.cart === undefined) {
+        console.log('update cart condition 2 calleed')
+        updateCartSession()
+      }
+      else {
+        console.log('update cart condition 3s calleed')
+        updateCartSession()
+        console.log('sessionData:', sessionData)
+      }
+    }
+  }, [mainState.cart])
+  // useEffect(() => {
+  //   if (!!sessionData) {
+  //     if (mainState.cart === undefined) {
+  //       dispatch(cartChanged(sessionData.cart))
+  //     }
+  //   }
+  // }, [sessionData?.cart])
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
@@ -100,7 +128,7 @@ export default function ProductButtonsContainer({
                 // removeFromToPurchaseMethodItem(productMemo)
                 addToCart(productRepository, sessionData?.token ?? `yliaster`) :
                 removeFromCart(productRepository, sessionData?.token ?? `yliaster`)
-              );
+              )
             }
           }}>
           {
