@@ -24,7 +24,7 @@ export default function StaffTable() {
     <div className='block overflow-auto'>
       <table className='min-w-[768px] w-full'>
         <thead>
-          <tr className='text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#EFF0F0] bg-[#F8FAFC]'>
+          <tr className='text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px]  border-tertiary bg-[#F8FAFC]'>
             <th>ID</th>
             <th>PHOTO</th>
             <th>LASTNAME</th>

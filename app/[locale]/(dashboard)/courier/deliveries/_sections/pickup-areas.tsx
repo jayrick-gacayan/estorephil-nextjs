@@ -16,8 +16,8 @@ export default function PickupAreas() {
           Region
         </div>
         <div className="relative w-full">
-          <input type="text" readOnly id='inputId' className="focus:border-primary w-full peer/region p-2 rounded border-[.5px] border-[#707070]" />
-          <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute peer-focus/region:h-[240px] h-0 rounded peer-focus/region:border-[.5px] border-0 border-[#707070] top-[110%]">
+          <input type="text" readOnly id='inputId' className="focus:border-primary w-full peer/region p-2 rounded border-[.5px] border-tertiary-dark" />
+          <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute peer-focus/region:h-[240px] h-0 rounded peer-focus/region:border-[.5px] border-0 border-secondary top-[110%]">
             {
               philippinesRegions.map((value: any) => {
                 let getRegion = regions.find((region: any) => { return region.regionCode === value.regionCode });

@@ -101,10 +101,10 @@ function CourierSidebar() {
 
 
   return (
-    <div className='lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-[.5px] border-r-secondary-dark'>
+    <div className='lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-[.5px] border-r-tertiary-dark'>
       <div className='space-y-2'>
         <div className='px-4 py-2'>Menu</div>
-        <div className='block'>
+        <div className='block text-secondary'>
           {
             courierDashboardMenus.map((courierDashboardMenu: MenuProps) => {
 

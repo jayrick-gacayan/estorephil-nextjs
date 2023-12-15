@@ -18,11 +18,7 @@ import { TYPES } from '@/inversify/types';
 import { ProductRepository } from '@/repositories/product-repository';
 import { addToCart, removeFromCart } from '../../../_redux/main-thunk';
 
-export default function ProductButtonsContainer({
-
-}: {
-
-  }) {
+export default function ProductButtonsContainer() {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethod: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
   const dispatch: AppDispatch = useAppDispatch();
