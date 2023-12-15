@@ -19,16 +19,14 @@ export const allCategoriesSlice = createSlice({
     initialState,
     reducers: {
         categoriesSelectedChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
-            let updatedSelectedCategories;
-            if (state.categoriesSelected.includes(action.payload)) {
-                updatedSelectedCategories = state.categoriesSelected.filter(category => category !== action.payload);
-            } else {
-                updatedSelectedCategories = [...state.categoriesSelected, action.payload];
-            }
+
             return {
                 ...state,
-                categoriesSelected: updatedSelectedCategories,
-            };
+                categoriesSelected: state.categoriesSelected.includes(action.payload) ?
+                    state.categoriesSelected.filter((category) => {
+                        return category !== action.payload;
+                    }) : [...state.categoriesSelected, action.payload]
+            }
         },
         getCategoriesLoaded: (state: AllCategoriesState) => {
             return {
