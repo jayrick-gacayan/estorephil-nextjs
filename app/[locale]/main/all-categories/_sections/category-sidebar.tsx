@@ -43,10 +43,40 @@ export function CategorySidebar() {
   }, [dispatch, locale]);
 
   useEffect(() => {
+    let getAllCategories = searchParamsMemo.getAll('category[]');
+    if (categoriesSelected.length === 0 && getAllCategories.length > 0) {
+      getAllCategories.forEach((value: string) => {
+        dispatch(categoriesSelectedChanged(value));
+      })
+    }
+    else if (categoriesSelected.length === 1 && getAllCategories.length === 0) {
+      dispatch(categoriesSelectedChanged(categoriesSelected[0]));
+    }
+    else {
 
-  }, [searchParamsMemo, categories, dispatch]);
+      // for (let i: number = 0; i < categoriesSelected.length; i++) {
+      //   let getBreak = false;
+      //   for (let j: number = 0; j < getAllCategories.length; j++) {
+      //     if (!categoriesSelected.includes(getAllCategories[j])) {
+      //       getBreak = true;
+      //       dispatch(categoriesSelectedChanged(getAllCategories[j]));
+      //       break;
+      //     }
+      //   }
+      // }
+      getAllCategories.forEach((value: string) => {
+        if (!categoriesSelected.includes(value)) {
+          dispatch(categoriesSelectedChanged(value));
+        }
+      })
 
-
+      categoriesSelected.forEach((value: string) => {
+        if (!getAllCategories.includes(value)) {
+          dispatch(categoriesSelectedChanged(value));
+        }
+      })
+    }
+  }, [searchParamsMemo, categoriesSelected, dispatch]);
 
   useEffect(() => {
     const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
@@ -78,17 +108,8 @@ export function CategorySidebar() {
 
                     let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-                    dispatch(categoriesSelectedChanged(category.name))
-
-                    if (value) {
-                      if (current.getAll('category').length === 1) { current.delete('category[]'); }
-                      else {
-                        current.delete('category[]', category.name)
-                      }
-                    }
-                    else {
+                    value ? current.delete('category[]', category.name) :
                       current.append('category[]', category.name);
-                    }
 
                     const query = current.toString() === '' ? '' : `?${current.toString()}`;
 
