@@ -14,7 +14,7 @@ import Dropdown from '../../_components/dropdown';
 import { useCallback, useEffect, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next-intl/client';
 
 export default function MainHeader() {
   const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
@@ -87,9 +87,7 @@ export default function MainHeader() {
                     </div>
                   </Dropdown>
                   : (
-                    <button onClick={() => {
-                      useRouter().push('/login')
-                    }}
+                    <button onClick={() => { push('/login') }}
                       className='transition-all delay-50 text-white border border-transparent py-2 px-4 h-full rounded text-xl align-middle bg-primary hover:bg-primary-light'>Login
                     </button>)
                 }
