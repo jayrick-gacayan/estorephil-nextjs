@@ -19,26 +19,26 @@ import { removeFromToPurchaseMethodItem } from '../purchase-method/[slug]/_redux
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { MainState } from '../_redux/main-state';
 import { useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
 
 export default function CartTypeDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toastOnDropdownRef = useRef<HTMLDivElement>(null);
   const dispatch: AppDispatch = useAppDispatch();
-
+  const { data: sessionData } = useSession()
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod });
   const cartType = useMemo(() => {
-    const cartType = mainState.cartType;
+    const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
   const productImage = useSelector((state: RootState) => state.product)?.product?.gallery?.[0]?.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`
   // const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
-  const cartProducts = mainState.cart?.cart_products
+  const cartProducts = !!sessionData ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
   // const prevCountRef = usePrevious(purchaseMethodItems.length);
   const prevCountRef = usePrevious(cartProducts?.length)
   const purchaseMethodItemToToast = useMemo(() => { return purchaseMethodState.purchaseMethodItemToInteract; }, [purchaseMethodState.purchaseMethodItemToInteract])
-  const cart = mainState.cart
   let cartTypeHeaderText = cartType === 'Shopping Cart' ? 'CART' : 'BALIKBAYAN';
   const closeDropdown = useCallback(() => {
     if (dropdownRef.current) {
@@ -48,7 +48,6 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
       }
     }
   }, []);
-  console.log('cart products:', cartProducts)
   useEffect(() => {
     if (toastOnDropdownRef.current) {
       if (prevCountRef) {
@@ -72,6 +71,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
     if (cartType !== '') {
       closeDropdown();
     }
+    console.log('cart products', cartProducts)
   }, [cartType, closeDropdown]);
 
   useOutsideClick(dropdownRef, () => { closeDropdown(); });
@@ -91,23 +91,23 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
                     }
                   }}>
                   {
-                    cartType === 'Shopping Cart' ?
-                      (<FaCartShopping className='w-10 h-10 inline-block align-middle cursor-pointer' />) :
-                      (<BsBox2 className='w-10 h-10 inline-block align-middle cursor-pointer' />)
+                    cartType === 'Shopping Cart'
+                      ? (<FaCartShopping className='w-10 h-10 inline-block align-middle cursor-pointer' />)
+                      : (<BsBox2 className='w-10 h-10 inline-block align-middle cursor-pointer' />)
                   }
                 </div>
                 {
-                  cart?.cart_products?.length > 0 &&
+                  cartProducts?.length > 0 &&
                   (<span className='absolute -top-3 -right-2 w-7 h-7 bg-danger rounded-full flex justify-center items-center'>
                     <div className='flex-none w-auto'>
-                      {cart?.cart_products?.length}
+                      {cartProducts?.length}
                     </div>
                   </span>)
                 }
               </div>
               <div className='space-y-1'>
                 <span className='block'>{cartTypeHeaderText}</span>
-                <span className='block'>C&#36; {cart?.cart_products?.total?.toFixed(2) ?? 0}</span>
+                <span className='block'>C&#36; {cartProducts?.total?.toFixed(2) ?? 0}</span>
               </div>
             </div>
             <div ref={toastOnDropdownRef}

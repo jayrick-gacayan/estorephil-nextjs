@@ -45,10 +45,8 @@ export default function CategoryProducts() {
               if (state.categoriesSelected.length === 2) {
                 const categoriesText = state.categoriesSelected.map((category, index) => {
                   if (index === 0) {
-                    console.log('category', index, category);
                     return category.toLowerCase();
                   } else {
-                    console.log('category', index, category);
                     return ` & ${category.toLowerCase()}`;
                   }
                 });
@@ -57,8 +55,6 @@ export default function CategoryProducts() {
               } else {
                 const categoriesText = state.categoriesSelected.map((category, index) => {
                   if (index === state.categoriesSelected.length - 1 && state.categoriesSelected.length != 1) {
-                    console.log('category', index, category);
-
                     return `& ${category.toLowerCase()}`;
                   }
                   else {

@@ -46,7 +46,6 @@ export default function CountryPicker({
                         {countries.map((country, index) =>
                             <li key={index} onClick={(e) => {
                                 e.preventDefault()
-                                console.log('value', value)
                                 dispatch(countryPickerValueChanged(country.code))
                                 store.dispatch(getMainCategories(homeRepository, country.code))
                                 store.dispatch(getMainStores(homeRepository, country.code))

@@ -12,7 +12,7 @@ const initialState: MainState = {
     value: 'ph',
     show: false
   },
-  cart: {},
+  cart: undefined,
   cartType: '',
   deliveryType: '',
   deliveryAddressCity: '',
@@ -116,7 +116,6 @@ export const mainSlice = createSlice({
       }
     },
     countryPickerValueChanged: (state: MainState, action: PayloadAction<string>) => {
-      console.log('country picked', action.payload)
       return {
         ...state,
         countryPicker: {
@@ -136,6 +135,12 @@ export const mainSlice = createSlice({
         ...state,
         deliveryAddressCity: action.payload
       }
+    },
+    cartChanged: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        cart: action.payload
+      }
     }
   }
 })
@@ -146,7 +151,7 @@ export const {
   closeCountryPicker, addToCartSuccess,
   countryPickerValueChanged, removeFromCartLoaded,
   openCountryPicker, removeFromCartSuccess, addToCartQuantityChanged,
-  deliveryAddressCityChanged,
+  deliveryAddressCityChanged, cartChanged,
   deliveryAddressCountryChanged,
   cartTypeChanged,
   deliveryTypeChanged,

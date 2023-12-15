@@ -28,15 +28,11 @@ export function CategorySidebar() {
   }))
   useEffect(() => {
     if (state.categoriesSelected.length == 0) {
-      console.log('searchQueryValue:', searchParams)
       if (!!searchParams) {
         dispatch(searchQueryChanged(searchParams.get('search') ?? ``))
-        console.log('has search query:', searchParams.get('search'))
-        console.log('search query value:', searchParams)
         router.push(`${pathName}?search=${searchParams.get('search')}`)
       }
       else {
-        console.log('no search query')
         router.push(`${pathName}`)
       }
 

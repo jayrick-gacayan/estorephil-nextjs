@@ -27,7 +27,6 @@ export function getMainStores(homeRepository: HomeRepository, locale: string) {
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(getMainStoresSuccess(result.data))
-                console.log('home thunk', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
                 dispatch(getMainStoresSuccess([]))
@@ -42,7 +41,6 @@ export function getMainProducts(homeRepository: HomeRepository, locale: string) 
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(getMainProductsSuccess(result.data))
-                console.log('home thunk main products', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
                 dispatch(getMainProductsSuccess([]))

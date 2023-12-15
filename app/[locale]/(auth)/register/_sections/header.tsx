@@ -1,6 +1,5 @@
 'use client'
 export default function Header() {
-    console.log('-------')
     return (
         <>
             <div className="flex items-center justify-between w-[80%] h-full">

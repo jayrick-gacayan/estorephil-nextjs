@@ -35,6 +35,7 @@ const authOptions: AuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);
       if (trigger === "update") {
+        console.log('route token', token, session)
         return session
       }
       return token;
