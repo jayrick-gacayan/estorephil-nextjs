@@ -12,7 +12,7 @@ export default function BusinessInformation() {
     const { data: sessionData } = useSession()
 
     return (
-        <div className='space-y-4 py-4'>
+        <div className='space-y-4 pt-4'>
             <div className='flex items-center justify-between w-full'>
                 <h3 className="font-semibold text-[24px]">{translate('businessInformation')}</h3>
                 <button className='underline hover:no-underline text-primary'
