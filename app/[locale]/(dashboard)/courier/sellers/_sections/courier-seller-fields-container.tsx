@@ -18,11 +18,11 @@ export default function CourierSellersFieldsContainer() {
             }} />
         </div>
         <div className='flex-none w-auto space-x-2'>
-          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>Set Status</span>
-          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>
+          <span className='p-1.5 rounded border-[.5px] border-secondary inline'>Set Status</span>
+          <span className='p-1.5 rounded border-[.5px] border-secondary inline'>
             <FaCheck className='inline-block' />
           </span>
-          <span className='p-1.5 rounded border-[.5px] border-[#707070] inline'>
+          <span className='p-1.5 rounded border-[.5px] border-secondary inline'>
             <FaRegTrashCan className='inline-block' />
           </span>
         </div>

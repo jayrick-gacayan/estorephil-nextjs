@@ -6,4 +6,5 @@ export interface MenuProps {
   icon?: ReactNode;
   subMenus?: MenuProps[];
   alt: string;
+  totalBadgeContainer?: ReactNode;
 }

@@ -13,8 +13,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -23,8 +21,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -33,8 +29,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -43,8 +37,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -53,8 +45,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -63,8 +53,6 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
     {
@@ -73,11 +61,16 @@ export default function AdminItems() {
       lastName: "Quilla",
       firstName: "Dwight Dennis",
       email: "dwight.aton+2@kodakollectiv.com",
-      mobileNo: "09770136298",
-      role: "Admin",
       status: "Active",
     },
-    
+    {
+      userID: "1",
+      photo: "",
+      lastName: "Quilla",
+      firstName: "Dwight Dennis",
+      email: "dwight.aton+2@kodakollectiv.com",
+      status: "Active",
+    },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
   return (
@@ -99,13 +92,11 @@ export default function AdminItems() {
           <table className={`w-full `}>
             <thead>
               <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-sm">
-                <th className="px-4 py-2 ">USER ID</th>
+                <th className="px-4 py-2 ">ID</th>
                 <th className="px-4 py-2 ">PHOTO</th>
                 <th className="px-4 py-2 ">LAST NAME</th>
                 <th className="px-4 py-2 ">FIRST NAME</th>
                 <th className="px-4 py-2 ">EMAIL</th>
-                <th className="px-4 py-2 ">MOBILE NO.</th>
-                <th className="px-4 py-2 ">ROLE</th>
                 <th className="px-4 py-2 text-center">STATUS</th>
                 <th className="px-4 py-2 text-center">ACTIONS</th>
               </tr>
@@ -144,8 +135,6 @@ export default function AdminItems() {
                     <td className={`${rowHeight}`}>{order.lastName}</td>
                     <td className={`${rowHeight}`}>{order.firstName}</td>
                     <td className={`${rowHeight}`}>{order.email}</td>
-                    <td className={`${rowHeight}`}>{order.mobileNo}</td>
-                    <td className={`${rowHeight}`}>{order.role}</td>
                     <td className={`${rowHeight}`}>
                       <div
                         className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}>

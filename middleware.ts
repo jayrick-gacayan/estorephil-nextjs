@@ -19,7 +19,9 @@ const authMiddleware = withAuth(
       authorized: ({ token, req }) => {
         if (req.nextUrl.pathname.includes('courier')
           || req.nextUrl.pathname.includes('admin') ||
-          req.nextUrl.pathname.includes('dashboard')) {
+          req.nextUrl.pathname.includes('dashboard') ||
+          req.nextUrl.pathname.includes('purchase-method')
+        ) {
           return true;
         }
 

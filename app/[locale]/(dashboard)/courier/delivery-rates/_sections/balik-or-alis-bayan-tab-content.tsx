@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa6";
 export default function BalikOrAlisBayanTabContent() {
 
   function tabClassName(tab: string, currentTab: string) {
-    return `border-[.5px] ${tab === currentTab ? 'bg-success-dark text-white border-success-dark' : 'bg-default border-[#707070] hover:border-success-dark hover:bg-success-dark hover:text-white'}`;
+    return `border-[.5px] ${tab === currentTab ? 'bg-success-dark text-white border-success-dark' : 'bg-default border-secondary hover:border-success-dark hover:bg-success-dark hover:text-white'}`;
   }
 
   return (
