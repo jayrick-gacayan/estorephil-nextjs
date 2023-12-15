@@ -12,7 +12,7 @@ import { OrderRepository } from '@/repositories/order-repository';
 import { orderContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { setCart } from '../_redux/main-thunk';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import Image from 'next/image';
 import TabItem from '../../_components/tab-item';
 import Tabs from '../../_components/tabs';

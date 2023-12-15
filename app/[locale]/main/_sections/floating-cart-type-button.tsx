@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { isToChangeSet, mainModalOpened } from '../_redux/main-slice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useMemo } from 'react';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 
 export default function FloatingCartTypeButton(): JSX.Element | null {
   const dispatch: AppDispatch = useAppDispatch();

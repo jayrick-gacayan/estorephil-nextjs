@@ -80,7 +80,7 @@ export default function CitySelect({
                     { group: 'Misamis Occidental', cities: ['Oroquieta City', 'Ozamiz City', 'Tangub City'] },
                     { group: 'Misamis Oriental', cities: ['Cagayan de Oro City', 'Gingoog City', 'El Salvador City'] },
                     { group: 'Mountain Province', cities: ['Bontoc', 'Barlig', 'Sadanga'] },
-                    { group: 'Negros Occidental', cities: ['Bacolod City', 'Bago City', 'Talisay City'] },
+                    { group: 'Negros Occidental', cities: ['Bacolod City', 'Bago City', 'Talisay City','San Carlos','Sagay','La Carlota','Cadiz','Murcia','Canlaon'] },
                     { group: 'Negros Oriental', cities: ['Dumaguete City', 'Bais City', 'Guihulngan City'] },
                     { group: 'Northern Samar', cities: ['Catarman', 'Calbayog City', 'Laoang'] },
                     { group: 'Nueva Ecija', cities: ['Palayan City', 'Cabanatuan City', 'Gapan City'] },
@@ -201,6 +201,7 @@ export default function CitySelect({
                             <option hidden selected={!!value} className="text-gray-400" value="">
                                 {placeholder}
                             </option>
+                            <option selected={!!value} className="text-slate-800" value="Nationwide">Nationwide</option>
                             {cityOptions?.map((group, index) => (
                                 <optgroup key={index} label={group.group}>
                                     {group.cities.map((city, cityIndex) => (

@@ -44,6 +44,7 @@ const authOptions: AuthOptions = {
       session.company = (token.user as any).company as any || null
       session.store = (token.user as any).store as any || null
       session.token = (token.user as any).token as any
+      session.cart = (token.user as any).cart as any
       return session;
     },
     signIn: async () => {

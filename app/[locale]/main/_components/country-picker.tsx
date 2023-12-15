@@ -34,9 +34,11 @@ export default function CountryPicker({
     const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
     return (
         <>
-            <div className="flex relative bg-transparent w-full h-full px-2 hover:cursor-pointer" onClick={() => {
+
+            <div className="flex relative bg-transparent w-full h-full z-[10] px-2 hover:cursor-pointer" onClick={() => {
                 show ? dispatch(closeCountryPicker()) : dispatch(openCountryPicker())
             }}>
+
                 <div className="flex items-center gap-2 text-white">{icon} {value?.toUpperCase()}</div>
                 <div className={`${show ? `block` : `hidden`} absolute top-6 -right-12 shadow-md w-[100px] bg-white h-full`}>
                     <ul className="decoration-none bg-white border-[1px] border-slate-800">

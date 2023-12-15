@@ -3,14 +3,13 @@
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useMemo } from 'react';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { mainModalOpened } from '../_redux/main-slice';
 import CartTypeDropdown from './cart-type-dropdown';
 
 export default function CartTypeNavbar({ children }: { children: ReactNode }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
-
   const cartType = useMemo(() => {
     const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :

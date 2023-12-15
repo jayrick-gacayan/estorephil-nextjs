@@ -29,4 +29,16 @@ export class ProductRepository {
         }
         return await this.productService.searchProducts(locale, params.toString())
     }
+    async addToCart(token: string, productId: number, quantity: number) {
+        const body = {
+            order: {
+                product_id: productId,
+                quantity: quantity,
+            }
+        }
+        return await this.productService.addToCart(token, JSON.stringify(body))
+    }
+    async removeFromCart(token: string, productId: number) {
+        return await this.productService.removeFromCart(token, productId)
+    }
 }

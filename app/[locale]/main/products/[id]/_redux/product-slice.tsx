@@ -5,12 +5,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export const initialState: ProductState = {
     getProductDetailsStatus: RequestStatus.WAITING,
     product: {},
-    currentPreviewImage: {}
+    currentPreviewImage: {},
 }
 export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
+
         getProductDetailsLoaded: (state: ProductState) => {
             return {
                 ...state,
