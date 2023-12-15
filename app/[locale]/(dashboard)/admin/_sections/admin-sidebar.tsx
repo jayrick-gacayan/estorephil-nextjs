@@ -17,86 +17,95 @@ import {
   FaUsers,
 } from "react-icons/fa6";
 
-let adminDashboardMenus: MenuProps[] = [
-  {
-    link: "/admin/dashboard",
-    text: "Dashboard",
-    alt: "dashboard",
-    icon: <BiSolidDashboard />,
-  },
-  {
-    link: "/admin/products",
-    text: "Products",
-    alt: "products",
-    icon: <FaShoppingCart />,
-  },
-  {
-    link: "/admin/tax-rules",
-    alt: "tax-rules",
-    text: "Tax Rules",
-    icon: <FaMoneyCheck />,
-  },
-  {
-    link: "/admin/trade-rates",
-    alt: "trade-rates",
-    text: "Trade Rates",
-    icon: <FaChartBar />,
-  },
-  {
-    link: "/admin/categories",
-    alt: "categories",
-    text: "Categories",
-    icon: <FaFilter />,
-  },
-  {
-    link: "/admin/accounting",
-    alt: "accounting",
-    text: "Accounting",
-    icon: <FaChartLine />,
-  },
-  {
-    link: "/admin/banners",
-    alt: "banners",
-    text: "Banners",
-    icon: <FaImages />,
-  },
-  {
-    link: "/admin/orders",
-    alt: "orders",
-    text: "Orders",
-    icon: <FaShoppingBasket />,
-  },
-  {
-    link: "/admin/users",
-    text: "Users",
-    alt: "users",
-    icon: <FaUsers />,
-    subMenus: [
-      {
-        link: "/admin/users/admins",
-        text: "Admins",
-        alt: "admins",
-      },
-      {
-        link: "/admin/users/agents",
-        text: "Agents",
-        alt: "agents",
-      },
-      {
-        link: "/admin/users/couriers",
-        text: "Couriers",
-        alt: "couriers",
-      },
-      {
-        link: "/admin/users/sellers",
-        text: "Sellers",
-        alt: "sellers",
-      },
-    ],
-  },
-];
-
 function AdminSidebar() {
+
+  let adminDashboardMenus: MenuProps[] = [
+    {
+      link: "/admin/dashboard",
+      text: "Dashboard",
+      alt: "dashboard",
+      icon: <BiSolidDashboard />,
+    },
+    {
+      link: "/admin/products",
+      text: "Products",
+      alt: "products",
+      icon: <FaShoppingCart />,
+      totalBadgeContainer: (
+        <div className='rounded-full w-auto bg-success text-white px-1.5 inline-block text-sm'>45</div>
+      )
+    },
+    {
+      link: "/admin/tax-rules",
+      alt: "tax-rules",
+      text: "Tax Rules",
+      icon: <FaMoneyCheck />,
+    },
+    {
+      link: "/admin/trade-rates",
+      alt: "trade-rates",
+      text: "Trade Rates",
+      icon: <FaChartBar />,
+    },
+    {
+      link: "/admin/categories",
+      alt: "categories",
+      text: "Categories",
+      icon: <FaFilter />,
+    },
+    {
+      link: "/admin/accounting",
+      alt: "accounting",
+      text: "Accounting",
+      icon: <FaChartLine />,
+    },
+    {
+      link: "/admin/banners",
+      alt: "banners",
+      text: "Banners",
+      icon: <FaImages />,
+    },
+    {
+      link: "/admin/orders",
+      alt: "orders",
+      text: "Orders",
+      icon: <FaShoppingBasket />,
+    },
+    {
+      link: "/admin/users",
+      text: "Users",
+      alt: "users",
+      icon: <FaUsers />,
+      subMenus: [
+        {
+          link: "/admin/users/admins",
+          text: "Admins",
+          alt: "admins",
+        },
+        {
+          link: "/admin/users/agents",
+          text: "Agents",
+          alt: "agents",
+        },
+        {
+          link: "/admin/users/couriers",
+          text: "Couriers",
+          alt: "couriers",
+        },
+        {
+          link: "/admin/users/sellers",
+          text: "Sellers",
+          alt: "sellers",
+          totalBadgeContainer: (
+            <div className='rounded-full w-auto bg-danger text-white px-1.5 inline-block text-sm'>99</div>
+          )
+        },
+      ],
+    },
+  ];
+
+
+
   const [currentDropdownMenu, setCurrentDropdownMenu] = useState<string>("");
   const router = useRouter();
   const segments = useSelectedLayoutSegments();
@@ -161,6 +170,7 @@ function AdminSidebar() {
 
             let objectToAdminMenuItemLinkProps: any = adminDashboardMenu;
 
+
             return (
               <DashboardMenuItemLink
                 key={`menu-items-${adminDashboardMenu.text}`}
@@ -171,7 +181,9 @@ function AdminSidebar() {
                     : "";
                 }}
                 {...objectToAdminMenuItemLinkProps}
-              />
+              >
+                {adminDashboardMenu.totalBadgeContainer && adminDashboardMenu.totalBadgeContainer}
+              </DashboardMenuItemLink>
             );
           })}
         </div>

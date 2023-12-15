@@ -4,21 +4,15 @@ import { AppDispatch } from "@/redux/store";
 import DashboardHeaderText from "../../../_components/dashboard-header-text";
 import { useAppDispatch } from "@/app/_hooks/redux_hooks";
 import { modalBoxesOpened } from "../_redux/courier-boxes-slice";
+import DashboardHeaderTextButton from "../../../_components/dashboard-header-text-button";
 
 export default function BoxesHeader() {
   const dispatch: AppDispatch = useAppDispatch();
+
   return (
     <DashboardHeaderText text="Box Management">
-      <div className="flex-none w-auto">
-        <div className='flex-none w-auto'>
-          <button className='bg-info hover:bg-info-dark px-4 py-1.5 rounded w-fit text-white'
-            onClick={() => {
-              dispatch(modalBoxesOpened('createBox'));
-            }}>
-            Set Box Pricing
-          </button>
-        </div>
-      </div>
+      <DashboardHeaderTextButton labelText='Set Box Pricing'
+        onClick={() => { dispatch(modalBoxesOpened('createBox')); }} />
     </DashboardHeaderText>
   )
 }
