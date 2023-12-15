@@ -18,7 +18,6 @@ import {
 } from "react-icons/fa6";
 
 function AdminSidebar() {
-
   let adminDashboardMenus: MenuProps[] = [
     {
       link: "/admin/dashboard",
@@ -32,8 +31,10 @@ function AdminSidebar() {
       alt: "products",
       icon: <FaShoppingCart />,
       totalBadgeContainer: (
-        <div className='rounded-full w-auto bg-success text-white px-1.5 inline-block text-sm'>45</div>
-      )
+        <div className="rounded-full w-auto bg-success text-white px-1.5 inline-block text-sm">
+          45
+        </div>
+      ),
     },
     {
       link: "/admin/tax-rules",
@@ -97,14 +98,14 @@ function AdminSidebar() {
           text: "Sellers",
           alt: "sellers",
           totalBadgeContainer: (
-            <div className='rounded-full w-auto bg-danger text-white px-1.5 inline-block text-sm'>99</div>
-          )
+            <div className="rounded-full w-auto bg-danger text-white px-1.5 inline-block text-sm">
+              99
+            </div>
+          ),
         },
       ],
     },
   ];
-
-
 
   const [currentDropdownMenu, setCurrentDropdownMenu] = useState<string>("");
   const router = useRouter();
@@ -121,10 +122,10 @@ function AdminSidebar() {
   }, [segments]);
 
   return (
-    <div className="lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-[.5px] border-r-secondary-dark">
+    <div className="lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-2 text-sm">
       <div className="space-y-2">
-        <div className="px-4 py-2">Menu</div>
-        <div className="block">
+        <div className="px-4 py-2 ">Menu</div>
+        <div className="block space-y-3 pl-5 text-sm text-gray-500">
           {adminDashboardMenus.map((adminDashboardMenu: MenuProps) => {
             if (adminDashboardMenu.subMenus) {
               let objectToAdminMenuItemWithSubLinksProps: any =
@@ -155,7 +156,7 @@ function AdminSidebar() {
                     segment: string
                   ): string {
                     return segment === alt
-                      ? `text-primary bg-tertiary-light`
+                      ? `text-[#32BCE6] bg-tertiary-light`
                       : ``;
                   }}
                   {...objectToAdminMenuItemWithSubLinksProps}>
@@ -170,19 +171,18 @@ function AdminSidebar() {
 
             let objectToAdminMenuItemLinkProps: any = adminDashboardMenu;
 
-
             return (
               <DashboardMenuItemLink
                 key={`menu-items-${adminDashboardMenu.text}`}
                 segment={segment!}
                 onActiveMenu={(alt: string, segment: string) => {
                   return segment === alt
-                    ? "text-primary border-l-4 border-l-primary bg-tertiary-light"
+                    ? "text-[#32BCE6] border-l-4 border-l-primary bg-tertiary-light"
                     : "";
                 }}
-                {...objectToAdminMenuItemLinkProps}
-              >
-                {adminDashboardMenu.totalBadgeContainer && adminDashboardMenu.totalBadgeContainer}
+                {...objectToAdminMenuItemLinkProps}>
+                {adminDashboardMenu.totalBadgeContainer &&
+                  adminDashboardMenu.totalBadgeContainer}
               </DashboardMenuItemLink>
             );
           })}

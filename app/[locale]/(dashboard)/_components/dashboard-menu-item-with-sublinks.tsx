@@ -51,7 +51,9 @@ export default function DashboardMenuItemWithSubLinks(props: MenuProps &
                   <DashboardMenuItemLink key={`sub-menu-items-${subMenu.text}`}
                     segment={props.segment}
                     onActiveMenu={(alt: string, segment: string) => {
-                      return segment === alt ? 'text-primary border-l-2 border-l-primary bg-tertiary-light' : ''
+                      return segment === alt
+                        ? "text-[#32BCE6] border-l-2 border-l-primary bg-tertiary-light"
+                        : "";
                     }}
                     {...subMenu} >
                     {subMenu.totalBadgeContainer && subMenu.totalBadgeContainer}
