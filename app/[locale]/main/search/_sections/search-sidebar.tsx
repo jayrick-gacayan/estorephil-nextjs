@@ -3,6 +3,7 @@
 import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next-intl/client';
+import CustomInput from '@/app/[locale]/_components/custom-input';
 
 export function SearchSidebar() {
   const searchParams = useSearchParams();
@@ -13,7 +14,7 @@ export function SearchSidebar() {
   }
 
   function checkBoxClassName(value: string, current: string) {
-    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary'} rounded w-6 h-6`;
+    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
   }
 
   function checkClassName(value: string, current: string) {
@@ -21,7 +22,7 @@ export function SearchSidebar() {
   }
 
   return (
-    <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[320px] border-r-2 border-r-secondary-light'>
+    <div className='sticky top-[200px] left-0 z-10 py-2 flex-none bg-white w-[320px] border-r border-r-tertiary-dark'>
 
       <div className='space-y-3 w-3/4 m-auto'>
         <div className='space-y-3'>
@@ -61,11 +62,11 @@ export function SearchSidebar() {
         <div className='w-full'>
           <div className='flex gap-1 items-center justify-between w-full'>
             <div className='flex-1'>
-              <input type='number' className='w-full rounded p-1 border border-tertiary' placeholder={`\u20B1 MIN`} />
+              <CustomInput leftSideContent={<div>&#8369;</div>} />
             </div>
             <span className='w-12 flex-none text-center'>&#8212;</span>
             <div className='flex-1'>
-              <input type='number' className='w-full rounded p-1 border border-tertiary' placeholder={`\u20B1 MAX`} />
+              <CustomInput leftSideContent={<div>&#8369;</div>} />
             </div>
           </div>
         </div>

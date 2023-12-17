@@ -5,9 +5,9 @@ import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
 import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
-import { MainState } from '../../../_redux/main_state';
 import CartItemsContainer from './cart-items-container';
 import Image from 'next/image';
+import { MainState } from '../../../_redux/main-state';
 
 export default function PageContainer({
   checkoutSlug
@@ -20,20 +20,24 @@ export default function PageContainer({
     return state.purchaseMethod;
   });
 
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod]);
+  const cartType = useMemo(() => {
+    const cartType = mainState.cartType;
+    return cartType === 'shopping_cart' ? 'Shopping Cart' :
+      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+  }, [mainState.cartType]);
 
   useEffect(() => {
-    if (purchaseMethod === '') {
+    if (cartType === '') {
       router.push('/')
     }
-  }, [purchaseMethod, router]);
+  }, [cartType, router]);
 
   const purchaseMethodItems = useMemo(() => {
     return purchaseMethodState.purchaseMethodItems;
   }, [purchaseMethodState.purchaseMethodItems]);
 
 
-  return purchaseMethod === '' ? null :
+  return cartType === '' ? null :
     purchaseMethodItems.length === 0 ?
       (
         <div className='max-w-screen-2xl m-auto p-8'>
@@ -43,8 +47,8 @@ export default function PageContainer({
                 <Image alt='empty-shop-method-alt'
                   src='/others/shop_method_empty.svg'
                   fill />
-                <Image alt={`empty-method-${purchaseMethod}`}
-                  src={`/others/${purchaseMethod === 'Shopping Cart' ? `custom_cart` : `balik_box`}_icon.svg`}
+                <Image alt={`empty-method-${cartType}`}
+                  src={`/others/${cartType === 'Shopping Cart' ? `custom_cart` : `balik_box`}_icon.svg`}
                   fill
                   className='z-10' />
               </div>

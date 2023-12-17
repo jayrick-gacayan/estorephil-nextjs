@@ -1,7 +1,7 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions, JWT } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const authOptions: NextAuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -11,20 +11,15 @@ const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
-        const formData = new FormData();
-        formData.append('user[email]', email)
-        formData.append('user[password]', password)
-        console.log('auth options called')
+        console.log('auth options called', { email, password })
         const data = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
-          body: formData,
+          body: JSON.stringify({ email, password }),
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
           },
         });
-
-
-        console.log('login route -----', data.json())
+        // console.log('login route -----', data.json())
         const res = await data.json();
         if (res?.status !== 200) {
           throw new Error(res?.status);
@@ -40,21 +35,17 @@ const authOptions: NextAuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);
       if (trigger === "update") {
+        console.log('route token', token, session)
         return session
       }
       return token;
     },
     session: async ({ session, token, trigger, newSession }) => {
-      session.user = token as {
-        id: number,
-        email: string
-        first_name: string
-        last_name: string
-        phone_number?: string
-        address?: string
-        status?: string
-        accessToken?: string
-      }
+      session.user = (token.user as any).user as any
+      session.company = (token.user as any).company as any || null
+      session.store = (token.user as any).store as any || null
+      session.token = (token.user as any).token as any
+      session.cart = (token.user as any).cart as any
       return session;
     },
     signIn: async () => {

@@ -1,13 +1,28 @@
 'use client'
 import { useTranslations } from "next-intl"
 import Order from "../_components/order"
-import { RootState } from "@/redux/store"
+import { RootState, store } from "@/redux/store"
 import { useSelector } from "react-redux"
 import PaginationControl from "../_components/pagination-control"
+import { OrderRepository } from "@/repositories/order-repository"
+import { TYPES } from "@/inversify/types"
+import { useSession } from "next-auth/react"
+import { useEffect } from "react"
+import { orderContainer } from "@/inversify/inversify.config"
+import { getAgentOrders } from "../_redux/orders-thunk"
 
 export default function OrderTable() {
     const translate = useTranslations()
     const state = useSelector((state: RootState) => state.order)
+    const { data: sessionData } = useSession()
+    const onSession = !!sessionData
+    const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
+    useEffect(() => {
+        if (onSession) {
+            store.dispatch(getAgentOrders(orderRepository, sessionData?.token || ``, state.pagination.currentPage, 10))
+            console.log('state', state)
+        }
+    }, [sessionData])
     return (
         <>
             <div className="w-full pb-4 pt-8">
@@ -29,22 +44,19 @@ export default function OrderTable() {
                         {state.orders.map((order, index) =>
                             <>
                                 <Order
-                                    agent={order.agent}
-                                    dateDelivered={order.dateDelivered}
-                                    dateOrdered={order.dateOrderd}
-                                    numberOfItems={order.numberOfItems}
-                                    orderNumber={order.orderNumber}
-                                    referralFee={order.referralFee}
-                                    status={order.status}
-                                    totalPaid={order.totalPaid}
                                     key={index}
+                                    order={order}
                                 />
                             </>)}
                     </tbody>
                 </table>
-                <div className="w-full flex items-center justify-center">
-                    <PaginationControl page={state.pagination.currentPage} />
-                </div>
+                {
+                    state.pagination.totalPages > 1 &&
+                    <div className="w-full flex items-center justify-center">
+                        <PaginationControl page={state.pagination.currentPage} />
+                    </div>
+                }
+
             </div>
         </>
     )

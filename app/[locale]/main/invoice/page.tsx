@@ -165,7 +165,7 @@ export default async function Page() {
                     <div className='flex'>
                       <div className='flex-1'>Total Shipping Cost</div>
                       <div className='flex-none w-auto'>
-                        C&#36; <span className='text-secondary'>{(25).toFixed(2)}</span>
+                        C&#36; <span>{(25).toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -182,7 +182,7 @@ export default async function Page() {
                   <div className='flex items-center'>
                     <div className='flex-1'>TOTAL</div>
                     <div className='flex-none w-auto text-[20px]'>
-                      C&#36; <span className='text-secondary'>{(1025).toFixed(2)}</span>
+                      C&#36; <span>{(1025).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>

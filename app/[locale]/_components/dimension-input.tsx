@@ -8,9 +8,9 @@ export default function DimensionInput({
   return (
     <div className="block space-y-1" tabIndex={-1}>
       {labelText && labelText}
-      <div className="rounded divide-x divide-[#707070] gap-2 border-[.5px] border-[#707070] overflow-hidden flex items-center focus-within:border-primary">
+      <div className="rounded divide-x divide-secondary gap-2 border-[.5px] border-secondary overflow-hidden flex items-center focus-within:border-primary">
         <div className="flex-1">
-          <div className="flex items-center divide-x divide-[#707070]">
+          <div className="flex items-center divide-x divide-secondary">
             <div className="p-2">
               <input type="text"
                 className="w-full outline-0" />

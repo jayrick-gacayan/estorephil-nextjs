@@ -16,7 +16,7 @@ export function BreadcrumbItem({
     (
       <Link href={link} className='text-primary space-x-0.5'>
         <span className='align-middle'>{text}</span>
-        {withRightArrowChevron && <>{<FaChevronRight className='inline-block h-3 w-3 text-secondary' />}</>}
+        {withRightArrowChevron && <>{<FaChevronRight className='inline-block h-3 w-3' />}</>}
       </Link>
     ) :
     (

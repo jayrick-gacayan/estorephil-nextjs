@@ -1,18 +1,25 @@
 'use client';
 
 import { useAppDispatch } from '@/app/_hooks/redux_hooks';
-import { CustomSelect } from '../../_components/custom-select';
 import Image from 'next/image';
-import { AppDispatch } from '@/redux/store';
-import { modalProductDeliveryAddressOpened } from '../_redux/main-slice';
-import { useRef, useState } from 'react';
+import { AppDispatch, RootState } from '@/redux/store';
+import { deliveryAddressCityChanged, deliveryAddressCountryChanged, isToChangeSet, mainModalOpened } from '../_redux/main-slice';
+import { avaiableCountries } from '@/types/props/countries';
+import CountrySelect from '../_components/country-select';
+import CitySelect from '../_components/city-select';
+import { useSelector } from 'react-redux';
 
-export default function EnterDeliveryAddress({ onClose }: { onClose: () => void; }): JSX.Element {
-  const countrySelectRef = useRef<HTMLDivElement>(null);
-  const citySelectRef = useRef<HTMLDivElement>(null);
-  const [countrySelectVisible, setCountrySelectVisible] = useState<boolean>(false);
-  const [citySelectVisible, setCitySelectVisible] = useState<boolean>(false);
+export default function DeliveryAddressForm({
+  isToChange,
+  onClose
+}: {
+  isToChange: boolean;
+  onClose: () => void;
+}): JSX.Element {
   const dispatch: AppDispatch = useAppDispatch();
+  const countrySelected = useSelector((state: RootState) => state.main).deliveryAddressCountry
+  const citySelected = useSelector((state: RootState) => state.main).deliveryAddressCity
+  const availableCountries = avaiableCountries;
 
   return (
     <div className="py-8 space-y-3 w-[512px] m-auto">
@@ -29,36 +36,42 @@ export default function EnterDeliveryAddress({ onClose }: { onClose: () => void;
       <p className='leading-0 text-sm italic'>You can skip this to view all of our products in store.</p>
       <div className='flex gap-4 text-left'>
         <div className='w-full'>
-          <CustomSelect ref={countrySelectRef}
-            items={['Philippines', 'Canada', 'United States of America']}
-            value={undefined}
-            placeholder='Country:'
-            labelText=''
-            visible={countrySelectVisible}
-            setVisible={setCountrySelectVisible} />
+          <CountrySelect
+            countries={availableCountries}
+            className='block space-y-1'
+            placeholder={"Select Country:"}
+            onChange={(e) => dispatch(deliveryAddressCountryChanged(e.target.value))}
+          />
         </div>
         <div className='w-full'>
-          <CustomSelect ref={citySelectRef}
-            items={['Quezon City', 'Cebu City', 'Manila', 'Davao City']}
-            value={undefined}
-            placeholder='City:'
-            labelText=''
-            visible={citySelectVisible}
-            setVisible={setCitySelectVisible} />
+          <CitySelect
+            country={countrySelected}
+            value={citySelected}
+            required={false}
+            onChange={(e) => dispatch(deliveryAddressCityChanged(e.target.value))}
+            className='block space-y-1'
+            placeholder={'Select City:'}
+          />
         </div>
       </div>
       <button className='w-full p-3 rounded bg-warning hover:bg-warning-light text-white'
         onClick={() => {
           onClose();
-
           setTimeout(() => {
-            dispatch(modalProductDeliveryAddressOpened({ open: true, type: 'changeAddress' }));
+            dispatch(mainModalOpened({ open: true, type: isToChange ? 'changeAddress' : 'cartType' }));
           }, 1000)
         }}>
         Next
       </button>
       <button className='w-full p-3 rounded bg-transparent underline font-[500] hover:no-underline'
-        onClick={onClose}>
+        onClick={() => {
+          onClose();
+          if (isToChange) {
+            setTimeout(() => {
+              dispatch(mainModalOpened({ open: true, type: 'cartType' }));
+            }, 1000)
+          }
+        }}>
         Skip
       </button>
     </div>

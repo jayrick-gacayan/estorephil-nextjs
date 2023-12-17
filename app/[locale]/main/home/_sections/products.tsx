@@ -8,6 +8,8 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { getMainProducts, getMainStores } from "../_redux/home-thunk"
 import Product from "../_components/product"
+import Loading from "../../_components/loading"
+import { RequestStatus } from "@/models/result"
 
 
 export default function Products() {
@@ -21,13 +23,15 @@ export default function Products() {
         console.log('state stores', products)
     }, [])
     return (
-        <div className='max-w-screen-2xl m-auto py-4 text-secondary'>
+        <div className='max-w-screen-2xl m-auto py-4'>
             <h1 className="font-[500] text-2xl">Our Products</h1>
             <div className="flex mb-2 gap-4">
-                {
-                    products.map((product, index) =>
+                {state.getMainStoresStatus === RequestStatus.SUCCESS
+                    ? (products.map((product, index) =>
                         <Product key={`products-${product.id}-${index}`} product={product} />
-                    )
+                    ))
+                    : <Loading />
+
                 }
             </div>
 

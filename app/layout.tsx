@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode; }) {
   return (
     <Providers>
       <html>
-        <body className={montserrat.className}>
+        <body className={`${montserrat.className} text-default-dark`} >
           {children}
         </body>
       </html>

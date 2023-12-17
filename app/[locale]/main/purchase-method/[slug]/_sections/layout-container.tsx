@@ -4,12 +4,13 @@ import { ReactNode, useMemo } from 'react';
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { PurchaseMethodState } from '../_redux/purchase-method-state';
-import { MainState } from '../../../_redux/main_state';
+
 import ShopMethodHeader from './purchase-method-header';
 import SummaryCheckout from './summary-checkout';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { useRouter } from 'next-intl/client';
+import { MainState } from '../../../_redux/main-state';
 
 export default function LayoutContainer({
   checkoutSlug,
@@ -22,13 +23,17 @@ export default function LayoutContainer({
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
 
-  const purchaseMethod = useMemo(() => { return mainState.purchaseMethod; }, [mainState.purchaseMethod])
+  const cartType = useMemo(() => {
+    const cartType = mainState.cartType;
+    return cartType === 'shopping_cart' ? 'Shopping Cart' :
+      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+  }, [mainState.cartType]);
+
   const purchaseMethodItems = useMemo(() => {
     return purchaseMethodState.purchaseMethodItems;
   }, [purchaseMethodState.purchaseMethodItems]);
 
-  console.log('sdjfklsdjf', checkoutSlug)
-  return purchaseMethod === '' ? null :
+  return cartType === '' ? null :
     purchaseMethodItems.length === 0 ? (<>{children}</>) :
       (
         <div className='flex'>

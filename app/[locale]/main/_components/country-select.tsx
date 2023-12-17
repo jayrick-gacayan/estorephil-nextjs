@@ -11,19 +11,25 @@ export default function CountrySelect(
         placeholder,
         errorText = '',
         className = ``,
+        countries,
+        paddingHeight,
+        paddingWidth
     }: {
         onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
         required?: boolean,
-        label: string,
-        type: 'number' | 'text',
+        label?: string,
+        type?: 'number' | 'text',
         show?: boolean,
         value?: any,
         placeholder?: any,
         errorText?: string,
         className?: string
+        countries?: any[]
+        paddingHeight?: string | number
+        paddingWidth?: string | number
     }
 ) {
-    const countries = Countries
+    const selectCountries = !!countries ? countries : Countries
     return (
         <>
             <div className={`block ${className != `` ? `${className}` : `w-[570px]`}`}>
@@ -33,10 +39,18 @@ export default function CountrySelect(
                         <p className={`text-red-500 ${errorText == '' ? `hidden` : ``}`} >{errorText}</p>
                     </div>
                     <div className="py-2">
-                        <select required={required} placeholder={placeholder} value={value} className={`py-[4px] px-[2px] border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `} onChange={onChange}>
-                            <option disabled selected={value == ''} className="text-gray-400" value=""> {placeholder} </option>
+                        <select
+                            required={required}
+                            placeholder={placeholder}
+                            defaultValue={placeholder}
+                            value={value}
+                            className={`${!!paddingHeight ? `py-[${paddingHeight}px]` : `py-[10px]`} ${!!paddingWidth ? `py-[${paddingWidth}px]` : `px-[2px]`} border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `}
+                            onChange={onChange}
+                        >
+                            <option hidden selected={!!value} className="text-gray-400" value=""> {placeholder} </option>
+                            <option disabled selected={!!value} className="text-gray-400" value=""> {placeholder} </option>
                             {
-                                countries.map((country, index) =>
+                                selectCountries.map((country, index) =>
                                     <option key={index} selected={value == country.name} value={country.name}>{country.name}</option>
                                 )
                             }

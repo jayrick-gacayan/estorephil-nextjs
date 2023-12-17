@@ -21,7 +21,6 @@ export const homeSlice = createSlice({
             }
         },
         getMainCategoriesSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
             return {
                 ...state,
                 categories: action.payload,
@@ -35,7 +34,6 @@ export const homeSlice = createSlice({
             }
         },
         getMainStoresSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
             return {
                 ...state,
                 stores: action.payload,
@@ -49,7 +47,6 @@ export const homeSlice = createSlice({
             }
         },
         getMainProductsSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
             return {
                 ...state,
                 products: action.payload,

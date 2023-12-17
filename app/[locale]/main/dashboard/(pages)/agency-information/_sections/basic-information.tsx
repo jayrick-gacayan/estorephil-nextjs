@@ -1,24 +1,41 @@
 'use client'
-import { useTranslations } from "next-intl"
-import Label from "../_components/label"
+
+import { useTranslations } from 'next-intl'
+import Label from '../_components/label'
+import { useAppDispatch } from '@/app/_hooks/redux_hooks';
+import { modalUpdateFormOpened } from '../_redux/agent-agency-information-slice';
+import { useSession } from 'next-auth/react';
 
 export default function BasicInformation() {
-    const translate = useTranslations()
+    const dispatch = useAppDispatch();
+    const translate = useTranslations();
+    const { data: sessionData } = useSession();
+
     return (
-        <>
-            <div className=" border-b-[2px] border-gray-400">
-                <div className="flex items-center justify-between w-full">
-                    <h1 className="text-[20px] font-bold">{translate("basicInformation")}</h1>
-                    <button className="underline text-[#1186FF]">{translate("update")}</button>
+        <div className='space-y-4'>
+            <div className='flex items-center justify-between w-full'>
+                <h3 className="font-semibold text-[24px]">{translate('basicInformation')}</h3>
+                <button className='underline hover:no-underline text-primary'
+                    onClick={() => {
+                        dispatch(modalUpdateFormOpened('basicInfo'));
+                    }}>{translate('update')}
+                </button>
+            </div>
+
+            <div className='space-y-1'>
+                <Label label="Last Name" value={sessionData?.user.last_name ?? ''} />
+                <Label label="Address" value={sessionData?.user.address ?? 'NA'} />
+                <Label label="Email Address" value={sessionData?.user.email ?? 'NA'} />
+                <Label label="Contact" value={sessionData?.user.phone_number ?? ``} />
+            </div>
+            <div className="flex items-center w-full gap-8">
+                <div className="text-right basis-[18%]">
+                    &nbsp;
                 </div>
-                <div className="px-[102px] py-[56px]">
-                    <div><Label label="First Name" value="Kelly" /> </div>
-                    <div><Label label="Last Name" value="Schenider" /></div>
-                    <div><Label label="Address" value="3482 Port Washington Road Arrowwood Alberta T0L 0B0" /></div>
-                    <div><Label label="Email Address" value="kelly.schneider@gmail.com" /></div>
-                    <div><Label label="Contact" value="403-534-2342" /></div>
+                <div className='block'>
+                    <button className='transition-all delay-100 bg-success-dark p-2 w-auto text-white rounded hover:bg-success'>Reset Password</button>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
