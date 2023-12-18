@@ -1,17 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatus } from "@/models/result";
 import { MainState } from "./main-state";
+import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
 
 const initialState: MainState = {
   isToChange: false,
+
   mainModalInfo: {
     open: false,
     type: ''
   },
-  countryPicker: {
-    value: 'ph',
-    show: false
-  },
+
+  countryPicker: textInputFieldValue('ph', false),
+
   cart: undefined,
   cartType: '',
   deliveryType: '',
@@ -95,6 +96,16 @@ export const mainSlice = createSlice({
         mainModalInfo: { open, type }
       }
     },
+
+    countryPickerToggled: (state: MainState) => {
+      return {
+        ...state,
+        countryPicker: {
+          ...state.countryPicker,
+          show: !state.countryPicker.show
+        }
+      }
+    },
     openCountryPicker: (state: MainState) => {
       return {
         ...state,
@@ -147,9 +158,12 @@ export const mainSlice = createSlice({
 
 export const {
   mainModalOpened,
-  isToChangeSet, addToCartLoaded,
+  isToChangeSet,
+  countryPickerToggled,
+  countryPickerValueChanged,
+  removeFromCartLoaded,
+  addToCartLoaded,
   closeCountryPicker, addToCartSuccess,
-  countryPickerValueChanged, removeFromCartLoaded,
   openCountryPicker, removeFromCartSuccess, addToCartQuantityChanged,
   deliveryAddressCityChanged, cartChanged,
   deliveryAddressCountryChanged,

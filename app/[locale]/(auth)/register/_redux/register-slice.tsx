@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { RegisterState } from "./register-state"
 import Validations from "@/types/validations"
-import { ValidationStatus } from "@/models/validation-response"
+import { ValidationType } from "@/models/validation-response"
 import { error } from "console"
 
 
@@ -44,7 +44,7 @@ export const registerSlice = createSlice({
                 ...state,
                 businessName: {
                     value: action.payload,
-                    valid: validateBusinessName.status == ValidationStatus.VALID,
+                    valid: validateBusinessName.status == ValidationType.VALID,
                     error: validateBusinessName.errorText,
                 }
             }
@@ -57,7 +57,7 @@ export const registerSlice = createSlice({
                 ...state,
                 businessNature: {
                     value: action.payload,
-                    valid: validateBusinessNature.status == ValidationStatus.VALID,
+                    valid: validateBusinessNature.status == ValidationType.VALID,
                     error: validateBusinessNature.errorText,
                 }
             }
@@ -69,7 +69,7 @@ export const registerSlice = createSlice({
                 ...state,
                 fullName: {
                     value: action.payload,
-                    valid: validateFullName.status == ValidationStatus.VALID,
+                    valid: validateFullName.status == ValidationType.VALID,
                     error: validateFullName.errorText
                 }
             }
@@ -81,7 +81,7 @@ export const registerSlice = createSlice({
                 ...state,
                 email: {
                     value: action.payload,
-                    valid: validateEmail.status == ValidationStatus.VALID,
+                    valid: validateEmail.status == ValidationType.VALID,
                     error: validateEmail.errorText
                 }
             }
@@ -93,7 +93,7 @@ export const registerSlice = createSlice({
                 ...state,
                 phoneNumber: {
                     value: action.payload,
-                    valid: validatePhoneNumber.status == ValidationStatus.VALID,
+                    valid: validatePhoneNumber.status == ValidationType.VALID,
                     error: validatePhoneNumber.errorText
                 }
             }
@@ -105,7 +105,7 @@ export const registerSlice = createSlice({
                 ...state,
                 password: {
                     value: action.payload,
-                    valid: validatePassword.status == ValidationStatus.VALID,
+                    valid: validatePassword.status == ValidationType.VALID,
                     error: validatePassword.errorText
                 }
             }
@@ -120,7 +120,7 @@ export const registerSlice = createSlice({
                 ...state,
                 confirmPassword: {
                     value: action.payload.confirmPassword,
-                    valid: validateConfirmPassword.status == ValidationStatus.VALID,
+                    valid: validateConfirmPassword.status == ValidationType.VALID,
                     error: validateConfirmPassword.errorText
                 }
             }

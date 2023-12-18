@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { PaymentMethodState } from "./payment-method-state"
 import Validations from "@/types/validations"
-import { ValidationStatus } from "@/models/validation-response"
+import { ValidationType } from "@/models/validation-response"
 import { SenderState } from "../../sender/_redux/sender-state"
 import { RequestStatus } from "@/types/enums/request-status"
 
@@ -80,7 +80,7 @@ export const paymentMethodSlice = createSlice({
                     ...state.card,
                     name: {
                         value: action.payload,
-                        valid: validateName.status == ValidationStatus.VALID,
+                        valid: validateName.status == ValidationType.VALID,
                         error: validateName.errorText
                     }
                 }
@@ -95,7 +95,7 @@ export const paymentMethodSlice = createSlice({
                     ...state.card,
                     number: {
                         value: action.payload,
-                        valid: validateCardNumber.status == ValidationStatus.VALID,
+                        valid: validateCardNumber.status == ValidationType.VALID,
                         error: validateCardNumber.errorText
                     }
                 }
@@ -111,7 +111,7 @@ export const paymentMethodSlice = createSlice({
                     ccv: {
                         value: action.payload,
                         error: validateCCV.errorText,
-                        valid: validateCCV.status == ValidationStatus.VALID
+                        valid: validateCCV.status == ValidationType.VALID
                     }
                 }
             }
@@ -127,7 +127,7 @@ export const paymentMethodSlice = createSlice({
                     expiryDate: {
                         ...state.card.expiryDate,
                         value: action.payload,
-                        valid: validateExpiry.status == ValidationStatus.VALID,
+                        valid: validateExpiry.status == ValidationType.VALID,
                         error: validateExpiry.errorText
                     }
                 }
@@ -140,7 +140,7 @@ export const paymentMethodSlice = createSlice({
                 ...state,
                 firstName: {
                     value: action.payload,
-                    valid: validateName.status == ValidationStatus.VALID,
+                    valid: validateName.status == ValidationType.VALID,
                     error: validateName.errorText
                 }
             }
@@ -152,7 +152,7 @@ export const paymentMethodSlice = createSlice({
                 ...state,
                 lastName: {
                     value: action.payload,
-                    valid: validateName.status == ValidationStatus.VALID,
+                    valid: validateName.status == ValidationType.VALID,
                     error: validateName.errorText
                 }
             }
@@ -164,7 +164,7 @@ export const paymentMethodSlice = createSlice({
                 ...state,
                 billingAddress: {
                     value: action.payload,
-                    valid: validateBillingAddress.status == ValidationStatus.VALID,
+                    valid: validateBillingAddress.status == ValidationType.VALID,
                     error: validateBillingAddress.errorText
                 }
             }
@@ -176,7 +176,7 @@ export const paymentMethodSlice = createSlice({
                 ...state,
                 contactNumber: {
                     value: action.payload,
-                    valid: validatePhoneNumber.status == ValidationStatus.VALID
+                    valid: validatePhoneNumber.status == ValidationType.VALID
                 }
             }
         },
@@ -187,7 +187,7 @@ export const paymentMethodSlice = createSlice({
                 ...state,
                 emailAddress: {
                     value: action.payload,
-                    valid: validateEmail.status == ValidationStatus.VALID,
+                    valid: validateEmail.status == ValidationType.VALID,
                     error: validateEmail.errorText
                 }
             }

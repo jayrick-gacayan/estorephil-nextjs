@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentProps } from "react";
+import { ComponentProps } from "react";
 
 export default function GoogleLikeInputField({
   labelText,

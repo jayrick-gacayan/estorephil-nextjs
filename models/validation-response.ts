@@ -1,4 +1,4 @@
-export enum ValidationStatus {
+export enum ValidationType {
     VALID,
     EMPTY,
     INVALID_INPUT,
@@ -6,6 +6,6 @@ export enum ValidationStatus {
     NONE,
 }
 export type ValidationResponse = {
-    status: ValidationStatus,
+    status: ValidationType,
     errorText: string,
 }

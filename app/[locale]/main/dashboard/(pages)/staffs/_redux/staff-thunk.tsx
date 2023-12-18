@@ -1,7 +1,6 @@
 import { StaffRepository } from "@/repositories/staff-repository"
 import { StaffState } from "./staff-state"
 import { ApiResponse, ResultStatus, getResultStatus } from "@/models/result"
-import { getMainCategoriesLoaded, getMainCategoriesSuccess } from "@/app/[locale]/main/home/_redux/home-slice"
 import { AppDispatch, store } from "@/redux/store"
 import { getStaffLoaded, getStaffSuccess } from "./staff-slice"
 

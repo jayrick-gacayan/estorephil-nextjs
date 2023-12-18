@@ -1,4 +1,4 @@
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import Image from 'next/image';
 import { FaRegTrashCan } from 'react-icons/fa6';
 

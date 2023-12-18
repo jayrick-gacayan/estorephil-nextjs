@@ -1,4 +1,4 @@
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import CategoryProducts from './_sections/category-products';
 
 export default async function AllCategories() {

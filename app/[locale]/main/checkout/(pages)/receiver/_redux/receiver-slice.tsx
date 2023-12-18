@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import Validations from "@/types/validations";
-import { ValidationStatus } from "@/models/validation-response";
+import { ValidationType } from "@/models/validation-response";
 import { ReceiverState } from "./receiver-state";
 import { SenderState } from "../../sender/_redux/sender-state";
 import { RootState, store } from "@/redux/store";
@@ -79,50 +79,50 @@ export const receiverSlice = createSlice({
             const validateCity = validation.isEmpty(state.city.value, 'city')
             const validateZipCode = validation.isEmpty(state.zipCode.value, 'zip code')
             const validateCountry = validation.isEmpty(state.country.value, 'country')
-            const isValid = validateFirstName.status == ValidationStatus.VALID
-                && validateLastName.status == ValidationStatus.VALID
-                && validateEmail.status == ValidationStatus.VALID
-                && validateAddress1.status == ValidationStatus.VALID
-                && validateCity.status == ValidationStatus.VALID
-                && validateZipCode.status == ValidationStatus.VALID
-                && validateCountry.status == ValidationStatus.VALID
+            const isValid = validateFirstName.status == ValidationType.VALID
+                && validateLastName.status == ValidationType.VALID
+                && validateEmail.status == ValidationType.VALID
+                && validateAddress1.status == ValidationType.VALID
+                && validateCity.status == ValidationType.VALID
+                && validateZipCode.status == ValidationType.VALID
+                && validateCountry.status == ValidationType.VALID
             console.log('is valid: ', isValid)
             return {
                 ...state,
                 valid: isValid,
                 firstName: {
                     ...state.firstName,
-                    valid: validateFirstName.status === ValidationStatus.VALID,
+                    valid: validateFirstName.status === ValidationType.VALID,
                     error: validateFirstName.errorText,
                 },
                 lastName: {
                     ...state.lastName,
-                    valid: validateLastName.status === ValidationStatus.VALID,
+                    valid: validateLastName.status === ValidationType.VALID,
                     error: validateLastName.errorText,
                 },
                 emailAddress: {
                     ...state.emailAddress,
-                    valid: validateEmail.status === ValidationStatus.VALID,
+                    valid: validateEmail.status === ValidationType.VALID,
                     error: validateEmail.errorText,
                 },
                 address1: {
                     ...state.address1,
-                    valid: validateAddress1.status === ValidationStatus.VALID,
+                    valid: validateAddress1.status === ValidationType.VALID,
                     error: validateAddress1.errorText,
                 },
                 city: {
                     ...state.city,
-                    valid: validateCity.status === ValidationStatus.VALID,
+                    valid: validateCity.status === ValidationType.VALID,
                     error: validateCity.errorText,
                 },
                 zipCode: {
                     ...state.zipCode,
-                    valid: validateZipCode.status === ValidationStatus.VALID,
+                    valid: validateZipCode.status === ValidationType.VALID,
                     error: validateZipCode.errorText,
                 },
                 country: {
                     ...state.country,
-                    valid: validateCountry.status === ValidationStatus.VALID,
+                    valid: validateCountry.status === ValidationType.VALID,
                     error: validateCountry.errorText,
                 },
             }
@@ -134,7 +134,7 @@ export const receiverSlice = createSlice({
                 ...state,
                 firstName: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }
@@ -146,7 +146,7 @@ export const receiverSlice = createSlice({
                 ...state,
                 lastName: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }
@@ -158,7 +158,7 @@ export const receiverSlice = createSlice({
                 ...state,
                 emailAddress: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }

@@ -34,4 +34,12 @@ export class ProductService {
         var result = await response.json()
         return result;
     }
+
+    async getMainProducts(locale: string) {
+        return await fetch(`${process.env.API_URL}/main-products/${locale}`);
+    }
+
+    async productsSearch(locale: string, queryString: string) {
+        return await fetch(`${process.env.API_URL}/${locale}/products${queryString}`)
+    }
 }

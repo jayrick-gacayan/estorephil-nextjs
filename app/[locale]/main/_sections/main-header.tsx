@@ -7,19 +7,46 @@ import { FaEnvelope, FaPhoneFlip, FaTruck, FaRegHeart, FaUser } from 'react-icon
 import { TextWithIcon } from '../_components/text-with-icon';
 import { NavbarSearch } from '../_components/navbar-search';
 import CartTypeNavbar from './cart-type-navbar';
-import CountryPicker from '../_components/country-picker';
-import { RootState } from '@/redux/store';
-import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
 import Dropdown from '../../_components/dropdown';
-import { useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next-intl/client';
+import CustomCountryPicker from '../_components/custom-country-picker';
+import { MainState } from '../_redux/main-state';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { CountryProps } from '@/types/props/country-props';
+import { TextInputField } from '@/types/props/text-input-field';
+import { countryPickerToggled, countryPickerValueChanged } from '../_redux/main-slice';
+
+export const countries: CountryProps[] = [
+  {
+    code: "us",
+    code3: "USA",
+    name: "United States of America",
+    number: 840,
+  },
+  {
+    code: "ca",
+    code3: "CAN",
+    name: "Canada",
+    number: 124,
+  },
+  {
+    code: "ph",
+    code3: "PHL",
+    name: "Philippines",
+    number: 608,
+  },
+];
 
 export default function MainHeader() {
-  const dropdownProfileImageRef = useRef<HTMLDivElement>(null);
-  const state = useSelector((state: RootState) => state.main)
-  const { push } = useRouter()
+  const dropdownProfileImageRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
+  const { push } = useRouter();
+  const dispatch: AppDispatch = useAppDispatch();
+
   const closeDropdown = useCallback(() => {
     if (dropdownProfileImageRef.current) {
       let querySelector = dropdownProfileImageRef.current.querySelector('#dropdown-profile-image');
@@ -28,14 +55,22 @@ export default function MainHeader() {
       }
     }
   }, []);
+
+  let countryPicker: TextInputField<string> = useMemo(() => {
+    return mainState.countryPicker;
+  }, [mainState.countryPicker])
+
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
   const onSession = !!sessionData
   const removeSession = async () => {
     await signOut({ callbackUrl: `/login` })
   }
+
   useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
+
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
+
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
@@ -107,31 +142,35 @@ export default function MainHeader() {
               <Link href="/dashboard/agency-information" className='inline-block'>
                 <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
               </Link>
-              <div className='inline-block'>
-                <CountryPicker
-                  value={state.countryPicker.value}
-                  show={state.countryPicker.show}
-                  icon={
-                    state.countryPicker.value == 'ca' ? <Image
-                      src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ca.svg"
-                      height={25}
-                      width={25}
-                      alt=''
-                    /> :
-                      state.countryPicker.value == 'ph' ? <Image
-                        src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/ph.svg"
-                        height={25}
-                        width={25}
-                        alt=''
-                      />
-                        : <Image
-                          src="https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/us.svg"
-                          height={25}
-                          width={25}
-                          alt=''
-                        />
-                  }
-                />
+              <div className='inline-block align-middle w-[100px] px-2'>
+                <CustomCountryPicker value={countries.find((value: CountryProps) => {
+                  return value.code === countryPicker.value;
+                }) ?? countries[2]}
+                  labelText={(value: CountryProps) => {
+                    return (
+                      <div className="flex items-center gap-4 text-white px-2">
+                        <div className='block'>
+                          <Image alt='selected-country-picker-alt'
+                            src={`/flags/${countryPicker.value}_flag.svg`}
+                            height={24}
+                            width={24} />
+                        </div>
+                        <div className='block'>
+                          {countryPicker.value?.toUpperCase()}
+                        </div>
+                      </div>
+                    );
+                  }}
+                  items={countries}
+                  onToggle={() => {
+                    dispatch(countryPickerToggled());
+                  }}
+                  onSelect={(value: CountryProps) => {
+                    let { code } = value;
+                    dispatch(countryPickerValueChanged(code));
+
+                  }}
+                  show={countryPicker.show ?? false} />
               </div>
             </div>
           </div>

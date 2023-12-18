@@ -1,12 +1,12 @@
-import { ValidationResponse, ValidationStatus } from '@/models/validation-response';
+import { ValidationResponse, ValidationType } from '@/models/validation-response';
 
 export default class CustomValidation {
   private errorText: string;
-  private validationStatus: ValidationStatus;
+  private validationStatus: ValidationType;
 
   constructor() {
     this.errorText = '';
-    this.validationStatus = ValidationStatus.NONE
+    this.validationStatus = ValidationType.NONE
   }
 
   setErrorText(field: string,
@@ -16,10 +16,10 @@ export default class CustomValidation {
       max?: number;
     }) {
     switch (this.validationStatus) {
-      case ValidationStatus.EMPTY:
+      case ValidationType.EMPTY:
         this.errorText = `${field} is required`;
         break;
-      case ValidationStatus.INVALID_FORMAT:
+      case ValidationType.INVALID_FORMAT:
         this.errorText = `${field} is in invalid format.`;
         break;
     }
@@ -28,7 +28,7 @@ export default class CustomValidation {
   setErrorType<T>(value: T, options?: string[]) {
     if (Array.isArray(value)) {
       if (value.length === 0) {
-        this.validationStatus = ValidationStatus.EMPTY;
+        this.validationStatus = ValidationType.EMPTY;
       }
     }
     else if (typeof value === 'string') {
@@ -38,7 +38,7 @@ export default class CustomValidation {
           switch (opt.toLowerCase()) {
             case opt.match(/required/)?.input:
               if (value.trim() === '') {
-                this.validationStatus = ValidationStatus.EMPTY;
+                this.validationStatus = ValidationType.EMPTY;
               }
               break;
             // case opt.match(/format/)?.input:
@@ -67,14 +67,14 @@ export default class CustomValidation {
             //   break;
           }
 
-          if (this.validationStatus !== ValidationStatus.NONE) {
+          if (this.validationStatus !== ValidationType.NONE) {
             break;
           }
         }
       }
     }
     else {
-      if (!value) { this.validationStatus = ValidationStatus.EMPTY; }
+      if (!value) { this.validationStatus = ValidationType.EMPTY; }
     }
   }
 

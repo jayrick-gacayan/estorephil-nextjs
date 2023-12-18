@@ -1,33 +1,56 @@
 'use client';
 
-import { Seller } from '@/models/seller';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useEffect, useRef, useState } from 'react';
-import { Store } from '../../_components/store';
-import Sellers from "@/app/_data/seller.json";
-import { useSelector } from 'react-redux';
-import { RootState, store } from '@/redux/store';
-import { homeContainer } from '@/inversify/inversify.config';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AppDispatch, RootState, store } from '@/redux/store';
+import { storeContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
-import { HomeRepository } from '@/repositories/home-repository';
-import { getMainCategories, getMainStores } from '../_redux/home-thunk';
-import { RequestStatus } from '@/models/result';
+import { getMainStores } from '../_redux/home-thunk';
 import Loading from '../../_components/loading';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { MainState } from '../../_redux/main-state';
+import { Store } from '@/models/store';
+import { TextInputField } from '@/types/props/text-input-field';
+import { HomeState } from '../_redux/home-state';
+import { storesRequestStatusSet } from '../_redux/home-slice';
+import { RequestStatus } from '@/types/enums/request-status';
+import { StoreItem } from '../../_components/store-item';
+import { StoreRepository } from '@/repositories/store-repository';
 
 export function OurSellers() {
   const [pressDirection, setPressDirection] = useState('');
   const sliderContainerRef = useRef<HTMLDivElement>(null);
   const innerSliderContainerRef = useRef<HTMLDivElement>(null);
+  const dispatch: AppDispatch = useAppDispatch();
   // const sellers: Seller[] = Sellers.sellers;
-  const state = useSelector((state: RootState) => state.home)
-  const stores = state.stores
-  const mainState = useSelector((state: RootState) => state.main)
-  const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
+  const homeState: HomeState = useAppSelector((state: RootState) => { return state.home; });
+
+  let stores: Store[] = useMemo(() => {
+    return homeState.stores;
+  }, [homeState.stores]);
+  let countryPicker: TextInputField<string> = useMemo(() => {
+    return mainState.countryPicker;
+  }, [mainState.countryPicker]);
+  let storesRequestStatus = useMemo(() => {
+    return homeState.getMainStoresStatus
+  }, [homeState.getMainStoresStatus]);
 
   useEffect(() => {
-    store.dispatch(getMainStores(homeRepository, mainState.countryPicker.value))
-    console.log('state stores', stores)
-  }, [])
+    switch (storesRequestStatus) {
+      case RequestStatus.NONE:
+        dispatch(storesRequestStatusSet(RequestStatus.WAITING));
+        break;
+      case RequestStatus.WAITING:
+        dispatch(storesRequestStatusSet(RequestStatus.IN_PROGRESS));
+        break;
+      case RequestStatus.IN_PROGRESS:
+        const storeRepository: StoreRepository = storeContainer.get<StoreRepository>(TYPES.StoreRepository);
+        dispatch(getMainStores(storeRepository, countryPicker.value))
+        break;
+    }
+  }, [storesRequestStatus, dispatch, countryPicker.value]);
+
   function moveSellersSlider(moveTo: number) {
     if (sliderContainerRef.current) {
       if (innerSliderContainerRef.current) {
@@ -81,7 +104,7 @@ export function OurSellers() {
   return (
     <div className='max-w-screen-2xl m-auto py-4 h-auto'>
       <div className="flex mb-2">
-        <div className="flex-1 font-[500] text-2xl">Our Sellers</div>
+        <div className="flex-1 font-[500] text-[28px] leading-0">Our Sellers</div>
         <div className='w-auto flex-none space-x-1 self-center'>
           <FaChevronLeft size={20} className='inline-block'
             onClick={() => { moveSellersSlider(-140) }}
@@ -93,11 +116,12 @@ export function OurSellers() {
 
       <div ref={sliderContainerRef} className='w-full overflow-hidden'>
         <div ref={innerSliderContainerRef} className="flex flex-nowrap gap-3 w-[150%]">
-          {state.getMainStoresStatus === RequestStatus.SUCCESS ? (
-            stores.map((store, index) => {
-              return (<Store key={`store-${store.id}`} store={store} />)
-            }))
-            : <Loading />
+          {
+            storesRequestStatus === RequestStatus.SUCCESS ?
+              stores.map((store: Store, index: number) => {
+                return <StoreItem store={store} key={`stores-main-${store.id}-${index}`} />
+              }) :
+              storesRequestStatus === RequestStatus.FAILURE ? (<div>NO STORES</div>) : (<Loading />)
           }
         </div>
       </div>

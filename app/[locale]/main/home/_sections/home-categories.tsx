@@ -1,30 +1,53 @@
 'use client';
 
-import { RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { useRouter } from 'next-intl/client';
 import Link from 'next-intl/link';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { getMainCategories } from '../_redux/home-thunk';
 import { TYPES } from '@/inversify/types';
-import { HomeRepository } from '@/repositories/home-repository';
-import { homeContainer } from '@/inversify/inversify.config';
-import { RequestStatus } from '@/models/result';
+import { categoryContainer } from '@/inversify/inversify.config';
 import Loading from '../../_components/loading';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { HomeState } from '../_redux/home-state';
+import { RequestStatus } from '@/types/enums/request-status';
+import { categoriesRequestStatusSet } from '../_redux/home-slice';
+import { Categories } from '@/models/category';
+import { HiOutlineExclamation } from 'react-icons/hi';
+import { MainState } from '../../_redux/main-state';
+import { TextInputField } from '@/types/props/text-input-field';
+import { CategoryRepository } from '@/repositories/category-repository';
 
 export function HomeCategories() {
   const router = useRouter();
-  const state = useAppSelector((state: RootState) => { return state.home; });
-  const mainState = useAppSelector((state: RootState) => { return state.main });
-  const dispatch = useAppDispatch();
+  const homeState: HomeState = useAppSelector((state: RootState) => { return state.home; });
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
+  const dispatch: AppDispatch = useAppDispatch();
+
+  let categoriesRequestStatus: RequestStatus = useMemo(() => {
+    return homeState.getMainCategoriesStatus
+  }, [homeState.getMainCategoriesStatus]);
+
+  let countryPicker: TextInputField<string> = useMemo(() => {
+    return mainState.countryPicker;
+  }, [mainState.countryPicker])
 
   useEffect(() => {
-    const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository);
+    switch (categoriesRequestStatus) {
+      case RequestStatus.NONE:
+        dispatch(categoriesRequestStatusSet(RequestStatus.WAITING));
+        break;
+      case RequestStatus.WAITING:
+        dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
+        break;
+      case RequestStatus.IN_PROGRESS:
+        const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
 
-    dispatch(getMainCategories(homeRepository, mainState.countryPicker.value))
-  }, []);
 
-  console.log('sdjfksdjfsdf', state.categories);
+        dispatch(getMainCategories(categoryRepository, countryPicker.value));
+        break;
+    }
+  }, [categoriesRequestStatus, dispatch, countryPicker.value]);
 
   return (
     <div className='lg:block hidden flex-none border rounded border-secondary-light p-3 space-y-2 bg-white w-64'>
@@ -35,12 +58,15 @@ export function HomeCategories() {
       </div>
       <div className='flex flex-col h-[348px]'>
         {
-          state.getMainCategoriesStatus === RequestStatus.SUCCESS ?
-            state.categories.map(
-              (category, index) => {
+          categoriesRequestStatus === RequestStatus.SUCCESS ?
+            homeState.categories.map(
+              (category: Categories, index) => {
                 return <Link key={`${index}-categories`}
                   className='block hover:text-primary hover:underline'
-                  href={'/all-categories'}>
+                  href={{
+                    pathname: '/all-categories',
+                    query: { 'category[]': category.name }
+                  }}>
                   {category.name}
                 </Link>
               }
@@ -48,7 +74,16 @@ export function HomeCategories() {
             :
             (
               <div className='flex items-center h-full justify-center'>
-                <Loading height={64} width={64} />
+                {
+                  categoriesRequestStatus === RequestStatus.FAILURE ?
+                    (
+                      <div className='flex-none w-auto text-secondary-light'>
+                        <HiOutlineExclamation size={24} className="inline-block" />
+                        <span className='inline-block'>No categories yet</span>
+                      </div>
+                    ) :
+                    (<Loading height={64} width={64} />)
+                }
               </div>
             )
         }

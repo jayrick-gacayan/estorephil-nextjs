@@ -1,12 +1,15 @@
-import { RequestStatus } from "@/models/result"
+import { Categories } from '@/models/category'
+import { Store } from '@/models/store'
+import { RequestStatus } from '@/types/enums/request-status'
 
 export interface AllCategoriesState {
-    categories: any[]
+    categories: Categories[]
+    stores: Store[]
+
     products: any[]
     categoriesSelected: string[],
-    sort: string | undefined,
+    sort: string,
     searchQuery: string | undefined,
-    stores: any[]
     getStoreStatus: RequestStatus
     getCategoriesStatus: RequestStatus
     getProductsStatus: RequestStatus,

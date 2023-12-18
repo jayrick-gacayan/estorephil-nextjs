@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { PurchaseMethodState } from './purchase-method-state';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import { Seller } from '@/models/seller';
 
 const initialState: PurchaseMethodState = {
@@ -43,7 +43,7 @@ export const shopMethodSlice = createSlice({
         }
       }
     },
-    productItemQuantitySet: (state: PurchaseMethodState, action: PayloadAction<{ product: Product; quantity: number; }>) => {
+    productItemQuantitySet: (state: PurchaseMethodState, action: PayloadAction<{ product: Products; quantity: number; }>) => {
       if (state.purchaseMethodItems.length > 0) {
         const { product, quantity } = action.payload;
         let existingData = state.purchaseMethodItems.find((purchaseMethod: Cart | BalikbayanBox) => {

@@ -10,10 +10,19 @@ export type SelectProps<T, P> = {
   placeholder: string;
   visible: boolean;
   setVisible: (visible: boolean) => void;
+  onSelect?: (value: T) => void;
 }
 
 export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
-  { labelText, items, value, placeholder, visible, setVisible }, ref
+  {
+    labelText,
+    items,
+    value,
+    placeholder,
+    onSelect,
+    visible,
+    setVisible
+  }, ref
 ) => {
 
   let selectValue = typeof value === 'string' ? (value === '' ? placeholder : value) : typeof value === 'number' ? value : value ? Object.assign(value, {} as any).name : `${placeholder}`;
@@ -47,6 +56,7 @@ export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
                   className={`px-2 py-1 cursor-pointer ${currentValue === itemValue && currentValue !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`}
                   onClick={
                     () => {
+                      onSelect && onSelect(item);
                       setVisible(false);
                     }
                   }>

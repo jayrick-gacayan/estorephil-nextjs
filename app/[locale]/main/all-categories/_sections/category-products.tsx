@@ -1,49 +1,73 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
-import { homeContainer, productContainer } from '@/inversify/inversify.config';
+import { productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
-import { RootState, store } from '@/redux/store';
-import { HomeRepository } from '@/repositories/home-repository';
+import { AppDispatch, RootState } from '@/redux/store';
 import { ProductRepository } from '@/repositories/product-repository';
-import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../_redux/all-categories-thunk';
-import ProductSort from '../_components/product-sort';
-import { useSearchParams } from 'next/navigation';
-import { searchQueryChanged } from '../_redux/all-categories-slice';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { getProductStatusSet, searchQueryChanged, sortChanged } from '../_redux/all-categories-slice';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { MainState } from '../../_redux/main-state';
+import { AllCategoriesState } from '../_redux/all-categories-state';
+import { TextInputField } from '@/types/props/text-input-field';
+import { Product } from '@/models/product';
+import { kebabCase, noCase, sentenceCase } from "change-case";
+import { RequestStatus } from '@/types/enums/request-status';
 
 export default function CategoryProducts() {
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  const dispatch: AppDispatch = useAppDispatch();
   const [visible, setVisible] = useState<boolean>(false);
   const categorySelectRef = useRef<HTMLDivElement>(null);
-  const locale = useSelector((state: RootState) => state.main).countryPicker.value
-  const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
-  const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
-  const state = useSelector((state: RootState) => state.allCategories)
-  const products = useSelector((state: RootState) => state.allCategories).products
-  const sort = useSelector((state: RootState) => state.allCategories).sort
-  const searchParams = useSearchParams();
-  const dispatch = useDispatch();
+
+  const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
+  const allCategoriesState: AllCategoriesState = useAppSelector((state: RootState) => { return state.allCategories });
+
+  let searchParamsMemo = useMemo(() => { return searchParams; }, [searchParams])
+  let countryPicker: TextInputField<string> = useMemo(() => {
+    return mainState.countryPicker;
+  }, [mainState.countryPicker])
+
+  let products: Product[] = useMemo(() => { return allCategoriesState.products }, [allCategoriesState.products])
+
+  let sort: string = useMemo(() => { return allCategoriesState.sort }, [allCategoriesState.sort]);
+  let categoriesSelected = useMemo(() => { return allCategoriesState.categoriesSelected }, [allCategoriesState.categoriesSelected])
+  let getProductsStatus = useMemo(() => {
+    return allCategoriesState.getProductsStatus;
+  }, [allCategoriesState.getProductsStatus]);
 
   useOutsideClick(categorySelectRef, () => { setVisible(false); })
+
   useEffect(() => {
-    const searchQuery = searchParams.get('search');
-    if (!!searchQuery) {
-      dispatch(searchQueryChanged(searchQuery as string))
+    let search: string | null = searchParamsMemo.get('search');
+    if (search !== null) {
+      dispatch(searchQueryChanged(search))
     }
-    store.dispatch(searchProducts(productRepository, locale))
-  }, [state.sort])
+  }, [searchParamsMemo, dispatch]);
+
+
+  useEffect(() => {
+    dispatch(getProductStatusSet(RequestStatus.WAITING));
+    dispatch(getProductStatusSet(RequestStatus.IN_PROGRESS));
+    const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
+    dispatch(searchProducts(productRepository, countryPicker.value))
+
+  }, [sort, countryPicker.value, dispatch, getProductsStatus, categoriesSelected])
+
   return (
     <div className='max-w-screen-2xl m-auto py-4 space-y-4'>
       <div className='flex'>
         <ProductHeaderText text={
-          `${state.categoriesSelected.length > 0
+          `${categoriesSelected.length > 0
             ? (() => {
-              if (state.categoriesSelected.length === 2) {
-                const categoriesText = state.categoriesSelected.map((category, index) => {
+              if (categoriesSelected.length === 2) {
+                const categoriesText = categoriesSelected.map((category, index) => {
                   if (index === 0) {
                     return category.toLowerCase();
                   } else {
@@ -53,8 +77,8 @@ export default function CategoryProducts() {
 
                 return `Products under ${categoriesText.join('')}  ${!!sort ? `by ${sort}` : ``}`;
               } else {
-                const categoriesText = state.categoriesSelected.map((category, index) => {
-                  if (index === state.categoriesSelected.length - 1 && state.categoriesSelected.length != 1) {
+                const categoriesText = categoriesSelected.map((category, index) => {
+                  if (index === categoriesSelected.length - 1 && categoriesSelected.length != 1) {
                     return `& ${category.toLowerCase()}`;
                   }
                   else {
@@ -64,21 +88,24 @@ export default function CategoryProducts() {
                 return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
               }
             })()
-            : state.categoriesSelected.length === 0 && state.products.length > 0
+            : categoriesSelected.length === 0 && products.length > 0
               ? `Products ${!!sort ? `by ${sort}` : ``}`
               : 'No products'
           }`}
         />
         <div className='flex-none space-x-2'>
           <span>Sort</span>
-          <div className='inline-block w-36'>
-            {/* <CustomSelect ref={categorySelectRef} items={['Top Seller', 'Low Seller']}
-              value={undefined}
+          <div className='inline-block w-48'>
+            <CustomSelect ref={categorySelectRef}
+              items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
+              value={sentenceCase(sort)}
               placeholder='Sort by:'
               labelText={''}
+              onSelect={(value: string) => {
+                dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
+              }}
               visible={visible}
-              setVisible={setVisible} /> */}
-            <ProductSort />
+              setVisible={setVisible} />
           </div>
         </div>
       </div>

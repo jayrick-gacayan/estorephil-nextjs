@@ -7,5 +7,9 @@ export class StoreService {
         var result = await response.json();
         return result;
     }
-    
+
+    async getMainStores(locale: string) {
+        return await fetch(`${process.env.API_URL}/main-stores/${locale}`);
+    }
+
 }

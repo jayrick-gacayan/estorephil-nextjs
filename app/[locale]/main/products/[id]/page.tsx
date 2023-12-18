@@ -6,7 +6,7 @@ import { RiRefund2Fill, RiShipLine } from 'react-icons/ri';
 import { HiInformationCircle } from 'react-icons/hi';
 import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
 import { Breadcrumbs } from '../../_components/bread-crumbs';
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import { notFound } from 'next/navigation';
 import ProductButtonsContainer from './_section/product-buttons-container';
 import Link from 'next-intl/link';
@@ -18,7 +18,7 @@ import Details from './_section/details';
 export async function generateStaticParams() {
   let products = (await import('@/app/_data/product.json')).default;
 
-  return products.products.map((product: Product) => {
+  return products.products.map((product: Products) => {
     return { id: product.id.toString() }
   });
 }

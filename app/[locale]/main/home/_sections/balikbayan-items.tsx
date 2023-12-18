@@ -1,10 +1,10 @@
-import Products from '@/app/_data/product.json';
-import { Product } from '@/models/product';
+import ProductsData from '@/app/_data/product.json';
+import { Products } from '@/models/products';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
 
 export default function BalikbayanItems() {
-  let popularProductItems: Product[] = Products.products;
+  let popularProductItems: Products[] = ProductsData.products;
 
   return (
     <div className='max-w-screen-2xl m-auto py-4'>
@@ -16,7 +16,7 @@ export default function BalikbayanItems() {
           (
             <div className='flex flex-row flex-wrap gap-4'>
               {
-                popularProductItems.map((product: Product) => {
+                popularProductItems.map((product: Products) => {
                   return (<ProductItem key={`product-item-${product.id}`}
                     product={product}
                     withRatingEvents={false} />)

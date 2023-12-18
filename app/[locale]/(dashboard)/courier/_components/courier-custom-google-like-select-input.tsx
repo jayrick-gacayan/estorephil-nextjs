@@ -15,7 +15,7 @@ export default function CourierCustomGoogleLikeSelectInput<T>({
   let currentValue = typeof value === 'string' ? (value === '' ? '' : value) : typeof value === 'number' ? value : value ? Object.assign(value, {} as any).name : ``;
 
   return (
-    <div className="bg-white w-full relative">
+    <div className="bg-white w-full">
       <div className="relative bg-inherit">
         <input type="text"
           id={inputId}
