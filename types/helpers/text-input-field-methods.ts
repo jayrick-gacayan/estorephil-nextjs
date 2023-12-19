@@ -5,7 +5,7 @@ export function textInputFieldValue<T>(value: T, show?: boolean): TextInputField
   return {
     value: value,
     show: show,
-    validationType: ValidationType.NONE,
-    validationText: ''
+    status: ValidationType.NONE,
+    errorText: ''
   }
 }

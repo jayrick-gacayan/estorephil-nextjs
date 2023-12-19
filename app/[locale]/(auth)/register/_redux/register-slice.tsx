@@ -72,7 +72,7 @@ export const registerSlice = createSlice({
                 ...state,
                 firstName: {
                     value: action.payload,
-                    valid: validateFullName.status == ValidationStatus.VALID,
+                    valid: validateFullName.status == ValidationType.VALID,
                     error: validateFullName.errorText
                 }
             }
