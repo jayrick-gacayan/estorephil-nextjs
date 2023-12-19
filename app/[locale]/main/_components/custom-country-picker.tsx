@@ -14,7 +14,7 @@ export default function CustomCountryPicker<T>({
   labelText: (value: T) => ReactNode;
   items: T[];
   onToggle: () => void;
-  onSelect: (value: T) => void;
+  onSelect: (value: T) => void | Promise<void>;
 }) {
   return (
     <div className='relative'>
@@ -36,7 +36,8 @@ export default function CustomCountryPicker<T>({
                 <Image alt='selected-country-picker-alt'
                   src={`/flags/${item.code}_flag.svg`}
                   height={24}
-                  width={24} />
+                  width={24}
+                  className='w-6 h-6' />
               </div>
               <div className='block'>{item.code.toUpperCase()}</div>
             </div>)

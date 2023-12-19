@@ -1,4 +1,4 @@
-import { withAuth } from 'next-auth/middleware';
+import { NextMiddlewareWithAuth, withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
 
@@ -10,7 +10,7 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'en'
 });
 
-const authMiddleware = withAuth(
+const authMiddleware: NextMiddlewareWithAuth = withAuth(
   function onSuccess(req) {
     return intlMiddleware(req);
   },
@@ -24,9 +24,11 @@ const authMiddleware = withAuth(
           req.nextUrl.pathname === '/home' ||
           req.nextUrl.pathname === '/register' ||
           req.nextUrl.pathname === '/agents/register' ||
-          req.nextUrl.pathname === '/all-categories'
+          req.nextUrl.pathname === '/all-categories' ||
+          req.nextUrl.pathname === '/register'
         ) {
           return true;
+
         }
 
         return token != null
@@ -34,6 +36,7 @@ const authMiddleware = withAuth(
     },
     pages: {
       signIn: '/login'
+
     }
   }
 );

@@ -1,9 +1,10 @@
-import { ResultStatus } from "../enums/result-status";
+import { ResultStatus } from '../enums/result-status';
 
 export class Result<T> {
   data?: T | null = undefined;
   statusCode: number = 0;
   response?: any | null = null;
+  message: string = '';
 
   constructor(init?: Partial<Result<T>>) {
     Object.assign(this, init);

@@ -7,14 +7,14 @@ import { StaffRepository } from '@/repositories/staff-repository';
 import { StaffService } from '@/services/staff-service';
 import { OrderRepository } from '@/repositories/order-repository';
 import { OrderService } from '@/services/order-service';
-import { HomeRepository } from '@/repositories/home-repository';
-import { HomeService } from '@/services/home-service';
 import { StoreService } from '@/services/store-service';
 import { StoreRepository } from '@/repositories/store-repository';
 import { ProductService } from '@/services/product-service';
 import { ProductRepository } from '@/repositories/product-repository';
 import { CategoryService } from '@/services/category-service';
 import { CategoryRepository } from '@/repositories/category-repository';
+import { CookiesService } from '@/services/cookies-service';
+import { CookiesRepository } from '@/repositories/cookies-repository';
 
 const categoryContainer = new Container();
 categoryContainer.bind<CategoryService>(TYPES.CategoryService).to(CategoryService);
@@ -28,16 +28,14 @@ const productContainer = new Container();
 productContainer.bind<ProductService>(TYPES.ProductService).to(ProductService)
 productContainer.bind<ProductRepository>(TYPES.ProductRepository).to(ProductRepository)
 
+const cookieContainer = new Container();
+cookieContainer.bind<CookiesService>(TYPES.CookiesService).to(CookiesService);
+cookieContainer.bind<CookiesRepository>(TYPES.CookiesRepository).to(CookiesRepository);
 
 const accountContainer = new Container();
 const staffContainer = new Container();
 const orderContainer = new Container();
-const homeContainer = new Container();
 
-
-
-homeContainer.bind<HomeService>(TYPES.HomeService).to(HomeService)
-homeContainer.bind<HomeRepository>(TYPES.HomeRepository).to(HomeRepository)
 accountContainer.bind<AccountService>(TYPES.AccountService).to(AccountService);
 accountContainer.bind<AccountRepository>(TYPES.AccountRepository).to(AccountRepository);
 staffContainer.bind<StaffRepository>(TYPES.StaffRepository).to(StaffRepository)
@@ -48,9 +46,9 @@ orderContainer.bind<OrderService>(TYPES.OrderService).to(OrderService)
 export {
   accountContainer,
   staffContainer,
-  homeContainer,
   storeContainer,
   productContainer,
   orderContainer,
-  categoryContainer
+  categoryContainer,
+  cookieContainer
 }

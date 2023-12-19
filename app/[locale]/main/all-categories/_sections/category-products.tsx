@@ -17,7 +17,7 @@ import { MainState } from '../../_redux/main-state';
 import { AllCategoriesState } from '../_redux/all-categories-state';
 import { TextInputField } from '@/types/props/text-input-field';
 import { Product } from '@/models/product';
-import { kebabCase, noCase, sentenceCase } from "change-case";
+import { capitalCase, kebabCase, noCase, sentenceCase } from "change-case";
 import { RequestStatus } from '@/types/enums/request-status';
 
 export default function CategoryProducts() {
@@ -59,6 +59,26 @@ export default function CategoryProducts() {
     dispatch(searchProducts(productRepository, countryPicker.value))
 
   }, [sort, countryPicker.value, dispatch, getProductsStatus, categoriesSelected])
+
+  function headerText() {
+    let string = '';
+
+    if (categoriesSelected.length === 1) {
+      string += categoriesSelected[0]
+    }
+    else if (categoriesSelected.length === 2) {
+      string += categoriesSelected.join(' & ');
+    }
+    else {
+
+    }
+
+    if (sort !== '') {
+      string += ' by ' + capitalCase(sort);
+    }
+
+    return string;
+  }
 
   return (
     <div className='max-w-screen-2xl m-auto py-4 space-y-4'>

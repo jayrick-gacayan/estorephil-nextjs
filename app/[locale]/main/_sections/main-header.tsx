@@ -18,7 +18,7 @@ import { MainState } from '../_redux/main-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { CountryProps } from '@/types/props/country-props';
 import { TextInputField } from '@/types/props/text-input-field';
-import { countryPickerToggled, countryPickerValueChanged } from '../_redux/main-slice';
+import { countryPickerToggled } from '../_redux/main-slice';
 
 export const countries: CountryProps[] = [
   {
@@ -41,7 +41,13 @@ export const countries: CountryProps[] = [
   },
 ];
 
-export default function MainHeader() {
+export default function MainHeader({
+  countryCookie,
+  onCountryCookieSet,
+}: {
+  countryCookie: string,
+  onCountryCookieSet: (countryCode: string) => void;
+}) {
   const dropdownProfileImageRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const { push } = useRouter();
@@ -144,19 +150,20 @@ export default function MainHeader() {
               </Link>
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={countries.find((value: CountryProps) => {
-                  return value.code === countryPicker.value;
+                  return value.code === countryCookie
                 }) ?? countries[2]}
                   labelText={(value: CountryProps) => {
                     return (
                       <div className="flex items-center gap-4 text-white px-2">
                         <div className='block'>
                           <Image alt='selected-country-picker-alt'
-                            src={`/flags/${countryPicker.value}_flag.svg`}
+                            src={`/flags/${countryCookie}_flag.svg`}
                             height={24}
-                            width={24} />
+                            width={24}
+                            className='w-6 h-6' />
                         </div>
                         <div className='block'>
-                          {countryPicker.value?.toUpperCase()}
+                          {value.code.toUpperCase()}
                         </div>
                       </div>
                     );
@@ -165,17 +172,15 @@ export default function MainHeader() {
                   onToggle={() => {
                     dispatch(countryPickerToggled());
                   }}
-                  onSelect={(value: CountryProps) => {
-                    let { code } = value;
-                    dispatch(countryPickerValueChanged(code));
-
+                  onSelect={async (value: CountryProps) => {
+                    onCountryCookieSet(value.code);
                   }}
                   show={countryPicker.show ?? false} />
               </div>
             </div>
           </div>
         </nav>
-      </div >
-    </header >
+      </div>
+    </header>
   )
 }

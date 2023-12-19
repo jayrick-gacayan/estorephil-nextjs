@@ -30,6 +30,7 @@ const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: "/login",
+
   },
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
