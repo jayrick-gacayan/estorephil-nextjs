@@ -22,4 +22,5 @@ export class AccountRepository {
         console.log('login repo body', body)
         return await this.accountService.login({ body })
     }
+    // async registerStore({})
 }

@@ -13,7 +13,10 @@ export const initialState: RegisterState = {
     businessNature: {
         value: '',
     },
-    fullName: {
+    firstName: {
+        value: '',
+    },
+    lastName: {
         value: '',
     },
     email: {
@@ -62,12 +65,24 @@ export const registerSlice = createSlice({
                 }
             }
         },
-        fullNameChanged: (state: RegisterState, action: PayloadAction<string>) => {
+        firstNameChanged: (state: RegisterState, action: PayloadAction<string>) => {
             const validation = new Validations()
-            const validateFullName = validation.isValidName({ name: action.payload, nameColumn: 'full name' })
+            const validateFullName = validation.isValidName({ name: action.payload, nameColumn: 'first name' })
             return {
                 ...state,
-                fullName: {
+                firstName: {
+                    value: action.payload,
+                    valid: validateFullName.status == ValidationStatus.VALID,
+                    error: validateFullName.errorText
+                }
+            }
+        },
+        lastNameChanged: (state: RegisterState, action: PayloadAction<string>) => {
+            const validation = new Validations()
+            const validateFullName = validation.isValidName({ name: action.payload, nameColumn: 'last name' })
+            return {
+                ...state,
+                lastName: {
                     value: action.payload,
                     valid: validateFullName.status == ValidationType.VALID,
                     error: validateFullName.errorText
@@ -137,7 +152,7 @@ export const registerSlice = createSlice({
 export const {
     businessNameChanged,
     businessNatureChanged, confirmPassworChanged,
-    emailChanged, fullNameChanged, passwordChanged, phoneNumberChanged,
+    emailChanged, firstNameChanged, lastNameChanged, passwordChanged, phoneNumberChanged,
     signUpClicked
 } = registerSlice.actions
 
