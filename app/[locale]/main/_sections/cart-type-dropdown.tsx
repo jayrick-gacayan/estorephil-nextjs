@@ -10,8 +10,6 @@ import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
 import Dropdown from '../../_components/dropdown';
 import Link from 'next-intl/link';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { BalikbayanBox } from '@/models/balikbayan-box';
-import { Cart } from '@/models/cart';
 import { PurchaseMethodState } from '../purchase-method/[slug]/_redux/purchase-method-state';
 import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
@@ -20,12 +18,17 @@ import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { MainState } from '../_redux/main-state';
 import { useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
+import { removeFromCart } from '../_redux/main-thunk';
+import { ProductRepository } from '@/repositories/product-repository';
+import { productContainer } from '@/inversify/inversify.config';
+import { TYPES } from '@/inversify/types';
 
 export default function CartTypeDropdown({ children }: { children: ReactNode }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const toastOnDropdownRef = useRef<HTMLDivElement>(null);
   const dispatch: AppDispatch = useAppDispatch();
   const { data: sessionData } = useSession()
+  const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod });
   const cartType = useMemo(() => {
@@ -162,7 +165,8 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
                       return (
                         <DropdownItem key={`shop-method-key-${product.name}-${product.id}`}>
                           <ShopMethodDropdownItem onDelete={() => {
-                            dispatch(removeFromToPurchaseMethodItem(product));
+                            dispatch(removeFromToPurchaseMethodItem(product))
+                            dispatch(removeFromCart(productRepository, sessionData?.token ?? ``, product.id ?? 0))
                           }} {...product} />
                         </DropdownItem>
                       )

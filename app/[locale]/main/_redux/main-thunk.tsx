@@ -41,11 +41,11 @@ export function addToCart(productRepository: ProductRepository, token: string) {
         }
     }
 }
-export function removeFromCart(productRepository: ProductRepository, token: string) {
+export function removeFromCart(productRepository: ProductRepository, token: string, productId?: number) {
     return async function getProductDetails(dispatch: AppDispatch, getState: typeof store.getState) {
         const state = getState().product as ProductState
         dispatch(removeFromCartLoaded())
-        const result: ApiResponse = await productRepository.removeFromCart(token, state.product.id)
+        const result: ApiResponse = await productRepository.removeFromCart(token, state.product.id ?? productId)
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(removeFromCartSuccess(result.data.cart))
