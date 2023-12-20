@@ -30,7 +30,7 @@ export const CustomSelect = forwardRef<HTMLDivElement, SelectProps<any, any>>((
     <div ref={ref} className='block space-y-1 w-full'>
       {labelText && <div className='block'>{labelText}</div>}
       <div className='block relative'>
-        <div className='flex border border-tertiary-dark rounded overflow-hidden bg-white p-2 hover:cursor-pointer'>
+        <div className='flex rounded overflow-hidden p-2 hover:cursor-pointer'>
           <div className={`flex-1 ${selectValue === placeholder ? 'text-tertiary-dark' : 'text-inherit'}`} onClick={() => {
             if (items.length > 0) { setVisible(true); }
           }}>

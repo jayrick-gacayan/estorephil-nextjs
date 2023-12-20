@@ -14,6 +14,9 @@ export const TYPES = {
     CookiesService: Symbol.for('CookiesService'),
     CookiesRepository: Symbol.for('CookiesRepository'),
 
+    AuthService: Symbol.for('AuthService'),
+    AuthRepository: Symbol.for('AuthRepository'),
+
 
     AccountService: Symbol.for("AccountService"),
     AccountRepository: Symbol.for("AccountRepository"),

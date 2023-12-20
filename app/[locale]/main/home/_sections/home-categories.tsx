@@ -17,6 +17,7 @@ import { HiOutlineExclamation } from 'react-icons/hi';
 import { MainState } from '../../_redux/main-state';
 import { TextInputField } from '@/types/props/text-input-field';
 import { CategoryRepository } from '@/repositories/category-repository';
+import SpinnerLoader from '@/app/[locale]/_components/spinner-loader';
 
 export function HomeCategories() {
   const router = useRouter();
@@ -41,10 +42,10 @@ export function HomeCategories() {
         dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
         break;
       case RequestStatus.IN_PROGRESS:
-        const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
+        // const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
 
 
-        dispatch(getMainCategories(categoryRepository, countryPicker.value));
+        // dispatch(getMainCategories(categoryRepository, countryPicker.value));
         break;
     }
   }, [categoriesRequestStatus, dispatch, countryPicker.value]);
@@ -82,7 +83,7 @@ export function HomeCategories() {
                         <span className='inline-block'>No categories yet</span>
                       </div>
                     ) :
-                    (<Loading height={64} width={64} />)
+                    (<SpinnerLoader height={128} width={128} color='#1186FF' />)
                 }
               </div>
             )

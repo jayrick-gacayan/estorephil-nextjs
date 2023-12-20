@@ -63,6 +63,7 @@ export default function CategoryProducts() {
   function headerText() {
     let string = '';
 
+
     if (categoriesSelected.length === 1) {
       string += categoriesSelected[0]
     }
@@ -75,7 +76,10 @@ export default function CategoryProducts() {
 
     if (sort !== '') {
       string += ' by ' + capitalCase(sort);
+
     }
+
+
 
     return string;
   }
@@ -83,39 +87,10 @@ export default function CategoryProducts() {
   return (
     <div className='max-w-screen-2xl m-auto py-4 space-y-4'>
       <div className='flex'>
-        <ProductHeaderText text={
-          `${categoriesSelected.length > 0
-            ? (() => {
-              if (categoriesSelected.length === 2) {
-                const categoriesText = categoriesSelected.map((category, index) => {
-                  if (index === 0) {
-                    return category.toLowerCase();
-                  } else {
-                    return ` & ${category.toLowerCase()}`;
-                  }
-                });
-
-                return `Products under ${categoriesText.join('')}  ${!!sort ? `by ${sort}` : ``}`;
-              } else {
-                const categoriesText = categoriesSelected.map((category, index) => {
-                  if (index === categoriesSelected.length - 1 && categoriesSelected.length != 1) {
-                    return `& ${category.toLowerCase()}`;
-                  }
-                  else {
-                    return `${category.toLowerCase()}`
-                  }
-                });
-                return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
-              }
-            })()
-            : categoriesSelected.length === 0 && products.length > 0
-              ? `Products ${!!sort ? `by ${sort}` : ``}`
-              : 'No products'
-          }`}
-        />
+        <ProductHeaderText text={headerText()} />
         <div className='flex-none space-x-2'>
           <span>Sort</span>
-          <div className='inline-block w-48'>
+          <div className='inline-block w-48 rounded border border-tertiary-dark bg-white'>
             <CustomSelect ref={categorySelectRef}
               items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
               value={sentenceCase(sort)}
@@ -146,3 +121,32 @@ export default function CategoryProducts() {
     </div>
   );
 }
+
+// `${categoriesSelected.length > 0
+//   ? (() => {
+//     if (categoriesSelected.length === 2) {
+//       const categoriesText = categoriesSelected.map((category, index) => {
+//         if (index === 0) {
+//           return category.toLowerCase();
+//         } else {
+//           return ` & ${category.toLowerCase()}`;
+//         }
+//       });
+
+//       return `Products under ${categoriesText.join('')}  ${!!sort ? `by ${sort}` : ``}`;
+//     } else {
+//       const categoriesText = categoriesSelected.map((category, index) => {
+//         if (index === categoriesSelected.length - 1 && categoriesSelected.length != 1) {
+//           return `& ${category.toLowerCase()}`;
+//         }
+//         else {
+//           return `${category.toLowerCase()}`
+//         }
+//       });
+//       return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
+//     }
+//   })()
+//   : categoriesSelected.length === 0 && products.length > 0
+//     ? `Products ${!!sort ? `by ${sort}` : ``}`
+//     : 'No products'
+// }`

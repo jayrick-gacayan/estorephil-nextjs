@@ -15,6 +15,8 @@ import { CategoryService } from '@/services/category-service';
 import { CategoryRepository } from '@/repositories/category-repository';
 import { CookiesService } from '@/services/cookies-service';
 import { CookiesRepository } from '@/repositories/cookies-repository';
+import { AuthService } from '@/services/auth-service';
+import { AuthRepository } from '@/repositories/auth-repository';
 
 const categoryContainer = new Container();
 categoryContainer.bind<CategoryService>(TYPES.CategoryService).to(CategoryService);
@@ -31,6 +33,10 @@ productContainer.bind<ProductRepository>(TYPES.ProductRepository).to(ProductRepo
 const cookieContainer = new Container();
 cookieContainer.bind<CookiesService>(TYPES.CookiesService).to(CookiesService);
 cookieContainer.bind<CookiesRepository>(TYPES.CookiesRepository).to(CookiesRepository);
+
+const authContainer = new Container();
+authContainer.bind<AuthService>(TYPES.AuthService).to(AuthService);
+authContainer.bind<AuthRepository>(TYPES.AuthRepository).to(AuthRepository);
 
 const accountContainer = new Container();
 const staffContainer = new Container();
@@ -50,5 +56,6 @@ export {
   productContainer,
   orderContainer,
   categoryContainer,
-  cookieContainer
+  cookieContainer,
+  authContainer
 }

@@ -7,7 +7,7 @@ export default function AuthHeader() {
         <nav className='max-w-screen-2xl m-auto'>
           <div className="flex gap-4 items-center justify-between py-8">
             <div className="flex-none w-auto">
-              <h3 className='font-semibold text-primary-dark text-[24px]'>eStorePh</h3>
+              <Link href='/' className='font-semibold text-primary-dark text-[24px]'>eStorePh</Link>
             </div>
             <div className="flex-none w-auto">
               <div className="space-x-8">

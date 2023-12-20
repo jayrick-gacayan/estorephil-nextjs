@@ -5,7 +5,6 @@ import { TYPES } from "@/inversify/types";
 import { RootState, store } from "@/redux/store";
 import { AccountRepository } from "@/repositories/account-repository";
 import { useTranslations } from "next-intl"
-import { FaEnvelope, FaLock } from "react-icons/fa"
 import { login } from "../_redux/login-thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { emailChanged, passwordChanged } from "../_redux/login-slice";
@@ -37,7 +36,7 @@ export default function Form() {
                     {
                         loginStatus == RequestStatus.WAITING || loginStatus == RequestStatus.FAILURE || loginStatus == RequestStatus.IN_PROGRESS
                             ? (<div className="block">
-                                <div className="bg-white rounded-md w-[350px] shadow-sm">
+                                <div className="bg-white rounded-md w-[350px] shadow-lg">
                                     <div className="bg-[#3a3f51] rounded-sm p-4 text-white flex items-center justify-center text-[25px]">
                                         {translate("agent")}
                                     </div>
