@@ -232,13 +232,17 @@ export default function ProductDetails() {
       {isEditModalOpen && (
         <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="bg-white p-5 rounded-md z-10 w-[20rem]">
-            {/* Your edit form or content goes here */}
+          <div className="bg-white p-5 rounded-md z-10 w-[25rem]">
             <div className="flex justify-between w-full items-center pb-5">
-              <h1 className="text-xl font-bold ">Edit Seller Details</h1>
-              <button className="text-xl">
-                <IoMdClose />
-              </button>
+              <div className="w-[1.25rem] h-[1.25rem]" />
+              <div className="growtext-center">
+                <h1 className="text-xl font-bold ">Edit Seller Details</h1>
+              </div>
+              <div>
+                <button className="text-xl">
+                  <IoMdClose />
+                </button>
+              </div>
             </div>
 
             <div className="border-t w-full h-[1.5rem]"></div>
@@ -252,6 +256,7 @@ export default function ProductDetails() {
                   id="sellerCode"
                   className="px-3 py-2 border rounded-md w-full"
                   defaultValue="Costco05041"
+                  placeholder="Seller Code"
                 />
               </div>
 
@@ -264,6 +269,7 @@ export default function ProductDetails() {
                   id="sellerName"
                   className="px-3 py-2 border rounded-md w-full"
                   defaultValue="Costco"
+                  placeholder="Seller Name"
                 />
               </div>
 
@@ -276,6 +282,7 @@ export default function ProductDetails() {
                   id="owner"
                   className="px-3 py-2 border rounded-md w-full"
                   defaultValue=""
+                  placeholder="Owner"
                 />
               </div>
 
@@ -288,6 +295,7 @@ export default function ProductDetails() {
                   id="businessLicenseNumber"
                   className="px-3 py-2 border rounded-md w-full"
                   defaultValue="License Number"
+                  placeholder="License Number"
                 />
               </div>
 
@@ -300,6 +308,7 @@ export default function ProductDetails() {
                   id="taxNumber"
                   className="px-3 py-2 border rounded-md w-full"
                   defaultValue="Tax"
+                  placeholder="Tax"
                 />
               </div>
 
@@ -317,7 +326,7 @@ export default function ProductDetails() {
                 </select>
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 items-center justify-center">
                 <button
                   type="submit"
                   className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
