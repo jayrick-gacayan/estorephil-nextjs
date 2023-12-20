@@ -239,7 +239,7 @@ export default function ProductDetails() {
                 <h1 className="text-xl font-bold ">Edit Seller Details</h1>
               </div>
               <div>
-                <button className="text-xl">
+                <button className="text-xl" onClick={closeEditModal}>
                   <IoMdClose />
                 </button>
               </div>
