@@ -16,7 +16,7 @@ export default function CustomInput({
   return (
     <div className="block space-y-1" tabIndex={-1}>
       {labelText && labelText}
-      <div className="rounded gap-2 border-[.5px] border-tertiary-dark p-2 flex items-center focus-within:border-primary">
+      <div className="rounded gap-2 flex items-center focus-within:border-primary">
         {leftSideContent && leftSideContent}
         <div className="flex-1">
           <input {...inputProps}

@@ -6,6 +6,7 @@ import { RequestStatus } from '@/types/enums/request-status';
 import { ValidationType } from '@/types/enums/validation-type';
 import { ValidationResponse } from '@/types/props/validation-response';
 import { agentRegisterTypeFields } from '@/types/input-fields/agent-register-type-fields';
+import { getValidationResponse } from '@/types/helpers/validation_helpers';
 
 const initialState: AgentRegisterState = {
   companyName: textInputFieldValue<string>(''),
@@ -16,13 +17,6 @@ const initialState: AgentRegisterState = {
   signUpThanksRequestStatus: RequestStatus.NONE
 }
 
-function getValidationResponse<T>(value: T, field: string, validations?: string[]): ValidationResponse {
-  let validate = new CustomValidation();
-  validate.setErrorType<T>(value, validations);
-  validate.setErrorText(field);
-
-  return validate.getErrorResponse();
-}
 
 const agentRegisterSlice = createSlice({
   name: 'agentRegister',

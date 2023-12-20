@@ -1,7 +1,11 @@
-import NextAuth, { AuthOptions, JWT } from "next-auth";
+import { authContainer } from "@/inversify/inversify.config";
+import { TYPES } from "@/inversify/types";
+import { AuthRepository } from "@/repositories/auth-repository";
+import { ResultStatus } from "@/types/enums/result-status";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const authOptions: AuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -12,19 +16,15 @@ const authOptions: AuthOptions = {
           password: string;
         };
         console.log('auth options called', { email, password })
-        const data = await fetch(`${process.env.API_URL}/login`, {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        // console.log('login route -----', data.json())
-        const res = await data.json();
-        if (res?.status !== 200) {
-          throw new Error(res?.status);
+        const authRepository = authContainer.get<AuthRepository>(TYPES.AuthRepository);
+
+        let result = await authRepository.loginBackend({ email, password });
+        console.log('login route -----', result.data)
+
+        if (result.resultStatus !== ResultStatus.SUCCESS) {
+          throw new Error(result.message);
         }
-        return res?.data;
+        return result?.data.data;
       },
     }),
   ],

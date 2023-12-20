@@ -11,4 +11,14 @@ export class AuthService {
   async nextAuthSignOut(callbackUrl?: string) {
     return await signOut(callbackUrl ? { callbackUrl: callbackUrl } : {})
   }
+
+  async loginBackend(body: string) {
+    return await fetch(`${process.env.API_URL}/login`, {
+      method: "POST",
+      body: body,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 }
