@@ -1,4 +1,4 @@
-import { ValidationType } from "@/models/validation-response";
+import { ValidationType } from "../enums/validation-type";
 import { ValidationResponse } from "./validation-response";
 
 export interface TextInputField<T> extends ValidationResponse {

@@ -1,5 +1,6 @@
-import { ValidationResponse, ValidationType } from '@/models/validation-response';
-import { ValidationHelpers } from './validation_helpers';
+import { ValidationType } from "../enums/validation-type";
+import { ValidationResponse } from "../props/validation-response";
+import { ValidationHelpers } from "./validation_helpers";
 
 export default class CustomValidation {
   #errorText: string;
@@ -85,7 +86,7 @@ export default class CustomValidation {
     }
   }
 
-  get getErrorResponse(): ValidationResponse {
+  getErrorResponse(): ValidationResponse {
     return {
       errorText: this.#errorText,
       status: this.#status

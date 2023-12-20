@@ -40,7 +40,7 @@ export class AccountRepository {
             data: response.data,
             message: response.message,
             statusCode: response.status,
-            errors: response.errors
+            error: response.error
         })
     }
 

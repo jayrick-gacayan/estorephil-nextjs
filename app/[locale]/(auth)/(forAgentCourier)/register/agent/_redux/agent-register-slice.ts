@@ -1,9 +1,11 @@
-import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
-import { AgentRegisterState } from "./agent-register-state";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import CustomValidation from "@/types/helpers/custom-validation";
-import { ValidationResponse, ValidationType } from "@/models/validation-response";
-import { RequestStatus } from "@/types/enums/request-status";
+import { textInputFieldValue } from '@/types/helpers/text-input-field-methods';
+import { AgentRegisterState } from './agent-register-state';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import CustomValidation from '@/types/helpers/custom-validation';
+import { RequestStatus } from '@/types/enums/request-status';
+import { ValidationType } from '@/types/enums/validation-type';
+import { ValidationResponse } from '@/types/props/validation-response';
+import { agentRegisterTypeFields } from '@/types/input-fields/agent-register-type-fields';
 
 const initialState: AgentRegisterState = {
   companyName: textInputFieldValue<string>(''),
@@ -19,7 +21,7 @@ function getValidationResponse<T>(value: T, field: string, validations?: string[
   validate.setErrorType<T>(value, validations);
   validate.setErrorText(field);
 
-  return validate.getErrorResponse;
+  return validate.getErrorResponse();
 }
 
 const agentRegisterSlice = createSlice({
@@ -44,9 +46,15 @@ const agentRegisterSlice = createSlice({
     signUpThanksRequestStatusSet: (state: AgentRegisterState, action: PayloadAction<RequestStatus>) => {
       return { ...state, signUpThanksRequestStatus: action.payload }
     },
+    fieldValidResponseSet: (state: AgentRegisterState, action: PayloadAction<{ field: agentRegisterTypeFields, validResponse: ValidationResponse }>) => {
+      return {
+        ...state,
+        [action.payload.field]: { ...state[action.payload.field], ...action.payload.validResponse }
+      }
+    },
     agentRegisterFormClicked: (state: AgentRegisterState) => {
       let businessNameError: ValidationResponse = getValidationResponse<string>(state.companyName.value, 'Business name', ['required']);
-      let nameOfBusinessError: ValidationResponse = getValidationResponse<string>(state.businessNature.value, 'Nature of business', ['required']);
+      let businessNatureError: ValidationResponse = getValidationResponse<string>(state.businessNature.value, 'Nature of business', ['required']);
       let firstNameError: ValidationResponse = getValidationResponse<string>(state.firstName.value, 'Firstname', ['required']);
       let lastNameError: ValidationResponse = getValidationResponse<string>(state.lastName.value, 'Lastname', ['required']);
       let emailError: ValidationResponse = getValidationResponse<string>(state.email.value, 'Email', ['required', 'email']);
@@ -54,17 +62,16 @@ const agentRegisterSlice = createSlice({
       return {
         ...state,
         companyName: { ...state.companyName, ...businessNameError },
-        businessNature: { ...state.businessNature, ...nameOfBusinessError },
+        businessNature: { ...state.businessNature, ...businessNatureError },
         firstName: { ...state.firstName, ...firstNameError },
         lastName: { ...state.lastName, ...lastNameError },
         email: { ...state.email, ...emailError },
-        signUpThanksRequestStatus:
-          businessNameError.status !== ValidationType.NONE ||
-            nameOfBusinessError.status !== ValidationType.NONE ||
-            firstNameError.status !== ValidationType.NONE ||
-            lastNameError.status !== ValidationType.NONE ||
-            emailError.status !== ValidationType.NONE ?
-            RequestStatus.FAILURE : RequestStatus.IN_PROGRESS
+        signUpThanksRequestStatus: businessNameError.status !== ValidationType.NONE ||
+          businessNatureError.status !== ValidationType.NONE ||
+          firstNameError.status !== ValidationType.NONE ||
+          lastNameError.status !== ValidationType.NONE ||
+          emailError.status !== ValidationType.NONE ?
+          RequestStatus.FAILURE : RequestStatus.IN_PROGRESS
       }
 
     }
@@ -79,6 +86,7 @@ export const {
   natureOfBusinessChanged,
   agentRegisterFormClicked,
   signUpThanksRequestStatusSet,
+  fieldValidResponseSet
 } = agentRegisterSlice.actions;
 
 export default agentRegisterSlice.reducer;

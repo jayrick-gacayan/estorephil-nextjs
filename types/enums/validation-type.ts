@@ -3,5 +3,6 @@ export enum ValidationType {
   EMPTY,
   INVALID_INPUT,
   INVALID_FORMAT,
+  EXISTS,
   NONE,
 }

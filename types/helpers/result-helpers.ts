@@ -6,6 +6,7 @@ export class Result<T> {
   response?: any | null = null;
   message: string = '';
   errors?: T | null = undefined;
+  error: string = ''
 
   constructor(init?: Partial<Result<T>>) {
     Object.assign(this, init);
