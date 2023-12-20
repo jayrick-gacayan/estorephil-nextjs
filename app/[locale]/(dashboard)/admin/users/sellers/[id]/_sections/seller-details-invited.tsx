@@ -218,12 +218,11 @@ export default function SellerDetailsInvited() {
           </div>
           <textarea className="w-full border resize-none outline-none" />
           <div className="border-t w-full h-[1.5rem]"></div>
-          <div className="flex w-full gap-5">
+          <div>Profile Completion</div>
+          <div className="border-b w-full h-[1.5rem]"></div>
+          <div className="w-full gap-5">
             <div className="flex-1 bg-green-500 text-white rounded-md px-5 py-2 text-center text-xs">
-              Approve Seller
-            </div>
-            <div className="bg-red-500 text-white rounded-md px-10 py-2 text-center text-xs">
-              Reject Seller
+              Re-send Invitation
             </div>
           </div>
         </div>
