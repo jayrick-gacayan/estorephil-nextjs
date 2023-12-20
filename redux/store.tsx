@@ -21,7 +21,7 @@ import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
 import productReducer from '@/app/[locale]/main/products/[id]/_redux/product-slice'
 import allCategoriesReducer from '@/app/[locale]/main/all-categories/_redux/all-categories-slice'
 
-import agentRegisterReducer from '@/app/[locale]/(auth)/(forAgentCourier)/register/agent/_redux/agent-register-slice';
+import agentRegisterReducer from '@/app/[locale]/(auth)/(forAgentCourier)/agent/register/_redux/agent-register-slice';
 
 import courierDeliveryRatesReducer from '@/app/[locale]/(dashboard)/courier/delivery-rates/_redux/courier-delivery-rates-slice';
 import courierStaffReducer from '@/app/[locale]/(dashboard)/courier/staffs/_redux/courier-staff-slice';

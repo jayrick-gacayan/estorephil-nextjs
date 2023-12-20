@@ -2,24 +2,28 @@
 
 import { accountContainer } from "@/inversify/inversify.config";
 import { TYPES } from "@/inversify/types";
-import { RootState, store } from "@/redux/store";
+import { AppDispatch, RootState, store } from "@/redux/store";
 import { AccountRepository } from "@/repositories/account-repository";
 import { useTranslations } from "next-intl"
 import { login } from "../_redux/login-thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { emailChanged, passwordChanged } from "../_redux/login-slice";
 import { RequestStatus } from "@/models/result";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/[locale]/main/_components/loading";
 import LoginSuccess from "./login-success";
 import LoginFailed from "./login-failed";
 import { useSession } from "next-auth/react";
+import { useAppDispatch } from "@/app/_hooks/redux_hooks";
+import { LoginState } from "../_redux/login-state";
 
 export default function Form() {
+    const dispatch: AppDispatch = useAppDispatch();
     const translate = useTranslations()
-    const accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository)
-    const dispatch = useDispatch()
+
+    const accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+
     const loginStatus = useSelector((state: RootState) => state.login).requestStatus
     const router = useRouter();
     const { data: sessionData } = useSession()
@@ -29,6 +33,7 @@ export default function Form() {
             router.push("/"); // replace with your desired redirect path
         }
     }, [sessionData, router]);
+
     return (
         <>
             {
@@ -42,7 +47,7 @@ export default function Form() {
                                     </div>
                                     <form onSubmit={(e) => {
                                         e.preventDefault()
-                                        store.dispatch(login(accountRepository))
+                                        dispatch(login(accountRepository))
                                     }}>
                                         <div className="flex flex-col items-center justify-center px-8 py-2">
                                             <div className="mb-8">{translate("signIn")}</div>

@@ -1,7 +1,7 @@
 'use client';
 
 import CustomInput from '@/app/[locale]/_components/custom-input';
-import FormHeader from '../../_components/form-header';
+import FormHeader from '../../../_components/form-header';
 import { ChangeEvent, useEffect, useMemo } from 'react';
 import GoogleLikeInputField from '@/app/[locale]/_components/google-like-input-field';
 import { AppDispatch, RootState } from '@/redux/store';

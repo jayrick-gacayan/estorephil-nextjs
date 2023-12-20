@@ -14,10 +14,10 @@ export default function AuthHeader() {
                 <Link href='#' className='transition-all delay-100 p-4 hover:text-primary'>
                   Become a Seller
                 </Link>
-                <Link href='/register/courier' className='transition-all delay-100 p-4 hover:text-primary'>
+                <Link href='/courier/register' className='transition-all delay-100 p-4 hover:text-primary'>
                   Become a Courier
                 </Link>
-                <Link href='/register/agent' className='transition-all delay-100 p-4 hover:text-primary'>
+                <Link href='/agent/register' className='transition-all delay-100 p-4 hover:text-primary'>
                   Become an Agent
                 </Link>
               </div>
