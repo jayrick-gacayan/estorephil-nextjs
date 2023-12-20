@@ -64,7 +64,7 @@ const agentRegisterSlice = createSlice({
             firstNameError.status !== ValidationType.NONE ||
             lastNameError.status !== ValidationType.NONE ||
             emailError.status !== ValidationType.NONE ?
-            RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
+            RequestStatus.FAILURE : RequestStatus.IN_PROGRESS
       }
 
     }

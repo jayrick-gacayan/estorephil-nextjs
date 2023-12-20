@@ -39,7 +39,24 @@ export class AccountRepository {
             response: response,
             data: response.data,
             message: response.message,
-            statusCode: result.status
+            statusCode: response.status,
+            errors: response.errors
+        })
+    }
+
+    async agentSendInvitation(id: number) {
+        let result = await this.#accountService.agentSendInvitation(id);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            message: response.message,
+            statusCode: response.status
         })
     }
 }

@@ -26,6 +26,14 @@ export class AccountService {
         'Content-Type': 'application/json'
       }
     })
+  }
 
+  async agentSendInvitation(id: number) {
+    return await fetch(`${process.env.API_URL}/agent/${id}/send-invitation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 }

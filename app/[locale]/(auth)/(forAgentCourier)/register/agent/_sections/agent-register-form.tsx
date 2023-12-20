@@ -2,12 +2,18 @@
 
 import CustomInput from '@/app/[locale]/_components/custom-input';
 import FormHeader from '../../_components/form-header';
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useEffect, useMemo } from 'react';
 import GoogleLikeInputField from '@/app/[locale]/_components/google-like-input-field';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AgentRegisterState } from '../_redux/agent-register-state';
-import { agentRegisterFormClicked, businessNameChanged, emailChanged, firstNameChanged, lastNameChanged, natureOfBusinessChanged } from '../_redux/agent-register-slice';
+import { agentRegisterFormClicked, businessNameChanged, emailChanged, firstNameChanged, lastNameChanged, natureOfBusinessChanged, signUpThanksRequestStatusSet } from '../_redux/agent-register-slice';
+import { RequestStatus } from '@/types/enums/request-status';
+import { accountContainer } from '@/inversify/inversify.config';
+import { AccountRepository } from '@/repositories/account-repository';
+import { TYPES } from '@/inversify/types';
+import { registerAgent } from '../_redux/agent-register-thunk';
+import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 
 export default function AgentRegisterForm() {
   const dispatch: AppDispatch = useAppDispatch();
@@ -18,11 +24,26 @@ export default function AgentRegisterForm() {
     businessNature,
     lastName,
     firstName,
-    email
-  } = useMemo(() => { return agentRegisterState }, [agentRegisterState])
+    email,
+    signUpThanksRequestStatus
+  } = useMemo(() => { return agentRegisterState }, [agentRegisterState]);
+
+  useEffect(() => {
+    switch (signUpThanksRequestStatus) {
+      case RequestStatus.WAITING:
+        setTimeout(() => {
+          dispatch(agentRegisterFormClicked())
+        }, 2000);
+        break;
+      case RequestStatus.IN_PROGRESS:
+        let accountRepository: AccountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+
+        dispatch(registerAgent(accountRepository));
+    }
+  }, [signUpThanksRequestStatus])
 
   return (
-    <div className='rounded bg-white h-full shadow-lg p-8'>
+    <div className='rounded bg-white h-full shadow-lg p-8 overflow-hidden'>
       <div className='flex flex-col h-full justify-between gap-4'>
         <div className='flex-none w-auto'>
           <FormHeader text='Agent' />
@@ -86,10 +107,22 @@ export default function AgentRegisterForm() {
             errorText={email.errorText} />
         </div>
         <div className='block'>
-          <button className='block w-full p-2 cursor-pointer bg-primary text-white rounded hover:bg-primary-light'
-            onClick={() => {
-              dispatch(agentRegisterFormClicked())
-            }}>Sign Up</button>
+          <button onClick={() => { dispatch(signUpThanksRequestStatusSet(RequestStatus.WAITING)); }}
+            disabled={signUpThanksRequestStatus === RequestStatus.WAITING || signUpThanksRequestStatus === RequestStatus.IN_PROGRESS}
+            className={'block w-full p-2 disabled:cursor-not-allowed text-center cursor-pointer bg-primary text-white rounded hover:bg-primary-light'}>
+            {
+              signUpThanksRequestStatus === RequestStatus.WAITING ||
+                signUpThanksRequestStatus === RequestStatus.IN_PROGRESS ?
+                (
+                  <div className='w-fit m-auto block space-x-0.5'>
+                    <span className='inline-block align-middle'>
+                      <LineDotLoader height={24} width={48} color={'#fff'} />
+                    </span>
+                    <span className='inline-block'>Checking</span>
+                  </div>
+                ) : "Sign up"
+            }
+          </button>
         </div>
       </div>
     </div>

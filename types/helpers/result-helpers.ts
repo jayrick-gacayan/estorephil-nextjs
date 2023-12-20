@@ -5,6 +5,7 @@ export class Result<T> {
   statusCode: number = 0;
   response?: any | null = null;
   message: string = '';
+  errors?: T | null = undefined;
 
   constructor(init?: Partial<Result<T>>) {
     Object.assign(this, init);
@@ -14,6 +15,7 @@ export class Result<T> {
     switch (this.statusCode) {
       case 200: return ResultStatus.SUCCESS;
       case 204: return ResultStatus.NO_CONTENT;
+      case 300: return ResultStatus.MULTIPLE_CHOICES;
       case 400: return ResultStatus.INVALID_REQUEST;
       case 401:
       case 403: return ResultStatus.UNAUTHORIZED;
