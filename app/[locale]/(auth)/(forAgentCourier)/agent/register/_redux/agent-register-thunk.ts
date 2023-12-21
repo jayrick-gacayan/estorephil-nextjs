@@ -3,13 +3,13 @@ import { AgentRegisterState } from "./agent-register-state";
 import { AccountRepository } from "@/repositories/account-repository";
 import { ResultStatus } from "@/types/enums/result-status";
 import { RequestStatus } from "@/types/enums/request-status";
-import { fieldInputSet, fieldValidResponseSet, signUpThanksRequestStatusSet } from "./agent-register-slice";
+import { fieldInputSet, fieldValidResponseSet, signUpThanksRequestStatusSet, withTokenSet } from "./agent-register-slice";
 import { Result } from "@/types/helpers/result-helpers";
 import { Company } from "@/models/company";
 import { ValidationType } from "@/types/enums/validation-type";
 import { agentRegisterTypeFields } from "@/types/input-fields/agent-register-type-fields";
 
-export function registerAgent(accountRepository: AccountRepository, token: undefined | string) {
+export function registerAgent(accountRepository: AccountRepository) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
 
     let agentRegisterState: AgentRegisterState = getState().agentRegister;
@@ -48,7 +48,7 @@ export function registerAgent(accountRepository: AccountRepository, token: undef
 }
 
 export function getCompanyDataFromInvitation(accountRepository: AccountRepository, code: string) {
-  return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+  return async function (dispatch: AppDispatch) {
 
     let result: Result<Company> = await accountRepository.getCompanyDataFromInvitation(code);
 
@@ -64,10 +64,33 @@ export function getCompanyDataFromInvitation(accountRepository: AccountRepositor
           }
         }))
       }
+
+      dispatch(withTokenSet(true));
     }
     else {
 
 
     }
+  }
+}
+
+export function registerUserAgent(accountRepository: AccountRepository, token: string) {
+  return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+    const agentRegisterState: AgentRegisterState = getState().agentRegister;
+
+    let result = await accountRepository.registerUser({
+      user: {
+        role: 'agent_admin',
+        firstName: agentRegisterState.firstName.value,
+        lastName: agentRegisterState.lastName.value,
+        email: agentRegisterState.email.value,
+        token: token,
+        password: agentRegisterState.password.value,
+        passwordConfirmation: agentRegisterState.passwordConfirmation.value,
+      },
+      company: {
+        name: agentRegisterState.companyName.value
+      }
+    })
   }
 }

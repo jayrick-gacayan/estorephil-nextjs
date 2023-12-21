@@ -12,6 +12,8 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
 
+        console.log('email, password', email, password)
+
         let result = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password }),
@@ -21,12 +23,13 @@ const authOptions: NextAuthOptions = {
         });
 
         let response = await result.json();
+        console.log('sdfjlksdfjlsdkf', response)
 
-        if (result.status !== 200) {
+        if (response?.status !== 200) {
           throw new Error(response.message);
         }
 
-        return response.data;
+        return response?.data;
       },
     }),
   ],

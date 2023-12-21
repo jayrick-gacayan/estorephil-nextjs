@@ -6,6 +6,7 @@ import { SignInOptions, SignInResponse, signIn, signOut } from "next-auth/react"
 export class AccountService {
 
   async nextAuthSignIn(body: SignInProps): Promise<SignInResponse | undefined> {
+    console.log('body', body)
     return await signIn('credentials', { redirect: false, ...body });
   }
 

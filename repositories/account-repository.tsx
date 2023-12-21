@@ -19,6 +19,7 @@ export class AccountRepository {
     async nextAuthSignIn(body: SignInProps): Promise<Result<SignInResponse | undefined>> {
         let result: SignInResponse | undefined = await this.#accountService.nextAuthSignIn(body);
 
+
         return new Result<SignInResponse | undefined>({
             response: result,
             data: result,
@@ -37,12 +38,13 @@ export class AccountRepository {
     }
 
     async registerAgentCompany(company: CompanyFieldProps) {
+        console.log('sdfjsdklfjsdklf', snakeCase(company));
         let result = await this.#accountService.registerAgentCompany(JSON.stringify({ company: snakeCase(company) }))
 
         let response: any = undefined;
 
         if (result.status === 200) {
-            response = await result.json();
+            response = camelCase({ ...await result.json() });
         }
 
         return new Result<Company>({
@@ -88,7 +90,7 @@ export class AccountRepository {
         })
     }
 
-    async registerUser({ user }: {
+    async registerUser({ user, company }: {
         user: {
             role: string;
             email: string;
@@ -96,8 +98,26 @@ export class AccountRepository {
             lastName: string;
             password: string;
             passwordConfirmation: string;
-        }
+            token: string;
+        };
+        company: { name: string; }
     }) {
+        let result = await this.#accountService.registerUser(
+            JSON.stringify({
+                user: snakeCase(user),
+                company: snakeCase(company)
+            })
+        );
 
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+        return new Result<any>({
+            response: response,
+            data: response.data,
+            statusCode: response.status,
+        })
     }
 }

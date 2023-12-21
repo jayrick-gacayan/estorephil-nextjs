@@ -91,6 +91,7 @@ export default function LoginForm() {
                                         rightSideContent={<div className='p-2'><FaLock /></div>}
                                         inputProps={{
                                             id: 'password-login-id',
+                                            type: 'password',
                                             value: password.value,
                                             onChange: (event: ChangeEvent<HTMLInputElement>) => {
                                                 dispatch(passwordChanged(event.target.value))

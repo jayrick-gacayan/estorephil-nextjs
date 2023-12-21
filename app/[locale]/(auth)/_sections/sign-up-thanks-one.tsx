@@ -10,21 +10,11 @@ import { usePathname, useRouter } from 'next-intl/client';
 import { agentRegisterFormReset } from '../(forAgentCourier)/agent/register/_redux/agent-register-slice';
 
 export default function SignUpThanksOne() {
-  const dispatch: AppDispatch = useAppDispatch();
-  const pathname: string = usePathname();
-  const router = useRouter();
   const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
 
-  let pathName = useMemo(() => { return pathname }, [pathname])
-
-  useEffect(() => {
-    dispatch(agentRegisterFormReset());
-    router.push('/')
-  }, [pathName]);
-
-  useEffect(() => {
-
-  }, [])
+  const withToken = useMemo(() => {
+    return agentRegisterState.withToken
+  }, [agentRegisterState.withToken]);
 
   return (
     <div className='w-full'>
@@ -37,9 +27,14 @@ export default function SignUpThanksOne() {
             className='w-[373px] h-[357px] block m-auto' />
           <div className="block font-semibold">
             <h1 className="text-[56px] leading-0">Thank you for signing up</h1>
-            <p className="text-[20px] leading-0">An email will be sent to you once we&#39;re done checking the details you have provided.</p>
+            <p className="text-[20px] leading-0">
+              {
+                withToken ? (<>You can now login to your account.</>) :
+                  (<>An email will be sent to you once we&#39;re done checking the details you have provided.</>)
+              }
+            </p>
           </div>
-          <Link href='/'
+          <Link href={`${withToken ? '/login' : '/'}`}
             className="rounded block m-auto text-white bg-primary py-2 w-[60%] hover:bg-primary-light">
             Home
           </Link>

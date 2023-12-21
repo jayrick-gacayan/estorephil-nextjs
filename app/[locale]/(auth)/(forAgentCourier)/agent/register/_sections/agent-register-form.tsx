@@ -1,18 +1,26 @@
 'use client';
 
-import CustomInput from '@/app/[locale]/_components/custom-input';
 import FormHeader from '../../../_components/form-header';
 import { ChangeEvent, useEffect, useMemo } from 'react';
-import GoogleLikeInputField from '@/app/[locale]/_components/google-like-input-field';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AgentRegisterState } from '../_redux/agent-register-state';
-import { agentRegisterFormClicked, businessNameChanged, confirmPasswordChanged, emailChanged, firstNameChanged, lastNameChanged, natureOfBusinessChanged, passwordChanged, signUpThanksRequestStatusSet } from '../_redux/agent-register-slice';
+import {
+  agentRegisterFormClicked,
+  businessNameChanged,
+  confirmPasswordChanged,
+  emailChanged,
+  firstNameChanged,
+  lastNameChanged,
+  natureOfBusinessChanged,
+  passwordChanged,
+  signUpThanksRequestStatusSet
+} from '../_redux/agent-register-slice';
 import { RequestStatus } from '@/types/enums/request-status';
 import { accountContainer } from '@/inversify/inversify.config';
 import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
-import { registerAgent } from '../_redux/agent-register-thunk';
+import { registerAgent, registerUserAgent } from '../_redux/agent-register-thunk';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
@@ -21,7 +29,7 @@ import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-
 export default function AgentRegisterForm({
   token
 }: {
-  token: string | string[] | undefined;
+  token: string | string[] | undefined
 }) {
   const dispatch: AppDispatch = useAppDispatch();
   const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
@@ -33,28 +41,33 @@ export default function AgentRegisterForm({
     firstName,
     email,
     password,
-    passwordConfirmation: confirmPassword,
-    signUpThanksRequestStatus
+    passwordConfirmation,
+    signUpThanksRequestStatus,
+    withToken,
   } = useMemo(() => { return agentRegisterState }, [agentRegisterState]);
 
   useEffect(() => {
     switch (signUpThanksRequestStatus) {
       case RequestStatus.WAITING:
         setTimeout(() => {
-          if (token === undefined || typeof token === 'string') {
-            console.log('I am here')
-            dispatch(agentRegisterFormClicked({ token }))
-          }
+          dispatch(agentRegisterFormClicked())
         }, 2000);
         break;
       case RequestStatus.IN_PROGRESS:
         let accountRepository: AccountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-        if (token === undefined || typeof token === 'string') {
-          dispatch(registerAgent(accountRepository, token));
+
+        if (withToken) {
+          if (token !== undefined && typeof token === 'string') {
+            dispatch(registerUserAgent(accountRepository, token))
+          }
         }
+        else {
+          dispatch(registerAgent(accountRepository))
+        }
+
         break;
     }
-  }, [signUpThanksRequestStatus]);
+  }, [signUpThanksRequestStatus, dispatch, token, withToken]);
 
   function divClassName(status: ValidationType) {
     return `border divide-x rounded overflow-hidden w-full flex items-center gap-2
@@ -182,13 +195,13 @@ export default function AgentRegisterForm({
                     },
                     placeholder: 'Enter password',
                   }} />
-                <InputCustom errorText={confirmPassword.errorText}
-                  divClassName={divClassName(confirmPassword.status)}
-                  labelText={<div className={labelClassName(confirmPassword.status)}>Confirm Password</div>}
+                <InputCustom errorText={passwordConfirmation.errorText}
+                  divClassName={divClassName(passwordConfirmation.status)}
+                  labelText={<div className={labelClassName(passwordConfirmation.status)}>Confirm Password</div>}
                   inputProps={{
                     id: 'confirm-password-register-agent-id',
                     type: 'password',
-                    value: confirmPassword.value,
+                    value: passwordConfirmation.value,
                     className: 'p-2',
                     onChange: (event: ChangeEvent<HTMLInputElement>) => {
                       dispatch(confirmPasswordChanged(event.target.value))

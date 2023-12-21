@@ -8,6 +8,7 @@ import { agentRegisterTypeFields } from '@/types/input-fields/agent-register-typ
 import { getValidationResponse } from '@/types/helpers/validation_helpers';
 
 const initialState: AgentRegisterState = {
+  withToken: false,
   companyName: textInputFieldValue<string>(''),
   businessNature: textInputFieldValue<string>(''),
   firstName: textInputFieldValue(''),
@@ -63,18 +64,22 @@ const agentRegisterSlice = createSlice({
         [action.payload.field]: { ...state[action.payload.field], ...action.payload.data }
       }
     },
-    agentRegisterFormClicked: (state: AgentRegisterState, action: PayloadAction<{ token: string | undefined }>) => {
+    withTokenSet: (state: AgentRegisterState, action: PayloadAction<boolean>) => {
+      return { ...state, withToken: action.payload }
+    },
+    agentRegisterFormClicked: (state: AgentRegisterState) => {
       let businessNameError: ValidationResponse = getValidationResponse<string>(state.companyName.value, 'Business name', ['required']);
       let businessNatureError: ValidationResponse = getValidationResponse<string>(state.businessNature.value, 'Nature of business', ['required']);
       let firstNameError: ValidationResponse = getValidationResponse<string>(state.firstName.value, 'Firstname', ['required']);
       let lastNameError: ValidationResponse = getValidationResponse<string>(state.lastName.value, 'Lastname', ['required']);
       let emailError: ValidationResponse = getValidationResponse<string>(state.email.value, 'Email', ['required', 'email']);
-      let passwordError: ValidationResponse = { status: ValidationType.NONE, errorText: '' };
-      let confirmationPasswordError: ValidationResponse = { status: ValidationType.NONE, errorText: '' };
+      let passwordError: ValidationResponse = { status: ValidationType.VALID, errorText: '' };
+      let confirmationPasswordError: ValidationResponse = { status: ValidationType.VALID, errorText: '' };
 
 
-      if (action.payload.token && action.payload.token !== '') {
-        passwordError = getValidationResponse<string>(state.password.value, 'Email', ['required', 'email']);
+      if (state.withToken) {
+        passwordError = getValidationResponse<string>(state.password.value, 'Password', ['required']);
+        confirmationPasswordError = getValidationResponse<string>(state.passwordConfirmation.value, 'Confirm Password', ['required']);
       }
 
       return {
@@ -108,6 +113,7 @@ export const {
   passwordChanged,
   confirmPasswordChanged,
   agentRegisterFormClicked,
+  withTokenSet,
   signUpThanksRequestStatusSet,
   fieldValidResponseSet,
   agentRegisterFormReset,

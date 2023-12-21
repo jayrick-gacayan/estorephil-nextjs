@@ -33,9 +33,9 @@ export const loginSlice = createSlice({
                 ...state,
                 email: { ...state.email, ...emailError },
                 password: { ...state.password, ...passwordError },
-                requestStatus: emailError.status !== ValidationType.NONE ||
-                    passwordError.status !== ValidationType.NONE ?
-                    RequestStatus.FAILURE : RequestStatus.IN_PROGRESS
+                requestStatus: emailError.status === ValidationType.VALID ||
+                    passwordError.status === ValidationType.VALID ?
+                    RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
             }
         }
     }
