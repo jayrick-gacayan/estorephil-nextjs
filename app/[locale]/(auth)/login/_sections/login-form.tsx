@@ -100,7 +100,7 @@ export default function LoginForm() {
                                         }} />
                                     <div className='flex items-center justify-between w-full'>
                                         <div className='flex items-center gap-2'>
-                                            <Checkbox<boolean> current={false}
+                                            {/* <Checkbox<boolean> current={false}
                                                 value={true}
                                                 onCheckboxChanged={(value: boolean) => {
                                                     return
@@ -109,8 +109,13 @@ export default function LoginForm() {
                                                     return `border - leading - 1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w - 6 h - 6`;
                                                 }}
                                                 checkClassName={(value: boolean, current: boolean) => {
-                                                    return `${current === value ? 'block' : 'hidden'} translate - x - [2px] translate - y - [1px]`;
-                                                }} />
+                                                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                                                }} /> */}
+                                            <input
+                                                type='checkbox'
+                                                id='cart-checkbox'
+                                                className="form-checkbox rounded-md cursor-pointer border-gray-400 checked:hover:border-blue-400 h-5 w-5 focus:ring-0 focus:ring-offset-0 checked:text-white checked:border-blue-400"
+                                            />
                                             <div className='text-tertiary-dark text-xs'>
                                                 {translate('rememberMe')}
                                             </div>
