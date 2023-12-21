@@ -107,7 +107,7 @@ export default function LoginForm() {
 
                                     <div className='flex items-center justify-between w-full'>
                                         <div className='flex items-center gap-2'>
-                                            <Checkbox<boolean> current={false}
+                                            {/* <Checkbox<boolean> current={false}
                                                 value={true}
                                                 onCheckboxChanged={(value: boolean) => {
                                                     return
@@ -117,7 +117,11 @@ export default function LoginForm() {
                                                 }}
                                                 checkClassName={(value: boolean, current: boolean) => {
                                                     return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
-                                                }} />
+                                                }} /> */}
+                                            <input
+                                                type='checkbox'
+                                                className="form-checkbox rounded-md cursor-pointer h-5 w-5 border border-gray-300 text-blue-400 focus:ring-0 focus:ring-offset-0"
+                                            />
                                             <div className='text-tertiary-dark text-xs'>
                                                 {translate('rememberMe')}
                                             </div>
