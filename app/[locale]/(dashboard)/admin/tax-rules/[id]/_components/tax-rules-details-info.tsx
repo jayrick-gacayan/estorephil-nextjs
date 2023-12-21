@@ -61,9 +61,9 @@ export default function TaxRulesDetailsInfo({
               }`}>
             {isDropdownMultiple != true ? (
               <>
-                {options.map((value: string) => {
+                {options.map((value: string, index) => {
                   return (
-                    <button
+                    <button key={`${value}-${index}-options`}
                       className=" px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 bg-white w-full flex justify-between items-center"
                       onClick={() => {
                         setSelected(value);
@@ -102,8 +102,8 @@ export default function TaxRulesDetailsInfo({
                       <button
                         key={value}
                         className={`text-lg ${words.includes(value)
-                            ? "text-red-500"
-                            : "text-green-500"
+                          ? "text-red-500"
+                          : "text-green-500"
                           }`}>
                         {words.includes(value) ? (
                           <FaMinusCircle />
