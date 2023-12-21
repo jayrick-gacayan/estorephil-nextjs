@@ -120,7 +120,8 @@ export default function LoginForm() {
                                                 }} /> */}
                                             <input
                                                 type='checkbox'
-                                                className="form-checkbox rounded-md cursor-pointer h-5 w-5 border border-gray-300 text-blue-400 focus:ring-0 focus:ring-offset-0"
+                                                id='cart-checkbox'
+                                                className="form-checkbox rounded-md cursor-pointer border-gray-400 checked:hover:border-blue-400 h-5 w-5 focus:ring-0 focus:ring-offset-0 checked:text-white checked:border-blue-400"
                                             />
                                             <div className='text-tertiary-dark text-xs'>
                                                 {translate('rememberMe')}
