@@ -1,7 +1,6 @@
 import { textInputFieldValue } from '@/types/helpers/text-input-field-methods';
 import { AgentRegisterState } from './agent-register-state';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import CustomValidation from '@/types/helpers/custom-validation';
 import { RequestStatus } from '@/types/enums/request-status';
 import { ValidationType } from '@/types/enums/validation-type';
 import { ValidationResponse } from '@/types/props/validation-response';
@@ -14,6 +13,10 @@ const initialState: AgentRegisterState = {
   firstName: textInputFieldValue(''),
   lastName: textInputFieldValue(''),
   email: textInputFieldValue(''),
+
+  password: textInputFieldValue(''),
+  passwordConfirmation: textInputFieldValue(''),
+
   signUpThanksRequestStatus: RequestStatus.NONE
 }
 
@@ -40,18 +43,39 @@ const agentRegisterSlice = createSlice({
     signUpThanksRequestStatusSet: (state: AgentRegisterState, action: PayloadAction<RequestStatus>) => {
       return { ...state, signUpThanksRequestStatus: action.payload }
     },
-    fieldValidResponseSet: (state: AgentRegisterState, action: PayloadAction<{ field: agentRegisterTypeFields, validResponse: ValidationResponse }>) => {
+    passwordChanged: (state: AgentRegisterState, action: PayloadAction<string>) => {
+      return { ...state, password: textInputFieldValue(action.payload) }
+    },
+    confirmPasswordChanged: (state: AgentRegisterState, action: PayloadAction<string>) => {
+      return { ...state, passwordConfirmation: textInputFieldValue(action.payload) }
+    },
+    fieldValidResponseSet: (state: AgentRegisterState,
+      action: PayloadAction<{ field: agentRegisterTypeFields, validResponse: ValidationResponse }>) => {
       return {
         ...state,
         [action.payload.field]: { ...state[action.payload.field], ...action.payload.validResponse }
       }
     },
-    agentRegisterFormClicked: (state: AgentRegisterState) => {
+    fieldInputSet: (state: AgentRegisterState,
+      action: PayloadAction<{ field: agentRegisterTypeFields, data: { value: string } & ValidationResponse }>) => {
+      return {
+        ...state,
+        [action.payload.field]: { ...state[action.payload.field], ...action.payload.data }
+      }
+    },
+    agentRegisterFormClicked: (state: AgentRegisterState, action: PayloadAction<{ token: string | undefined }>) => {
       let businessNameError: ValidationResponse = getValidationResponse<string>(state.companyName.value, 'Business name', ['required']);
       let businessNatureError: ValidationResponse = getValidationResponse<string>(state.businessNature.value, 'Nature of business', ['required']);
       let firstNameError: ValidationResponse = getValidationResponse<string>(state.firstName.value, 'Firstname', ['required']);
       let lastNameError: ValidationResponse = getValidationResponse<string>(state.lastName.value, 'Lastname', ['required']);
       let emailError: ValidationResponse = getValidationResponse<string>(state.email.value, 'Email', ['required', 'email']);
+      let passwordError: ValidationResponse = { status: ValidationType.NONE, errorText: '' };
+      let confirmationPasswordError: ValidationResponse = { status: ValidationType.NONE, errorText: '' };
+
+
+      if (action.payload.token && action.payload.token !== '') {
+        passwordError = getValidationResponse<string>(state.password.value, 'Email', ['required', 'email']);
+      }
 
       return {
         ...state,
@@ -60,14 +84,17 @@ const agentRegisterSlice = createSlice({
         firstName: { ...state.firstName, ...firstNameError },
         lastName: { ...state.lastName, ...lastNameError },
         email: { ...state.email, ...emailError },
-        signUpThanksRequestStatus: businessNameError.status !== ValidationType.NONE ||
-          businessNatureError.status !== ValidationType.NONE ||
-          firstNameError.status !== ValidationType.NONE ||
-          lastNameError.status !== ValidationType.NONE ||
-          emailError.status !== ValidationType.NONE ?
-          RequestStatus.FAILURE : RequestStatus.IN_PROGRESS
+        signUpThanksRequestStatus:
+          businessNameError.status === ValidationType.VALID ||
+            businessNatureError.status === ValidationType.VALID ||
+            firstNameError.status === ValidationType.VALID ||
+            lastNameError.status === ValidationType.VALID ||
+            emailError.status === ValidationType.VALID ?
+            RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
       }
-
+    },
+    agentRegisterFormReset: () => {
+      return initialState;
     }
   }
 });
@@ -78,9 +105,13 @@ export const {
   firstNameChanged,
   lastNameChanged,
   natureOfBusinessChanged,
+  passwordChanged,
+  confirmPasswordChanged,
   agentRegisterFormClicked,
   signUpThanksRequestStatusSet,
-  fieldValidResponseSet
+  fieldValidResponseSet,
+  agentRegisterFormReset,
+  fieldInputSet,
 } = agentRegisterSlice.actions;
 
 export default agentRegisterSlice.reducer;

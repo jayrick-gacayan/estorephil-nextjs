@@ -84,6 +84,10 @@ export default class CustomValidation {
     else {
       if (!value) { this.#status = ValidationType.EMPTY; }
     }
+
+    if (this.#status === ValidationType.NONE) {
+      this.#status = ValidationType.VALID;
+    }
   }
 
   getErrorResponse(): ValidationResponse {

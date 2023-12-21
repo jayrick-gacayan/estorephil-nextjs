@@ -1,7 +1,3 @@
-import { authContainer } from "@/inversify/inversify.config";
-import { TYPES } from "@/inversify/types";
-import { AuthRepository } from "@/repositories/auth-repository";
-import { ResultStatus } from "@/types/enums/result-status";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -15,16 +11,22 @@ const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
-        console.log('auth options called', { email, password })
-        const authRepository = authContainer.get<AuthRepository>(TYPES.AuthRepository);
 
-        let result = await authRepository.loginBackend({ email, password });
-        console.log('login route -----', result.data)
+        let result = await fetch(`${process.env.API_URL}/login`, {
+          method: "POST",
+          body: JSON.stringify({ email, password }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-        if (result.resultStatus !== ResultStatus.SUCCESS) {
-          throw new Error(result.message);
+        let response = await result.json();
+
+        if (result.status !== 200) {
+          throw new Error(response.message);
         }
-        return result?.data.data;
+
+        return response.data;
       },
     }),
   ],

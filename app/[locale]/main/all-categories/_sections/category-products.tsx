@@ -19,6 +19,7 @@ import { TextInputField } from '@/types/props/text-input-field';
 import { Product } from '@/models/product';
 import { capitalCase, kebabCase, noCase, sentenceCase } from "change-case";
 import { RequestStatus } from '@/types/enums/request-status';
+import SelectCustom from '@/app/[locale]/_components/select-custom';
 
 export default function CategoryProducts() {
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
@@ -63,7 +64,6 @@ export default function CategoryProducts() {
   function headerText() {
     let string = '';
 
-
     if (categoriesSelected.length === 1) {
       string += categoriesSelected[0]
     }
@@ -71,16 +71,13 @@ export default function CategoryProducts() {
       string += categoriesSelected.join(' & ');
     }
     else {
-
+      string += categoriesSelected.slice(0, categoriesSelected.length - 2).join(', ');
+      string += ' & ' + categoriesSelected[categoriesSelected.length - 1];
     }
 
     if (sort !== '') {
       string += ' by ' + capitalCase(sort);
-
     }
-
-
-
     return string;
   }
 
@@ -91,16 +88,22 @@ export default function CategoryProducts() {
         <div className='flex-none space-x-2'>
           <span>Sort</span>
           <div className='inline-block w-48 rounded border border-tertiary-dark bg-white'>
-            <CustomSelect ref={categorySelectRef}
+            <SelectCustom labelText=''
               items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
               value={sentenceCase(sort)}
-              placeholder='Sort by:'
-              labelText={''}
+              placeholder='Sort By:'
+              visible={visible}
+              setVisible={setVisible}
               onSelect={(value: string) => {
                 dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
               }}
-              visible={visible}
-              setVisible={setVisible} />
+              valueClassName={(errorText: string) => {
+                return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
+              }}
+              optionActiveClassName={(current: string, value: string) => {
+                return `p-2 cursor-pointer ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`
+              }}
+              errorText='' />
           </div>
         </div>
       </div>
@@ -121,32 +124,3 @@ export default function CategoryProducts() {
     </div>
   );
 }
-
-// `${categoriesSelected.length > 0
-//   ? (() => {
-//     if (categoriesSelected.length === 2) {
-//       const categoriesText = categoriesSelected.map((category, index) => {
-//         if (index === 0) {
-//           return category.toLowerCase();
-//         } else {
-//           return ` & ${category.toLowerCase()}`;
-//         }
-//       });
-
-//       return `Products under ${categoriesText.join('')}  ${!!sort ? `by ${sort}` : ``}`;
-//     } else {
-//       const categoriesText = categoriesSelected.map((category, index) => {
-//         if (index === categoriesSelected.length - 1 && categoriesSelected.length != 1) {
-//           return `& ${category.toLowerCase()}`;
-//         }
-//         else {
-//           return `${category.toLowerCase()}`
-//         }
-//       });
-//       return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
-//     }
-//   })()
-//   : categoriesSelected.length === 0 && products.length > 0
-//     ? `Products ${!!sort ? `by ${sort}` : ``}`
-//     : 'No products'
-// }`

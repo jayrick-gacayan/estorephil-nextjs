@@ -2,8 +2,30 @@
 
 import Image from 'next/image';
 import Link from 'next-intl/link';
+import { AgentRegisterState } from '../(forAgentCourier)/agent/register/_redux/agent-register-state';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { AppDispatch, RootState } from '@/redux/store';
+import { useEffect, useMemo } from 'react';
+import { usePathname, useRouter } from 'next-intl/client';
+import { agentRegisterFormReset } from '../(forAgentCourier)/agent/register/_redux/agent-register-slice';
 
 export default function SignUpThanksOne() {
+  const dispatch: AppDispatch = useAppDispatch();
+  const pathname: string = usePathname();
+  const router = useRouter();
+  const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
+
+  let pathName = useMemo(() => { return pathname }, [pathname])
+
+  useEffect(() => {
+    dispatch(agentRegisterFormReset());
+    router.push('/')
+  }, [pathName]);
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <div className='w-full'>
       <div className='flex items-center justify-center h-full'>

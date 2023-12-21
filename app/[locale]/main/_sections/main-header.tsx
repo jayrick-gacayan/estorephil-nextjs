@@ -19,6 +19,9 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { CountryProps } from '@/types/props/country-props';
 import { TextInputField } from '@/types/props/text-input-field';
 import { countryPickerToggled } from '../_redux/main-slice';
+import { accountContainer } from '@/inversify/inversify.config';
+import { AccountRepository } from '@/repositories/account-repository';
+import { TYPES } from '@/inversify/types';
 
 export const countries: CountryProps[] = [
   {
@@ -69,9 +72,6 @@ export default function MainHeader({
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
   const onSession = !!sessionData
-  const removeSession = async () => {
-    await signOut({ callbackUrl: `/login` })
-  }
 
   useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
 
@@ -118,8 +118,11 @@ export default function MainHeader({
                         <button
                           className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
                           type='button'
-                          onClick={() => {
-                            removeSession()
+                          onClick={async () => {
+                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                            let result = await accountRepository.nextAuthSignOut(`/login`);
+
+                            console.log('result', result)
                           }}
                         >
                           SIGNOUT

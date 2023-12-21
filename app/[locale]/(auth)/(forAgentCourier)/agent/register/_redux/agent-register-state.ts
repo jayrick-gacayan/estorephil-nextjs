@@ -8,5 +8,8 @@ export interface AgentRegisterState {
   lastName: TextInputField<string>;
   email: TextInputField<string>;
 
+  password: TextInputField<string>;
+  passwordConfirmation: TextInputField<string>;
+
   signUpThanksRequestStatus: RequestStatus;
 }

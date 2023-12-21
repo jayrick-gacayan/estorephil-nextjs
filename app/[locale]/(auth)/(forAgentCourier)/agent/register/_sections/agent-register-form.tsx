@@ -7,15 +7,22 @@ import GoogleLikeInputField from '@/app/[locale]/_components/google-like-input-f
 import { AppDispatch, RootState } from '@/redux/store';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AgentRegisterState } from '../_redux/agent-register-state';
-import { agentRegisterFormClicked, businessNameChanged, emailChanged, firstNameChanged, lastNameChanged, natureOfBusinessChanged, signUpThanksRequestStatusSet } from '../_redux/agent-register-slice';
+import { agentRegisterFormClicked, businessNameChanged, confirmPasswordChanged, emailChanged, firstNameChanged, lastNameChanged, natureOfBusinessChanged, passwordChanged, signUpThanksRequestStatusSet } from '../_redux/agent-register-slice';
 import { RequestStatus } from '@/types/enums/request-status';
 import { accountContainer } from '@/inversify/inversify.config';
 import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
 import { registerAgent } from '../_redux/agent-register-thunk';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
+import InputCustom from '@/app/[locale]/_components/input-custom';
+import { ValidationType } from '@/types/enums/validation-type';
+import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-custom';
 
-export default function AgentRegisterForm() {
+export default function AgentRegisterForm({
+  token
+}: {
+  token: string | string[] | undefined;
+}) {
   const dispatch: AppDispatch = useAppDispatch();
   const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
 
@@ -25,6 +32,8 @@ export default function AgentRegisterForm() {
     lastName,
     firstName,
     email,
+    password,
+    passwordConfirmation: confirmPassword,
     signUpThanksRequestStatus
   } = useMemo(() => { return agentRegisterState }, [agentRegisterState]);
 
@@ -32,15 +41,47 @@ export default function AgentRegisterForm() {
     switch (signUpThanksRequestStatus) {
       case RequestStatus.WAITING:
         setTimeout(() => {
-          dispatch(agentRegisterFormClicked())
+          if (token === undefined || typeof token === 'string') {
+            console.log('I am here')
+            dispatch(agentRegisterFormClicked({ token }))
+          }
         }, 2000);
         break;
       case RequestStatus.IN_PROGRESS:
         let accountRepository: AccountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-
-        dispatch(registerAgent(accountRepository));
+        if (token === undefined || typeof token === 'string') {
+          dispatch(registerAgent(accountRepository, token));
+        }
+        break;
     }
-  }, [signUpThanksRequestStatus])
+  }, [signUpThanksRequestStatus]);
+
+  function divClassName(status: ValidationType) {
+    return `border divide-x rounded overflow-hidden w-full flex items-center gap-2
+        ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
+        status === ValidationType.VALID ? 'text-success border-success divide-success has-[input:focus]:border-success' :
+          'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary'
+      }`
+  }
+
+  function labelClassName(status: ValidationType) {
+    return `font-semibold ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger' :
+      status === ValidationType.VALID ? 'text-success' : ''}`
+  }
+
+  function googleLikeInputLabelClassName(status: ValidationType) {
+    return `transition-all absolute peer-focus:text-sm cursor-text peer-placeholder-shown:top-2 peer-focus:-top-3 peer-placeholder-shown:text-base left-0 -top-3 text-sm bg-inherit mx-2 px-1 
+          ${status !== ValidationType.NONE && status !== ValidationType.VALID ? `text-danger peer-focus:text-danger` :
+        status === ValidationType.VALID ? 'peer-focus:text-success text-success' :
+          'peer-focus:text-primary peer-placeholder-shown:text-tertiary-dark text-tertiary-dark'}`
+  }
+
+  function googleLikeInputClassName(status: ValidationType) {
+    return `border-[.5px] rounded w-full p-2 disabled:bg-tertiary-dark
+    ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger focus:border-danger border-danger' :
+        status === ValidationType.VALID ? 'focus:border-success border-success text-success' :
+          'focus:border-primary border-tertiary-dark'}`
+  }
 
   return (
     <div className='rounded bg-white h-full shadow-lg p-8 overflow-hidden'>
@@ -50,61 +91,113 @@ export default function AgentRegisterForm() {
           <div className='text-tertiary-dark'>You get &#37; commission for every successful customer purchase</div>
         </div>
         <div className='space-y-2 flex-1'>
-          <CustomInput labelText={<div className='font-semibold'>Business Name</div>}
+          <InputCustom labelText={<div className={labelClassName(companyName.status)}>Business Name</div>}
+            divClassName={divClassName(companyName.status)}
             inputProps={{
+              id: 'company-name-register-agent',
               type: 'text',
+              disabled: token !== undefined && typeof token === 'string',
               onChange: (event: ChangeEvent<HTMLInputElement>) => {
                 dispatch(businessNameChanged(event.target.value));
               },
+              className: 'p-2 disabled:bg-tertiary-dark',
               value: companyName.value,
               placeholder: 'Enter Business Name: '
             }}
             errorText={companyName.errorText} />
-          <CustomInput labelText={<div className='font-semibold'>Nature of Business</div>}
+          <InputCustom labelText={<div className={labelClassName(businessNature.status)}>Nature of Business</div>}
+            divClassName={divClassName(businessNature.status)}
             inputProps={{
+              id: 'business-nature-register-agent',
               type: 'text',
+              disabled: token !== undefined && typeof token === 'string',
               onChange: (event: ChangeEvent<HTMLInputElement>) => {
                 dispatch(natureOfBusinessChanged(event.target.value));
               },
               value: businessNature.value,
-              placeholder: 'Enter nature of business'
+              placeholder: 'Enter nature of business',
+              className: 'p-2 disabled:bg-tertiary-dark',
             }}
             errorText={businessNature.errorText} />
           <div className='space-y-3'>
             <div className='font-bold'>Company Owner</div>
             <div className='flex gap-4'>
-              <GoogleLikeInputField labelText='Firstname'
+              <InputGoogleLikeCustom labelText='Firstname'
                 inputProps={{
-                  id: 'agent-firstname',
+                  id: 'agent-register-firstname',
                   type: 'text',
                   value: firstName.value,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     dispatch(firstNameChanged(event.target.value));
                   },
+                  disabled: token !== undefined && typeof token === 'string',
+                  className: googleLikeInputClassName(firstName.status)
                 }}
-                errorText={firstName.errorText} />
-              <GoogleLikeInputField labelText='Lastname'
+                errorText={firstName.errorText}
+                status={firstName.status}
+                labelClassName={googleLikeInputLabelClassName} />
+              <InputGoogleLikeCustom labelText='Lastname'
                 inputProps={{
-                  id: 'agent-lastname',
+                  id: 'agent-register-lastname',
                   type: 'text',
                   value: lastName.value,
+                  disabled: token !== undefined && typeof token === 'string',
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
                     dispatch(lastNameChanged(event.target.value));
                   },
+                  className: googleLikeInputClassName(lastName.status)
                 }}
-                errorText={lastName.errorText} />
+                errorText={lastName.errorText}
+                status={lastName.status}
+                labelClassName={googleLikeInputLabelClassName} />
             </div>
           </div>
-          <CustomInput labelText={<div className='font-semibold'>Email Address</div>}
+          <InputCustom errorText={email.errorText}
+            divClassName={divClassName(email.status)}
+            labelText={<div className={labelClassName(email.status)}>Email Address</div>}
             inputProps={{
-              type: 'text',
+              id: 'email-register-agent-id',
+              value: email.value,
+              className: 'p-2 disabled:bg-tertiary-dark',
+              disabled: token !== undefined && typeof token === 'string',
               onChange: (event: ChangeEvent<HTMLInputElement>) => {
                 dispatch(emailChanged(event.target.value))
               },
-              value: email.value,
-              placeholder: 'Enter email address'
-            }}
-            errorText={email.errorText} />
+              placeholder: 'Enter email Address',
+            }} />
+          {
+            token && typeof token === 'string' &&
+            (
+              <>
+                <InputCustom errorText={password.errorText}
+                  divClassName={divClassName(password.status)}
+                  labelText={<div className={labelClassName(password.status)}>Password</div>}
+                  inputProps={{
+                    id: 'password-register-agent-id',
+                    type: 'password',
+                    value: password.value,
+                    className: 'p-2',
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(passwordChanged(event.target.value))
+                    },
+                    placeholder: 'Enter password',
+                  }} />
+                <InputCustom errorText={confirmPassword.errorText}
+                  divClassName={divClassName(confirmPassword.status)}
+                  labelText={<div className={labelClassName(confirmPassword.status)}>Confirm Password</div>}
+                  inputProps={{
+                    id: 'confirm-password-register-agent-id',
+                    type: 'password',
+                    value: confirmPassword.value,
+                    className: 'p-2',
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(confirmPasswordChanged(event.target.value))
+                    },
+                    placeholder: 'Enter confirm password',
+                  }} />
+              </>
+            )
+          }
         </div>
         <div className='block'>
           <button onClick={() => { dispatch(signUpThanksRequestStatusSet(RequestStatus.WAITING)); }}

@@ -3,28 +3,38 @@ import { Company } from '@/models/company';
 import { AccountService } from '@/services/account-service';
 import { Result } from '@/types/helpers/result-helpers';
 import { CompanyFieldProps } from '@/types/props/company-field-props';
+import { SignInProps } from '@/types/props/sign-in-props';
 import { snakeCase, camelCase } from 'change-case/keys';
 import { inject, injectable } from 'inversify';
-import { SignInOptions } from 'next-auth/react';
+import { SignInResponse } from 'next-auth/react';
 
 @injectable()
 export class AccountRepository {
     #accountService: AccountService;
-    public constructor(
-        @inject(TYPES.AccountService) accountService: AccountService,
-    ) {
+
+    constructor(@inject(TYPES.AccountService) accountService: AccountService) {
         this.#accountService = accountService;
     }
-    async login({ email, password }: { email: string, password: string }) {
-        const body: SignInOptions = {
-            email,
-            password,
-            redirect: false,
-        }
-        console.log('login repo body', body)
-        return await this.#accountService.login({ body })
+
+    async nextAuthSignIn(body: SignInProps): Promise<Result<SignInResponse | undefined>> {
+        let result: SignInResponse | undefined = await this.#accountService.nextAuthSignIn(body);
+
+        return new Result<SignInResponse | undefined>({
+            response: result,
+            data: result,
+            statusCode: result?.status ?? 0
+        })
     }
-    // async registerStore({})
+
+    async nextAuthSignOut(callbackUrl?: string) {
+        let result = await this.#accountService.nextAuthSignOut(callbackUrl);
+
+        return new Result<undefined>({
+            response: result,
+            data: result,
+            statusCode: 200
+        })
+    }
 
     async registerAgentCompany(company: CompanyFieldProps) {
         let result = await this.#accountService.registerAgentCompany(JSON.stringify({ company: snakeCase(company) }))
@@ -32,12 +42,12 @@ export class AccountRepository {
         let response: any = undefined;
 
         if (result.status === 200) {
-            response = camelCase(await result.json());
+            response = await result.json();
         }
 
         return new Result<Company>({
             response: response,
-            data: response.data,
+            data: camelCase({ ...response.data }) ?? undefined,
             message: response.message,
             statusCode: response.status,
             error: response.error
@@ -58,5 +68,36 @@ export class AccountRepository {
             message: response.message,
             statusCode: response.status
         })
+    }
+
+    async getCompanyDataFromInvitation(code: string) {
+        let result = await this.#accountService.getCompanyDataFromInvitation(code);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+
+        return new Result<Company>({
+            response: response,
+            data: camelCase({ ...response.data }) ?? undefined,
+            statusCode: response.status,
+            error: response.error,
+        })
+    }
+
+    async registerUser({ user }: {
+        user: {
+            role: string;
+            email: string;
+            firstName: string;
+            lastName: string;
+            password: string;
+            passwordConfirmation: string;
+        }
+    }) {
+
     }
 }

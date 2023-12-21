@@ -3,14 +3,15 @@ import { AgentRegisterState } from "./agent-register-state";
 import { AccountRepository } from "@/repositories/account-repository";
 import { ResultStatus } from "@/types/enums/result-status";
 import { RequestStatus } from "@/types/enums/request-status";
-import { fieldValidResponseSet, signUpThanksRequestStatusSet } from "./agent-register-slice";
+import { fieldInputSet, fieldValidResponseSet, signUpThanksRequestStatusSet } from "./agent-register-slice";
 import { Result } from "@/types/helpers/result-helpers";
 import { Company } from "@/models/company";
 import { ValidationType } from "@/types/enums/validation-type";
 import { agentRegisterTypeFields } from "@/types/input-fields/agent-register-type-fields";
 
-export function registerAgent(accountRepository: AccountRepository) {
+export function registerAgent(accountRepository: AccountRepository, token: undefined | string) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+
     let agentRegisterState: AgentRegisterState = getState().agentRegister;
 
     let result: Result<Company> = await accountRepository.registerAgentCompany({
@@ -42,6 +43,31 @@ export function registerAgent(accountRepository: AccountRepository) {
         }))
       }
       dispatch(signUpThanksRequestStatusSet(RequestStatus.FAILURE));
+    }
+  }
+}
+
+export function getCompanyDataFromInvitation(accountRepository: AccountRepository, code: string) {
+  return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+
+    let result: Result<Company> = await accountRepository.getCompanyDataFromInvitation(code);
+
+    if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
+      let companyProps: agentRegisterTypeFields[] = ['companyName', 'businessNature', 'firstName', 'lastName', 'email'];
+      for (let i = 0; i < companyProps.length; i++) {
+        dispatch(fieldInputSet({
+          field: companyProps[i],
+          data: {
+            value: result.data[companyProps[i]]!,
+            status: ValidationType.VALID,
+            errorText: ''
+          }
+        }))
+      }
+    }
+    else {
+
+
     }
   }
 }

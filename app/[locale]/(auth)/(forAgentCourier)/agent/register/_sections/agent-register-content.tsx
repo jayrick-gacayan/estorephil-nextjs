@@ -1,19 +1,35 @@
 'use client';
 
 import SignUpThanksOne from '@/app/[locale]/(auth)/_sections/sign-up-thanks-one';
-import { useAppSelector } from '@/app/_hooks/redux_hooks';
-import { RootState } from '@/redux/store';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { AppDispatch, RootState } from '@/redux/store';
 import { RequestStatus } from '@/types/enums/request-status';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import AgentRegisterForm from './agent-register-form';
+import { getCompanyDataFromInvitation } from '../_redux/agent-register-thunk';
+import { accountContainer } from '@/inversify/inversify.config';
+import { AccountRepository } from '@/repositories/account-repository';
+import { TYPES } from '@/inversify/types';
 
-export default function AgentRegisterContent() {
+export default function AgentRegisterContent({
+  token
+}: {
+  token: string | string[] | undefined
+}) {
+  const dispatch: AppDispatch = useAppDispatch();
   const agentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
 
   let signUpThanksRequestStatus = useMemo(() => {
     return agentRegisterState.signUpThanksRequestStatus;
   }, [agentRegisterState.signUpThanksRequestStatus])
+
+  useEffect(() => {
+    if (token !== undefined && typeof token === 'string') {
+      let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+      dispatch(getCompanyDataFromInvitation(accountRepository, token))
+    }
+  }, [token])
 
   let isSuccess = signUpThanksRequestStatus === RequestStatus.SUCCESS;
 
@@ -37,7 +53,7 @@ export default function AgentRegisterContent() {
           </div>
         </div>
         <div className="w-full">
-          <AgentRegisterForm />
+          <AgentRegisterForm token={token} />
         </div>
       </>
     )

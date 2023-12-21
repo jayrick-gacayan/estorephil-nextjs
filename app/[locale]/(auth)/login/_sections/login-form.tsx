@@ -1,25 +1,25 @@
 'use client'
 
-import { authContainer } from '@/inversify/inversify.config';
+import { accountContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { AppDispatch, RootState } from '@/redux/store';;
 import { useTranslations } from 'next-intl'
 import { login } from '../_redux/login-thunk';
 import { emailChanged, loginFormSubmitted, loginRequestStatusSet, passwordChanged } from '../_redux/login-slice';
-
 import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginSuccess from './login-success';
 import { useSession } from 'next-auth/react';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { LoginState } from '../_redux/login-state';
-import CustomInput from '@/app/[locale]/_components/custom-input';
 import { FaEnvelope, FaLock } from 'react-icons/fa6';
 import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import Link from 'next-intl/link';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import { RequestStatus } from '@/types/enums/request-status';
-import { AuthRepository } from '@/repositories/auth-repository';
+import InputCustom from '@/app/[locale]/_components/input-custom';
+import { ValidationType } from '@/types/enums/validation-type';
+import { AccountRepository } from '@/repositories/account-repository';
 
 export default function LoginForm() {
     const dispatch: AppDispatch = useAppDispatch();
@@ -40,8 +40,8 @@ export default function LoginForm() {
                 break;
             case RequestStatus.IN_PROGRESS:
                 setTimeout(() => {
-                    const authRepository = authContainer.get<AuthRepository>(TYPES.AuthRepository);
-                    dispatch(login(authRepository))
+                    const accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                    dispatch(login(accountRepository))
                 }, 2000);
                 break;
         }
@@ -56,8 +56,15 @@ export default function LoginForm() {
         dispatch(loginRequestStatusSet(RequestStatus.WAITING));
     }
 
-    return (
+    function divClassName(status: ValidationType) {
+        return `border divide-x rounded overflow-hidden w-full flex items-center gap-2
+        ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
+                status === ValidationType.VALID ? 'text-success border-success divide-success has-[input:focus]:border-success' :
+                    'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary'
+            }`
+    }
 
+    return (
         <>
             {
                 requestStatus === RequestStatus.SUCCESS ? (<LoginSuccess />) :
@@ -67,44 +74,30 @@ export default function LoginForm() {
                             <div className='block text-center'>{translate('signIn')}</div>
                             <div className='px-8 py-4 space-y-8'>
                                 <form onSubmit={loginFormSubmit} className='space-y-4'>
-                                    <div className='block'>
-                                        <div className='border focus-within:border-primary rounded overflow-hidden tw-full border-tertiary-dark flex items-center'>
-                                            <div className='flex-1 p-2'>
-                                                <CustomInput
-                                                    inputProps={{
-                                                        id: 'login-id',
-                                                        value: email.value,
-                                                        onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                                                            dispatch(emailChanged(event.target.value))
-                                                        },
-                                                        placeholder: 'Enter email Address'
-                                                    }} />
-                                            </div>
-                                            <div className='flex-none w-9 p-2 border-l border-l-tertiary-dark'>
-                                                <div><FaEnvelope /></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='block'>
-                                        <div className='border focus-within:border-primary rounded overflow-hidden tw-full border-tertiary-dark flex items-center divide-x divide-tertiary-dark'>
-                                            <div className='flex-1 p-2'>
-                                                <CustomInput
-                                                    inputProps={{
-                                                        id: 'login-id',
-                                                        type: 'password',
-                                                        value: password.value,
-                                                        onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                                                            dispatch(passwordChanged(event.target.value))
-                                                        },
-                                                        placeholder: 'Enter password'
-                                                    }} />
-                                            </div>
-                                            <div className='flex-none w-9 p-2'>
-                                                <FaLock />
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                    <InputCustom errorText={email.errorText}
+                                        divClassName={divClassName(email.status)}
+                                        rightSideContent={<div className='p-2'><FaEnvelope /></div>}
+                                        inputProps={{
+                                            id: 'email-login-id',
+                                            value: email.value,
+                                            className: 'p-2',
+                                            onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                                                dispatch(emailChanged(event.target.value))
+                                            },
+                                            placeholder: 'Enter email Address',
+                                        }} />
+                                    <InputCustom errorText={password.errorText}
+                                        divClassName={divClassName(password.status)}
+                                        rightSideContent={<div className='p-2'><FaLock /></div>}
+                                        inputProps={{
+                                            id: 'password-login-id',
+                                            value: password.value,
+                                            onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                                                dispatch(passwordChanged(event.target.value))
+                                            },
+                                            className: 'p-2',
+                                            placeholder: 'Enter password'
+                                        }} />
                                     <div className='flex items-center justify-between w-full'>
                                         <div className='flex items-center gap-2'>
                                             <Checkbox<boolean> current={false}
@@ -113,10 +106,10 @@ export default function LoginForm() {
                                                     return
                                                 }}
                                                 checkBoxClassName={(value: boolean, current: boolean) => {
-                                                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
+                                                    return `border - leading - 1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w - 6 h - 6`;
                                                 }}
                                                 checkClassName={(value: boolean, current: boolean) => {
-                                                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                                                    return `${current === value ? 'block' : 'hidden'} translate - x - [2px] translate - y - [1px]`;
                                                 }} />
                                             <div className='text-tertiary-dark text-xs'>
                                                 {translate('rememberMe')}
@@ -125,12 +118,10 @@ export default function LoginForm() {
                                         <div className='text-tertiary-dark font-semibold text-xs'>
                                             {translate('forgotPassword?')}
                                         </div>
-
                                     </div>
                                     <button type='submit'
                                         className='w-full bg-primary rounded disabled:cursor-not-allowed text-white py-2 mt-4 flex items-center justify-center'
                                         disabled={requestStatus == RequestStatus.IN_PROGRESS || requestStatus === RequestStatus.WAITING}>
-
                                         {requestStatus == RequestStatus.IN_PROGRESS || requestStatus === RequestStatus.WAITING
                                             ? (<div className='w-fit m-auto block space-x-0.5'>
                                                 <span className='inline-block align-middle'>
