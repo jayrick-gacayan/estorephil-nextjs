@@ -51,6 +51,26 @@ declare module "next-auth" {
             country?: any | null,
             referral_fee?: number
         }
+        cart?: {
+            id:number,
+            user_id: number,
+            created_at?: string,
+            updated_at?: string,
+            cart_type?: string,
+            is_active?: boolean,
+            country?: string,
+            city?: string,
+            box_size?: string,
+            box_id?: number,
+            delivery_type?: string,
+            volume_percentage?: string,
+            courier_id?: number,
+            company_id?: number,
+            address_1?:string,
+            address_2?: string,
+            zip_code?: string,
+            cart_products: any[]
+        },
         store?: {
             id: 83,
             user_id: 106,
@@ -107,6 +127,26 @@ declare module "next-auth" {
         city?: string | null,
         province?: string | null,
         profile_image_url?: string | null
+        cart?: {
+            id:number,
+            user_id: number,
+            created_at?: string,
+            updated_at?: string,
+            cart_type?: string,
+            is_active?: boolean,
+            country?: string,
+            city?: string,
+            box_size?: string,
+            box_id?: number,
+            delivery_type?: string,
+            volume_percentage?: string,
+            courier_id?: number,
+            company_id?: number,
+            address_1?:string,
+            address_2?: string,
+            zip_code?: string,
+            cart_products: any[]
+        },
         company?: {
             id: number,
             company_name: string,

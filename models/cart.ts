@@ -1,8 +1,8 @@
-import { Product } from "./product";
+import { Products } from "./products";
 import { Seller } from "./seller";
 
 export interface Cart {
-  product: Product;
+  product: Products;
   seller: Seller;
   quantity: number;
   total: number;

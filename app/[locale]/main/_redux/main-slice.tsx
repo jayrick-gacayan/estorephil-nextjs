@@ -1,22 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatus } from "@/models/result";
-import { MainState } from "./main_state";
+import { MainState } from "./main-state";
+import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
 
 const initialState: MainState = {
   isToChange: false,
+
   mainModalInfo: {
     open: false,
     type: ''
   },
-  countryPicker: {
-    value: 'ph',
-    show: false
-  },
-  cart: {},
+
+  countryPicker: textInputFieldValue('ph', false),
+
+  cart: undefined,
   cartType: '',
   deliveryType: '',
   deliveryAddressCity: '',
   deliveryAddressCountry: '',
+  addToCartQuantity: 0,
+  addToCartStatus: RequestStatus.WAITING,
+  removeFromCartStatus: RequestStatus.WAITING,
   setCartStatus: RequestStatus.WAITING
 }
 
@@ -31,6 +35,38 @@ export const mainSlice = createSlice({
       return {
         ...state,
         setCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    addToCartLoaded: (state: MainState) => {
+      return {
+        ...state,
+        addToCartStatus: RequestStatus.IN_PROGRESS,
+      }
+    },
+    removeFromCartLoaded: (state: MainState) => {
+      return {
+        ...state,
+        removeFromCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    addToCartQuantityChanged: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        addToCartQuantity: action.payload
+      }
+    },
+    addToCartSuccess: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        addToCartStatus: RequestStatus.SUCCESS,
+        cart: action.payload
+      }
+    },
+    removeFromCartSuccess: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        removeFromCartStatus: RequestStatus.SUCCESS,
+        cart: action.payload
       }
     },
     cartTypeChanged: (state: MainState, action: PayloadAction<string>) => {
@@ -52,11 +88,22 @@ export const mainSlice = createSlice({
         cart: action.payload
       }
     },
+
     mainModalOpened: (state: MainState, action: PayloadAction<{ type: string; open: boolean }>) => {
       const { open, type } = action.payload;
       return {
         ...state,
         mainModalInfo: { open, type }
+      }
+    },
+
+    countryPickerToggled: (state: MainState) => {
+      return {
+        ...state,
+        countryPicker: {
+          ...state.countryPicker,
+          show: !state.countryPicker.show
+        }
       }
     },
     openCountryPicker: (state: MainState) => {
@@ -80,7 +127,6 @@ export const mainSlice = createSlice({
       }
     },
     countryPickerValueChanged: (state: MainState, action: PayloadAction<string>) => {
-      console.log('country picked', action.payload)
       return {
         ...state,
         countryPicker: {
@@ -100,6 +146,12 @@ export const mainSlice = createSlice({
         ...state,
         deliveryAddressCity: action.payload
       }
+    },
+    cartChanged: (state: MainState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        cart: action.payload
+      }
     }
   }
 })
@@ -107,10 +159,13 @@ export const mainSlice = createSlice({
 export const {
   mainModalOpened,
   isToChangeSet,
-  closeCountryPicker,
+  countryPickerToggled,
   countryPickerValueChanged,
-  openCountryPicker,
-  deliveryAddressCityChanged,
+  removeFromCartLoaded,
+  addToCartLoaded,
+  closeCountryPicker, addToCartSuccess,
+  openCountryPicker, removeFromCartSuccess, addToCartQuantityChanged,
+  deliveryAddressCityChanged, cartChanged,
   deliveryAddressCountryChanged,
   cartTypeChanged,
   deliveryTypeChanged,

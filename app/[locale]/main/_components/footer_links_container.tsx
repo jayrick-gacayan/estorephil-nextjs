@@ -14,7 +14,7 @@ export function FooterLinksContainer({
       <div>
         {
           links.map((link: LinkProps, index: number) => {
-            return <Link key={`${link.text}-${index}`} href={link.link} className='block'>{link.text}</Link>
+            return <Link key={`${link.text}-${index}`} href={link.link} className='block hover:text-primary'>{link.text}</Link>
           })
         }
       </div>

@@ -30,7 +30,7 @@ export default function Documents() {
 
 
     return (
-        <div className="space-y-4 py-4">
+        <div className="space-y-4 pt-4">
             <h3 className="font-semibold text-[24px]">DOCUMENTS</h3>
             <div className="flex gap-4">
                 {
@@ -74,7 +74,7 @@ export default function Documents() {
                                 return;
                             }
                             else {
-                                let { arrayBuffer, name, type } = files[0];
+                                let { name, type } = files[0];
 
                                 dispatch(agentInfoDocumentAdded({
                                     fileName: name,

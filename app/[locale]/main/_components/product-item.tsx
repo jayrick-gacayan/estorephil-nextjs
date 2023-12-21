@@ -1,4 +1,4 @@
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import Image from 'next/image';
 import Link from 'next-intl/link';
 import Rating from '../../_components/rating';

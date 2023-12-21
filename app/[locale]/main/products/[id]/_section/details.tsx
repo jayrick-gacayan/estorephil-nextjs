@@ -98,7 +98,7 @@ export default function Details() {
                 </div>
                 <div className='w-full space-y-2'>
                     <h1 className='font-bold text-primary text-3xl'>C&#36; {product?.price?.toFixed(2)}</h1>
-                    <ProductButtonsContainer product={product} seller={product?.seller!} />
+                    <ProductButtonsContainer />
                 </div>
             </div>
         </>

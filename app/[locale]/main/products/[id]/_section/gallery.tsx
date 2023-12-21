@@ -22,8 +22,6 @@ export default function Gallery() {
             store.dispatch(getProductDetails(productRepository, productId))
         }
     }, [productId])
-    console.log('first image', state.currentPreviewImage)
-    console.log('images', images)
     return (
         <>
             <div className='basis-1/2 py-6 px-8 '>

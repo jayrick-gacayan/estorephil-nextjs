@@ -1,16 +1,16 @@
-import { withAuth } from 'next-auth/middleware';
+import { NextMiddlewareWithAuth, withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
 
 const locales = ['en', 'ph'];
-const publicPages = ['/', '/home', '/all-categories', '/login'];
+const publicPages = ['/', '/home', '/all-categories', '/login', '/agent/register',];
 
 const intlMiddleware = createMiddleware({
   locales: locales,
   defaultLocale: 'en'
 });
 
-const authMiddleware = withAuth(
+const authMiddleware: NextMiddlewareWithAuth = withAuth(
   function onSuccess(req) {
     return intlMiddleware(req);
   },
@@ -19,8 +19,14 @@ const authMiddleware = withAuth(
       authorized: ({ token, req }) => {
         if (req.nextUrl.pathname.includes('courier')
           || req.nextUrl.pathname.includes('admin') ||
-          req.nextUrl.pathname.includes('dashboard')) {
+          req.nextUrl.pathname.includes('dashboard') ||
+          req.nextUrl.pathname === '/' ||
+          req.nextUrl.pathname === '/home' ||
+          req.nextUrl.pathname === '/agent/register' ||
+          req.nextUrl.pathname === '/all-categories'
+        ) {
           return true;
+
         }
 
         return token != null
@@ -28,6 +34,7 @@ const authMiddleware = withAuth(
     },
     pages: {
       signIn: '/login'
+
     }
   }
 );

@@ -1,68 +1,51 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { HomeState } from "./home-state";
-import { RequestStatus } from "@/models/result";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { HomeState } from './home-state';
+import { RequestStatus } from '@/types/enums/request-status';
+import { Categories } from '@/models/category';
+import { Store } from '@/models/store';
+import { Product } from '@/models/product';
 
 const initialState: HomeState = {
-    categories: [{}],
-    products: [{}],
-    stores: [{}],
-    getMainCategoriesStatus: RequestStatus.WAITING,
-    getMainStoresStatus: RequestStatus.WAITING,
-    getMainProductsStatus: RequestStatus.WAITING,
+    categories: [],
+    ourProducts: [],
+    stores: [],
+    getMainCategoriesStatus: RequestStatus.NONE,
+    getMainStoresStatus: RequestStatus.NONE,
+    getOurProductsStatus: RequestStatus.NONE,
 }
+
 export const homeSlice = createSlice({
     name: 'home',
     initialState,
     reducers: {
-        getMainCategoriesLoaded: (state: HomeState) => {
-            return {
-                ...state,
-                getMainCategoriesStatus: RequestStatus.IN_PROGRESS
-            }
+        categoriesRequestStatusSet: (state: HomeState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getMainCategoriesStatus: action.payload }
         },
-        getMainCategoriesSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
-            return {
-                ...state,
-                categories: action.payload,
-                getMainCategoriesStatus: RequestStatus.SUCCESS
-            }
+        mainCategoriesSet: (state: HomeState, action: PayloadAction<Categories[]>) => {
+            return { ...state, categories: action.payload }
         },
-        getMainStoresLoaded: (state: HomeState) => {
-            return {
-                ...state,
-                getMainStoresStatus: RequestStatus.IN_PROGRESS
-            }
+        storesRequestStatusSet: (state: HomeState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getMainStoresStatus: action.payload }
         },
-        getMainStoresSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
-            return {
-                ...state,
-                stores: action.payload,
-                getMainStoresStatus: RequestStatus.SUCCESS
-            }
+        mainStoresSet: (state: HomeState, action: PayloadAction<Store[]>) => {
+            return { ...state, stores: action.payload }
         },
-        getMainProductsLoaded: (state: HomeState) => {
-            return {
-                ...state,
-                getMainProductsStatus: RequestStatus.IN_PROGRESS
-            }
+        ourProductsRequestStatusSet: (state: HomeState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getOurProductsStatus: action.payload }
         },
-        getMainProductsSuccess: (state: HomeState, action: PayloadAction<any>) => {
-            console.log('action payload: ', action.payload)
-            return {
-                ...state,
-                products: action.payload,
-                getMainProductsStatus: RequestStatus.SUCCESS
-            }
-        }
+        mainOurProductsSet: (state: HomeState, action: PayloadAction<Product[]>) => {
+            return { ...state, ourProducts: action.payload }
+        },
     }
 })
 
 export const {
-    getMainCategoriesLoaded,
-    getMainCategoriesSuccess, getMainProductsLoaded,
-    getMainProductsSuccess, getMainStoresLoaded, getMainStoresSuccess
+    categoriesRequestStatusSet,
+    mainCategoriesSet,
+    storesRequestStatusSet,
+    mainStoresSet,
+    ourProductsRequestStatusSet,
+    mainOurProductsSet,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

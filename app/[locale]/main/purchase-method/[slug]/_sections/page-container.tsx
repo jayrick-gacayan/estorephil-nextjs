@@ -7,7 +7,8 @@ import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
 import CartItemsContainer from './cart-items-container';
 import Image from 'next/image';
-import { MainState } from '../../../_redux/main_state';
+import { MainState } from '../../../_redux/main-state';
+import { useSession } from 'next-auth/react';
 
 export default function PageContainer({
   checkoutSlug
@@ -16,12 +17,13 @@ export default function PageContainer({
 }): JSX.Element | null {
   const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
+  const { data: sessionData } = useSession()
   const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => {
     return state.purchaseMethod;
   });
 
   const cartType = useMemo(() => {
-    const cartType = mainState.cartType;
+    const cartType = !!sessionData ? sessionData.cart?.cart_type : mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
       cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);

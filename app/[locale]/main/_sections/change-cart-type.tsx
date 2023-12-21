@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import Image from 'next/image';
 import { mainModalOpened } from '../_redux/main-slice';
-import { MainState } from '../_redux/main_state';
+import { MainState } from '../_redux/main-state';
 import { useMemo } from 'react';
 
 export default function ChangeCartType({ onClose }: { onClose: () => void; }) {

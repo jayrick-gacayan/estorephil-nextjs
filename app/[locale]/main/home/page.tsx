@@ -4,7 +4,7 @@ import { HomeCategories } from './_sections/home-categories';
 import { BayanSection } from './_sections/bayan-section';
 import BalikbayanItems from './_sections/balikbayan-items';
 import NewItems from './_sections/new-items';
-import Products from './_sections/products';
+import OurProducts from './_sections/our-products';
 
 export default function Home({ params }: { params: { locale: string } }) {
   return (
@@ -17,7 +17,7 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </div>
       <OurSellers />
-      <Products />
+      <OurProducts />
       {/* <BalikbayanItems />
       <NewItems /> */}
     </div>

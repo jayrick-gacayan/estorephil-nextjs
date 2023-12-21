@@ -1,17 +1,19 @@
 'use client';
 
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { useState, useRef } from 'react';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
+import SelectCustom from '@/app/[locale]/_components/select-custom';
+import { sentenceCase } from 'change-case';
 
 export function SearchProducts({
   products
 }: {
-  products: Product[]
+  products: Products[]
 }): JSX.Element {
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const [visible, setVisible] = useState<boolean>(false);
@@ -28,12 +30,22 @@ export function SearchProducts({
         <div className='flex-none space-x-2'>
           <span>Sort</span>
           <div className='inline-block w-36'>
-            <CustomSelect ref={searchSelectRef} items={['Top Seller', 'Low Seller']}
-              value={undefined}
-              placeholder='Sort by:'
-              labelText={''}
+            <SelectCustom labelText=''
+              items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
+              value={sentenceCase('top-seller')}
+              placeholder='Sort By:'
               visible={visible}
-              setVisible={setVisible} />
+              setVisible={setVisible}
+              onSelect={(value: string) => {
+                return;
+              }}
+              valueClassName={(errorText: string) => {
+                return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
+              }}
+              optionActiveClassName={(current: string, value: string) => {
+                return `p-2 cursor-pointer ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`
+              }}
+              errorText='' />
           </div>
         </div>
       </div>
@@ -42,7 +54,7 @@ export function SearchProducts({
           (
             <div className='flex flex-row flex-wrap gap-4'>
               {
-                products.map((product: Product) => {
+                products.map((product: Products) => {
                   return (<ProductItem key={`product-item-${product.id}`}
                     product={product}
                     withRatingEvents={false} />)

@@ -125,7 +125,7 @@ function AdminSidebar() {
     <div className="lg:block hidden h-full w-[256px] bg-white lg:relative absolute lg:z-0 z-[100] top-0 left-0 border-r-2 text-sm">
       <div className="space-y-2">
         <div className="px-4 py-2 ">Menu</div>
-        <div className="block space-y-3 pl-5 text-sm text-gray-500">
+        <div className="block space-y-3 pl-5 text-sm text-secondary">
           {adminDashboardMenus.map((adminDashboardMenu: MenuProps) => {
             if (adminDashboardMenu.subMenus) {
               let objectToAdminMenuItemWithSubLinksProps: any =

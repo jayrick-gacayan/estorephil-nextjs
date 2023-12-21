@@ -42,7 +42,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|register|login|verify-login|courier).*)',
+        source: '/:locale/:path((?!admin|login|verify-login|courier|agent/register).*)',
         destination: '/:locale/main/:path*',
       },
       {

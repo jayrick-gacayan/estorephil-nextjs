@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <Header />
                 <div className="flex w-full h-full content-stretch">
                     <SideBar />
-                    <div className="border-l-[2px] border-[#D4D4D4] w-full h-full relative">
+                    <div className="border-l border-tertiary-dark w-full h-full relative">
                         {children}
                     </div>
                 </div>

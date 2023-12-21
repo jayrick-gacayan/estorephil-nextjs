@@ -22,7 +22,7 @@ export default function PasswordFieldInput({
             <div className={`block ${className != `` ? `${className}` : `w-[570px]`}`}>
                 <div className="relative py-2">
                     <div className="flex justify-between">
-                        <label className="">{label}</label>
+                        <label className="text-zinc-500 font-medium">{label}</label>
                         <p className={`${errorText == '' ? `hidden` : ``} text-red-500`}>{errorText}</p>
                     </div>
                     <div className="py-2">

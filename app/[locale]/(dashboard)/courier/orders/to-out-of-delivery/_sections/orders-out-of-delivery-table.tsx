@@ -83,12 +83,12 @@ export default function OrdersOutOfDeliveryTable() {
     <div className="block overflow-auto">
       <table className="min-w-[768px] w-full">
         <thead>
-          <tr className="text-left [&>th]:font-normal [&>th]:p-2 border-y-[.5px] border-y-thin border-[#707070] bg-[#F8FAFC]">
+          <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-3 border-y-[.5px] border-tertiary bg-[#F8FAFC]">
             <th>
               <Checkbox<boolean> current={false}
                 value={true}
                 checkBoxClassName={(value: boolean, current: boolean) => {
-                  return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-[#707070]'} rounded w-6 h-6`;
+                  return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
                 }}
                 checkClassName={(value: boolean, current: boolean) => {
                   return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
@@ -110,12 +110,12 @@ export default function OrdersOutOfDeliveryTable() {
             outOfDeliveryOrders.map((value: any) => {
               return (
                 <tr key={`orders-completed-${value.id}`}
-                  className="[&>td]:p-2 border-b-[.5px] border-b-[#707070] odd:bg-inherit even:bg-[#EFF0F0]">
+                  className="[&>td]:p-2 border-b-[.5px] border-b-tertiary-dark odd:bg-inherit even:bg-[#EFF0F0]">
                   <td>
                     <Checkbox<boolean> current={false}
                       value={true}
                       checkBoxClassName={(value: boolean, current: boolean) => {
-                        return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-[#707070]'} rounded w-6 h-6`;
+                        return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
                       }}
                       checkClassName={(value: boolean, current: boolean) => {
                         return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
