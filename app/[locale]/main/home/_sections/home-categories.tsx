@@ -42,10 +42,8 @@ export function HomeCategories() {
         dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
         break;
       case RequestStatus.IN_PROGRESS:
-        // const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
-
-
-        // dispatch(getMainCategories(categoryRepository, countryPicker.value));
+        const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
+        dispatch(getMainCategories(categoryRepository, countryPicker.value));
         break;
     }
   }, [categoriesRequestStatus, dispatch, countryPicker.value]);

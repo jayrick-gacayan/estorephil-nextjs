@@ -16,6 +16,7 @@ import { CategoryRepository } from '@/repositories/category-repository';
 import { StoreRepository } from '@/repositories/store-repository';
 import { ProductRepository } from '@/repositories/product-repository';
 import { Product } from '@/models/product';
+import { getResultStatus } from '@/models/result';
 
 function getMainCategories(
     categoryRepository: CategoryRepository,
@@ -23,6 +24,7 @@ function getMainCategories(
 ): (dispatch: AppDispatch) => Promise<void> {
     return async function (dispatch: AppDispatch) {
         let result: Result<Categories[]> = await categoryRepository.getMainCategories(locale);
+        console.log('result status:',result.resultStatus)
         switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
                 dispatch(categoriesRequestStatusSet(RequestStatus.SUCCESS))

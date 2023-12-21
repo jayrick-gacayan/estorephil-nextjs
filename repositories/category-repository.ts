@@ -27,7 +27,7 @@ export class CategoryRepository {
       {
         response: response,
         data: response.data,
-        statusCode: result.status
+        statusCode: response.status
       }
     )
   }

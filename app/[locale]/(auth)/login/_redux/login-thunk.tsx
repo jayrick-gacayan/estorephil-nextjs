@@ -9,14 +9,11 @@ export function login(accountRepository: AccountRepository) {
         const loginState: LoginState = getState().login
 
         console.log('email on login', loginState.email.value)
-        let result = await accountRepository.nextAuthSignIn({
+        let result = await accountRepository.login({
             email: loginState.email.value,
             password: loginState.password.value
         });
-
-        console.log('Result', result.data);
-
-        if (result.data?.ok) {
+        if (!result?.error) {
             dispatch(loginRequestStatusSet(RequestStatus.SUCCESS))
         } else {
             dispatch(loginRequestStatusSet(RequestStatus.FAILURE))
