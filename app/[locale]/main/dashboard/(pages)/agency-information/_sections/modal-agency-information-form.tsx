@@ -6,7 +6,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import { AgentAgencyInformationState } from '../_redux/agent-agency-information-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import { modalUpdateFormOpened } from '../_redux/agent-agency-information-slice';
+import { modalUpdateFormOpened, updateModalBasicInfoClicked } from '../_redux/agent-agency-information-slice';
 import AgentEditBasicInfoForm from './agent-edit-basic-info-form';
 import AgentEditBusinessInfoForm from './agent-edit-business-info-form';
 
@@ -44,7 +44,12 @@ export default function ModalAgencyInformationForm() {
           <div className='block'>
             <div className='w-1/2 m-auto'>
               <div className='flex items-stretch gap-2 justify-center'>
-                <button className='bg-info p-2 rounded text-white'>Update</button>
+                <button className='bg-info p-2 rounded text-white'
+                  onClick={() => {
+                    if (type === 'basicInfo') {
+                      dispatch(updateModalBasicInfoClicked())
+                    }
+                  }}>Update</button>
                 <button className='border border-info p-2 rounded text-info'
                   onClick={cbOnModalClose}>Cancel</button>
               </div>

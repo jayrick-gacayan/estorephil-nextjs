@@ -1,8 +1,8 @@
-import { FieldInput } from "@/models/field-input"
-import { RequestStatus } from "@/models/result"
+import { RequestStatus } from "@/types/enums/request-status"
+import { TextInputField } from "@/types/props/text-input-field"
 
 export interface LoginState {
-    email: FieldInput
-    password: FieldInput
+    email: TextInputField<string>;
+    password: TextInputField<string>;
     requestStatus: RequestStatus
 }

@@ -1,10 +1,10 @@
-import Products from '@/app/_data/product.json';
-import { Product } from '@/models/product';
+import ProductsData from '@/app/_data/product.json';
+import { Products } from '@/models/products';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
 
 export default function NewItems() {
-  let newItems: Product[] = Products.products;
+  let newItems: Products[] = ProductsData.products;
 
   return (
     <div className='max-w-screen-2xl m-auto py-4'>
@@ -16,7 +16,7 @@ export default function NewItems() {
           (
             <div className='flex flex-row flex-wrap gap-4'>
               {
-                newItems.map((product: Product) => {
+                newItems.map((product: Products) => {
                   return (<ProductItem key={`product-item-${product.id}`}
                     product={product}
                     withRatingEvents={false} />)

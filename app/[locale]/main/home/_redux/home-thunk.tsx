@@ -1,50 +1,79 @@
-import { AppDispatch, store } from "@/redux/store";
-import { HomeRepository } from "@/repositories/home-repository";
-import { HomeState } from "./home-state";
-import { getMainCategoriesLoaded, getMainCategoriesSuccess, getMainProductsSuccess, getMainStoresSuccess } from "./home-slice";
-import { ApiResponse, ResultStatus, getResultStatus } from "@/models/result";
+import { AppDispatch } from '@/redux/store';
+import {
+    categoriesRequestStatusSet,
+    mainCategoriesSet,
+    storesRequestStatusSet,
+    mainStoresSet,
+    ourProductsRequestStatusSet,
+    mainOurProductsSet,
+} from './home-slice';
+import { Result } from '@/types/helpers/result-helpers';
+import { Categories } from '@/models/category';
+import { RequestStatus } from '@/types/enums/request-status';
+import { ResultStatus } from '@/types/enums/result-status';
+import { Store } from '@/models/store';
+import { CategoryRepository } from '@/repositories/category-repository';
+import { StoreRepository } from '@/repositories/store-repository';
+import { ProductRepository } from '@/repositories/product-repository';
+import { Product } from '@/models/product';
 
-export function getMainCategories(homeRepository: HomeRepository, locale: string) {
-    return async function getMainCategories(dispatch: AppDispatch, getState: typeof store.getState) {
-        const state = getState().home as HomeState
-        dispatch(getMainCategoriesLoaded())
-        const result: ApiResponse = await homeRepository.getMainCategories(locale)
-        switch (getResultStatus(result.status)) {
+function getMainCategories(
+    categoryRepository: CategoryRepository,
+    locale: string
+): (dispatch: AppDispatch) => Promise<void> {
+    return async function (dispatch: AppDispatch) {
+        let result: Result<Categories[]> = await categoryRepository.getMainCategories(locale);
+        switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
-                dispatch(getMainCategoriesSuccess(result.data))
-                console.log('home thunk', result.data)
+                dispatch(categoriesRequestStatusSet(RequestStatus.SUCCESS))
+                dispatch(mainCategoriesSet(result.data ?? []))
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(getMainCategoriesSuccess([]))
+                dispatch(categoriesRequestStatusSet(RequestStatus.FAILURE))
                 break;
         }
     }
 }
-export function getMainStores(homeRepository: HomeRepository, locale: string) {
-    return async function getMainStores(dispatch: AppDispatch, getState: typeof store.getState) {
-        const state = getState().home as HomeState
-        const result: ApiResponse = await homeRepository.getMainStores(locale)
-        switch (getResultStatus(result.status)) {
+
+function getMainStores(
+    storeRepository: StoreRepository,
+    locale: string
+): (dispatch: AppDispatch) => Promise<void> {
+    return async function (dispatch: AppDispatch) {
+        let result: Result<Store[]> = await storeRepository.getMainStores(locale);
+        switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
-                dispatch(getMainStoresSuccess(result.data))
+                dispatch(storesRequestStatusSet(RequestStatus.SUCCESS))
+                dispatch(mainStoresSet(result.data ?? []))
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(getMainStoresSuccess([]))
+                dispatch(storesRequestStatusSet(RequestStatus.FAILURE))
                 break;
         }
     }
 }
-export function getMainProducts(homeRepository: HomeRepository, locale: string) {
-    return async function getMainProducts(dispatch: AppDispatch, getState: typeof store.getState) {
-        const state = getState().home as HomeState
-        const result: ApiResponse = await homeRepository.getMainProducts(locale)
-        switch (getResultStatus(result.status)) {
+
+function getOurProducts(
+    productRepository: ProductRepository,
+    locale: string
+): (dispatch: AppDispatch) => Promise<void> {
+    return async function getMainProducts(dispatch: AppDispatch) {
+        let result: Result<Product[]> = await productRepository.getMainProducts(locale);
+        switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
-                dispatch(getMainProductsSuccess(result.data))
+                dispatch(ourProductsRequestStatusSet(RequestStatus.SUCCESS))
+                dispatch(mainOurProductsSet(result.data ?? []))
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(getMainProductsSuccess([]))
+                dispatch(ourProductsRequestStatusSet(RequestStatus.FAILURE))
                 break;
         }
     }
 }
+
+export {
+    getMainCategories,
+    getMainStores,
+    getOurProducts
+}
+

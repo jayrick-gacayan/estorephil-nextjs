@@ -1,10 +1,23 @@
 export const TYPES = {
-    HomeRepository: Symbol.for("HomeRepository"),
-    HomeService: Symbol.for("HomeService"),
+    CategoryService: Symbol.for('CategoryService'),
+    CategoryRepository: Symbol.for('CategoryRepository'),
+
     StoreRepository: Symbol.for("StoreRepository"),
     StoreService: Symbol.for("StoreService"),
+
     ProductService: Symbol.for("ProductService"),
     ProductRepository: Symbol.for("ProductRepository"),
+
+    HomeRepository: Symbol.for("HomeRepository"),
+    HomeService: Symbol.for("HomeService"),
+
+    CookiesService: Symbol.for('CookiesService'),
+    CookiesRepository: Symbol.for('CookiesRepository'),
+
+    AuthService: Symbol.for('AuthService'),
+    AuthRepository: Symbol.for('AuthRepository'),
+
+
     AccountService: Symbol.for("AccountService"),
     AccountRepository: Symbol.for("AccountRepository"),
     StaffService: Symbol.for("StaffService"),

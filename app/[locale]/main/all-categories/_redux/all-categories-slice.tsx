@@ -1,45 +1,65 @@
-import { RequestStatus } from "@/models/result";
+import { RequestStatus } from "@/types/enums/request-status";
 import { AllCategoriesState } from "./all-categories-state";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Categories } from "@/models/category";
+import { Store } from '@/models/store'
+import { Product } from "@/models/product";
 
 const initialState: AllCategoriesState = {
-    categories: [{}],
-    products: [{}],
-    stores: [{}],
-    categoriesSelected: [],
-    sort: undefined,
-    searchQuery: undefined,
+    categories: [],
+    getCategoriesStatus: RequestStatus.NONE,
+
     getStoreStatus: RequestStatus.WAITING,
-    getCategoriesStatus: RequestStatus.WAITING,
-    getProductsStatus: RequestStatus.WAITING
+    stores: [],
+
+    products: [],
+    getProductsStatus: RequestStatus.NONE,
+
+    categoriesSelected: [],
+    sort: '',
+    searchQuery: undefined,
 }
 
 export const allCategoriesSlice = createSlice({
     name: 'allCategories',
     initialState,
     reducers: {
+        categoriesRequestStatusSet: (state: AllCategoriesState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getCategoriesStatus: action.payload }
+        },
+        allCategoriesSet: (state: AllCategoriesState, action: PayloadAction<Categories[]>) => {
+            return { ...state, categories: action.payload }
+        },
+        storesRequestStatusSet: (state: AllCategoriesState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getStoreStatus: action.payload }
+        },
+        allCategoriesStoresSet: (state: AllCategoriesState, action: PayloadAction<Store[]>) => {
+            return { ...state, stores: action.payload }
+        },
+        getProductStatusSet: (state: AllCategoriesState, action: PayloadAction<RequestStatus>) => {
+            return { ...state, getProductsStatus: action.payload }
+        },
+        allCategoriesProductsSet: (state: AllCategoriesState, action: PayloadAction<Product[]>) => {
+            return { ...state, products: action.payload }
+        },
+        sortChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
+            return { ...state, sort: action.payload }
+        },
+
         categoriesSelectedChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
-            let updatedSelectedCategories;
-            if (state.categoriesSelected.includes(action.payload)) {
-                updatedSelectedCategories = state.categoriesSelected.filter(category => category !== action.payload);
-            } else {
-                updatedSelectedCategories = [...state.categoriesSelected, action.payload];
-            }
+
             return {
                 ...state,
-                categoriesSelected: updatedSelectedCategories,
-            };
+                categoriesSelected: state.categoriesSelected.includes(action.payload) ?
+                    state.categoriesSelected.filter((category) => {
+                        return category !== action.payload;
+                    }) : [...state.categoriesSelected, action.payload]
+            }
         },
         getCategoriesLoaded: (state: AllCategoriesState) => {
             return {
                 ...state,
                 getCategoriesStatus: RequestStatus.IN_PROGRESS
-            }
-        },
-        getProductsLoaded: (state: AllCategoriesState, action: PayloadAction<any>) => {
-            return {
-                ...state,
-                getProductsStatus: RequestStatus.IN_PROGRESS
             }
         },
         getProductsSuccess: (state: AllCategoriesState, action: PayloadAction<any>) => {
@@ -75,19 +95,20 @@ export const allCategoriesSlice = createSlice({
                 searchQuery: action.payload
             }
         },
-        sortChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
-            return {
-                ...state,
-                sort: action.payload
-            }
-        }
+
     }
 })
 export const {
-    getCategoriesLoaded,
-    getCategoriesSuccess, getStoresLoaded
-    , getStoresSuccess, categoriesSelectedChanged
-    , getProductsLoaded, getProductsSuccess, sortChanged,
+    categoriesRequestStatusSet,
+    allCategoriesSet,
+    storesRequestStatusSet,
+    allCategoriesStoresSet,
+    sortChanged,
+    getProductStatusSet,
+    allCategoriesProductsSet,
+
+    categoriesSelectedChanged,
+    getProductsSuccess,
     searchQueryChanged
 } = allCategoriesSlice.actions;
 

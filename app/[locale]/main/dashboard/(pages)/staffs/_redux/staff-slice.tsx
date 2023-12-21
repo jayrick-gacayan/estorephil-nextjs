@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import Validations from "@/types/validations"
-import { ValidationStatus } from "@/models/validation-response"
+import { ValidationType } from "@/models/validation-response"
 import { error } from "console"
 import { StaffState } from "./staff-state"
 import { RequestStatus } from "@/models/result"

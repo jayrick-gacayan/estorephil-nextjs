@@ -1,7 +1,7 @@
-import { Product } from "./product";
+import { Products } from "./products";
 
 export interface OrderDetail {
   orderNo: number;
-  product: Product;
+  product: Products;
   quantity: number;
 }

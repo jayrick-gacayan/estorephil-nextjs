@@ -1,4 +1,5 @@
 import { RequestStatus } from "@/types/enums/request-status";
+import { TextInputField } from "@/types/props/text-input-field";
 
 export interface MainState {
   cartType: string;
@@ -8,10 +9,8 @@ export interface MainState {
     open: boolean;
     type: string;
   };
-  countryPicker: {
-    value: string,
-    show: boolean
-  }
+
+  countryPicker: TextInputField<string>
   cart: any,
   deliveryType: string,
   deliveryAddressCountry: string,

@@ -1,12 +1,14 @@
-import { ValidationResponse, ValidationStatus } from '@/models/validation-response';
+import { ValidationType } from "../enums/validation-type";
+import { ValidationResponse } from "../props/validation-response";
+import { ValidationHelpers } from "./validation_helpers";
 
 export default class CustomValidation {
-  private errorText: string;
-  private validationStatus: ValidationStatus;
+  #errorText: string;
+  #status: ValidationType;
 
   constructor() {
-    this.errorText = '';
-    this.validationStatus = ValidationStatus.NONE
+    this.#errorText = '';
+    this.#status = ValidationType.NONE
   }
 
   setErrorText(field: string,
@@ -15,12 +17,12 @@ export default class CustomValidation {
       compareMatch?: string;
       max?: number;
     }) {
-    switch (this.validationStatus) {
-      case ValidationStatus.EMPTY:
-        this.errorText = `${field} is required`;
+    switch (this.#status) {
+      case ValidationType.EMPTY:
+        this.#errorText = `${field} is required`;
         break;
-      case ValidationStatus.INVALID_FORMAT:
-        this.errorText = `${field} is in invalid format.`;
+      case ValidationType.INVALID_FORMAT:
+        this.#errorText = `${field} is in invalid format.`;
         break;
     }
   }
@@ -28,17 +30,23 @@ export default class CustomValidation {
   setErrorType<T>(value: T, options?: string[]) {
     if (Array.isArray(value)) {
       if (value.length === 0) {
-        this.validationStatus = ValidationStatus.EMPTY;
+        this.#status = ValidationType.EMPTY;
       }
     }
     else if (typeof value === 'string') {
       if (options) {
+        let validHelper = new ValidationHelpers();
         for (let i: number = 0; i < options.length; i++) {
           let opt: string = options[i];
           switch (opt.toLowerCase()) {
             case opt.match(/required/)?.input:
               if (value.trim() === '') {
-                this.validationStatus = ValidationStatus.EMPTY;
+                this.#status = ValidationType.EMPTY;
+              }
+              break;
+            case opt.match(/email/)?.input:
+              if (!validHelper.isEmail(value)) {
+                this.#status = ValidationType.INVALID_FORMAT;
               }
               break;
             // case opt.match(/format/)?.input:
@@ -67,21 +75,21 @@ export default class CustomValidation {
             //   break;
           }
 
-          if (this.validationStatus !== ValidationStatus.NONE) {
+          if (this.#status !== ValidationType.NONE) {
             break;
           }
         }
       }
     }
     else {
-      if (!value) { this.validationStatus = ValidationStatus.EMPTY; }
+      if (!value) { this.#status = ValidationType.EMPTY; }
     }
   }
 
   getErrorResponse(): ValidationResponse {
     return {
-      errorText: this.errorText,
-      status: this.validationStatus
+      errorText: this.#errorText,
+      status: this.#status
     }
   }
 }

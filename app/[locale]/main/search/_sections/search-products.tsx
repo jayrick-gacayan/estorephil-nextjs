@@ -1,6 +1,6 @@
 'use client';
 
-import { Product } from '@/models/product';
+import { Products } from '@/models/products';
 import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { useState, useRef } from 'react';
@@ -11,7 +11,7 @@ import ProductHeaderText from '../../_components/product-header-text';
 export function SearchProducts({
   products
 }: {
-  products: Product[]
+  products: Products[]
 }): JSX.Element {
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const [visible, setVisible] = useState<boolean>(false);
@@ -42,7 +42,7 @@ export function SearchProducts({
           (
             <div className='flex flex-row flex-wrap gap-4'>
               {
-                products.map((product: Product) => {
+                products.map((product: Products) => {
                   return (<ProductItem key={`product-item-${product.id}`}
                     product={product}
                     withRatingEvents={false} />)
