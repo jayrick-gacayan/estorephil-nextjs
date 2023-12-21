@@ -41,8 +41,8 @@ export default function TaxRulesDetailsInfo({
               <div>{selected}</div>
             ) : (
               <div className=" w-full flex gap-2">
-                {words.map((word) => (
-                  <button
+                {words.map((word, index) => (
+                  <button key={`${word}-${index}`}
                     className="flex bg-white items-center rounded overflow-hidden border"
                     onClick={() => handleRemove(word)}>
                     <div className="p-1 border-r-2">
@@ -57,9 +57,8 @@ export default function TaxRulesDetailsInfo({
           </button>
 
           <div
-            className={`z-50 origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
-              visible == true ? "visible" : "hidden"
-            }`}>
+            className={`z-50 origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${visible == true ? "visible" : "hidden"
+              }`}>
             {isDropdownMultiple != true ? (
               <>
                 {options.map((value: string) => {
@@ -73,9 +72,8 @@ export default function TaxRulesDetailsInfo({
                       }}>
                       <div> {value}</div>
                       <div
-                        className={`text-lg ${
-                          selected == value ? "text-red-500" : "text-green-500"
-                        }`}>
+                        className={`text-lg ${selected == value ? "text-red-500" : "text-green-500"
+                          }`}>
                         {selected == value ? (
                           <FaMinusCircle />
                         ) : (
@@ -103,11 +101,10 @@ export default function TaxRulesDetailsInfo({
                       <div> {value}</div>
                       <button
                         key={value}
-                        className={`text-lg ${
-                          words.includes(value)
+                        className={`text-lg ${words.includes(value)
                             ? "text-red-500"
                             : "text-green-500"
-                        }`}>
+                          }`}>
                         {words.includes(value) ? (
                           <FaMinusCircle />
                         ) : (
