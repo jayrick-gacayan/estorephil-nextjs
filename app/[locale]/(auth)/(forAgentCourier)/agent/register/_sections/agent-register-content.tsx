@@ -29,11 +29,11 @@ export default function AgentRegisterContent({
       let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
       dispatch(getCompanyDataFromInvitation(accountRepository, token))
     }
-  }, [token])
+  }, [token]);
 
   let isSuccess = signUpThanksRequestStatus === RequestStatus.SUCCESS;
 
-  return isSuccess ? (<SignUpThanksOne />) :
+  return (isSuccess && (token === undefined || typeof token !== 'string')) ? (<SignUpThanksOne />) :
     (
       <>
         <div className="w-full space-y-8">
