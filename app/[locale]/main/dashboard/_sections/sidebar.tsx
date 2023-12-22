@@ -17,7 +17,7 @@ export default function SideBar() {
             <div className="my-4">
                 <div className="flex items-center justify-center relative p-8">
                     <Image alt=''
-                        src={sessionData?.user.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
+                        src={`https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
                         height={181}
                         width={181} className="h-[181px] w-[181px] rounded-full shadow-md border-4 border-blue-200"
                     />

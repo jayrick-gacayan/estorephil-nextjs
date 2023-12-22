@@ -1,4 +1,5 @@
 import { FileCustomBlobString } from "@/models/file-custom-blob-string";
+import { RequestStatus } from "@/types/enums/request-status";
 import { TextInputField } from "@/types/props/text-input-field";
 
 export interface AgentAgencyInformationState {
@@ -6,8 +7,10 @@ export interface AgentAgencyInformationState {
     open: boolean;
     type: string;
   };
+
   firstName: TextInputField<string>;
   lastName: TextInputField<string>;
+  updateBasicInfoRequestStatus: RequestStatus;
 
   documents: FileCustomBlobString[];
 }

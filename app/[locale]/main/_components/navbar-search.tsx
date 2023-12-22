@@ -46,16 +46,20 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
           }}
           placeholder='Search products' />
       </div>
-      <div className={` h-full p-3 self-center
-        ${navbarSearchText === '' ? 'cursor-not-allowed bg-tertiary-dark' : 'cursor-pointer bg-warning'}`}
+      <div className={` h-full p-3 self-center cursor-pointer bg-warning`}
         onClick={() => {
           let queryStringParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-          if (navbarSearchText !== '') {
-            queryStringParams.set('search', navbarSearchText);
-            router.push(`all-categories?${queryStringParams.toString()}`);
+          if (navbarSearchText === '') {
+            queryStringParams.delete('search');
           }
-          else { return; }
+          else {
+            queryStringParams.set('search', navbarSearchText);
+          }
+
+          let qString = queryStringParams.toString();
+
+          router.push(`/all-categories${qString !== '' ? `?${qString.toString()}` : ``}`)
         }}>
         Search
       </div>

@@ -13,7 +13,7 @@ export function StoreItem({
         className='block w-full h-full'>
         {
           <Image alt={`store-${store.id}`}
-            src={store.mainImageUrl!}
+            src={store.mainImageUrl ?? `/sellers/asianhome.png`}
             width={128}
             height={128}
             className='w-full h-full'

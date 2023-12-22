@@ -12,24 +12,14 @@ async function getMainCategories(countryCode: string) {
   return (await categoriesRepository.getMainCategories(countryCode)).data;
 }
 
-export default async function CategoriesLayout({ children }: { children: ReactNode }) {
-  let cookieStore = cookies();
-  let countryCookie = cookieStore.get('country_code');
+export default async function CategoriesLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
 
-  let categories = await getMainCategories(countryCookie?.value ?? 'ph');
 
-  return (
-    <div>
-      <div className='flex lg:flex-row flex-col'>
-        <CategorySidebar categories={categories ?? []} />
-        <div className='flex-1'>
-          <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b border-b-tertiary-dark'>
-            <BreadcrumbsContainer basePath='all-categories' text='All Categories' />
-            <SellerByCategory />
-          </div>
-          {children}
-        </div>
-      </div>
-    </div>
-  )
+
+
+  return <>{children}</>
 }

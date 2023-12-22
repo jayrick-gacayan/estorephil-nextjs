@@ -11,6 +11,8 @@ const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
+
+        console.log('sdhfksdfhsdjf', process.env.API_URL);
         let result = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password }),

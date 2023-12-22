@@ -20,13 +20,13 @@ export class CategoryRepository {
     let response: any = undefined;
 
     if (result.status === 200) {
-      response = camelCase({ ...await result.json() });
+      response = camelCase(await result.json());
     }
 
     return new Result<Categories[]>(
       {
         response: response,
-        data: response.data ?? [],
+        data: (response.data && response.data.length > 0) ? response.data.map((value: any) => { return camelCase({ ...value }) as any }) : [],
         statusCode: response.status
       }
     )

@@ -45,7 +45,7 @@ export default function LoginForm() {
                 }, 2000);
                 break;
         }
-    }, [requestStatus])
+    }, [requestStatus, dispatch])
 
     useEffect(() => {
         if (!!sessionData) { router.push('/'); }

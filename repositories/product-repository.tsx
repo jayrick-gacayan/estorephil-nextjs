@@ -86,7 +86,9 @@ export class ProductRepository {
 
         let response: any = undefined;
         if (result.status === 200) {
-            response = camelCase(await result.json());
+            response = await result.json();
+
+            console.log('response', response);
         }
 
         return new Result<Product[]>({

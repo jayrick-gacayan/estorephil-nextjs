@@ -62,6 +62,10 @@ export default function CategoryProducts() {
   }, [sort, countryPicker.value, dispatch, getProductsStatus, categoriesSelected])
 
   function headerText() {
+    if (categoriesSelected.length === 0) {
+      return 'Products';
+    }
+
     let string = '';
 
     if (categoriesSelected.length === 1) {
@@ -95,6 +99,7 @@ export default function CategoryProducts() {
               visible={visible}
               setVisible={setVisible}
               onSelect={(value: string) => {
+
                 dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
               }}
               valueClassName={(errorText: string) => {

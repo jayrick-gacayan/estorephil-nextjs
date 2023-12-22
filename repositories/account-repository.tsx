@@ -1,5 +1,6 @@
 import { TYPES } from '@/inversify/types';
 import { Company } from '@/models/company';
+import { User } from '@/models/user';
 import { AccountService } from '@/services/account-service';
 import { Result } from '@/types/helpers/result-helpers';
 import { CompanyFieldProps } from '@/types/props/company-field-props';
@@ -117,4 +118,35 @@ export class AccountRepository {
             statusCode: response.status,
         })
     }
+
+    async updateAgentBasicInfo(
+        user:
+            {
+                firstName: string;
+                lastName: string;
+            }
+        ,
+        token: string) {
+
+        let formData = new FormData();
+
+        formData.set('user["first_name"]', user.firstName);
+        formData.set('user["last_name"]', user.lastName);
+        let result = await this.#accountService.updateAgent(formData, token);
+
+        let response = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+        console.log('dfjlsdkfjsdf', response);
+
+        return new Result<User>({
+            response: response,
+            data: camelCase({ ...response.data.user }) ?? undefined,
+            statusCode: response.status
+        });
+
+    }
+
 }

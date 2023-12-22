@@ -5,6 +5,12 @@ import { SignInOptions, SignInResponse, signIn, signOut } from "next-auth/react"
 @injectable()
 export class AccountService {
 
+  #headers(token: string, isImage: boolean) {
+    let headers = { Authorization: `Bearer ${token}` }
+
+    return !isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
+  }
+
   async nextAuthSignIn(body: SignInProps): Promise<SignInResponse | undefined> {
     console.log('body', body)
     return await signIn('credentials', { redirect: false, ...body });
@@ -50,6 +56,15 @@ export class AccountService {
       method: 'POST',
       body: body,
       headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  async updateAgent(body: string | FormData, token: string, isImage: boolean = false) {
+    console.log('api url', process.env.API_URL)
+    return await fetch(`https://estorephil.dev2.koda.ws/api/agents/update-agency`, {
+      method: 'PUT',
+      body: body,
+      headers: { ...this.#headers(token, isImage) }
     })
   }
 }
