@@ -92,5 +92,12 @@ export function registerUserAgent(accountRepository: AccountRepository, token: s
         name: agentRegisterState.companyName.value
       }
     })
+
+    if (result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(signUpThanksRequestStatusSet(RequestStatus.SUCCESS));
+    }
+    else {
+      dispatch(signUpThanksRequestStatusSet(RequestStatus.FAILURE));
+    }
   }
 }
