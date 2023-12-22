@@ -36,6 +36,12 @@ export default function ProductDetails() {
               <div className="font-bold text-lg">Costco</div>
             </div>
             <div className="flex items-center gap-2">
+              <div className="bg-blue-500 rounded w-min h-min px-3 py-1.5 flex items-center text-white cursor-pointer">
+                <div>
+                  <IoIosArrowBack />
+                </div>
+                <div>Products</div>
+              </div>
               <div
                 className={`text-white rounded-full h-auto ${
                   interviewStatus == "Inactive" ? "bg-red-500" : "bg-green-500"
@@ -66,12 +72,7 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
-          <button className="bg-blue-500 rounded w-min h-min px-3 py-1.5 flex items-center text-white">
-            <div>
-              <IoIosArrowBack />
-            </div>
-            <div>Products</div>
-          </button>
+
           <ProductDetailsInfo
             label={"Item Number:"}
             data={" Item 5015591 Model 395960"}
