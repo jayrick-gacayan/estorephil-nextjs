@@ -1,5 +1,6 @@
 import ProductHeaderText from '../../_components/product-header-text'
 import { Product } from '@/models/product'
+import { ProductItem } from '../../_components/product-item'
 
 export default function OurProducts({
     products
@@ -19,7 +20,7 @@ export default function OurProducts({
                             <>
                                 {
                                     products.map((product: Product, index: number) => {
-                                        return <></>
+                                        return (<ProductItem product={product} withRatingEvents={false} />);
                                     })
                                 }
                             </>
