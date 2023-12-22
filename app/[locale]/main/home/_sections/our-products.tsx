@@ -20,7 +20,7 @@ export default function OurProducts({
                             <>
                                 {
                                     products.map((product: Product, index: number) => {
-                                        return (<ProductItem product={product} withRatingEvents={false} />);
+                                        return (<ProductItem key={`our-products-${product.id}-${index}`} product={product} withRatingEvents={false} />);
                                     })
                                 }
                             </>
