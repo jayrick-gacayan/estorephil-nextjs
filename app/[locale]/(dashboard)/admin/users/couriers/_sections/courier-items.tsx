@@ -5,6 +5,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { MdOutlineLockReset } from "react-icons/md";
 import Image from "next/image";
+import Link from "next-intl/link";
 export default function CourierItems() {
   const orders = [
     {
@@ -164,9 +165,11 @@ export default function CourierItems() {
                     </td>
                     <td className={`${rowHeight}`}>
                       <div className="flex items-center justify-center gap-4">
-                        <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                        <Link
+                          className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                          href={"/admin/users/couriers/1"}>
                           <FaEdit />
-                        </div>
+                        </Link>
                         <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
                           <RiDeleteBin2Line />
                         </div>

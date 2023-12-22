@@ -133,15 +133,11 @@ export default function OrderItems() {
                     <td className={`${rowHeight}`}>{order.netAmount}</td>
                     <td className={`${rowHeight}`}>
                       <div className="flex items-center justify-center gap-4">
-                        <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                        <Link
+                          className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                          href={"/admin/orders/1"}>
                           <FaEdit />
-                        </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <RiDeleteBin2Line />
-                        </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <MdOutlineLockReset />
-                        </div>
+                        </Link>
                       </div>
                     </td>
                   </tr>
