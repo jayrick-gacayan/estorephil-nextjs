@@ -1,7 +1,7 @@
 "use client";
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { CiSearch } from "react-icons/ci";
+import { CiSearch, CiSquarePlus } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
@@ -45,6 +45,8 @@ export default function CategoryItems() {
   ];
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isViewModalOpen, setViewModalOpen] = useState(false);
+  const [nestCategoryUnder, setNestCategoryUnder] = useState(true); // Added state for checkbox
+  const [setActive, setIsActive] = useState(true); // Added state for second checkbox
   const openEditModal = () => {
     setEditModalOpen(true);
   };
@@ -175,6 +177,18 @@ export default function CategoryItems() {
 
             <div className="border-t w-full h-[1.5rem]"></div>
             <form className="space-y-4">
+              <div className="text-[2rem] cursor-pointer">
+                <label
+                  htmlFor="createCategoryUpload"
+                  className="cursor-pointer">
+                  <CiSquarePlus />
+                </label>
+                <input
+                  type="file"
+                  className="hidden"
+                  id="createCategoryUpload"
+                />
+              </div>
               <div className="flex flex-col">
                 <label htmlFor="sellerCode" className="mb-2">
                   Category Name
@@ -187,7 +201,6 @@ export default function CategoryItems() {
                   placeholder="Category Name"
                 />
               </div>
-
               <div className="flex flex-col">
                 <label htmlFor="sellerCode" className="mb-2">
                   Referral Fee
@@ -200,7 +213,33 @@ export default function CategoryItems() {
                   placeholder="Referral Fee"
                 />
               </div>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="nestCategoryUnder"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  checked={nestCategoryUnder}
+                  onChange={() => setNestCategoryUnder(!nestCategoryUnder)}
+                />
+                <label
+                  htmlFor="nestCategoryUnder"
+                  className="ml-2 text-gray-600">
+                  Nest category under
+                </label>
+              </div>
 
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id="setActive"
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  checked={setActive}
+                  onChange={() => setIsActive(!setActive)}
+                />
+                <label htmlFor="setActive" className="ml-2 text-gray-600">
+                  Set as Active
+                </label>
+              </div>
               <div className="flex space-x-4 items-center justify-center">
                 <button
                   type="submit"
