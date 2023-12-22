@@ -3,7 +3,6 @@ import { RiDeleteBin2Line } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
-import Link from "next-intl/link";
 export default function ProductItems() {
   const orders = [
     {
@@ -184,16 +183,12 @@ export default function ProductItems() {
                     </td>
                     <td className={`${rowHeight}`}>
                       <div className="flex items-center justify-center gap-4">
-                        <Link
-                          className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white"
-                          href={"/admin/products/1"}>
+                        <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500">
                           <FiEye />
-                        </Link>
-                        <Link
-                          className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white"
-                          href={""}>
+                        </div>
+                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500">
                           <RiDeleteBin2Line />
-                        </Link>
+                        </div>
                       </div>
                     </td>
                   </tr>

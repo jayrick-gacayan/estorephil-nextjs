@@ -255,9 +255,8 @@ export default function TaxRulesItem() {
                   <tr
                     key={order.taxCode}
                     className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs">
-                    <td
-                      className={`${rowHeight} text-cyan-500 hover:underline`}>
-                      <Link href={"/admin/tax-rules/1"}> {order.taxCode}</Link>
+                    <td className={`${rowHeight} text-cyan-500`}>
+                      <Link href={""}> {order.taxCode}</Link>
                     </td>
 
                     <td className={`${rowHeight}`}>{order.taxDescription}</td>

@@ -76,59 +76,26 @@ const agentRegisterSlice = createSlice({
       let passwordError: ValidationResponse = { status: ValidationType.VALID, errorText: '' };
       let confirmationPasswordError: ValidationResponse = { status: ValidationType.VALID, errorText: '' };
 
-      let insertFields: any = {
+
+      if (state.withToken) {
+        passwordError = getValidationResponse<string>(state.password.value, 'Password', ['required']);
+        confirmationPasswordError = getValidationResponse<string>(state.passwordConfirmation.value, 'Confirm Password', ['required']);
+      }
+
+      return {
+        ...state,
         companyName: { ...state.companyName, ...businessNameError },
         businessNature: { ...state.businessNature, ...businessNatureError },
         firstName: { ...state.firstName, ...firstNameError },
         lastName: { ...state.lastName, ...lastNameError },
         email: { ...state.email, ...emailError },
-      }
-
-      let validStatus = businessNameError.status === ValidationType.VALID &&
-        businessNatureError.status === ValidationType.VALID &&
-        firstNameError.status === ValidationType.VALID &&
-        lastNameError.status === ValidationType.VALID &&
-        emailError.status === ValidationType.VALID;
-
-      if (state.withToken) {
-        passwordError = getValidationResponse<string>(
-          state.password.value,
-          'Password',
-          ['required', 'min:8', 'max:16', 'has-chars-numeric'],
-          {
-            errorTextOptions: {
-              min: 8,
-              max: 16,
-
-            }
-          }
-        );
-        confirmationPasswordError = getValidationResponse<string>(state.passwordConfirmation.value,
-          'Confirm Password', passwordError.status === ValidationType.VALID ? ['required', 'match:password'] :
-          ['required'],
-          {
-            compareValidation: state.password.value,
-            errorTextOptions: {
-              compareMatch: 'Password'
-            }
-          });
-
-        validStatus = validStatus && (
-          passwordError.status === ValidationType.VALID &&
-          confirmationPasswordError.status === ValidationType.VALID
-        )
-
-        insertFields = {
-          ...insertFields,
-          password: { ...state.password, ...passwordError },
-          passwordConfirmation: { ...state.passwordConfirmation, ...confirmationPasswordError }
-        }
-      }
-
-      return {
-        ...state,
-        ...insertFields,
-        signUpThanksRequestStatus: validStatus ? RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
+        signUpThanksRequestStatus:
+          businessNameError.status === ValidationType.VALID ||
+            businessNatureError.status === ValidationType.VALID ||
+            firstNameError.status === ValidationType.VALID ||
+            lastNameError.status === ValidationType.VALID ||
+            emailError.status === ValidationType.VALID ?
+            RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
       }
     },
     agentRegisterFormReset: () => {
