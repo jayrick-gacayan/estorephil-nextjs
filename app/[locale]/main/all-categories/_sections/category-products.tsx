@@ -99,7 +99,10 @@ export default function CategoryProducts() {
               visible={visible}
               setVisible={setVisible}
               onSelect={(value: string) => {
+                let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
 
+                value === 'Sort By:' ? current.delete('sortBy') :
+                  current.set('sortBy', kebabCase(noCase(value)));
                 dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
               }}
               valueClassName={(errorText: string) => {
