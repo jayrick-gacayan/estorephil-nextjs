@@ -65,13 +65,17 @@ export default function ModalAgencyInformationForm() {
         setTimeout(() => {
           if (sessionData?.token) {
             let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-            dispatch(updateBasicInfo(accountRepository, sessionData.token, sessionData, update));
+            dispatch(updateBasicInfo(
+              accountRepository,
+              sessionData.token,
+              sessionData,
+              update
+            ));
           }
         }, 1000);
         break;
-      case RequestStatus.SUCCESS: cbOnModalClose(); break;
     }
-  }, [updateBasicInfoRequestStatus, dispatch, sessionData, cbOnModalClose])
+  }, [updateBasicInfoRequestStatus, dispatch, sessionData])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 

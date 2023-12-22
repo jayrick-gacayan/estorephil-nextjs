@@ -7,7 +7,12 @@ import { RequestStatus } from "@/types/enums/request-status";
 import { Session } from "next-auth";
 import { snakeCase } from "change-case/keys";
 
-export function updateBasicInfo(accountRepository: AccountRepository, token: string, sessionData: Session | null, update: (data?: any) => Promise<Session | null>) {
+export function updateBasicInfo(
+  accountRepository: AccountRepository,
+  token: string,
+  sessionData: Session | null,
+  update: (data?: any) => Promise<Session | null>
+) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
     let agentRegisterInfoState: AgentAgencyInformationState = getState().agentAgencyInfo;
 
@@ -22,11 +27,13 @@ export function updateBasicInfo(accountRepository: AccountRepository, token: str
       dispatch(updateBasicInfoRequestStatusSet(RequestStatus.SUCCESS))
       console.log('session data on thunk', result.data);
       await update({
-        ...sessionData,
         user: {
-          ...sessionData?.user,
-          first_name: result.data.firstName,
-          last_name: result.data.lastName,
+          ...sessionData,
+          user: {
+            ...sessionData?.user,
+            first_name: agentRegisterInfoState.firstName.value,
+            last_name: result.data.lastName,
+          }
         }
       })
 

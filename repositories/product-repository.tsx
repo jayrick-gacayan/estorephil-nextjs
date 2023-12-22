@@ -87,13 +87,11 @@ export class ProductRepository {
         let response: any = undefined;
         if (result.status === 200) {
             response = await result.json();
-
-            console.log('response', response);
         }
 
         return new Result<Product[]>({
             response: response,
-            data: response.data,
+            data: (response.data && response.data.length > 0) ? response.data.map((value: any) => { return camelCase({ ...value, rating: 4.5, totalRaters: 123 }) as any }) : [],
             statusCode: result.status
         });
     }

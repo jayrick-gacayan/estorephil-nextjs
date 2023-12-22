@@ -60,8 +60,7 @@ export class AccountService {
   }
 
   async updateAgent(body: string | FormData, token: string, isImage: boolean = false) {
-    console.log('api url', process.env.API_URL)
-    return await fetch(`https://estorephil.dev2.koda.ws/api/agents/update-agency`, {
+    return await fetch(`${process.env.API_URL}/agents/update-agency`, {
       method: 'PUT',
       body: body,
       headers: { ...this.#headers(token, isImage) }
