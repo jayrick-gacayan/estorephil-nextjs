@@ -15,8 +15,9 @@ import { CategoryRepository } from '@/repositories/category-repository';
 import { AllCategoriesState } from '../_redux/all-categories-state';
 import { TextInputField } from '@/types/props/text-input-field';
 import { RequestStatus } from '@/types/enums/request-status';
+import { Categories } from '@/models/category';
 
-export function CategorySidebar() {
+export function CategorySidebar({ categories }: { categories: Categories[] }) {
   const router = useRouter();
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const dispatch: AppDispatch = useAppDispatch()
@@ -27,9 +28,8 @@ export function CategorySidebar() {
 
   let searchParamsMemo: ReadonlyURLSearchParams = useMemo(() => { return searchParams }, [searchParams]);
 
-  let { categories, categoriesSelected } = useMemo(() => {
+  let { categoriesSelected } = useMemo(() => {
     return {
-      categories: allCategoriesState.categories,
       categoriesSelected: allCategoriesState.categoriesSelected
     }
   }, [allCategoriesState.categories, allCategoriesState.categoriesSelected])
@@ -87,33 +87,40 @@ export function CategorySidebar() {
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>
           {
-            categories.map((category: any, index: number) => {
-              return (
-                <Checkbox<boolean> key={`category-${index}-${category.name}`}
-                  labelText={category.name}
-                  labelClassname={(value: boolean, current: boolean) => {
-                    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
-                  }}
-                  value={true}
-                  checkBoxClassName={(value: boolean, current: boolean) => {
-                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
-                  }}
-                  checkClassName={(value: boolean, current: boolean) => {
-                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
-                  }}
-                  current={categoriesSelected.includes(category.name)}
-                  onCheckboxChanged={(value: boolean) => {
-                    let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+            categories.length === 0 ? (<div>No categories</div>) :
+              (
+                <>
+                  {
+                    categories.map((category: any, index: number) => {
+                      return (
+                        <Checkbox<boolean> key={`category-${index}-${category.name}`}
+                          labelText={category.name}
+                          labelClassname={(value: boolean, current: boolean) => {
+                            return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+                          }}
+                          value={true}
+                          checkBoxClassName={(value: boolean, current: boolean) => {
+                            return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
+                          }}
+                          checkClassName={(value: boolean, current: boolean) => {
+                            return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                          }}
+                          current={categoriesSelected.includes(category.name)}
+                          onCheckboxChanged={(value: boolean) => {
+                            let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-                    value ? current.delete('category[]', category.name) :
-                      current.append('category[]', category.name);
+                            value ? current.delete('category[]', category.name) :
+                              current.append('category[]', category.name);
 
-                    const query = current.toString() === '' ? '' : `?${current.toString()}`;
+                            const query = current.toString() === '' ? '' : `?${current.toString()}`;
 
-                    router.push(`${pathName}${query}`)
-                  }} />
+                            router.push(`${pathName}${query}`)
+                          }} />
+                      )
+                    })
+                  }
+                </>
               )
-            })
           }
         </div>
       </div>
