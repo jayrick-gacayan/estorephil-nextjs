@@ -1,28 +1,29 @@
 import { useState } from "react";
-import TaxRulesDetailsInfo from "../_components/tax-rules-details-info";
+import TaxRulesDetailsInfo from "../_components/create-tax-rules-details-info";
+import CreateTaxRulesDetailsInfo from "../_components/create-tax-rules-details-info";
 
-export default function TaxRulesDetails() {
+export default function CreateTaxRulesDetails() {
   return (
     <div className="flex flex-col bg-white w-full border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min justify-between gap-8">
       <div className=" grow space-y-6">
         <div className="text-xl text-cyan-500 font-bold">Tax Details</div>
         <div className="flex gap-10">
           <div className="space-y-8  grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Tax Code"}
               data={"Tax Code"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Read Description"}
               data={"Read Description"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Product Category"}
               data={"Tax Code"}
               isDropdown={true}
@@ -37,14 +38,14 @@ export default function TaxRulesDetails() {
             />
           </div>
           <div className="space-y-8 grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Tax Description"}
               data={"Tax Description"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Entity"}
               data={"Entity"}
               isDropdown={true}
@@ -52,7 +53,7 @@ export default function TaxRulesDetails() {
               dropdownLists={["All", "Product", "Seller", "Courier", "Box"]}
             />
 
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Product"}
               data={"Product"}
               isDropdown={false}
@@ -68,14 +69,14 @@ export default function TaxRulesDetails() {
         </div>
         <div className="flex gap-10">
           <div className="space-y-8  grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Seller Origin Country"}
               data={"Seller Origin Country"}
               isDropdown={true}
               isDropdownMultiple={false}
               dropdownLists={["Canada", "Philippines"]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Destination Country"}
               data={"Destination Country"}
               isDropdown={true}
@@ -84,14 +85,14 @@ export default function TaxRulesDetails() {
             />
           </div>
           <div className="space-y-8 grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Seller Province"}
               data={"Seller Province"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Destination Province"}
               data={"Destination Province"}
               isDropdown={false}
@@ -105,21 +106,21 @@ export default function TaxRulesDetails() {
         <div className="text-xl text-cyan-500 font-bold">Rates & Currency</div>
         <div className="flex gap-10">
           <div className="space-y-8  grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Rate %"}
               data={"Rate %"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Threshold Quantity"}
               data={"Threshold Quantity"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Threshold Currency"}
               data={"Threshold Currency"}
               isDropdown={false}
@@ -128,14 +129,14 @@ export default function TaxRulesDetails() {
             />
           </div>
           <div className="space-y-8 grow">
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Rate Flat Amount"}
               data={"Rate Flat Amount"}
               isDropdown={false}
               isDropdownMultiple={false}
               dropdownLists={[""]}
             />
-            <TaxRulesDetailsInfo
+            <CreateTaxRulesDetailsInfo
               label={"Threshold Amount"}
               data={"Threshold Amount"}
               isDropdown={false}

@@ -2,100 +2,104 @@ import { FiEye } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
+import { FaCheck, FaEdit, FaEye } from "react-icons/fa";
 import { MdOutlineLockReset } from "react-icons/md";
+import { FcCancel } from "react-icons/fc";
 import Image from "next/image";
+import Link from "next-intl/link";
+import { TiCancelOutline } from "react-icons/ti";
+import { sellers } from "../_helpers/sellers-data";
 export default function SellerItems() {
-  const orders = [
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-    {
-      logo: "",
-      businessName: "Bikini Bottom",
-      businessEmail: "jessah.pepito@kodakollectiv.com",
-      ownerName: "Jessah Pepito",
-      ownerEmail: "jessah.pepito@kodakollectiv.com",
-      mobileNo: "	09770136298",
-      phoneNo: "N/A",
-      dateRegistered: "14 Nov 2023",
-      status: "Active",
-    },
-  ];
+  // const orders = [
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Invitation Sent",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Pending",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  //   {
+  //     logo: "",
+  //     businessName: "Bikini Bottom",
+  //     businessEmail: "jessah.pepito@kodakollectiv.com",
+  //     ownerName: "Jessah Pepito",
+  //     ownerEmail: "jessah.pepito@kodakollectiv.com",
+  //     mobileNo: "	09770136298",
+  //     phoneNo: "N/A",
+  //     dateRegistered: "14 Nov 2023",
+  //     status: "Active",
+  //   },
+  // ];
   const rowHeight = "px-4 h-[4.25rem]";
   return (
     <div className="flex flex-col h-full ">
@@ -140,15 +144,18 @@ export default function SellerItems() {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => {
+              {sellers.map((order) => {
                 let statusColorClass = "";
                 switch (order.status) {
                   case "Active":
                     statusColorClass = "bg-green-500";
                     break;
 
-                  case "Draft":
+                  case "Invitation Sent":
                     statusColorClass = "bg-blue-500";
+                    break;
+                  case "Pending":
+                    statusColorClass = "bg-red-500";
                     break;
                   default:
                     statusColorClass = "";
@@ -186,17 +193,46 @@ export default function SellerItems() {
                       </div>
                     </td>
                     <td className={`${rowHeight}`}>
-                      <div className="flex items-center justify-center gap-4">
-                        <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <FaEdit />
+                      {order.status == "Invitation Sent" ? (
+                        <div className="flex items-center justify-center gap-4">
+                          <Link
+                            className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                            href={`/admin/users/sellers/${order.id}`}>
+                            <FaEye />
+                          </Link>
+                          <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <FaCheck />
+                          </div>
                         </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <RiDeleteBin2Line />
+                      ) : order.status == "Pending" ? (
+                        <div className="flex items-center justify-center gap-4">
+                          <Link
+                            className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                            href={`/admin/users/sellers/${order.id}`}>
+                            <FaEye />
+                          </Link>
+                          <div className=" border-2 p-2.5 border-green-500 rounded-md text-green-500 hover:bg-green-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <FaCheck />
+                          </div>
+                          <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <TiCancelOutline />
+                          </div>
                         </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <MdOutlineLockReset />
+                      ) : (
+                        <div className="flex items-center justify-center gap-4">
+                          <Link
+                            className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                            href={`/admin/users/sellers/${order.id}`}>
+                            <FaEye />
+                          </Link>
+                          <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <RiDeleteBin2Line />
+                          </div>
+                          <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <MdOutlineLockReset />
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </td>
                   </tr>
                 );

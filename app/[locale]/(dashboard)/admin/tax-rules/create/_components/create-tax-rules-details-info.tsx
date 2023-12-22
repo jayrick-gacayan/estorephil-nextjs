@@ -4,7 +4,7 @@ import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 
-export default function TaxRulesDetailsInfo({
+export default function CreateTaxRulesDetailsInfo({
   label,
   data,
   isDropdown,

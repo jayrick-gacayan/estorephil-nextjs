@@ -20,8 +20,8 @@ export default function ProductDetails() {
     setEditModalOpen(false);
   };
   return (
-    <div className="flex justify-evenly">
-      <div className="bg-white w-[40rem] border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+    <div className="flex justify-evenly gap-5">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
         <div className="space-y-8">
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
@@ -36,6 +36,12 @@ export default function ProductDetails() {
               <div className="font-bold text-lg">Costco</div>
             </div>
             <div className="flex items-center gap-2">
+              <div className="bg-blue-500 rounded w-min h-min px-3 py-1.5 flex items-center text-white cursor-pointer">
+                <div>
+                  <IoIosArrowBack />
+                </div>
+                <div>Products</div>
+              </div>
               <div
                 className={`text-white rounded-full h-auto ${
                   interviewStatus == "Inactive" ? "bg-red-500" : "bg-green-500"
@@ -66,12 +72,7 @@ export default function ProductDetails() {
               </div>
             </div>
           </div>
-          <button className="bg-blue-500 rounded w-min h-min px-3 py-1.5 flex items-center text-white">
-            <div>
-              <IoIosArrowBack />
-            </div>
-            <div>Products</div>
-          </button>
+
           <ProductDetailsInfo
             label={"Item Number:"}
             data={" Item 5015591 Model 395960"}
@@ -135,7 +136,7 @@ export default function ProductDetails() {
           <ProductDetailsInfo label={"Currency:"} data={"C$"} />
         </div>
       </div>
-      <div className="bg-white w-[40rem] border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
         <div className="space-y-4">
           <ProductDetailsInfo label={"Store Type:"} data={""} />
           <div className="border-b w-full"></div>
