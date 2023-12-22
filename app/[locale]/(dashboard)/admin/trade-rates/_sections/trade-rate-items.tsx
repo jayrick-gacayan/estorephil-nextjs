@@ -71,8 +71,9 @@ export default function TradeRateItems() {
       notes: "Active",
     },
   ];
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const rowHeight = "px-4 h-[4.25rem]";
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
   const openEditModal = () => {
     setEditModalOpen(true);
   };
