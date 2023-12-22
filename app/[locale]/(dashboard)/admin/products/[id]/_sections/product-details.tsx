@@ -20,8 +20,8 @@ export default function ProductDetails() {
     setEditModalOpen(false);
   };
   return (
-    <div className="flex justify-evenly">
-      <div className="bg-white w-[40rem] border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+    <div className="flex justify-evenly gap-5">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
         <div className="space-y-8">
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
@@ -135,7 +135,7 @@ export default function ProductDetails() {
           <ProductDetailsInfo label={"Currency:"} data={"C$"} />
         </div>
       </div>
-      <div className="bg-white w-[40rem] border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
         <div className="space-y-4">
           <ProductDetailsInfo label={"Store Type:"} data={""} />
           <div className="border-b w-full"></div>

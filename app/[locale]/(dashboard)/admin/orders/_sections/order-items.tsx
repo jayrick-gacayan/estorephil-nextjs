@@ -1,10 +1,8 @@
-import { FiEye } from "react-icons/fi";
-import { RiDeleteBin2Line } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
+import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import Link from "next/link";
-import { MdOutlineLockReset } from "react-icons/md";
+import { FaEye } from "react-icons/fa6";
+
 export default function OrderItems() {
   const orders = [
     {
@@ -69,6 +67,7 @@ export default function OrderItems() {
     },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
+
   return (
     <div className="flex flex-col h-full ">
       <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
@@ -136,7 +135,7 @@ export default function OrderItems() {
                         <Link
                           className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
                           href={"/admin/orders/1"}>
-                          <FaEdit />
+                          <FaEye />
                         </Link>
                       </div>
                     </td>
