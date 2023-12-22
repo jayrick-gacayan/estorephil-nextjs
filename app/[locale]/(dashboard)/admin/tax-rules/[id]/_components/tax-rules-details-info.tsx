@@ -9,16 +9,18 @@ export default function TaxRulesDetailsInfo({
   data,
   isDropdown,
   isDropdownMultiple,
+  dropdownLists,
 }: {
   label: string | ReactNode;
   data: string | ReactNode;
   isDropdown: boolean | ReactNode;
   isDropdownMultiple: boolean | ReactNode;
+  dropdownLists: string[];
 }) {
   const [visible, setVisible] = useState(false);
-  const [selected, setSelected] = useState("All");
-  const options = ["All", "Grocery", "Eelectronics", "Food", "Fast Food"];
-  const multiOptions = ["All", "Product", "Seller", "Courier", "Box"];
+  const [selected, setSelected] = useState(dropdownLists[0]);
+  const options = dropdownLists;
+  const multiOptions = dropdownLists;
   const [words, setWords] = useState<string[]>([]);
 
   const handleRemove = (wordToRemove: string | ReactNode) => {
@@ -33,38 +35,40 @@ export default function TaxRulesDetailsInfo({
           placeholder={`${data}`}></input>
       ) : (
         <div className="relative inline-block text-left w-full ">
-          <button
+          <div
             onClick={() => setVisible(!visible)}
-            type="button"
-            className="h-[40px] inline-flex  justify-between items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:text-gray-500 w-full ">
+            className=" cursor-pointer h-[40px] inline-flex  justify-between items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:text-gray-500 w-full ">
             {isDropdownMultiple != true ? (
               <div>{selected}</div>
             ) : (
               <div className=" w-full flex gap-2">
                 {words.map((word, index) => (
-                  <button key={`${word}-${index}`}
+                  <div
+                    key={`${word}-${index}`}
                     className="flex bg-white items-center rounded overflow-hidden border"
                     onClick={() => handleRemove(word)}>
                     <div className="p-1 border-r-2">
                       <IoClose />
                     </div>
                     <div className="bg-white py-1 px-5 ">{word}</div>
-                  </button>
+                  </div>
                 ))}
               </div>
             )}
             <IoMdArrowDropdown />
-          </button>
+          </div>
 
           <div
-            className={`z-50 origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${visible == true ? "visible" : "hidden"
-              }`}>
+            className={`z-50 origin-top-right absolute right-0 mt-2 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 ${
+              visible == true ? "visible" : "hidden"
+            }`}>
             {isDropdownMultiple != true ? (
               <>
-                {options.map((value: string, index) => {
+                {options?.map((value: string, index) => {
                   return (
-                    <button key={`${value}-${index}-options`}
-                      className=" px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 bg-white w-full flex justify-between items-center"
+                    <div
+                      key={`${value}-${index}-options`}
+                      className="cursor-pointer  px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 bg-white w-full flex justify-between items-center"
                       onClick={() => {
                         setSelected(value);
 
@@ -72,15 +76,16 @@ export default function TaxRulesDetailsInfo({
                       }}>
                       <div> {value}</div>
                       <div
-                        className={`text-lg ${selected == value ? "text-red-500" : "text-green-500"
-                          }`}>
+                        className={`text-lg ${
+                          selected == value ? "text-red-500" : "text-green-500"
+                        }`}>
                         {selected == value ? (
                           <FaMinusCircle />
                         ) : (
                           <FaPlusCircle />
                         )}
                       </div>
-                    </button>
+                    </div>
                   );
                 })}
               </>
@@ -88,9 +93,9 @@ export default function TaxRulesDetailsInfo({
               <>
                 {multiOptions.map((value: string) => {
                   return (
-                    <button
+                    <div
                       key={value}
-                      className=" px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 bg-white w-full flex justify-between items-center"
+                      className=" cursor-pointer px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 bg-white w-full flex justify-between items-center"
                       onClick={() => {
                         if (words.includes(value)) {
                           handleRemove(value);
@@ -101,17 +106,18 @@ export default function TaxRulesDetailsInfo({
                       <div> {value}</div>
                       <button
                         key={value}
-                        className={`text-lg ${words.includes(value)
-                          ? "text-red-500"
-                          : "text-green-500"
-                          }`}>
+                        className={`text-lg ${
+                          words.includes(value)
+                            ? "text-red-500"
+                            : "text-green-500"
+                        }`}>
                         {words.includes(value) ? (
                           <FaMinusCircle />
                         ) : (
                           <FaPlusCircle />
                         )}
                       </button>
-                    </button>
+                    </div>
                   );
                 })}
               </>
