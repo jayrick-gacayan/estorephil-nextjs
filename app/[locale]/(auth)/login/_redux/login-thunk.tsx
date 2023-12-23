@@ -1,21 +1,22 @@
 import { AppDispatch, store } from "@/redux/store";
-import { AccountRepository } from "@/repositories/account-repository";
 import { LoginState } from "./login-state";
-import { loginFailed, loginLoaded, loginSuccess } from "./login-slice";
+import { loginRequestStatusSet } from "./login-slice";
+import { RequestStatus } from "@/types/enums/request-status";
+import { AccountRepository } from "@/repositories/account-repository";
 
 export function login(accountRepository: AccountRepository) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
-        const state = getState().login as LoginState
-        dispatch(loginLoaded())
-        var response = await accountRepository.login({
-            email: state.email.value,
-            password: state.password.value
-        })
+        const loginState: LoginState = getState().login
 
-        if (!response?.error) {
-            dispatch(loginSuccess())
+        let result = await accountRepository.nextAuthSignIn({
+            email: loginState.email.value,
+            password: loginState.password.value
+        });
+
+        if (!result?.error) {
+            dispatch(loginRequestStatusSet(RequestStatus.SUCCESS))
         } else {
-            dispatch(loginFailed())
+            dispatch(loginRequestStatusSet(RequestStatus.FAILURE))
         }
     }
 }

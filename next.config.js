@@ -25,7 +25,7 @@ const nextConfig = {
     ],
   },
   env: {
-    API_URL: process.env.API_URL,
+    API_URL: process.env.API_URL
   },
   async rewrites() {
     return [
@@ -42,7 +42,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|register|login|verify-login|courier).*)',
+        source: '/:locale/:path((?!admin|login|verify-login|courier|agent/register).*)',
         destination: '/:locale/main/:path*',
       },
       {

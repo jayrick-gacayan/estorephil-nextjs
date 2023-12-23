@@ -1,10 +1,13 @@
-import { RequestStatus } from "@/models/result"
+import { Categories } from '@/models/category'
+import { Product } from '@/models/product'
+import { Store } from '@/models/store'
+import { RequestStatus } from '@/types/enums/request-status'
 
 export interface HomeState {
-    categories: any[]
-    stores: any[]
-    products: any[]
+    categories: Categories[]
+    stores: Store[]
+    ourProducts: Product[]
     getMainCategoriesStatus: RequestStatus
     getMainStoresStatus: RequestStatus
-    getMainProductsStatus: RequestStatus
+    getOurProductsStatus: RequestStatus
 }

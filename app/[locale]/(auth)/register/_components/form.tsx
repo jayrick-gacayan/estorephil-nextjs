@@ -2,7 +2,7 @@ import PasswordFieldInput from "@/app/[locale]/_components/password-field-input"
 import TextFieldInput from "@/app/[locale]/_components/text-field-input";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { businessNameChanged, businessNatureChanged, confirmPassworChanged, emailChanged, fullNameChanged, passwordChanged, phoneNumberChanged, signUpClicked } from "../_redux/register-slice";
+import { businessNameChanged, businessNatureChanged, confirmPassworChanged, emailChanged, firstNameChanged, lastNameChanged, passwordChanged, phoneNumberChanged, signUpClicked } from "../_redux/register-slice";
 
 export default function Form() {
     const state = useSelector((state: RootState) => state.register)
@@ -16,7 +16,13 @@ export default function Form() {
                 <div>
                     <TextFieldInput label={"Business Name"} value={state.businessName.value} onChange={(e) => { dispatch(businessNameChanged(e.target.value)) }} errorText={state.businessName.error} type={"text"} />
                     <TextFieldInput label={"Nature of Business"} value={state.businessNature.value} onChange={(e) => { dispatch(businessNatureChanged(e.target.value)) }} errorText={state.businessNature.error} type={"text"} />
-                    <TextFieldInput label={"Full Name"} value={state.fullName.value} onChange={(e) => { dispatch(fullNameChanged(e.target.value)) }} errorText={state.fullName.error} type={"text"} />
+                    <div className="">
+                        <label className="text-base font-medium text-zinc-500">Company Owner</label>
+                        <div className="flex gap-2">
+                            <TextFieldInput label={""} className={"w-full"} placeholder={"First name"} value={state.firstName.value} onChange={(e) => { dispatch(firstNameChanged(e.target.value)) }} errorText={state.firstName.error} type={"text"} />
+                            <TextFieldInput label={""} className={"w-full"} placeholder={"Last name"} value={state.lastName.value} onChange={(e) => { dispatch(lastNameChanged(e.target.value)) }} errorText={state.lastName.error} type={"text"} />
+                        </div>
+                    </div>
                     <TextFieldInput label={"Email Address"} value={state.email.value} onChange={(e) => { dispatch(emailChanged(e.target.value)) }} errorText={state.email.error} type={"text"} />
                     <TextFieldInput label={"Phone Number"} value={state.phoneNumber.value} onChange={(e) => { dispatch(phoneNumberChanged(e.target.value)) }} errorText={state.phoneNumber.error} type={"text"} />
                     <PasswordFieldInput label="Password" value={state.password.value} onChange={(e) => { dispatch(passwordChanged(e.target.value)) }} errorText={state.password.error} show={state.password.show} />

@@ -1,9 +1,10 @@
-import { FiEye } from "react-icons/fi";
-import { RiDeleteBin2Line } from "react-icons/ri";
+"use client";
 import { CiSearch } from "react-icons/ci";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
+import { IoIosArrowBack, IoIosArrowForward, IoMdClose } from "react-icons/io";
 import Link from "next/link";
+import { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
+import TradeRatesDropdown from "../_components/trade-rates-dropdown";
 export default function TradeRateItems() {
   const orders = [
     {
@@ -71,6 +72,15 @@ export default function TradeRateItems() {
     },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const openEditModal = () => {
+    setEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+  };
   return (
     <div className="flex flex-col h-full ">
       <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
@@ -106,7 +116,7 @@ export default function TradeRateItems() {
                     key={order.tradeID}
                     className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs">
                     <td className={`${rowHeight} text-cyan-500`}>
-                      <Link href={""}> {order.tradeID}</Link>
+                      <button onClick={openEditModal}> {order.tradeID}</button>
                     </td>
                     <td className={`${rowHeight} text-cyan-500`}>
                       <Link href={""}> {order.dateTime}</Link>
@@ -139,6 +149,112 @@ export default function TradeRateItems() {
           </div>
         </div>
       </div>
+      {isEditModalOpen && (
+        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
+            <div className="flex justify-between w-full items-center pb-5">
+              <div className="w-[1.25rem] h-[1.25rem]" />
+              <div className="growtext-center">
+                <h1 className="text-xl font-bold ">Edit Seller Details</h1>
+              </div>
+              <div>
+                <button className="text-xl" onClick={closeEditModal}>
+                  <IoMdClose />
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t w-full h-[1.5rem]"></div>
+            <form className="space-y-4">
+              <div className="flex flex-col">
+                <label htmlFor="sellerCode" className="mb-2 font-bold text-md">
+                  Seller Code
+                </label>
+                <input
+                  type="text"
+                  id="sellerCode"
+                  className="px-3 py-2 border rounded-md w-full"
+                  defaultValue="Costco05041"
+                  placeholder="Seller Code"
+                />
+              </div>
+              <div className="flex gap-4">
+                <div className="flex flex-col gap-4 grow">
+                  <TradeRatesDropdown
+                    label={"Currency Form"}
+                    data={undefined}
+                    isDropdown={true}
+                    isDropdownMultiple={undefined}
+                    dropdownLists={["₱", "C$"]}
+                  />
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="sellerCode"
+                      className="mb-2 font-bold text-md">
+                      Order Rate
+                    </label>
+                    <input
+                      type="text"
+                      id="sellerCode"
+                      className="px-3 py-2 border rounded-md w-full"
+                      defaultValue="Costco05041"
+                      placeholder="Seller Code"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col gap-4 grow">
+                  <TradeRatesDropdown
+                    label={"Currency To"}
+                    data={undefined}
+                    isDropdown={true}
+                    isDropdownMultiple={undefined}
+                    dropdownLists={["₱", "C$"]}
+                  />
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="sellerCode"
+                      className="mb-2 font-bold text-md">
+                      Trading Rate
+                    </label>
+                    <input
+                      type="text"
+                      id="sellerCode"
+                      className="px-3 py-2 border rounded-md w-full"
+                      defaultValue="Costco05041"
+                      placeholder="Seller Code"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-xs font-semibold flex-col flex  gap-2">
+                <div className="flex items-center gap-2">
+                  <div>Admin Note</div>
+                  <div>
+                    <FaCheckCircle />
+                  </div>
+                </div>
+                <textarea className="w-full border resize-none outline-none h-[5rem]" />
+              </div>
+
+              <div className="flex space-x-4 items-center justify-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
+                  onClick={closeEditModal}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

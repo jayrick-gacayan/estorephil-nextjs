@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { StaffAddState } from "./staff-add-state"
-import { ValidationStatus } from "@/models/validation-response"
+import { ValidationType } from "@/models/validation-response"
 import Validations from "@/types/validations"
 
 
@@ -35,7 +35,7 @@ export const staffAddSlice = createSlice({
                 ...state,
                 firstName: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }
@@ -47,7 +47,7 @@ export const staffAddSlice = createSlice({
                 ...state,
                 lastName: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }
@@ -59,7 +59,7 @@ export const staffAddSlice = createSlice({
                 ...state,
                 email: {
                     value: action.payload,
-                    valid: validationResponse.status == ValidationStatus.VALID,
+                    valid: validationResponse.status == ValidationType.VALID,
                     error: validationResponse.errorText
                 }
             }

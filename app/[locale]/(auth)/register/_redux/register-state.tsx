@@ -3,7 +3,8 @@ import { FieldInput } from "@/models/field-input";
 export interface RegisterState {
     businessName: FieldInput,
     businessNature: FieldInput,
-    fullName: FieldInput,
+    firstName: FieldInput,
+    lastName: FieldInput,
     email: FieldInput,
     phoneNumber: FieldInput,
     password: FieldInput,

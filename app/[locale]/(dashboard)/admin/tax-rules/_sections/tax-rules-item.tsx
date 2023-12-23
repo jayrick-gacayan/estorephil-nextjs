@@ -255,8 +255,9 @@ export default function TaxRulesItem() {
                   <tr
                     key={order.taxCode}
                     className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs">
-                    <td className={`${rowHeight} text-cyan-500`}>
-                      <Link href={""}> {order.taxCode}</Link>
+                    <td
+                      className={`${rowHeight} text-cyan-500 hover:underline`}>
+                      <Link href={"/admin/tax-rules/1"}> {order.taxCode}</Link>
                     </td>
 
                     <td className={`${rowHeight}`}>{order.taxDescription}</td>
@@ -309,7 +310,7 @@ export default function TaxRulesItem() {
 
       {isChargesDialogVisible && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="flex flex-col justify-between bg-white h-[25rem] rounded-md w-[40rem] items-center p-8">
+          <div className="flex flex-col justify-between bg-white h-[25rem] rounded-md w-[40rem] items-center p-8 gap-2">
             <div className="flex flex-col items-center gap-5 ">
               <h2 className="text-xl font-bold mb-4">Charges</h2>
               <div className="mb-4 flex flex-col ">
@@ -331,11 +332,18 @@ export default function TaxRulesItem() {
                 />
               </div>
             </div>
-            <button
-              onClick={closeChargesDialog}
-              className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]">
-              Close
-            </button>
+            <div className="gap-3 flex flex-col">
+              <button
+                onClick={closeChargesDialog}
+                className="text-white bg-green-500 px-4 py-2 rounded-md w-[10rem]">
+                Update
+              </button>
+              <button
+                onClick={closeChargesDialog}
+                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

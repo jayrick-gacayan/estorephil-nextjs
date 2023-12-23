@@ -1,30 +1,12 @@
 'use client';
 
-import { RootState } from '@/redux/store';
 import { useRouter } from 'next-intl/client';
 import Link from 'next-intl/link';
-import { useEffect } from 'react';
-import { getMainCategories } from '../_redux/home-thunk';
-import { TYPES } from '@/inversify/types';
-import { HomeRepository } from '@/repositories/home-repository';
-import { homeContainer } from '@/inversify/inversify.config';
-import { RequestStatus } from '@/models/result';
-import Loading from '../../_components/loading';
-import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
+import { Categories } from '@/models/category';
+import { HiOutlineExclamation } from 'react-icons/hi';
 
-export function HomeCategories() {
+export function HomeCategories({ categories }: { categories: Categories[] }) {
   const router = useRouter();
-  const state = useAppSelector((state: RootState) => { return state.home; });
-  const mainState = useAppSelector((state: RootState) => { return state.main });
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository);
-
-    dispatch(getMainCategories(homeRepository, mainState.countryPicker.value))
-  }, []);
-
-  console.log('sdjfksdjfsdf', state.categories);
 
   return (
     <div className='lg:block hidden flex-none border rounded border-secondary-light p-3 space-y-2 bg-white w-64'>
@@ -35,21 +17,33 @@ export function HomeCategories() {
       </div>
       <div className='flex flex-col h-[348px]'>
         {
-          state.getMainCategoriesStatus === RequestStatus.SUCCESS ?
-            state.categories.map(
-              (category, index) => {
-                return <Link key={`${index}-categories`}
-                  className='block hover:text-primary hover:underline'
-                  href={'/all-categories'}>
-                  {category.name}
-                </Link>
-              }
-            )
-            :
+          categories.length === 0 ?
             (
-              <div className='flex items-center h-full justify-center'>
-                <Loading height={64} width={64} />
+              <div className='flex items-center justify-center h-full'>
+                <div className='flex-none w-auto text-secondary-light'>
+                  <HiOutlineExclamation size={56} className="block w-auto m-auto" />
+                  <span className='block text-[24px]'>No categories yet</span>
+                </div>
               </div>
+
+            ) :
+            (
+              <>
+                {
+                  categories.map(
+                    (category: Categories, index) => {
+                      return <Link key={`${index}-categories`}
+                        className='block hover:text-primary hover:underline'
+                        href={{
+                          pathname: '/all-categories',
+                          query: { 'category[]': category.name }
+                        }}>
+                        {category.name}
+                      </Link>
+                    }
+                  )
+                }
+              </>
             )
         }
       </div>

@@ -3,44 +3,58 @@
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from 'next-intl/client';
 import { Checkbox } from '@/app/[locale]/_components/checkbox';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/redux/store';
-import { getMainCategories, searchProducts } from '../_redux/all-categories-thunk';
-import { homeContainer, productContainer } from '@/inversify/inversify.config';
+import { getMainCategories } from '../_redux/all-categories-thunk';
+import { categoryContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
-import { HomeRepository } from '@/repositories/home-repository';
-import { categoriesSelectedChanged, searchQueryChanged } from '../_redux/all-categories-slice';
-import { ProductRepository } from '@/repositories/product-repository';
+import { categoriesRequestStatusSet, categoriesSelectedChanged } from '../_redux/all-categories-slice';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { MainState } from '../../_redux/main-state';
-import { useForceUpdate } from 'framer-motion';
+import { CategoryRepository } from '@/repositories/category-repository';
+import { AllCategoriesState } from '../_redux/all-categories-state';
+import { TextInputField } from '@/types/props/text-input-field';
+import { RequestStatus } from '@/types/enums/request-status';
+import { Categories } from '@/models/category';
 
-export function CategorySidebar() {
+export function CategorySidebar({ categories }: { categories: Categories[] }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const dispatch: AppDispatch = useAppDispatch()
   const pathName: string = usePathname();
 
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; })
+  const allCategoriesState: AllCategoriesState = useAppSelector((state: RootState) => state.allCategories);
 
-  let locale = useMemo(() => {
-    return mainState.countryPicker.value;
-  }, [mainState.countryPicker.value]);
+  let searchParamsMemo: ReadonlyURLSearchParams = useMemo(() => { return searchParams }, [searchParams]);
 
-  const allCategoriesState = useAppSelector((state: RootState) => state.allCategories);
-
-  let searchParamsMemo = useMemo(() => { return searchParams }, [searchParams])
-  let { categories, categoriesSelected } = useMemo(() => {
+  let { categoriesSelected } = useMemo(() => {
     return {
-      categories: allCategoriesState.categories,
       categoriesSelected: allCategoriesState.categoriesSelected
     }
   }, [allCategoriesState.categories, allCategoriesState.categoriesSelected])
+  let categoriesRequestStatus: RequestStatus = useMemo(() => {
+    return allCategoriesState.getCategoriesStatus
+  }, [allCategoriesState.getCategoriesStatus]);
+
+  let countryPicker: TextInputField<string> = useMemo(() => {
+    return mainState.countryPicker;
+  }, [mainState.countryPicker])
 
   useEffect(() => {
-    const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository);
-    dispatch(getMainCategories(homeRepository, locale));
-  }, [dispatch, locale]);
+    switch (categoriesRequestStatus) {
+      case RequestStatus.NONE:
+        dispatch(categoriesRequestStatusSet(RequestStatus.WAITING));
+        break;
+      case RequestStatus.WAITING:
+        dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
+        break;
+      case RequestStatus.IN_PROGRESS:
+        const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
+        dispatch(getMainCategories(categoryRepository, countryPicker.value));
+        break;
+    }
+  }, [categoriesRequestStatus, dispatch, countryPicker.value]);
 
   useEffect(() => {
     let getAllCategories = searchParamsMemo.getAll('category[]');
@@ -53,17 +67,6 @@ export function CategorySidebar() {
       dispatch(categoriesSelectedChanged(categoriesSelected[0]));
     }
     else {
-
-      // for (let i: number = 0; i < categoriesSelected.length; i++) {
-      //   let getBreak = false;
-      //   for (let j: number = 0; j < getAllCategories.length; j++) {
-      //     if (!categoriesSelected.includes(getAllCategories[j])) {
-      //       getBreak = true;
-      //       dispatch(categoriesSelectedChanged(getAllCategories[j]));
-      //       break;
-      //     }
-      //   }
-      // }
       getAllCategories.forEach((value: string) => {
         if (!categoriesSelected.includes(value)) {
           dispatch(categoriesSelectedChanged(value));
@@ -78,46 +81,46 @@ export function CategorySidebar() {
     }
   }, [searchParamsMemo, categoriesSelected, dispatch]);
 
-  useEffect(() => {
-    const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
-    dispatch(searchProducts(productRepository, locale))
-  }, [dispatch, locale]);
-
   return (
     <div className='flex-none bg-white w-[320px] border-r border-r-tertiary-dark py-2'>
       <div className='space-y-3 w-3/4 m-auto'>
         <div className='font-bold'>Categories</div>
         <div className='block space-y-4'>
           {
-            categories.map((category: any, index: number) => {
-              return (
-                <Checkbox<boolean> key={`category-${index}-${category.name}`}
-                  labelText={category.name}
-                  labelClassname={(value: boolean, current: boolean) => {
-                    return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
-                  }}
-                  value={true}
-                  checkBoxClassName={(value: boolean, current: boolean) => {
-                    return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
-                  }}
-                  checkClassName={(value: boolean, current: boolean) => {
-                    return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
-                  }}
-                  current={categoriesSelected.includes(category.name)}
-                  onCheckboxChanged={(value: boolean) => {
+            categories.length === 0 ? (<div>No categories</div>) :
+              (
+                <>
+                  {
+                    categories.map((category: any, index: number) => {
+                      return (
+                        <Checkbox<boolean> key={`category-${index}-${category.name}`}
+                          labelText={category.name}
+                          labelClassname={(value: boolean, current: boolean) => {
+                            return `inline-block text-sm flex-1 ${value === current ? 'text-primary' : 'text-inherit'}`;
+                          }}
+                          value={true}
+                          checkBoxClassName={(value: boolean, current: boolean) => {
+                            return `border -leading-1 ${current === value ? 'border-primary text-primary' : 'border-tertiary-dark'} rounded w-6 h-6`;
+                          }}
+                          checkClassName={(value: boolean, current: boolean) => {
+                            return `${current === value ? 'block' : 'hidden'} translate-x-[2px] translate-y-[1px]`;
+                          }}
+                          current={categoriesSelected.includes(category.name)}
+                          onCheckboxChanged={(value: boolean) => {
+                            let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-                    let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
+                            value ? current.delete('category[]', category.name) :
+                              current.append('category[]', category.name);
 
-                    value ? current.delete('category[]', category.name) :
-                      current.append('category[]', category.name);
+                            const query = current.toString() === '' ? '' : `?${current.toString()}`;
 
-                    const query = current.toString() === '' ? '' : `?${current.toString()}`;
-
-                    console.log('query', query, value);
-                    router.push(`${pathName}${query}`)
-                  }} />
+                            router.push(`${pathName}${query}`)
+                          }} />
+                      )
+                    })
+                  }
+                </>
               )
-            })
           }
         </div>
       </div>

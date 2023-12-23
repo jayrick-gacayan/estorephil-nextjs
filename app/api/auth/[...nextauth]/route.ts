@@ -1,7 +1,7 @@
-import NextAuth, { AuthOptions, JWT } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const authOptions: AuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -11,25 +11,27 @@ const authOptions: AuthOptions = {
           email: string;
           password: string;
         };
-        console.log('auth options called', { email, password })
-        const data = await fetch(`${process.env.API_URL}/login`, {
+
+        console.log('sdhfksdfhsdjf', process.env.API_URL);
+        let result = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password }),
           headers: {
             'Content-Type': 'application/json',
           },
         });
-        // console.log('login route -----', data.json())
-        const res = await data.json();
-        if (res?.status !== 200) {
-          throw new Error(res?.status);
+        let response = await result.json();
+        if (response?.status !== 200) {
+          throw new Error(response.message);
         }
-        return res?.data;
+
+        return response?.data;
       },
     }),
   ],
   pages: {
     signIn: "/login",
+
   },
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {

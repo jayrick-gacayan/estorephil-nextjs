@@ -1,10 +1,17 @@
-import { FiEye } from "react-icons/fi";
-import { RiDeleteBin2Line } from "react-icons/ri";
+"use client";
 import { CiSearch } from "react-icons/ci";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
-import { MdOutlineLockReset } from "react-icons/md";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoMdClose,
+  IoMdSettings,
+} from "react-icons/io";
+import { FaEye } from "react-icons/fa";
+import { TiCancel } from "react-icons/ti";
 import Image from "next/image";
+import Link from "next-intl/link";
+import { useState } from "react";
+import { AiOutlineMail } from "react-icons/ai";
 export default function AgentItems() {
   const orders = [
     {
@@ -15,7 +22,7 @@ export default function AgentItems() {
       firstName: "Jezzel",
       email: "villamorjezzel@kodakollectiv.com",
       referral: "	1.5",
-      status: "Active",
+      status: "Pending",
     },
     {
       userID: "1",
@@ -68,6 +75,22 @@ export default function AgentItems() {
       status: "Active",
     },
   ];
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const openEditModal = () => {
+    setEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModalOpen(false);
+  };
+  const [isEmailModalOpen, setEmailModalOpen] = useState(false);
+  const openEmailModal = () => {
+    setEmailModalOpen(true);
+  };
+
+  const closeEmailModal = () => {
+    setEmailModalOpen(false);
+  };
   const rowHeight = "px-4 h-[4.25rem]";
   return (
     <div className="flex flex-col h-full ">
@@ -107,8 +130,12 @@ export default function AgentItems() {
                     statusColorClass = "bg-green-500";
                     break;
 
-                  case "Draft":
+                  case "Invited":
                     statusColorClass = "bg-blue-500";
+                    break;
+
+                  case "Pending":
+                    statusColorClass = "bg-red-500";
                     break;
                   default:
                     statusColorClass = "";
@@ -143,17 +170,31 @@ export default function AgentItems() {
                       </div>
                     </td>
                     <td className={`${rowHeight}`}>
-                      <div className="flex items-center justify-center gap-4">
-                        <div className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <FaEdit />
+                      {order.status != "Pending" ? (
+                        <div className="flex items-center justify-center gap-4">
+                          <Link
+                            className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
+                            href={"/admin/users/agents/1"}>
+                            <FaEye />
+                          </Link>
+                          <button
+                            onClick={openEditModal}
+                            className=" border-2 p-2.5 border-gray-500 rounded-md text-gray-500 hover:bg-gray-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <IoMdSettings />
+                          </button>
+                          <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <TiCancel />
+                          </div>
                         </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <RiDeleteBin2Line />
+                      ) : (
+                        <div className="flex items-center justify-center gap-4">
+                          <button
+                            onClick={openEmailModal}
+                            className=" border-2 p-2.5 border-green-500 rounded-md text-green-500 hover:bg-green-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
+                            <AiOutlineMail />
+                          </button>
                         </div>
-                        <div className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
-                          <MdOutlineLockReset />
-                        </div>
-                      </div>
+                      )}
                     </td>
                   </tr>
                 );
@@ -178,6 +219,92 @@ export default function AgentItems() {
           </div>
         </div>
       </div>
+      {isEmailModalOpen && (
+        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
+            <div className="flex justify-between w-full items-center pb-5">
+              <div className="w-[1.25rem] h-[1.25rem]" />
+              <div className="growtext-center">
+                <h1 className="text-xl font-bold ">Send Invitation</h1>
+              </div>
+              <div>
+                <button className="text-xl" onClick={closeEmailModal}>
+                  <IoMdClose />
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t w-full h-[1.5rem]"></div>
+            <div className="w-full flex items-center justify-center mb-5">
+              Send invitation code to Villamor?
+            </div>
+            <form className="space-y-4">
+              <div className="flex space-x-4 items-center justify-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+                  Send Invite
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
+                  onClick={closeEmailModal}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
+            <div className="flex justify-between w-full items-center pb-5">
+              <div className="w-[1.25rem] h-[1.25rem]" />
+              <div className="growtext-center">
+                <h1 className="text-xl font-bold ">Send Invitation</h1>
+              </div>
+              <div>
+                <button className="text-xl" onClick={closeEditModal}>
+                  <IoMdClose />
+                </button>
+              </div>
+            </div>
+
+            <div className="border-t w-full h-[1.5rem]"></div>
+            <form className="space-y-4">
+              <div className="flex flex-col">
+                <label htmlFor="sellerCode" className="mb-2 font-bold text-md">
+                  Referral Fee (%)
+                </label>
+                <input
+                  type="text"
+                  id="sellerCode"
+                  className="px-3 py-2 border rounded-md w-full"
+                  defaultValue="1.5"
+                  placeholder="Seller Code"
+                />
+              </div>
+
+              <div className="flex space-x-4 items-center justify-center">
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
+                  onClick={closeEditModal}>
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
