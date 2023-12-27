@@ -2,12 +2,13 @@
 
 import { AppDispatch, RootState } from '@/redux/store';
 import { CourierBoxesState } from '../_redux/courier-boxes-state';
-import { modalBoxesOpened } from '../_redux/courier-boxes-slice';
+import { boxFormFieldsReset, modalBoxesOpened } from '../_redux/courier-boxes-slice';
 import Modal from '@/app/[locale]/_components/modal';
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { useMemo, useRef, useCallback } from 'react';
+import { useMemo, useRef, useCallback, useEffect } from 'react';
 import BoxesModalForm from './boxes-modal-form';
+import { RequestStatus } from '@/types/enums/request-status';
 
 export default function ModalBoxesContainer() {
   const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => {
@@ -22,7 +23,13 @@ export default function ModalBoxesContainer() {
     }
   }, [courierBoxesState.modalBoxesOpen]);
 
+  const requestStatus = useMemo(() => {
+    return courierBoxesState.boxFormFields.requestStatus;
+  }, [courierBoxesState.boxFormFields.requestStatus])
+
   const modalContentRef = useRef<HTMLDivElement>(null);
+
+
 
   const cbOnModalClose = useCallback(() => {
     if (modalContentRef.current) {
@@ -30,9 +37,16 @@ export default function ModalBoxesContainer() {
       modalContentRef.current.classList.add('animate-slide-down');
       setTimeout(() => {
         dispatch(modalBoxesOpened(''))
+        dispatch(boxFormFieldsReset())
       }, 300);
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (requestStatus === RequestStatus.SUCCESS) {
+      cbOnModalClose();
+    }
+  }, [requestStatus, cbOnModalClose])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 

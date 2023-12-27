@@ -20,7 +20,7 @@ import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import { AccountRepository } from '@/repositories/account-repository';
 
-export default function LoginForm({ role }: { role: string }) {
+export default function LoginForm() {
     const dispatch: AppDispatch = useAppDispatch();
     const loginState: LoginState = useAppSelector((state: RootState) => {
         return state.login;
@@ -46,10 +46,6 @@ export default function LoginForm({ role }: { role: string }) {
         }
     }, [requestStatus, dispatch])
 
-    useEffect(() => {
-        if (!!sessionData) { router.push('/'); }
-    }, [sessionData, router]);
-
     function loginFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         dispatch(loginRequestStatusSet(RequestStatus.WAITING));
@@ -70,7 +66,7 @@ export default function LoginForm({ role }: { role: string }) {
                     (<div className='block'>
                         <div className='bg-white rounded-md w-[352px] shadow-lg overflow-hidden space-y-4'>
                             <h3 className='bg-default-dark p-4 text-white text-[24px] text-center'>
-                                {translate('userRole', { userRole: role }).toUpperCase()}
+                                {translate('userRole', { userRole: 'agent' }).toUpperCase()}
                             </h3>
                             <div className='block text-center'>{translate('signIn')}</div>
                             <div className='px-8 py-4 space-y-8'>

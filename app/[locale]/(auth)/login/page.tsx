@@ -1,25 +1,14 @@
 
 import LoginForm from "./_sections/login-form";
 
-export default function Page({
-    searchParams
-}: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
-    // let header = headers();
-
-    let role = searchParams.role !== undefined && typeof searchParams.role === 'string' ?
-        searchParams.role : 'agent';
-
-    // console.log('headers ', header.get('host'));
-
+export default function Page() {
 
 
     return (
         <div className="bg-tertiary-light h-screen w-screen p-8">
             <div className="max-w-screen-2xl m-auto h-full ">
                 <div className="flex items-start justify-center h-full">
-                    <LoginForm role={role} />
+                    <LoginForm />
                 </div>
             </div>
 

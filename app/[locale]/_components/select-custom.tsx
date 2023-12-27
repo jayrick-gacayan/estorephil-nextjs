@@ -70,7 +70,7 @@ export const SelectCustom = forwardRef<HTMLDivElement, SelectProps<any, any>>(
                     : `${placeholder}`}
             </div>
             <div className='w-auto flex-none'>
-              <HiChevronDown
+              <HiChevronDown size={20}
                 className={`transition-all duration-100 ${visible ? `-rotate-90` : `rotate-0`
                   }`}
               />

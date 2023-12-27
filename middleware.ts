@@ -14,11 +14,11 @@ const authMiddleware: NextMiddlewareWithAuth = withAuth(
   function onSuccess(req) {
     return intlMiddleware(req);
   },
+
   {
     callbacks: {
       authorized: ({ token, req }) => {
-        if (req.nextUrl.pathname.includes('courier')
-          || req.nextUrl.pathname.includes('admin') ||
+        if (req.nextUrl.pathname.includes('admin') ||
           req.nextUrl.pathname.includes('dashboard') ||
           req.nextUrl.pathname === '/' ||
           req.nextUrl.pathname === '/home' ||
@@ -32,6 +32,7 @@ const authMiddleware: NextMiddlewareWithAuth = withAuth(
         return token != null
       }
     },
+    secret: "dVecWxuLKpdiMHr4MyVWAF5aBg8S7mddGNuSd66bLPk=",
     pages: {
       signIn: '/login'
 

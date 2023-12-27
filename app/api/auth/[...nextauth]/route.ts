@@ -12,7 +12,7 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        console.log('sdhfksdfhsdjf', process.env.API_URL);
+        // console.log('sdhfksdfhsdjf', email, password);
         let result = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password }),
@@ -21,6 +21,8 @@ const authOptions: NextAuthOptions = {
           },
         });
         let response = await result.json();
+
+        console.log('dfjaslkdfjdsf', response)
         if (response?.status !== 200) {
           throw new Error(response.message);
         }
@@ -33,6 +35,7 @@ const authOptions: NextAuthOptions = {
     signIn: "/login",
 
   },
+  secret: "dVecWxuLKpdiMHr4MyVWAF5aBg8S7mddGNuSd66bLPk=",
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);
