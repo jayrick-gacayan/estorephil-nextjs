@@ -44,7 +44,33 @@ export class BoxRepository {
 
   }
 
-  async updateBox() {
+  async updateBox(box: {
+    cargoType: string;
+    boxType: string;
+    length: string;
+    width: string;
+    height: string;
+    unitMeasure: string;
+    weight: string;
+    weightType: string;
+    price: string;
+    referralPercentage: string;
+  }, token: string, id: string) {
+    let result = await this.#boxService.updateBox(
+      JSON.stringify({ box: snakeCase(box), id: id }), token
+    );
+
+    let response: any = undefined;
+
+    if (result.status === 200) {
+      response = await result.json();
+    }
+
+    return new Result<Box>({
+      response: response,
+      data: camelCase({ ...response.data }) ?? undefined,
+      statusCode: response.status,
+    })
 
   }
 }

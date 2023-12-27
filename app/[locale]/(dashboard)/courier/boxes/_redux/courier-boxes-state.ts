@@ -20,6 +20,4 @@ export interface CourierBoxesState {
     weightType: TextInputField<string>;
     requestStatus: RequestStatus;
   }
-
-
 }
