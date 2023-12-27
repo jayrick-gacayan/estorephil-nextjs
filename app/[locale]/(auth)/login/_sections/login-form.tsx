@@ -13,7 +13,6 @@ import { useSession } from 'next-auth/react';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { LoginState } from '../_redux/login-state';
 import { FaEnvelope, FaLock } from 'react-icons/fa6';
-import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import Link from 'next-intl/link';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import { RequestStatus } from '@/types/enums/request-status';

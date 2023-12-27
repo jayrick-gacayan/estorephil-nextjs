@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
