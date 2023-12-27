@@ -1,12 +1,17 @@
-import { headers } from "next/headers";
+
 import LoginForm from "./_sections/login-form";
 
-export default function Page() {
-    let header = headers();
+export default function Page({
+    searchParams
+}: {
+    searchParams: { [key: string]: string | string[] | undefined }
+}) {
+    // let header = headers();
 
-    let role = header.get('host')?.split('.')[0] ?? 'agent'
+    let role = searchParams.role !== undefined && typeof searchParams.role === 'string' ?
+        searchParams.role : 'agent';
 
-    console.log('headers ', header.get('host'));
+    // console.log('headers ', header.get('host'));
 
 
 
