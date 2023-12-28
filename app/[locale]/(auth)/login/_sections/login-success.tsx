@@ -33,35 +33,15 @@ export default function LoginSuccess() {
     }, [loginStatus, dispatch, router, sessionData?.user]);
 
     return (
-        <>
-            <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5 }}
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100vh',
-                }}
-                className='flex items-center justify-center'
-            >
-                <motion.div
-                    style={{
-                        width: '100px',
-                        height: '100px',
-                        borderRadius: '50%',
-                    }}
-                    className='flex items-center justify-center'
-                >
-
-                    <CiCircleCheck color='10D62E' size={100} />
-                    {/* ✅ */}
-                </motion.div>
-                <h1 className='mt-8 text-lg font-semibold text-slate-800'>Login Successful!</h1>
-            </motion.div>
-        </>
+        <motion.div initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+            className='flex flex-col items-center justify-center fixed h-screen w-screen'>
+            <div className='flex items-center justify-center w-[100px] h-[100px] rounded-[50%]'>
+                <CiCircleCheck color='10D62E' size={100} />{/* ✅ */}
+            </div>
+            <h1 className='mt-8 text-lg font-semibold text-default-dark'>Login Successful!</h1>
+        </motion.div>
     )
 }

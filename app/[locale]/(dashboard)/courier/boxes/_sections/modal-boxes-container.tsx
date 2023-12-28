@@ -37,7 +37,6 @@ export default function ModalBoxesContainer() {
       modalContentRef.current.classList.add('animate-slide-down');
       setTimeout(() => {
         dispatch(modalBoxesOpened(''))
-        dispatch(boxFormFieldsReset())
       }, 300);
     }
   }, [dispatch]);

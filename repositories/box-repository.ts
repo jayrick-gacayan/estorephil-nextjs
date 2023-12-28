@@ -6,6 +6,19 @@ import { camelCase, snakeCase } from "change-case/keys";
 
 import { inject, injectable } from "inversify";
 
+type BoxInputProps = {
+  cargoType: string;
+  boxType: string;
+  length: string;
+  width: string;
+  height: string;
+  unitMeasure: string;
+  weight: string;
+  weightType: string;
+  price: string;
+  referralPercentage: string;
+}
+
 @injectable()
 export class BoxRepository {
   #boxService: BoxService;
@@ -14,18 +27,7 @@ export class BoxRepository {
     this.#boxService = boxService
   }
 
-  async createBox(box: {
-    cargoType: string;
-    boxType: string;
-    length: string;
-    width: string;
-    height: string;
-    unitMeasure: string;
-    weight: string;
-    weightType: string;
-    price: string;
-    referralPercentage: string;
-  }, token: string) {
+  async createBox(box: BoxInputProps, token: string) {
     let result = await this.#boxService.createBox(
       JSON.stringify({ box: snakeCase(box) }), token
     )
@@ -44,18 +46,7 @@ export class BoxRepository {
 
   }
 
-  async updateBox(box: {
-    cargoType: string;
-    boxType: string;
-    length: string;
-    width: string;
-    height: string;
-    unitMeasure: string;
-    weight: string;
-    weightType: string;
-    price: string;
-    referralPercentage: string;
-  }, token: string, id: string) {
+  async updateBox(box: BoxInputProps, token: string, id: string) {
     let result = await this.#boxService.updateBox(
       JSON.stringify({ box: snakeCase(box), id: id }), token
     );
