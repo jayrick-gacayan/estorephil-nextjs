@@ -122,115 +122,144 @@ export default function ProductItems() {
   ];
   const rowHeight = "px-4 h-[4.25rem]";
   const [isBlockDialogVisible, setIsBlockDialogVisible] = useState(false);
-  const openChargesDialog = () => {
+  const openBlockDialog = () => {
     setIsBlockDialogVisible(true);
   };
 
-  const closeChargesDialog = () => {
+  const closeBlockDialog = () => {
     setIsBlockDialogVisible(false);
   };
   return (
-    <div className="flex flex-col h-full ">
-      <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
-        <div className="flex items-center h-[3.5rem]">
-          <div className="py-3 px-2 flex items-center gap-2 w-full  ">
-            <span className="text-xl">
-              <CiSearch />
-            </span>
-            <input
-              type="text"
-              placeholder=""
-              className="border   focus:border-blue-500 focus:outline-none w-[20rem] h-[2rem]"
-            />
+    <>
+      {isBlockDialogVisible && (
+        <div className="z-[999] fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="flex flex-col justify-between bg-white h-[15rem] rounded-md w-[40rem] items-center p-8 gap-2">
+            <div className="flex flex-col items-center gap-5 ">
+              <h2 className="text-xl font-bold mb-4">Block Product</h2>
+              <div>Are you sure to block product?</div>
+            </div>
+            <div className="gap-3 flex flex-row">
+              <button
+                onClick={closeBlockDialog}
+                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]"
+              >
+                Block
+              </button>
+              <button
+                onClick={closeBlockDialog}
+                className="text-cyan-500 border-cyan-500 border px-4 py-2 rounded-md w-[10rem]"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
-        <div className="h-[41.125rem] overflow-auto">
-          <table className={`w-full `}>
-            <thead>
-              <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-sm">
-                <th className="px-4 py-2 ">ITEM NO.</th>
-                <th className="px-4 py-2 ">UID</th>
-                <th className="px-4 py-2 ">IMAGE</th>
-                <th className="px-4 py-2 ">PRODUCT NAME</th>
-                <th className="px-4 py-2 ">CATEGORY</th>
-                <th className="px-4 py-2 ">INVENTORY</th>
-                <th className="px-4 py-2 ">PRICE</th>
-                <th className="px-4 py-2 ">SELLER</th>
-                <th className="px-4 py-2 text-center">STATUS</th>
-                <th className="px-4 py-2 text-center">ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => {
-                let statusColorClass = "";
-                switch (order.status) {
-                  case "Active":
-                    statusColorClass = "bg-green-500";
-                    break;
+      )}
+      <div className="flex flex-col h-full ">
+        <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
+          <div className="flex items-center h-[3.5rem]">
+            <div className="py-3 px-2 flex items-center gap-2 w-full  ">
+              <span className="text-xl">
+                <CiSearch />
+              </span>
+              <input
+                type="text"
+                placeholder=""
+                className="border   focus:border-blue-500 focus:outline-none w-[20rem] h-[2rem]"
+              />
+            </div>
+          </div>
+          <div className="h-[41.125rem] overflow-auto">
+            <table className={`w-full `}>
+              <thead>
+                <tr className=" text-gray-600  border-t-2 border-b-2 bg-white text-left text-sm">
+                  <th className="px-4 py-2 ">ITEM NO.</th>
+                  <th className="px-4 py-2 ">UID</th>
+                  <th className="px-4 py-2 ">IMAGE</th>
+                  <th className="px-4 py-2 ">PRODUCT NAME</th>
+                  <th className="px-4 py-2 ">CATEGORY</th>
+                  <th className="px-4 py-2 ">INVENTORY</th>
+                  <th className="px-4 py-2 ">PRICE</th>
+                  <th className="px-4 py-2 ">SELLER</th>
+                  <th className="px-4 py-2 text-center">STATUS</th>
+                  <th className="px-4 py-2 text-center">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => {
+                  let statusColorClass = "";
+                  switch (order.status) {
+                    case "Active":
+                      statusColorClass = "bg-green-500";
+                      break;
 
-                  case "Draft":
-                    statusColorClass = "bg-blue-500";
-                    break;
-                  default:
-                    statusColorClass = "";
-                    break;
-                }
-                return (
-                  <tr
-                    key={order.itemNo}
-                    className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs"
-                  >
-                    <td className={`${rowHeight}`}>{order.itemNo}</td>
-                    <td className={`${rowHeight}`}>{order.uid}</td>
-                    <td className={`${rowHeight}`}>{order.image}</td>
-                    <td className={`${rowHeight}`}>{order.productName}</td>
-                    <td className={`${rowHeight}`}>{order.category}</td>
-                    <td className={`${rowHeight}`}>{order.inventory}</td>
-                    <td className={`${rowHeight}`}>{order.price}</td>
-                    <td className={`${rowHeight}`}>{order.seller}</td>
-                    <td className={`${rowHeight}`}>
-                      <div
-                        className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}
-                      >
-                        {order.status}
-                      </div>
-                    </td>
-                    <td className={`${rowHeight}`}>
-                      <div className="flex items-center justify-center gap-4">
-                        <Link
-                          className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white"
-                          href={"/admin/products/1"}
+                    case "Draft":
+                      statusColorClass = "bg-blue-500";
+                      break;
+                    default:
+                      statusColorClass = "";
+                      break;
+                  }
+                  return (
+                    <tr
+                      key={order.itemNo}
+                      className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs"
+                    >
+                      <td className={`${rowHeight}`}>{order.itemNo}</td>
+                      <td className={`${rowHeight}`}>{order.uid}</td>
+                      <td className={`${rowHeight}`}>{order.image}</td>
+                      <td className={`${rowHeight}`}>{order.productName}</td>
+                      <td className={`${rowHeight}`}>{order.category}</td>
+                      <td className={`${rowHeight}`}>{order.inventory}</td>
+                      <td className={`${rowHeight}`}>{order.price}</td>
+                      <td className={`${rowHeight}`}>{order.seller}</td>
+                      <td className={`${rowHeight}`}>
+                        <div
+                          className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}
                         >
-                          <FiEye />
-                        </Link>
-                        <button className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white">
-                          <MdBlock />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <div className="  flex justify-center items-center border-t   flex-1">
-          <div className="flex text-[#23B7E5]">
-            <div className="border border-gray-300 w-8 h-8 flex items-center justify-center rounded-l-md">
-              <IoIosArrowBack />
-            </div>
-            <div className="border border-gray-300 w-8 h-8 flex items-center justify-center text-white bg-[#23B7E5]">
-              1
-            </div>
-            <div className="border border-gray-300 w-8 h-8 flex items-center justify-center">
-              2
-            </div>
-            <div className="border border-gray-300 w-8 h-8 flex items-center justify-center  rounded-r-md">
-              <IoIosArrowForward />
+                          {order.status}
+                        </div>
+                      </td>
+                      <td className={`${rowHeight}`}>
+                        <div className="flex items-center justify-center gap-4">
+                          <Link
+                            className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white"
+                            href={"/admin/products/1"}
+                          >
+                            <FiEye />
+                          </Link>
+                          <button
+                            onClick={openBlockDialog}
+                            className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white"
+                          >
+                            <MdBlock />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="  flex justify-center items-center border-t   flex-1">
+            <div className="flex text-[#23B7E5]">
+              <div className="border border-gray-300 w-8 h-8 flex items-center justify-center rounded-l-md">
+                <IoIosArrowBack />
+              </div>
+              <div className="border border-gray-300 w-8 h-8 flex items-center justify-center text-white bg-[#23B7E5]">
+                1
+              </div>
+              <div className="border border-gray-300 w-8 h-8 flex items-center justify-center">
+                2
+              </div>
+              <div className="border border-gray-300 w-8 h-8 flex items-center justify-center  rounded-r-md">
+                <IoIosArrowForward />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
