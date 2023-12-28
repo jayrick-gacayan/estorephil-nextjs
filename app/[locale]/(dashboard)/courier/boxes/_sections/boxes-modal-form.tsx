@@ -35,7 +35,7 @@ import { useSession } from "next-auth/react";
 import { boxContainer } from "@/inversify/inversify.config";
 import { BoxRepository } from "@/repositories/box-repository";
 import { TYPES } from "@/inversify/types";
-import { createBox } from "../_redux/courier-boxes-thunk";
+import { createBox, updateBox } from "../_redux/courier-boxes-thunk";
 
 type BoxTypes = {
   code: string;
@@ -69,7 +69,8 @@ export default function BoxesModalForm({
     referralPercentage,
     weight,
     weightType,
-    requestStatus
+    requestStatus,
+    id
   } = useMemo(() => {
     return courierBoxesState.boxFormFields;
   }, [courierBoxesState.boxFormFields]);
@@ -79,7 +80,7 @@ export default function BoxesModalForm({
     { code: 'm', value: 'Medium' },
     { code: 'l', value: 'Large' },
     { code: 'xl', value: 'Extra-Large' },
-    { code: 'o', value: 'Odd' },
+    { code: 'odd', value: 'Odd' },
   ]
 
   const [regions, setRegions] = useState<any[]>([]);
@@ -97,6 +98,11 @@ export default function BoxesModalForm({
             let boxRepository = boxContainer.get<BoxRepository>(TYPES.BoxRepository);
             if (type === 'createBox') {
               dispatch(createBox(boxRepository, sessionData.token));
+            }
+            else if (type === 'updateBox') {
+              if (id) {
+                dispatch(updateBox(boxRepository, sessionData.token, id.toString()));
+              }
             }
             else {
               dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
@@ -124,7 +130,7 @@ export default function BoxesModalForm({
   // });
 
   function selectCustomValueClassName(errorText: string) {
-    return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 border 
+    return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 border has-[input:focus]:border-primary
       ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
   }
 
@@ -154,8 +160,6 @@ export default function BoxesModalForm({
           'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary'
       }`
   }
-
-  console.log('session data', sessionData)
 
   return (
     <div className='py-8 space-y-8 w-[768px] m-auto'>

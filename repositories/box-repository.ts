@@ -38,6 +38,7 @@ export class BoxRepository {
       response = await result.json();
     }
 
+    console.log('data', camelCase({ ...response.data }))
     return new Result<Box>({
       response: response,
       data: camelCase({ ...response.data }) ?? undefined,

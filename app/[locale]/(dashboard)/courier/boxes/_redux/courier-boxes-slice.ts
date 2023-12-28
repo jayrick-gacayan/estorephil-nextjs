@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourierBoxesState } from "./courier-boxes-state";
 import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
 import { RequestStatus } from "@/types/enums/request-status";
+import { Box } from "@/models/box";
 
 const initialState: CourierBoxesState = {
   modalBoxesOpen: {
@@ -196,6 +197,25 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
+    editFormFieldsFilled: (state: CourierBoxesState, action: PayloadAction<Box>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          id: action.payload.id,
+          cargoType: textInputFieldValue(action.payload.cargoType ?? ""),
+          boxType: textInputFieldValue(action.payload.boxType ?? ""),
+          length: textInputFieldValue(action.payload.length?.toString() ?? ""),
+          width: textInputFieldValue(action.payload.width?.toString() ?? ""),
+          height: textInputFieldValue(action.payload.height?.toString() ?? ""),
+          unitMeasure: textInputFieldValue(action.payload.unitMeasure ?? ""),
+          price: textInputFieldValue(action.payload.price?.toString() ?? ""),
+          weight: textInputFieldValue(action.payload.weight?.toString() ?? ""),
+          weightType: textInputFieldValue(action.payload.weightType ?? ""),
+          referralPercentage: textInputFieldValue(action.payload.referralPercentage?.toString() ?? "")
+        }
+      }
+    },
     boxFormFieldsReset: (state: CourierBoxesState) => {
       return {
         ...state,
@@ -236,7 +256,8 @@ export const {
   weightTypeChanged,
   boxFormFieldsReset,
   boxFormRequestStatusSet,
-  boxFormFieldsClicked
+  boxFormFieldsClicked,
+  editFormFieldsFilled
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;

@@ -52,7 +52,7 @@ export function updateBox(boxRepository: BoxRepository, token: string, id: strin
       referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value
     }, token, id);
 
-
+    console.log('data', result.data)
     if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
       dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
     }

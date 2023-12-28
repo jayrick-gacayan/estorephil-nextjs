@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/app/_hooks/redux_hooks";
 import { AppDispatch } from "@/redux/store";
 import { FaRegPenToSquare, FaXmark } from "react-icons/fa6";
 import { RxCircleBackslash } from "react-icons/rx";
-import { modalBoxesOpened } from "../_redux/courier-boxes-slice";
+import { editFormFieldsFilled, modalBoxesOpened } from "../_redux/courier-boxes-slice";
 
 const boxesInfos = [
   {
@@ -91,7 +91,22 @@ export default function BoxesTable() {
                   <td>
                     <div className="space-x-2">
                       <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
-                        onClick={() => { dispatch(modalBoxesOpened('updateBox')); }}>
+                        onClick={() => {
+                          dispatch(editFormFieldsFilled({
+                            id: 66,
+                            length: 550,
+                            width: 550,
+                            height: 550,
+                            unitMeasure: "cm",
+                            price: 550,
+                            boxType: "l",
+                            cargoType: "0",
+                            weightType: "gms",
+                            referralPercentage: 10,
+                            weight: 100
+                          }))
+                          dispatch(modalBoxesOpened('updateBox'));
+                        }}>
                         <FaRegPenToSquare />
                       </div>
                       <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'

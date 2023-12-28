@@ -58,7 +58,7 @@ export default function ModalAlertResponse({
 
 
   return (
-    <motion.div initial={{ opacity: 1, y: "0" }}
+    <motion.div initial={{ opacity: 0, y: "100%" }}
       animate={open ? 'open' : 'closed'}
       variants={variants}
       className="fixed z-[9999] top-0 left-0 w-screen h-screen flex items-center justify-center

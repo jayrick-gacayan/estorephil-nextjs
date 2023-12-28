@@ -9,6 +9,7 @@ export interface Box {
   companyId?: number;
   cargoType?: string;
   weight?: number;
+  weightType?: string;
   referralPercentage?: number;
   isTaxInclusive?: boolean;
   taxRuleId?: number;

@@ -59,15 +59,20 @@ export const SelectCustom = forwardRef<HTMLDivElement, SelectProps<any, any>>(
                 ? 'text-tertiary-dark'
                 : 'text-inherit'
                 }`}>
-              {typeof value === 'string'
-                ? value === ''
-                  ? placeholder
-                  : value
-                : typeof value === 'number'
-                  ? value
-                  : value
-                    ? Object.assign(value, {} as any).name
-                    : `${placeholder}`}
+              <input type='string'
+                className='outline-0 w-full cursor-default'
+                value={typeof value === 'string'
+                  ? value === ''
+                    ? placeholder
+                    : value
+                  : typeof value === 'number'
+                    ? value
+                    : value
+                      ? Object.assign(value, {} as any).name
+                      : `${placeholder}`}
+                onChange={() => { return }}
+                readOnly />
+
             </div>
             <div className='w-auto flex-none'>
               <HiChevronDown size={20}

@@ -8,6 +8,7 @@ export interface CourierBoxesState {
   }
 
   boxFormFields: {
+    id?: number;
     cargoType: TextInputField<string>;
     boxType: TextInputField<string>;
     length: TextInputField<string>;
