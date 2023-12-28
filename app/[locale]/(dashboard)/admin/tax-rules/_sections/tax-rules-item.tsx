@@ -7,7 +7,6 @@ import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from "react";
 export default function TaxRulesItem() {
-  const [isChargesDialogVisible, setIsChargesDialogVisible] = useState(false);
   const orders = [
     {
       taxCode: "GST",
@@ -181,6 +180,7 @@ export default function TaxRulesItem() {
     },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
+  const [isChargesDialogVisible, setIsChargesDialogVisible] = useState(false);
   const openChargesDialog = () => {
     setIsChargesDialogVisible(true);
   };
@@ -206,7 +206,8 @@ export default function TaxRulesItem() {
           </div>
           <button
             className="text-sm font-bold text-white bg-[#23B7E5] flex items-center py-2 px-3 rounded-lg"
-            onClick={openChargesDialog}>
+            onClick={openChargesDialog}
+          >
             Charges
           </button>
         </div>
@@ -254,9 +255,11 @@ export default function TaxRulesItem() {
                 return (
                   <tr
                     key={order.taxCode}
-                    className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs">
+                    className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs"
+                  >
                     <td
-                      className={`${rowHeight} text-cyan-500 hover:underline`}>
+                      className={`${rowHeight} text-cyan-500 hover:underline`}
+                    >
                       <Link href={"/admin/tax-rules/1"}> {order.taxCode}</Link>
                     </td>
 
@@ -335,12 +338,14 @@ export default function TaxRulesItem() {
             <div className="gap-3 flex flex-col">
               <button
                 onClick={closeChargesDialog}
-                className="text-white bg-green-500 px-4 py-2 rounded-md w-[10rem]">
+                className="text-white bg-green-500 px-4 py-2 rounded-md w-[10rem]"
+              >
                 Update
               </button>
               <button
                 onClick={closeChargesDialog}
-                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]">
+                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]"
+              >
                 Close
               </button>
             </div>
