@@ -1,9 +1,12 @@
+"use client";
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaEdit } from "react-icons/fa";
 import Link from "next-intl/link";
+import { MdBlock } from "react-icons/md";
+import { useState } from "react";
 export default function ProductItems() {
   const orders = [
     {
@@ -118,6 +121,14 @@ export default function ProductItems() {
     },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
+  const [isBlockDialogVisible, setIsBlockDialogVisible] = useState(false);
+  const openChargesDialog = () => {
+    setIsBlockDialogVisible(true);
+  };
+
+  const closeChargesDialog = () => {
+    setIsBlockDialogVisible(false);
+  };
   return (
     <div className="flex flex-col h-full ">
       <div className="  h-full flex flex-col border-2 bg-white rounded-xl border-white shadow-2xl">
@@ -167,7 +178,8 @@ export default function ProductItems() {
                 return (
                   <tr
                     key={order.itemNo}
-                    className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs">
+                    className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-100 text-xs"
+                  >
                     <td className={`${rowHeight}`}>{order.itemNo}</td>
                     <td className={`${rowHeight}`}>{order.uid}</td>
                     <td className={`${rowHeight}`}>{order.image}</td>
@@ -178,7 +190,8 @@ export default function ProductItems() {
                     <td className={`${rowHeight}`}>{order.seller}</td>
                     <td className={`${rowHeight}`}>
                       <div
-                        className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}>
+                        className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}
+                      >
                         {order.status}
                       </div>
                     </td>
@@ -186,14 +199,13 @@ export default function ProductItems() {
                       <div className="flex items-center justify-center gap-4">
                         <Link
                           className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white"
-                          href={"/admin/products/1"}>
+                          href={"/admin/products/1"}
+                        >
                           <FiEye />
                         </Link>
-                        <Link
-                          className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white"
-                          href={""}>
-                          <RiDeleteBin2Line />
-                        </Link>
+                        <button className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white">
+                          <MdBlock />
+                        </button>
                       </div>
                     </td>
                   </tr>

@@ -8,9 +8,9 @@ export default function ProductDetailsInfo({
   data: string | ReactNode;
 }) {
   return (
-    <div className="flex  w-[30rem]  ">
+    <div className="flex    ">
       <div className=" text-gray-400 text-xs  w-[10rem] ">{label}</div>
-      <div className="text-xs font-semibold flex-1 flex justify-start  ">
+      <div className="text-xs font-semibold flex-1 flex justify-end  ">
         {data}
       </div>
     </div>

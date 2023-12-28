@@ -21,7 +21,7 @@ export default function ProductDetails() {
   };
   return (
     <div className="flex justify-evenly gap-5">
-      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm p-5 h-min ">
         <div className="space-y-8 ">
           <div className="flex justify-between ">
             <div className="flex items-center gap-2">
@@ -116,12 +116,7 @@ export default function ProductDetails() {
             label={"Name:"}
             data={"Spam"}
           />
-          {/* <ProductDetailsInfo
-            label={"Description:"}
-            data={
-              "Luncheon meat​3 × 340 g Fully-cooked 100% pure pork and ham Reduced sodium"
-            }
-          /> */}
+
           <ProductDetailsInfo
             label={"Description:"}
             data={
@@ -170,7 +165,7 @@ export default function ProductDetails() {
           />
         </div>
       </div>
-      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm p-5 h-min">
         <div className="space-y-4">
           <ProductDetailsInfo
             label={"Store Type:"}

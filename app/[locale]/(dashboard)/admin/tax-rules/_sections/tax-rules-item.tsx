@@ -7,7 +7,6 @@ import { FaEdit } from "react-icons/fa";
 import Link from "next/link";
 import { useState } from "react";
 export default function TaxRulesItem() {
-  const [isChargesDialogVisible, setIsChargesDialogVisible] = useState(false);
   const orders = [
     {
       taxCode: "GST",
@@ -181,6 +180,7 @@ export default function TaxRulesItem() {
     },
   ];
   const rowHeight = "px-4 h-[4.25rem]";
+    const [isChargesDialogVisible, setIsChargesDialogVisible] = useState(false);
   const openChargesDialog = () => {
     setIsChargesDialogVisible(true);
   };
