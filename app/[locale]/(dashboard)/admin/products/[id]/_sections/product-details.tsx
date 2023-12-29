@@ -21,9 +21,9 @@ export default function ProductDetails() {
   };
   return (
     <div className="flex justify-evenly gap-5">
-      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
-        <div className="space-y-8">
-          <div className="flex justify-between">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm p-5 h-min ">
+        <div className="space-y-8 ">
+          <div className="flex justify-between ">
             <div className="flex items-center gap-2">
               <div className="overflow-hidden rounded-xl">
                 <Image
@@ -45,7 +45,8 @@ export default function ProductDetails() {
               <div
                 className={`text-white rounded-full h-auto ${
                   interviewStatus == "Inactive" ? "bg-red-500" : "bg-green-500"
-                }`}>
+                }`}
+              >
                 <CustomSelect
                   dropdownColor="bg-white "
                   onSelect={(value: string) => {
@@ -111,34 +112,65 @@ export default function ProductDetails() {
               />
             </div>
           </div>
-          <ProductDetailsInfo label={"Name:"} data={"Spam"} />
+          <ProductDetailsInfo
+            label={"Name:"}
+            data={"Spam"}
+          />
+
           <ProductDetailsInfo
             label={"Description:"}
             data={
               "Luncheon meat​3 × 340 g Fully-cooked 100% pure pork and ham Reduced sodium"
             }
           />
-          <ProductDetailsInfo label={"Category:"} data={"Grocery"} />
-          <ProductDetailsInfo label={"Referral %:"} data={"%Update"} />
-          <ProductDetailsInfo label={"Card Fee (%):"} data={"%"} />
-          <ProductDetailsInfo label={"Product Weight:"} data={"4.08kgs"} />
+          <ProductDetailsInfo
+            label={"Category:"}
+            data={"Grocery"}
+          />
+          <ProductDetailsInfo
+            label={"Referral %:"}
+            data={"%Update"}
+          />
+          <ProductDetailsInfo
+            label={"Card Fee (%):"}
+            data={"%"}
+          />
+          <ProductDetailsInfo
+            label={"Product Weight:"}
+            data={"4.08kgs"}
+          />
           <ProductDetailsInfo
             label={"Product Dimension:"}
             data={"33 x 25 x 9"}
           />
-          <ProductDetailsInfo label={"Quantity:"} data={"99"} />
+          <ProductDetailsInfo
+            label={"Quantity:"}
+            data={"99"}
+          />
           <ProductDetailsInfo
             label={"Shipment Dimension:"}
             data={"33 x 24 x 8"}
           />
-          <ProductDetailsInfo label={"Product Origin:"} data={"Canada"} />
-          <ProductDetailsInfo label={"Unit Cost:"} data={"$29.97"} />
-          <ProductDetailsInfo label={"Currency:"} data={"C$"} />
+          <ProductDetailsInfo
+            label={"Product Origin:"}
+            data={"Canada"}
+          />
+          <ProductDetailsInfo
+            label={"Unit Cost:"}
+            data={"$29.97"}
+          />
+          <ProductDetailsInfo
+            label={"Currency:"}
+            data={"C$"}
+          />
         </div>
       </div>
-      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm px-5 py-5 h-min">
+      <div className="bg-white grow border border-t-4 border-gray-300 rounded-t-md shadow-xl text-sm p-5 h-min">
         <div className="space-y-4">
-          <ProductDetailsInfo label={"Store Type:"} data={""} />
+          <ProductDetailsInfo
+            label={"Store Type:"}
+            data={""}
+          />
           <div className="border-b w-full"></div>
           <div className="h-[1.5rem]"></div>
           <ProductDetailsInfo
@@ -149,9 +181,18 @@ export default function ProductDetails() {
               </div>
             }
           />
-          <ProductDetailsInfo label={"Date Registered:"} data={"10/09/2023"} />
-          <ProductDetailsInfo label={"Date Approved:"} data={"10/09/2023"} />
-          <ProductDetailsInfo label={"Notes:"} data={""} />
+          <ProductDetailsInfo
+            label={"Date Registered:"}
+            data={"10/09/2023"}
+          />
+          <ProductDetailsInfo
+            label={"Date Approved:"}
+            data={"10/09/2023"}
+          />
+          <ProductDetailsInfo
+            label={"Notes:"}
+            data={""}
+          />
           <div className="h-[1.5rem]"></div>
           <div className="border-b w-full"></div>
           <div className="h-[1.5rem]"></div>
@@ -160,13 +201,20 @@ export default function ProductDetails() {
             data={
               <button
                 className="w-min bg-blue-500 rounded-xl text-white px-2 py-1 text-xl"
-                onClick={openEditModal}>
+                onClick={openEditModal}
+              >
                 <CiEdit />
               </button>
             }
           />
-          <ProductDetailsInfo label={"Branches:"} data={"1"} />
-          <ProductDetailsInfo label={"Owner:"} data={"Costco Owner"} />
+          <ProductDetailsInfo
+            label={"Branches:"}
+            data={"1"}
+          />
+          <ProductDetailsInfo
+            label={"Owner:"}
+            data={"Costco Owner"}
+          />
           <ProductDetailsInfo
             label={"Contact Mobile No.:"}
             data={"7786888392"}
@@ -182,19 +230,40 @@ export default function ProductDetails() {
             label={"Branch Details:"}
             data={<div className="text-green-500">Main Branch</div>}
           />
-          <ProductDetailsInfo label={"Branch Name:"} data={"12345"} />
-          <ProductDetailsInfo label={"City:"} data={"Vancouver"} />
+          <ProductDetailsInfo
+            label={"Branch Name:"}
+            data={"12345"}
+          />
+          <ProductDetailsInfo
+            label={"City:"}
+            data={"Vancouver"}
+          />
           <div className="h-[1.5rem]"></div>
           <div className="border-b w-full"></div>
           <div className="h-[1.5rem]"></div>
-          <ProductDetailsInfo label={"Payment Information:"} data={""} />
-          <ProductDetailsInfo label={"Bank Name:"} data={"RBC"} />
-          <ProductDetailsInfo label={"Account Number:"} data={"12345"} />
-          <ProductDetailsInfo label={"Bank Branch:"} data={"RBC"} />
+          <ProductDetailsInfo
+            label={"Payment Information:"}
+            data={""}
+          />
+          <ProductDetailsInfo
+            label={"Bank Name:"}
+            data={"RBC"}
+          />
+          <ProductDetailsInfo
+            label={"Account Number:"}
+            data={"12345"}
+          />
+          <ProductDetailsInfo
+            label={"Bank Branch:"}
+            data={"RBC"}
+          />
           <div className="h-[1.5rem]"></div>
           <div className="border-b w-full"></div>
           <div className="h-[1.5rem]"></div>
-          <ProductDetailsInfo label={"Document Licenses:"} data={""} />
+          <ProductDetailsInfo
+            label={"Document Licenses:"}
+            data={""}
+          />
           <div className="bg-green-500 rounded-md px-3 py-1.5 flex w-min text-white items-center gap-2">
             <div>
               <IoMdCloudUpload />
@@ -240,7 +309,10 @@ export default function ProductDetails() {
                 <h1 className="text-xl font-bold ">Edit Seller Details</h1>
               </div>
               <div>
-                <button className="text-xl" onClick={closeEditModal}>
+                <button
+                  className="text-xl"
+                  onClick={closeEditModal}
+                >
                   <IoMdClose />
                 </button>
               </div>
@@ -249,7 +321,10 @@ export default function ProductDetails() {
             <div className="border-t w-full h-[1.5rem]"></div>
             <form className="space-y-4">
               <div className="flex flex-col">
-                <label htmlFor="sellerCode" className="mb-2">
+                <label
+                  htmlFor="sellerCode"
+                  className="mb-2"
+                >
                   Seller Code
                 </label>
                 <input
@@ -262,7 +337,10 @@ export default function ProductDetails() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="sellerName" className="mb-2">
+                <label
+                  htmlFor="sellerName"
+                  className="mb-2"
+                >
                   Seller Name
                 </label>
                 <input
@@ -275,7 +353,10 @@ export default function ProductDetails() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="owner" className="mb-2">
+                <label
+                  htmlFor="owner"
+                  className="mb-2"
+                >
                   Owner
                 </label>
                 <input
@@ -288,7 +369,10 @@ export default function ProductDetails() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="businessLicenseNumber" className="mb-2">
+                <label
+                  htmlFor="businessLicenseNumber"
+                  className="mb-2"
+                >
                   Business License Number
                 </label>
                 <input
@@ -301,7 +385,10 @@ export default function ProductDetails() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="taxNumber" className="mb-2">
+                <label
+                  htmlFor="taxNumber"
+                  className="mb-2"
+                >
                   Tax Number
                 </label>
                 <input
@@ -314,13 +401,17 @@ export default function ProductDetails() {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="countries" className="mb-2">
+                <label
+                  htmlFor="countries"
+                  className="mb-2"
+                >
                   Countries
                 </label>
                 <select
                   id="countries"
                   className="px-3 py-2 border rounded-md w-full"
-                  multiple>
+                  multiple
+                >
                   <option value="Canada">Canada</option>
                   <option value="Philippines">Philippines</option>
                   <option value="USA">United States of America</option>
@@ -330,12 +421,14 @@ export default function ProductDetails() {
               <div className="flex space-x-4 items-center justify-center">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+                >
                   Update
                 </button>
                 <button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300">
+                  className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
+                >
                   Reset
                 </button>
               </div>

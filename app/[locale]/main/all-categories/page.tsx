@@ -35,7 +35,7 @@ export default async function AllCategories({
             <SellerByCategory />
           </div>
           <div className='p-4 bg-default space-y-4'>
-            <CategoryProducts />
+            <CategoryProducts countryCode={countryCookie?.value ?? 'ph'} />
           </div>
         </div>
       </div>

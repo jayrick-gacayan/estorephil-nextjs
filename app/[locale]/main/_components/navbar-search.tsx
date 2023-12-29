@@ -40,9 +40,6 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             setNavbarSearchText(event.target.value);
             dispatch(searchQueryChanged(event.target.value))
-            if (onCategoryPage) {
-              dispatch(searchProducts(productRepository, countryCookie))
-            }
           }}
           placeholder='Search products' />
       </div>

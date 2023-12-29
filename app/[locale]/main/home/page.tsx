@@ -33,9 +33,9 @@ export default async function Home({ params }: { params: { locale: string } }) {
 
   let categories = await getMainCategories(countryCookie?.value ?? 'ph');
   let stores = await getMainStores(countryCookie?.value ?? 'ph');
-  // let ourProducts = await getOurProducts(countryCookie?.value ?? 'ph');
+  let ourProducts = await getOurProducts(countryCookie?.value ?? 'ph');
 
-  let ourProducts = (await import('@/app/_data/products.json')).default.products;
+  // let ourProducts = (await import('@/app/_data/products.json')).default.products;
 
   return (
     <div className='bg-default px-8'>

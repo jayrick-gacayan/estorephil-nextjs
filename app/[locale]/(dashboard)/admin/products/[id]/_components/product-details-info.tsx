@@ -8,12 +8,10 @@ export default function ProductDetailsInfo({
   data: string | ReactNode;
 }) {
   return (
-    <div className="flex justify-between w-[35rem] ">
-      <div className=" text-gray-400 text-xs">{label}</div>
-      <div className="w-[20rem] ">
-        <div className="text-xs font-semibold text-end  flex justify-end">
-          {data}
-        </div>
+    <div className="flex    ">
+      <div className=" text-gray-400 text-xs  w-[10rem] ">{label}</div>
+      <div className="text-xs font-semibold flex-1 flex justify-end  ">
+        {data}
       </div>
     </div>
   );

@@ -8,55 +8,60 @@ export default function CourierDetails() {
 
   return (
     <div className="flex flex-wrap justify-start items-start gap-8">
-      <CourierDetailsCard
-        title={"Company Details"}
-        data={[
-          {
-            label: "Company Logo:",
-            value: (
-              <Image
-                src={"/static_images/txc.jpeg"}
-                alt={"company logo"}
-                width={100}
-                height={50}
-              />
-            ),
-          },
-          { label: "Company Name:", value: "Koda Courier" },
-          { label: "Owner Name:", value: "(555) 123-4567letters?" },
-          { label: "Telephone Name:", value: "09694098497letters?" },
-          {
-            label: "Mobile Name:",
-            value: "456 Mango Avenue, Brgy. Lahug, Cebu, Cebu",
-          },
-          { label: "Country:", value: "Philippines" },
-        ]}
-      />
-      <CourierDetailsCard
-        title={"Staff Details"}
-        data={[
-          {
-            label: "Company Logo:",
-            value: (
-              <div className="overflow-hidden rounded-full h-[100px] w-[100px] bg-red-500']">
+      <div className="h-[20rem]">
+        <CourierDetailsCard
+          title={"Company Details"}
+          data={[
+            {
+              label: "Company Logo:",
+              value: (
                 <Image
-                  src={"/static_images/profile_image_default.jpg"}
+                  src={"/static_images/txc.jpeg"}
                   alt={"company logo"}
                   width={100}
                   height={50}
                 />
-              </div>
-            ),
-          },
-          { label: "Name:", value: "Koda Courier" },
-          { label: "Email:", value: "(555) 123-4567letters?" },
-          { label: "Phone Number:", value: "09694098497letters?" },
-          {
-            label: "Complete Address:",
-            value: "456 Mango Avenue, Brgy. Lahug, Cebu, Cebu",
-          },
-        ]}
-      />
+              ),
+            },
+            { label: "Company Name:", value: "Koda Courier" },
+            { label: "Owner Name:", value: "(555) 123-4567letters?" },
+            { label: "Telephone Name:", value: "09694098497letters?" },
+            {
+              label: "Mobile Name:",
+              value: "456 Mango Avenue, Brgy. Lahug, Cebu, Cebu",
+            },
+            { label: "Country:", value: "Philippines" },
+          ]}
+        />
+      </div>
+      <div className="h-[20rem]">
+        <CourierDetailsCard
+          title={"Staff Details"}
+          data={[
+            {
+              label: "Company Logo:",
+              value: (
+                <div className="overflow-hidden rounded-full h-[100px] w-[100px] bg-red-500']">
+                  <Image
+                    src={"/static_images/profile_image_default.jpg"}
+                    alt={"company logo"}
+                    width={100}
+                    height={50}
+                  />
+                </div>
+              ),
+            },
+            { label: "Name:", value: "Koda Courier" },
+            { label: "Email:", value: "(555) 123-4567letters?" },
+            { label: "Phone Number:", value: "09694098497letters?" },
+            {
+              label: "Complete Address:",
+              value: "456 Mango Avenue, Brgy. Lahug, Cebu, Cebu",
+            },
+          ]}
+        />
+      </div>
+
       <CourierDetailsCard
         title={"Company Staff"}
         data={[
