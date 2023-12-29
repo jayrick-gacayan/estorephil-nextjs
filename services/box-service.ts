@@ -24,4 +24,13 @@ export class BoxService {
       }
     });
   }
+
+  async getAllCourierBoxes(token: string, page: number) {
+    return await fetch(`${process.env.API_URL}/courier/all-boxes?page=${page}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }

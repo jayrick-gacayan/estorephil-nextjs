@@ -1,8 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CourierBoxesState } from "./courier-boxes-state";
-import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
+import { paginatedInit, textInputFieldValue } from "@/types/helpers/field-methods";
 import { RequestStatus } from "@/types/enums/request-status";
 import { Box } from "@/models/box";
+import { Paginated } from "@/models/paginated";
 
 const initialState: CourierBoxesState = {
   modalBoxesOpen: {
@@ -21,13 +22,43 @@ const initialState: CourierBoxesState = {
     weight: textInputFieldValue(''),
     weightType: textInputFieldValue(''),
     requestStatus: RequestStatus.NONE,
-  }
+  },
+  courierBoxes: paginatedInit<Box>({
+    data: [],
+    currentPage: 1,
+    requestStatus: RequestStatus.NONE,
+    count: 0
+  })
 }
 
 const courierBoxesSlice = createSlice({
   name: 'courierBoxes',
   initialState,
   reducers: {
+    courierBoxesSet: (state: CourierBoxesState, action: PayloadAction<Paginated<Box>>) => {
+      return {
+        ...state,
+        courierBoxes: action.payload
+      }
+    },
+    courierBoxesRequestStatusSet: (state: CourierBoxesState, action: PayloadAction<RequestStatus>) => {
+      return {
+        ...state,
+        courierBoxes: {
+          ...state.courierBoxes,
+          requestStatus: action.payload
+        }
+      }
+    },
+    courierBoxesPageNumberSet: (state: CourierBoxesState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        courierBoxes: {
+          ...state.courierBoxes,
+          currentPage: action.payload
+        }
+      }
+    },
     modalBoxesOpened: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
@@ -257,7 +288,10 @@ export const {
   boxFormFieldsReset,
   boxFormRequestStatusSet,
   boxFormFieldsClicked,
-  editFormFieldsFilled
+  editFormFieldsFilled,
+  courierBoxesSet,
+  courierBoxesRequestStatusSet,
+  courierBoxesPageNumberSet
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;

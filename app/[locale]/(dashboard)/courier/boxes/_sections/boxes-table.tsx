@@ -1,53 +1,44 @@
 'use client';
 
-import { useAppDispatch } from "@/app/_hooks/redux_hooks";
-import { AppDispatch } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
+import { AppDispatch, RootState } from "@/redux/store";
 import { FaRegPenToSquare, FaXmark } from "react-icons/fa6";
 import { RxCircleBackslash } from "react-icons/rx";
-import { editFormFieldsFilled, modalBoxesOpened } from "../_redux/courier-boxes-slice";
+import { courierBoxesRequestStatusSet, editFormFieldsFilled, modalBoxesOpened } from "../_redux/courier-boxes-slice";
+import { useSession } from "next-auth/react";
+import { useEffect, useMemo } from "react";
+import { CourierBoxesState } from "../_redux/courier-boxes-state";
+import { RequestStatus } from "@/types/enums/request-status";
+import { getAllCourierBoxes } from "../_redux/courier-boxes-thunk";
+import { boxContainer } from "@/inversify/inversify.config";
+import { BoxRepository } from "@/repositories/box-repository";
+import { TYPES } from "@/inversify/types";
+import CirclingLoader from "@/app/[locale]/_components/circling-loader";
+import { Box } from "@/models/box";
+import { BoxTypes } from "@/types/enums/box-type";
+import { CargoTypes } from "@/types/enums/cargo-type";
+import { toFirstUpperCase } from "@/types/helpers/string-helper";
 
-const boxesInfos = [
-  {
-    id: 22,
-    dimension: {
-      length: 7,
-      width: 7,
-      height: 7,
-      unit: 'cm'
-    },
-    type: 'small',
-    weight: {
-      input: 8,
-      unit: 'gm'
-    },
-    cargo: 'air',
-    noOfProducts: 5,
-    price: 1.0,
-    taxInclusive: 0.0,
-    referral: 1.0,
-  },
-  {
-    id: 23,
-    dimension: {
-      length: 8,
-      width: 8,
-      height: 8,
-      unit: 'cm'
-    },
-    type: 'medium',
-    weight: {
-      input: 1,
-      unit: 'kg'
-    },
-    cargo: 'vessel',
-    noOfProducts: 5,
-    price: 4.0,
-    taxInclusive: 1.0,
-    referral: 4.0,
-  }
-]
 export default function BoxesTable() {
+  const { data: sessionData } = useSession();
+  const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => {
+    return state.courierBoxes;
+  });
   const dispatch: AppDispatch = useAppDispatch();
+
+  const { requestStatus, data, count, currentPage } = useMemo(() => {
+    return courierBoxesState.courierBoxes
+  }, [courierBoxesState.courierBoxes]);
+
+  useEffect(() => {
+    dispatch(courierBoxesRequestStatusSet(RequestStatus.NONE))
+    setTimeout(() => {
+      if (sessionData?.token) {
+        let boxRepository = boxContainer.get<BoxRepository>(TYPES.BoxRepository);
+        dispatch(getAllCourierBoxes(boxRepository, sessionData.token, currentPage));
+      }
+    }, 2000);
+  }, [currentPage, sessionData, dispatch])
 
   return (
     <div className="block overflow-auto">
@@ -68,57 +59,78 @@ export default function BoxesTable() {
         </thead>
         <tbody>
           {
+            requestStatus === RequestStatus.NONE ||
+              requestStatus === RequestStatus.WAITING ||
+              requestStatus === RequestStatus.IN_PROGRESS ||
+              requestStatus === RequestStatus.FAILURE ?
+              (<tr>
+                <td rowSpan={10} colSpan={10}>
+                  <div className="flex h-full w-full items-center justify-center">
+                    <div>
+                      {
+                        requestStatus === RequestStatus.FAILURE ? 'No Data' :
+                          (<CirclingLoader height={240} width={240} color='#1186FF' />)
+                      }
+                    </div>
+                  </div>
+                </td>
+              </tr>) :
+              data.map((box: Box) => {
+                return (
+                  <tr key={`boxes-courier-${box.id!}`}
+                    className="[&>td]:p-2 border-b-[.5px] border-b-tertiary-dark odd:bg-inherit even:bg-[#EFF0F0]">
+                    <td className="text-primary">{box.id!}</td>
+                    <td>&#40;{`${box.length!} \u00D7 ${box.width!} \u00D7 ${box.height!}`}&#41; {box.unitMeasure!}</td>
+                    <td>{box.boxType!.toUpperCase()}</td>
+                    <td>{`${box.weight!} ${box.weightType!}`}</td>
+                    <td>{box.cargoType!.toUpperCase()}</td>
+                    <td>{10.00}</td>
+                    <td>{box.price?.toFixed(1) ?? <>&#8212;</>}</td>
+                    <td>
+                      {
+                        !box.isTaxInclusive! ?
+                          <FaXmark className='text-danger' /> : 10.0
+                      }
+                    </td>
+                    <td>
+                      {box.referralPercentage?.toFixed(1) ?? <>&#8212;</>}
+                    </td>
+                    <td>
+                      <div className="space-x-2">
+                        <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
+                          onClick={() => {
+                            dispatch(editFormFieldsFilled({
+                              ...box,
+                              cargoType: Object.entries(CargoTypes).find(
+                                (typeCargos: [string, string]) => {
+                                  return toFirstUpperCase(box.cargoType ?? '') === typeCargos[0];
+                                }
+                              )?.[1] ?? '',
+                              boxType: Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                                return box.boxType === typeBoxes[1].toLowerCase()
+                              })?.[0] ?? ""
+                            }))
+                            dispatch(modalBoxesOpened('updateBox'));
+                          }}>
+                          <FaRegPenToSquare />
+                        </div>
+                        <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'
+                          onClick={() => { }}>
+                          <RxCircleBackslash />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })
+          }
+          {/* {
             boxesInfos.map((value: any) => {
               return (
-                <tr key={`orders-completed-${value.id}`}
-                  className="[&>td]:p-2 border-b-[.5px] border-b-tertiary-dark odd:bg-inherit even:bg-[#EFF0F0]">
-                  <td className="text-primary">{value.id}</td>
-                  <td>&#40;{`${value.dimension.length} \u00D7 ${value.dimension.width} \u00D7 ${value.dimension.height}`}&#41; {value.dimension.unit}</td>
-                  <td>{value.type.toUpperCase()}</td>
-                  <td>{`${value.weight.input} ${value.weight.unit}${value.weight.input > 1 ? 's' : ''}`}</td>
-                  <td>{value.cargo.toUpperCase()}</td>
-                  <td>{value.noOfProducts}</td>
-                  <td>{value.price.toFixed(1)}</td>
-                  <td>
-                    {
-                      value.taxInclusive === 0 ?
-                        <FaXmark className='text-danger' /> : value.taxInclusive.toFixed(1)
-                    }
-                  </td>
-                  <td>
-                    {value.referral.toFixed(1)}
-                  </td>
-                  <td>
-                    <div className="space-x-2">
-                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
-                        onClick={() => {
-                          dispatch(editFormFieldsFilled({
-                            id: 66,
-                            length: 550,
-                            width: 550,
-                            height: 550,
-                            unitMeasure: "cm",
-                            price: 550,
-                            boxType: "l",
-                            cargoType: "0",
-                            weightType: "gms",
-                            referralPercentage: 10,
-                            weight: 100
-                          }))
-                          dispatch(modalBoxesOpened('updateBox'));
-                        }}>
-                        <FaRegPenToSquare />
-                      </div>
-                      <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'
-                        onClick={() => { }}>
-                        <RxCircleBackslash />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                
               )
             })
-          }
+          } */}
         </tbody>
       </table>
     </div>

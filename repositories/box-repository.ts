@@ -1,6 +1,8 @@
 import { TYPES } from "@/inversify/types";
 import { Box } from "@/models/box";
+import { Paginated } from "@/models/paginated";
 import { BoxService } from "@/services/box-service";
+import { RequestStatus } from "@/types/enums/request-status";
 import { Result } from "@/types/helpers/result-helpers";
 import { camelCase, snakeCase } from "change-case/keys";
 
@@ -63,6 +65,34 @@ export class BoxRepository {
       data: camelCase({ ...response.data }) ?? undefined,
       statusCode: response.status,
     })
+  }
 
+  async getAllCourierBoxes(currentPage: number, token: string) {
+    let result = await this.#boxService.getAllCourierBoxes(token, currentPage);
+
+    let response: any = undefined;
+
+    if (result.status === 200) {
+      response = await result.json();
+    }
+
+    console.log('response', response.data.boxes)
+    return new Result<Paginated<Box>>({
+      response: response,
+      data: {
+        currentPage: currentPage,
+        count: response.data.count ?? 0,
+        data: response.data.boxes.map((value: any) => {
+
+          return camelCase({
+            ...value,
+            referralPercentage: value.referral_percentage ?? undefined,
+            price: value.price ?? undefined
+          })
+        }) ?? [],
+        requestStatus: response.status === 200 ? RequestStatus.SUCCESS : RequestStatus.FAILURE
+      },
+      statusCode: response.status
+    })
   }
 }

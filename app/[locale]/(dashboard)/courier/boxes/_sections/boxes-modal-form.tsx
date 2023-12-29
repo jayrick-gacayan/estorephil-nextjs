@@ -36,11 +36,7 @@ import { boxContainer } from "@/inversify/inversify.config";
 import { BoxRepository } from "@/repositories/box-repository";
 import { TYPES } from "@/inversify/types";
 import { createBox, updateBox } from "../_redux/courier-boxes-thunk";
-
-type BoxTypes = {
-  code: string;
-  value: string;
-}
+import { BoxTypes } from "@/types/enums/box-type";
 
 export default function BoxesModalForm({
   type,
@@ -75,13 +71,6 @@ export default function BoxesModalForm({
     return courierBoxesState.boxFormFields;
   }, [courierBoxesState.boxFormFields]);
 
-  let boxTypeArrValues: BoxTypes[] = [
-    { code: 's', value: 'Small' },
-    { code: 'm', value: 'Medium' },
-    { code: 'l', value: 'Large' },
-    { code: 'xl', value: 'Extra-Large' },
-    { code: 'odd', value: 'Odd' },
-  ]
 
   const [regions, setRegions] = useState<any[]>([]);
 
@@ -181,7 +170,6 @@ export default function BoxesModalForm({
               }}
               onSelect={(value: string) => {
                 dispatch(cargoTypeChanged(value === "Cargo Type: " ? "" : value === "Air" ? "0" : "1"));
-
               }}
               valueClassName={selectCustomValueClassName}
               optionActiveClassName={selectCustomOptionsClassName}
@@ -195,9 +183,9 @@ export default function BoxesModalForm({
               labelText=''
               items={['Box Type: ', 'Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
               value={boxType.value === "" ? "Box Type: " :
-                boxTypeArrValues.find((typeBox: BoxTypes) => {
-                  return typeBox.code === boxType.value
-                })?.value ?? ""
+                Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                  return boxType.value === typeBoxes[0]
+                })?.[1] ?? ""
               }
               placeholder='Box Type: '
               visible={boxType.show ?? false}
@@ -208,9 +196,9 @@ export default function BoxesModalForm({
                 console.log('box value', value);
                 dispatch(boxTypeChanged(
                   value === "Box Type: " ? "" :
-                    boxTypeArrValues.find((boxType: BoxTypes) => {
-                      return boxType.value === value
-                    })?.code ?? ""
+                    Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                      return value === typeBoxes[1]
+                    })?.[0] ?? ""
                 ));
 
               }}
@@ -281,7 +269,7 @@ export default function BoxesModalForm({
           <div className="flex-none w-20">
             <SelectCustom ref={unitMeasureRef}
               labelText=''
-              items={['Unit: ', 'cm', 'm']}
+              items={['Unit: ', 'cm', 'm', 'in']}
               value={unitMeasure.value === "" ? "Unit: " : unitMeasure.value}
               placeholder='Unit: '
               visible={unitMeasure.show ?? false}
@@ -338,7 +326,7 @@ export default function BoxesModalForm({
           <div className="flex-none w-20">
             <SelectCustom ref={weightTypeRef}
               labelText=''
-              items={['Unit: ', 'gms', 'kgs']}
+              items={['Unit: ', 'gms', 'kgs', 'lbs']}
               value={weightType.value === "" ? "Unit: " : weightType.value}
               placeholder='Unit: '
               visible={weightType.show ?? false}

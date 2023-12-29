@@ -1,3 +1,5 @@
+import { Box } from "@/models/box";
+import { Paginated } from "@/models/paginated";
 import { RequestStatus } from "@/types/enums/request-status";
 import { TextInputField } from "@/types/props/text-input-field";
 
@@ -21,4 +23,6 @@ export interface CourierBoxesState {
     weightType: TextInputField<string>;
     requestStatus: RequestStatus;
   }
+
+  courierBoxes: Paginated<Box>;
 }

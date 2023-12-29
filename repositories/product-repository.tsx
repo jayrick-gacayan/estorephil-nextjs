@@ -43,41 +43,38 @@ export class ProductRepository {
         return await this.#productService.removeFromCart(token, productId)
     }
 
-    async productsSearch({
-        locale,
-        query,
-        categories,
-        sort
-    }: {
+    async productsSearch(
         locale: string,
-        query?: string,
+        search: string,
         categories: string[],
-        sort: string
-    }) {
+        sort: string) {
         let params = new URLSearchParams();
 
+        if (search !== "") { params.append(encodeURIComponent('search'), encodeURIComponent(search)) }
         if (categories.length > 0) {
             for (let i = 0; i < categories.length;) {
-                params.append(`category[]`, categories[i++]);
+                params.append(encodeURIComponent(`category[]`), encodeURIComponent(categories[i++]));
             }
         }
 
-        if (sort !== '') {
-            params.append('sort', sort)
-        }
+        if (sort !== '') { params.append(encodeURIComponent('sort'), encodeURIComponent(sort)) }
 
-        let result = await this.#productService.productsSearch(locale, params.toString() !== '' ? `?${params.toString()}` : ``)
+
+        let result = await this.#productService.productsSearch(locale,
+            params.toString() !== '' ? `?${params.toString()}` : ``)
 
         let response: any = undefined;
 
         if (result.status === 200) {
-            response = camelCase(await result.json());
+            response = await result.json();
         }
 
         return new Result<Product[]>({
             response: response,
-            data: response.data,
-            statusCode: result.status
+            data: response.data.map((value: any) => {
+                return camelCase({ ...value })
+            }) ?? [],
+            statusCode: response.status
         })
     }
 
@@ -89,6 +86,7 @@ export class ProductRepository {
             response = await result.json();
         }
 
+        console.log('response', response)
         return new Result<Product[]>({
             response: response,
             data: (response.data && response.data.length > 0) ? response.data.map((value: any) => { return camelCase({ ...value, rating: 4.5, totalRaters: 123 }) as any }) : [],
