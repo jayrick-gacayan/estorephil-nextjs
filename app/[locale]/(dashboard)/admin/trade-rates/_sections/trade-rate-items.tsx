@@ -229,7 +229,7 @@ export default function TradeRateItems() {
                         </button>
                       </td>
                       <td className={`${rowHeight} text-cyan-500`}>
-                        <Link href={""}> {order.dateTime}</Link>
+                        {order.dateTime}
                       </td>
                       <td className={`${rowHeight}`}>{order.currencyFrom}</td>
                       <td className={`${rowHeight}`}>{order.currencyTo}</td>
