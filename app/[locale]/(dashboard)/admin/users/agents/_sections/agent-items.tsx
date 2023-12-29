@@ -104,7 +104,7 @@ export default function AgentItems() {
   return (
     <>
       {isEmailModalOpen && (
-        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
+        <div className="fixed inset-0 overflow-y-auto z-[999] w-screen h-screen flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
             <div className="flex justify-between w-full items-center pb-5">
@@ -113,10 +113,7 @@ export default function AgentItems() {
                 <h1 className="text-xl font-bold ">Send Invitation</h1>
               </div>
               <div>
-                <button
-                  className="text-xl"
-                  onClick={closeEmailModal}
-                >
+                <button className="text-xl" onClick={closeEmailModal}>
                   <IoMdClose />
                 </button>
               </div>
@@ -130,15 +127,13 @@ export default function AgentItems() {
               <div className="flex space-x-4 items-center justify-center">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-                >
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
                   Send Invite
                 </button>
                 <button
                   type="button"
                   className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
-                  onClick={closeEmailModal}
-                >
+                  onClick={closeEmailModal}>
                   Cancel
                 </button>
               </div>
@@ -147,7 +142,7 @@ export default function AgentItems() {
         </div>
       )}
       {isEditModalOpen && (
-        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center">
+        <div className="fixed inset-0 overflow-y-auto z-[999] w-screen h-screen flex items-center justify-center">
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
             <div className="flex justify-between w-full items-center pb-5">
@@ -156,10 +151,7 @@ export default function AgentItems() {
                 <h1 className="text-xl font-bold ">Send Invitation</h1>
               </div>
               <div>
-                <button
-                  className="text-xl"
-                  onClick={closeEditModal}
-                >
+                <button className="text-xl" onClick={closeEditModal}>
                   <IoMdClose />
                 </button>
               </div>
@@ -168,10 +160,7 @@ export default function AgentItems() {
             <div className="border-t w-full h-[1.5rem]"></div>
             <form className="space-y-4">
               <div className="flex flex-col">
-                <label
-                  htmlFor="sellerCode"
-                  className="mb-2 font-bold text-md"
-                >
+                <label htmlFor="sellerCode" className="mb-2 font-bold text-md">
                   Referral Fee (%)
                 </label>
                 <input
@@ -186,15 +175,13 @@ export default function AgentItems() {
               <div className="flex space-x-4 items-center justify-center">
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
-                >
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">
                   Update
                 </button>
                 <button
                   type="button"
                   className="px-4 py-2 bg-gray-200 text-gray-500 rounded-md hover:bg-gray-300"
-                  onClick={closeEditModal}
-                >
+                  onClick={closeEditModal}>
                   Cancel
                 </button>
               </div>
@@ -213,14 +200,12 @@ export default function AgentItems() {
             <div className="gap-3 flex flex-row">
               <button
                 onClick={closeDeleteDialog}
-                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]"
-              >
+                className="text-white bg-red-500 px-4 py-2 rounded-md w-[10rem]">
                 Block
               </button>
               <button
                 onClick={closeDeleteDialog}
-                className="text-cyan-500 border-cyan-500 border px-4 py-2 rounded-md w-[10rem]"
-              >
+                className="text-cyan-500 border-cyan-500 border px-4 py-2 rounded-md w-[10rem]">
                 Close
               </button>
             </div>
@@ -279,8 +264,7 @@ export default function AgentItems() {
                   return (
                     <tr
                       key={order.userID}
-                      className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-50 text-xs"
-                    >
+                      className=" border-t-2 border-b-2 even:bg-white odd:bg-gray-50 text-xs">
                       <td className={`${rowHeight}`}>{order.userID}</td>
                       <td className={`${rowHeight}`}>
                         <div className="w-10 h-10 rounded-full overflow-hidden ">
@@ -301,8 +285,7 @@ export default function AgentItems() {
 
                       <td className={`${rowHeight}`}>
                         <div
-                          className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}
-                        >
+                          className={` ${statusColorClass}  text-center text-white rounded-2xl text-xs py-1 px-2`}>
                           {order.status}
                         </div>
                       </td>
@@ -311,20 +294,17 @@ export default function AgentItems() {
                           <div className="flex items-center justify-center gap-4">
                             <Link
                               className=" border-2 p-2.5 border-cyan-500 rounded-md text-cyan-500 hover:bg-cyan-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
-                              href={"/admin/users/agents/1"}
-                            >
+                              href={"/admin/users/agents/1"}>
                               <FaEye />
                             </Link>
                             <button
                               onClick={openEditModal}
-                              className=" border-2 p-2.5 border-gray-500 rounded-md text-gray-500 hover:bg-gray-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
-                            >
+                              className=" border-2 p-2.5 border-gray-500 rounded-md text-gray-500 hover:bg-gray-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
                               <IoMdSettings />
                             </button>
                             <button
                               onClick={openDeleteDialog}
-                              className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
-                            >
+                              className=" border-2 p-2.5 border-red-500 rounded-md text-red-500 hover:bg-red-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
                               <TiCancel />
                             </button>
                           </div>
@@ -332,8 +312,7 @@ export default function AgentItems() {
                           <div className="flex items-center justify-center gap-4">
                             <button
                               onClick={openEmailModal}
-                              className=" border-2 p-2.5 border-green-500 rounded-md text-green-500 hover:bg-green-500 hover:text-white hover:scale-150 duration-300 cursor-pointer"
-                            >
+                              className=" border-2 p-2.5 border-green-500 rounded-md text-green-500 hover:bg-green-500 hover:text-white hover:scale-150 duration-300 cursor-pointer">
                               <AiOutlineMail />
                             </button>
                           </div>
