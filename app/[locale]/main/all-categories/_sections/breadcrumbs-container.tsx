@@ -1,7 +1,7 @@
 'use client';
 
 import { BreadcrumbProps } from '@/types/props/breadcrumb-props';
-import { useSearchParams } from 'next/navigation';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import BreadCrumbItem from '../../_components/bread-crumb-item';
 
 export default function BreadcrumbsContainer({
@@ -11,23 +11,24 @@ export default function BreadcrumbsContainer({
   basePath: string;
   text: string;
 }) {
-  const searchParams = useSearchParams();
-  let categories = searchParams.getAll('category[]');
+  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  let categories: string[] = searchParams.getAll('category[]');
 
   let breadcrumbItems: BreadcrumbProps[] = [
     { text: 'Home', link: `/home`, isLink: true, withRightChevron: true },
   ];
 
   if (categories.length > 0) {
-    breadcrumbItems.push({ link: `/${basePath}`, text: text, withRightChevron: true, isLink: true });
+    breadcrumbItems.push({ link: `/${basePath}`, text: text, withRightChevron: true });
 
     if (categories.length === 1) {
-      breadcrumbItems.push({ link: `/${basePath}?category[]=${categories[0]}`, text: categories[0], withRightChevron: false })
+      breadcrumbItems.push({ link: `/${basePath}?${encodeURIComponent('category[]')}=${encodeURIComponent(categories[0])}`, text: categories[0] })
     }
     else {
       for (let i: number = 0; i < categories.length; i++) {
         let breadCrumbItem: BreadcrumbProps = {
-          link: `/${basePath}?${encodeURIComponent('category[]')}=${encodeURIComponent(categories[i])}`, text: categories[i],
+          link: `/${basePath}?${encodeURIComponent('category[]')}=${encodeURIComponent(categories[i])}`,
+          text: categories[i],
         };
         if (i > categories.length - 2) {
           breadCrumbItem = { ...breadCrumbItem, otherPuncMarks: <>&#44;</> }
