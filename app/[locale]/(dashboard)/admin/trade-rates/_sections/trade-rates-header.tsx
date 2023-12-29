@@ -8,7 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import TradeRatesDropdown from "../_components/trade-rates-dropdown";
 
 export default function TradeRatesHeader() {
-  const [isEditModalOpen, setEditModalOpen] = useState(true);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const openEditModal = () => {
     setEditModalOpen(true);
@@ -18,15 +18,9 @@ export default function TradeRatesHeader() {
     setEditModalOpen(false);
   };
   return (
-    <div className=" ">
-      <DashboardHeaderText text="Trade Rates">
-        <DashboardHeaderTextButton
-          labelText="Create Trade Rates"
-          onClick={openEditModal}
-        />
-      </DashboardHeaderText>
+    <>
       {isEditModalOpen && (
-        <div className="fixed inset-0 overflow-y-auto z-50 flex items-center justify-center ">
+        <div className="fixed inset-0 overflow-y-auto z-[999] flex items-center justify-center w-screen h-screen">
           <div className="fixed inset-0 bg-black opacity-50"></div>
           <div className="bg-white p-5 rounded-md z-10 w-[35rem]">
             <div className="flex justify-between w-full items-center pb-5">
@@ -131,6 +125,14 @@ export default function TradeRatesHeader() {
           </div>
         </div>
       )}
-    </div>
+      <div className=" ">
+        <DashboardHeaderText text="Trade Rates">
+          <DashboardHeaderTextButton
+            labelText="Create Trade Rates"
+            onClick={openEditModal}
+          />
+        </DashboardHeaderText>
+      </div>
+    </>
   );
 }
