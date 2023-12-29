@@ -23,8 +23,8 @@ export default async function AllCategories({
 
   let categories = await getMainCategories(countryCookie?.value ?? 'ph');
 
-  console.log('sdjflksdfjsdlkf', searchParams['category[]']);
-  console.log('sdjflksdfjsdlkf', searchParams.search);
+  // console.log('sdjflksdfjsdlkf', searchParams['category[]']);
+  // console.log('sdjflksdfjsdlkf', searchParams.search);
   return (
     <div>
       <div className='flex lg:flex-row flex-col'>
