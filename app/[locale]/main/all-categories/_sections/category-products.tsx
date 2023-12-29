@@ -10,34 +10,27 @@ import { AppDispatch, RootState } from '@/redux/store';
 import { ProductRepository } from '@/repositories/product-repository';
 import { searchProducts } from '../_redux/all-categories-thunk';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { getProductStatusSet, searchQueryChanged, sortChanged } from '../_redux/all-categories-slice';
+import { getProductStatusSet } from '../_redux/all-categories-slice';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
-import { MainState } from '../../_redux/main-state';
 import { AllCategoriesState } from '../_redux/all-categories-state';
-import { TextInputField } from '@/types/props/text-input-field';
 import { Product } from '@/models/product';
 import { capitalCase, kebabCase, noCase, sentenceCase } from "change-case";
 import { RequestStatus } from '@/types/enums/request-status';
 import SelectCustom from '@/app/[locale]/_components/select-custom';
+import { usePathname, useRouter } from 'next-intl/client';
 
-export default function CategoryProducts() {
+export default function CategoryProducts({ countryCode }: { countryCode: string }) {
+  const router = useRouter();
+  const pathName: string = usePathname();
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
   const dispatch: AppDispatch = useAppDispatch();
   const [visible, setVisible] = useState<boolean>(false);
   const categorySelectRef = useRef<HTMLDivElement>(null);
-
-  const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const allCategoriesState: AllCategoriesState = useAppSelector((state: RootState) => { return state.allCategories });
 
   let searchParamsMemo = useMemo(() => { return searchParams; }, [searchParams])
-  let countryPicker: TextInputField<string> = useMemo(() => {
-    return mainState.countryPicker;
-  }, [mainState.countryPicker])
-
   let products: Product[] = useMemo(() => { return allCategoriesState.products }, [allCategoriesState.products])
 
-  let sort: string = useMemo(() => { return allCategoriesState.sort }, [allCategoriesState.sort]);
-  let categoriesSelected = useMemo(() => { return allCategoriesState.categoriesSelected }, [allCategoriesState.categoriesSelected])
   let getProductsStatus = useMemo(() => {
     return allCategoriesState.getProductsStatus;
   }, [allCategoriesState.getProductsStatus]);
@@ -45,43 +38,57 @@ export default function CategoryProducts() {
   useOutsideClick(categorySelectRef, () => { setVisible(false); })
 
   useEffect(() => {
-    let search: string | null = searchParamsMemo.get('search');
-    if (search !== null) {
-      dispatch(searchQueryChanged(search))
-    }
-  }, [searchParamsMemo, dispatch]);
-
-
-  useEffect(() => {
     dispatch(getProductStatusSet(RequestStatus.WAITING));
     dispatch(getProductStatusSet(RequestStatus.IN_PROGRESS));
     const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
-    dispatch(searchProducts(productRepository, countryPicker.value))
 
-  }, [sort, countryPicker.value, dispatch, getProductsStatus, categoriesSelected])
+    let categories = searchParamsMemo.getAll('category[]');
+    let search = searchParamsMemo.get('search') ?? '';
+    let sort = searchParamsMemo.get('sort') ?? 'top-seller';
+    dispatch(searchProducts(productRepository, countryCode, search, categories, sort))
+
+  }, [searchParamsMemo, countryCode, dispatch])
 
   function headerText() {
-    if (categoriesSelected.length === 0) {
+    let str = '';
+
+    let categories = searchParamsMemo.getAll('category[]');
+    let sort = searchParamsMemo.get('sort') ?? '';
+    let search = searchParamsMemo.get('search') ?? '';
+
+    if (categories.length === 0 && sort === '' && search === '') {
       return 'Products';
     }
 
-    let string = '';
+    if (categories.length > 0) {
+      if (categories.length === 1) {
+        str += categories[1];
+      }
+      else if (categories.length === 2) {
+        str += categories.join(' & ');
+      }
+      else {
+        str += categories.slice(0, categories.length - 2).join(', ');
+        str += ' & ' + categories[categories.length - 1];
+      }
+    }
 
-    if (categoriesSelected.length === 1) {
-      string += categoriesSelected[0]
+    if (search !== '') {
+      if (str !== '') { str += `on \"${search}\"` }
+      else { str += `\"${search}\"` }
     }
-    else if (categoriesSelected.length === 2) {
-      string += categoriesSelected.join(' & ');
-    }
-    else {
-      string += categoriesSelected.slice(0, categoriesSelected.length - 2).join(', ');
-      string += ' & ' + categoriesSelected[categoriesSelected.length - 1];
-    }
+
 
     if (sort !== '') {
-      string += ' by ' + capitalCase(sort);
+      if (str === '') {
+        return 'Products by ' + capitalCase(sort)
+      }
+      else {
+        str += ` by ${capitalCase(sort)}`
+      }
     }
-    return string;
+
+    return str;
   }
 
   return (
@@ -93,16 +100,20 @@ export default function CategoryProducts() {
           <div className='inline-block w-48 rounded border border-tertiary-dark bg-white'>
             <SelectCustom labelText=''
               items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
-              value={sentenceCase(sort)}
+              value={sentenceCase(searchParamsMemo.get('sort') ?? 'Sort By:')}
               placeholder='Sort By:'
               visible={visible}
               setVisible={setVisible}
               onSelect={(value: string) => {
                 let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-                value === 'Sort By:' ? current.delete('sortBy') :
-                  current.set('sortBy', kebabCase(noCase(value)));
-                dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
+                value === 'Sort By:' ? current.delete('sort') :
+                  current.set('sort', kebabCase(noCase(value)));
+                const query = current.toString() === '' ? '' : `?${current.toString()}`;
+
+                router.push(`${pathName}${query}`)
+
+                // dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
               }}
               valueClassName={(errorText: string) => {
                 return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;

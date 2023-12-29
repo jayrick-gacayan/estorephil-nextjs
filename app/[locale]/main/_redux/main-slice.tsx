@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatus } from "@/models/result";
 import { MainState } from "./main-state";
-import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
+import { textInputFieldValue } from "@/types/helpers/field-methods";
 
 const initialState: MainState = {
   isToChange: false,

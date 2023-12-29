@@ -1,6 +1,6 @@
 import { LoginState } from "./login-state";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
+import { textInputFieldValue } from "@/types/helpers/field-methods";
 import { RequestStatus } from "@/types/enums/request-status";
 import { ValidationResponse } from "@/types/props/validation-response";
 import { getValidationResponse } from "@/types/helpers/validation_helpers";
