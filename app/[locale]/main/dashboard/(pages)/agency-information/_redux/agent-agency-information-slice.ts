@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AgentAgencyInformationState } from "./agent-agency-information-state";
 import { FileCustomBlobString } from "@/models/file-custom-blob-string";
-import { textInputFieldValue } from "@/types/helpers/text-input-field-methods";
+import { textInputFieldValue } from "@/types/helpers/field-methods";
 import { RequestStatus } from "@/types/enums/request-status";
 import { getValidationResponse } from "@/types/helpers/validation_helpers";
 import { ValidationType } from "@/types/enums/validation-type";

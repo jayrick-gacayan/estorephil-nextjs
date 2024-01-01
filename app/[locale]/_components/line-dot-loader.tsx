@@ -21,6 +21,6 @@ export default function LineDotLoader({
         <animate attributeName='opacity' calcMode='spline' dur='2' values='1;0;1;' keySplines='.5 0 .5 1;.5 0 .5 1' repeatCount='indefinite' begin='0'>
         </animate>
       </circle>
-    </svg >
+    </svg>
   )
 }

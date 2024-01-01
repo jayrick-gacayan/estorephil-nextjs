@@ -139,7 +139,6 @@ export class AccountRepository {
         if (result.status === 200) {
             response = await result.json();
         }
-        console.log('dfjlsdkfjsdf', response);
 
         return new Result<User>({
             response: response,

@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <TradeRatesHeader />
-      <div className="bg-[#F5F7FA] p-4 space-y-4 flex-1 overflow-auto">
+      <div className="bg-[#F5F7FA] p-4  flex-1 overflow-auto">
         <TradeRateItems />
       </div>
     </>
