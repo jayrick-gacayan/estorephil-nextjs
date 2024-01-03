@@ -10,16 +10,11 @@ export class AccountService {
 
     return !isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
   }
-
-  async nextAuthSignIn(body: SignInProps): Promise<SignInResponse | undefined> {
-    console.log('body', body)
-    return await signIn('credentials', { redirect: false, ...body });
+  async login({ body }: { body: SignInOptions }) {
+    const res = await signIn("credentials", body)
+    console.log('account service login', res)
+    return res
   }
-
-  async nextAuthSignOut(callbackUrl?: string) {
-    return await signOut(callbackUrl ? { callbackUrl: callbackUrl } : {})
-  }
-
   async registerStore(body: string) {
     const res = await fetch(`${process.env.API_URL}/register`, {
       headers: {

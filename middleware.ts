@@ -1,4 +1,4 @@
-import { NextMiddlewareWithAuth, withAuth } from 'next-auth/middleware';
+import { withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -11,13 +11,10 @@ const intlMiddleware = createMiddleware({
 
 });
 
-const authMiddleware: NextMiddlewareWithAuth = withAuth(
+const authMiddleware: any = withAuth(
   function onSuccess(req) {
-
-
     return intlMiddleware(req);
   },
-
   {
     callbacks: {
       authorized: ({ token, req }) => {
@@ -29,16 +26,12 @@ const authMiddleware: NextMiddlewareWithAuth = withAuth(
           req.nextUrl.pathname === '/all-categories'
         ) {
           return true;
-
         }
-
         return token != null
       }
     },
-    secret: process.env.NEXTAUTH_SECRET,
     pages: {
       signIn: '/login'
-
     }
   }
 );
@@ -57,7 +50,7 @@ export default function middleware(req: NextRequest) {
   if (isPublicPage) {
     return intlMiddleware(req)
   } else {
-    return (authMiddleware as any)(req);
+    return (authMiddleware)(req);
   }
 }
 

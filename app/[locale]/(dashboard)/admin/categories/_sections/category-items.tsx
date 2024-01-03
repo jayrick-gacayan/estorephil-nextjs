@@ -1,3 +1,4 @@
+'use client'
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { CiSearch, CiSquarePlus } from "react-icons/ci";
