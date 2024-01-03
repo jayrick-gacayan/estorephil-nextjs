@@ -6,7 +6,8 @@ import { RequestStatus } from "@/types/enums/request-status";
 import {
   boxFormRequestStatusSet,
   courierBoxesRequestStatusSet,
-  courierBoxesSet
+  courierBoxesSet,
+  courierBoxesUpdated
 } from "./courier-boxes-slice";
 import { Box } from "@/models/box";
 import { Result } from "@/types/helpers/result-helpers";
@@ -28,10 +29,13 @@ export function createBox(boxRepository: BoxRepository, token: string) {
       referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value
     }, token);
 
-    console.log('data', result.data)
-
-    if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
-      dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
+    if (!!result.data && result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS));
+      dispatch(courierBoxesSet({
+        ...courierBoxesState.courierBoxes,
+        data: [...courierBoxesState.courierBoxes.data, result.data],
+        count: courierBoxesState.courierBoxes.count + 1,
+      }));
     }
     else {
       dispatch(boxFormRequestStatusSet(RequestStatus.FAILURE))
@@ -56,8 +60,9 @@ export function updateBox(boxRepository: BoxRepository, token: string, id: strin
       referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value
     }, token, id);
 
-    console.log('data', result.data)
     if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
+      console.log('data', result.data)
+      dispatch(courierBoxesUpdated({ id: parseInt(id), box: result.data }))
       dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
     }
     else {
@@ -80,7 +85,6 @@ export function getAllCourierBoxes(boxRepository: BoxRepository, token: string, 
     setTimeout(async () => {
       let result = await boxRepository.getAllCourierBoxes(currentPage, token);
 
-      console.log('data', result.data)
       dispatch(
         courierBoxesSet(result.data ??
           { ...courierBoxesState.courierBoxes, requestStatus: RequestStatus.FAILURE }

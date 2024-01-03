@@ -29,8 +29,6 @@ export default function ModalBoxesContainer() {
 
   const modalContentRef = useRef<HTMLDivElement>(null);
 
-
-
   const cbOnModalClose = useCallback(() => {
     if (modalContentRef.current) {
       modalContentRef.current.classList.remove('animate-slide-up');

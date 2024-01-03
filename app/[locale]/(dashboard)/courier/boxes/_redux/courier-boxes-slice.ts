@@ -59,6 +59,17 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
+    courierBoxesUpdated: (state: CourierBoxesState, action: PayloadAction<{ id: number; box: Box; }>) => {
+      return {
+        ...state,
+        courierBoxes: {
+          ...state.courierBoxes,
+          data: state.courierBoxes.data.map((box: Box) => {
+            return box.id! === action.payload.id ? action.payload.box : box
+          })
+        }
+      }
+    },
     modalBoxesOpened: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
@@ -291,7 +302,8 @@ export const {
   editFormFieldsFilled,
   courierBoxesSet,
   courierBoxesRequestStatusSet,
-  courierBoxesPageNumberSet
+  courierBoxesPageNumberSet,
+  courierBoxesUpdated
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;

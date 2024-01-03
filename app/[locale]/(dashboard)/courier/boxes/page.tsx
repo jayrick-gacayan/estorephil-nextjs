@@ -13,7 +13,7 @@ export default function Page() {
         <div className="bg-white p-4 rounded space-y-4">
           <BoxesSearchContainer />
           <BoxesTable />
-          <BoxesPagination />
+          {/* <BoxesPagination /> */}
         </div>
       </div>
       <ModalBoxesContainer />

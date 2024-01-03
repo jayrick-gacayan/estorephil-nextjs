@@ -99,8 +99,6 @@ export default function BoxesModalForm({
           }
         }, 2000)
         break;
-      case RequestStatus.SUCCESS:
-        break;
     }
   }, [requestStatus, dispatch, sessionData, type])
 
