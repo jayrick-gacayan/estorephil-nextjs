@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from '@/redux/store';
 import Dropdown from '../../_components/dropdown';
 import { RefObject, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next-intl/client';
 import CustomCountryPicker from '../_components/custom-country-picker';
 import { MainState } from '../_redux/main-state';
@@ -22,6 +22,7 @@ import { countryPickerToggled } from '../_redux/main-slice';
 import { accountContainer } from '@/inversify/inversify.config';
 import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
+import LinkForSubTopNav from '../_components/link-for-sub-top-nav';
 
 export const countries: CountryProps[] = [
   {
@@ -91,49 +92,50 @@ export default function MainHeader({
             <NavbarSearch countryCookie={countryCookie} />
             <div className='md:block hidden space-x-3 w-auto'>
               <CartTypeNavbar>
-                {onSession
-                  ? <Dropdown ref={dropdownProfileImageRef}
-                    className='relative inline'>
-                    <Image alt='profile-image'
-                      src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
-                      width={48}
-                      height={48}
-                      className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'
-                      onClick={() => {
-                        if (dropdownProfileImageRef.current) {
-                          dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
-                        }
-                      }} />
-                    <div
-                      id="dropdown-profile-image"
-                      className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
-                      <div className='block'>
-                        <button
-                          onClick={() => {
-                            push('/dashboard/agency-information')
-                          }}
-                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
-                          PROFILE
-                        </button>
-                        <button
-                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
-                          type='button'
-                          onClick={async () => {
-                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-                            let result = await accountRepository.nextAuthSignOut(`/login`);
+                {
+                  onSession
+                    ? <Dropdown ref={dropdownProfileImageRef}
+                      className='relative inline'>
+                      <Image alt='profile-image'
+                        src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
+                        width={48}
+                        height={48}
+                        className='rounded-full border border-white w-12 h-12 inline-block cursor-pointer'
+                        onClick={() => {
+                          if (dropdownProfileImageRef.current) {
+                            dropdownProfileImageRef.current.querySelector('#dropdown-profile-image')?.classList.toggle('hidden')
+                          }
+                        }} />
+                      <div
+                        id="dropdown-profile-image"
+                        className='leading-0 hidden absolute shadow-lg shadow-secondary text-default-dark top-[250%] right-0 z-[9999] rounded overflow-hidden bg-white h-auto w-48'>
+                        <div className='block'>
+                          <button
+                            onClick={() => {
+                              push('/dashboard/agency-information')
+                            }}
+                            className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
+                            PROFILE
+                          </button>
+                          <button
+                            className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
+                            type='button'
+                            onClick={async () => {
+                              let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                              let result = await accountRepository.nextAuthSignOut(`/login`);
 
-                            console.log('result', result)
-                          }}
-                        >
-                          SIGNOUT
-                        </button>
+                              console.log('result', result)
+                            }}
+                          >
+                            SIGNOUT
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  </Dropdown>
-                  : (
-                    <button onClick={() => { push('/login') }}
-                      className='transition-all delay-50 text-white border border-transparent py-2 px-4 h-full rounded text-xl align-middle bg-primary hover:bg-primary-light'>Login
-                    </button>)
+                    </Dropdown>
+                    : (
+                      <button onClick={() => { push('/login') }}
+                        className='transition-all delay-50 text-white border border-transparent py-2 px-4 h-full rounded text-xl align-middle bg-primary hover:bg-primary-light'>Login
+                      </button>)
                 }
               </CartTypeNavbar>
             </div>
@@ -144,13 +146,9 @@ export default function MainHeader({
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              <Link href="/dashboard/orders" className='inline-block'>
-                <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
-              </Link>
-              <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-              <Link href="/dashboard/agency-information" className='inline-block'>
-                <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
-              </Link>
+              <LinkForSubTopNav href='/dashboard/orders' icon={<FaTruck className='inline-block' />} text='TRACK MY ORDER' />
+              <LinkForSubTopNav href='/dashboard/favorites' icon={<FaRegHeart className='inline-block' />} text='FAVORITES' />
+              <LinkForSubTopNav href='/dashboard/agency-information' icon={<FaUser className='inline-block' />} text={userFullName} />
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={countries.find((value: CountryProps) => {
                   return value.code === countryCookie
@@ -172,12 +170,8 @@ export default function MainHeader({
                     );
                   }}
                   items={countries}
-                  onToggle={() => {
-                    dispatch(countryPickerToggled());
-                  }}
-                  onSelect={async (value: CountryProps) => {
-                    onCountryCookieSet(value.code);
-                  }}
+                  onToggle={() => { dispatch(countryPickerToggled()); }}
+                  onSelect={async (value: CountryProps) => { onCountryCookieSet(value.code); }}
                   show={countryPicker.show ?? false} />
               </div>
             </div>

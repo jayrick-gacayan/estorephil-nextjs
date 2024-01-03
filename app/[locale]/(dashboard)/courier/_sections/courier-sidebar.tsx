@@ -11,7 +11,6 @@ import { FaCalculator, FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'rea
 import DashboardMenuItemWithSubLinks from '../../_components/dashboard-menu-item-with-sublinks';
 import { useRouter } from 'next-intl/client';
 
-
 function CourierSidebar() {
   let courierDashboardMenus: MenuProps[] = [
     {
