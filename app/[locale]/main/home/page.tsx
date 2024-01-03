@@ -34,8 +34,6 @@ export default async function Home({ params }: { params: { locale: string } }) {
   let ourProducts = await getOurProducts(countryCookie?.value ?? 'ph');
 
   // let ourProducts = (await import('@/app/_data/products.json')).default.products;
-
-export default function Home({ params }: { params: { locale: string } }) {
   return (
     <div className='bg-default px-8'>
       <div className='max-w-screen-2xl m-auto py-4'>
@@ -50,4 +48,5 @@ export default function Home({ params }: { params: { locale: string } }) {
       {/* <BalikbayanItems />
       <NewItems /> */}
     </div>
-  )}
+  )
+}
