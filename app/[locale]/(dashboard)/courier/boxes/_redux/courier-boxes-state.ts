@@ -22,6 +22,7 @@ export interface CourierBoxesState {
     weight: TextInputField<string>;
     weightType: TextInputField<string>;
     requestStatus: RequestStatus;
+    regionFees: Array<{ regionCode: string; fee: TextInputField<string> }>
   }
 
   courierBoxes: Paginated<Box>;

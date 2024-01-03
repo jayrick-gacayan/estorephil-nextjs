@@ -42,8 +42,7 @@ export default function ModalAlertInfo() {
       }
       type={
         requestStatus === RequestStatus.SUCCESS ? 'success' :
-          requestStatus === RequestStatus.FAILURE ? 'danger' :
-            'none'
+          requestStatus === RequestStatus.FAILURE ? 'danger' : 'none'
       }
       onCloseModal={cbOnModalClose} />
   )

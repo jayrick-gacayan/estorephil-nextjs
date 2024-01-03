@@ -81,7 +81,7 @@ export default function LoginForm() {
                                             onChange: (event: ChangeEvent<HTMLInputElement>) => {
                                                 dispatch(emailChanged(event.target.value))
                                             },
-                                            placeholder: 'Enter email Address',
+                                            placeholder: 'Enter email address',
                                         }} />
                                     <InputCustom errorText={password.errorText}
                                         divClassName={divClassName(password.status)}
@@ -135,8 +135,7 @@ export default function LoginForm() {
                                     </button>
                                 </form>
                                 <div className='space-y-4'>
-                                    <Link href='#'
-                                        className='transition-all delay-100 text-tertiary-dark w-full block text-center hover:text-primary hover:underline'>{translate('needToSignUp?')}</Link>
+                                    <span className='transition-all delay-100 text-tertiary-dark w-full block text-center'>{translate('needToSignUp')}</span>
                                     <button className='transition-all delay-100 bg-white w-full border-tertiary-dark rounded border py-2 hover:bg-warning-light hover:text-white'
                                         onClick={(e) => {
                                             // store.dispatch(login(accountRepository))

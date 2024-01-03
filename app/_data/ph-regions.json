@@ -1,0 +1,89 @@
+{
+  "regions": [
+    {
+      "code": "r01",
+      "name": "Ilocos Region",
+      "otherName": "Region I"
+    },
+    {
+      "code": "r02",
+      "name": "Cagayan Valley",
+      "otherName": "Region II"
+    },
+    {
+      "code": "r03",
+      "name": "Central Luzon",
+      "otherName": "Region III"
+    },
+    {
+      "code": "r04a",
+      "name": "Calabarzon",
+      "otherName": "Region IV-A"
+    },
+    {
+      "code": "r04b",
+      "name": "Mimaropa",
+      "otherName": "Region IV-B"
+    },
+    {
+      "code": "r05",
+      "name": "Bicol Region",
+      "otherName": "Region V"
+    },
+    {
+      "code": "r06",
+      "name": "Western Visayas",
+      "otherName": "Region VI"
+    },
+    {
+      "code": "r07",
+      "name": "Central Visayas",
+      "otherName": "Region VII"
+    },
+    {
+      "code": "r08",
+      "name": "Eastern Visayas",
+      "otherName": "Region VIII"
+    },
+    {
+      "code": "r09",
+      "name": "Zamboanga Peninsula",
+      "otherName": "Region IX"
+    },
+    {
+      "code": "r10",
+      "name": "Northern Mindanao",
+      "otherName": "Region X"
+    },
+    {
+      "code": "r11",
+      "name": "Davao Region",
+      "otherName": "Region XI"
+    },
+    {
+      "code": "r12",
+      "name": "Soccsksargen",
+      "otherName": "Region XII"
+    },
+    {
+      "code": "r13",
+      "name": "Caraga",
+      "otherName": "Region XIII"
+    },
+    {
+      "code": "car",
+      "name": "Cordillera Administrative Region",
+      "otherName": "CAR"
+    },
+    {
+      "code": "armm",
+      "name": "Autonomous Region in Muslim Mindanao",
+      "otherName": "ARMM"
+    },
+    {
+      "code": "ncr",
+      "name": "National Capital Region",
+      "otherName": "NCR"
+    }
+  ]
+}

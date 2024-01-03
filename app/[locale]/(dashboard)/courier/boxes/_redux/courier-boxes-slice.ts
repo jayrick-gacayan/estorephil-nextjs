@@ -22,6 +22,7 @@ const initialState: CourierBoxesState = {
     weight: textInputFieldValue(''),
     weightType: textInputFieldValue(''),
     requestStatus: RequestStatus.NONE,
+    regionFees: []
   },
   courierBoxes: paginatedInit<Box>({
     data: [],
@@ -258,6 +259,43 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
+    regionFeesAdded: (state: CourierBoxesState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: [
+            ...state.boxFormFields.regionFees,
+            { regionCode: action.payload, fee: textInputFieldValue("") }
+          ]
+        }
+      }
+    },
+    regionFeesFeeUpdated: (state: CourierBoxesState, action: PayloadAction<{ regionCode: string; value: string; }>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.map((regFee: any) => {
+            return regFee.regionCode === action.payload.regionCode ? {
+              ...regFee, fee: textInputFieldValue(action.payload.value)
+            } : regFee
+          })
+        }
+      }
+    },
+    regionFeesRemoved: (state: CourierBoxesState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.filter((regFee: any) => {
+            return regFee.regionCode !== action.payload
+          })
+        }
+      }
+    },
+
     boxFormFieldsReset: (state: CourierBoxesState) => {
       return {
         ...state,
@@ -272,7 +310,8 @@ const courierBoxesSlice = createSlice({
           referralPercentage: textInputFieldValue(''),
           weight: textInputFieldValue(''),
           weightType: textInputFieldValue(''),
-          requestStatus: RequestStatus.NONE
+          requestStatus: RequestStatus.NONE,
+          regionFees: []
         }
       }
     }
@@ -303,7 +342,10 @@ export const {
   courierBoxesSet,
   courierBoxesRequestStatusSet,
   courierBoxesPageNumberSet,
-  courierBoxesUpdated
+  courierBoxesUpdated,
+  regionFeesAdded,
+  regionFeesFeeUpdated,
+  regionFeesRemoved
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;

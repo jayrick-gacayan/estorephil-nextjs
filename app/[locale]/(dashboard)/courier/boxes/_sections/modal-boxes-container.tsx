@@ -9,8 +9,9 @@ import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { useMemo, useRef, useCallback, useEffect } from 'react';
 import BoxesModalForm from './boxes-modal-form';
 import { RequestStatus } from '@/types/enums/request-status';
+import { PhRegion } from '@/models/ph-region';
 
-export default function ModalBoxesContainer() {
+export default function ModalBoxesContainer({ regions }: { regions: PhRegion[] }) {
   const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => {
     return state.courierBoxes;
   });
@@ -51,7 +52,7 @@ export default function ModalBoxesContainer() {
     <Modal open={open}>
       <div ref={modalContentRef}
         className={`animate-slide-up translate-y-full flex-none w-auto rounded bg-white text-center relative z-10 px-8`}>
-        {(open && type !== '') && (<BoxesModalForm type={type} onClose={cbOnModalClose} />)}
+        {(open && type !== '') && (<BoxesModalForm type={type} onClose={cbOnModalClose} regions={regions} />)}
       </div>
     </Modal>
   )

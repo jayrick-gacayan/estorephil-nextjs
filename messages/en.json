@@ -52,7 +52,7 @@
   "login": "Login",
   "mobileNo": "Mobile Number",
   "name": "NAME",
-  "needToSignUp?": "Need to sign-up?",
+  "needToSignUp": "Need to sign-up?",
   "notifications": "NOTIFICATIONS",
   "order": "ORDER",
   "orderInfo": "Order Info",
