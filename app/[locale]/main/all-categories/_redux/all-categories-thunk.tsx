@@ -4,12 +4,12 @@ import { AllCategoriesState } from './all-categories-state'
 import { ProductRepository } from '@/repositories/product-repository'
 import { Result } from '@/types/helpers/result-helpers'
 import { Categories } from '@/models/category'
-import { ResultStatus } from '@/types/enums/result-status'
 import { RequestStatus } from '@/types/enums/request-status'
 import { CategoryRepository } from '@/repositories/category-repository'
 import { StoreRepository } from '@/repositories/store-repository'
 import { Store } from '@/models/store'
 import { Product } from '@/models/product'
+import { ApiResponse, getResultStatus, ResultStatus } from '@/models/result'
 
 function getMainCategories(
     categoryRepository: CategoryRepository,
@@ -44,36 +44,26 @@ function getMainStores(storeRepository: StoreRepository, locale: string) {
     }
 }
 
-function searchProducts(
-    productRepository: ProductRepository,
-    locale: string,
-    search: string,
-    categories: string[],
-    sort: string,
-) {
-    return async function searchProducts(dispatch: AppDispatch) {
-
-
-        const result: Result<Product[]> = await productRepository.productsSearch(
-            locale,
-            search,
-            categories,
-            sort
-        );
-
-        switch (result.resultStatus) {
+function searchProducts(productRepository: ProductRepository, locale: string) {
+    return async function searchProducts(dispatch: AppDispatch, getState: typeof store.getState) {
+        const state = getState().allCategories as AllCategoriesState
+        const result: ApiResponse = await productRepository.searchProducts({
+            locale: locale,
+            categories: state.categoriesSelected,
+            query: state.searchQuery,
+            sort: state.sort
+        })
+        switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                dispatch(getProductStatusSet(RequestStatus.SUCCESS));
-                dispatch(allCategoriesProductsSet(result.data ?? []))
+                dispatch(getProductsSuccess(result.data))
+                console.log('search products result: ', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(getProductStatusSet(RequestStatus.FAILURE));
-                dispatch(allCategoriesProductsSet([]))
+                dispatch(getProductsSuccess([]))
                 break;
         }
     }
 }
-
 export {
     getMainCategories,
     getMainStores,

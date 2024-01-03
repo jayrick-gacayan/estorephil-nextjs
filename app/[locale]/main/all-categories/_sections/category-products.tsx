@@ -1,127 +1,89 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
-import { productContainer } from '@/inversify/inversify.config';
+import { homeContainer, productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
-import { AppDispatch, RootState } from '@/redux/store';
+import { RootState, store } from '@/redux/store';
+import { HomeRepository } from '@/repositories/home-repository';
 import { ProductRepository } from '@/repositories/product-repository';
+import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../_redux/all-categories-thunk';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { getProductStatusSet } from '../_redux/all-categories-slice';
-import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
-import { AllCategoriesState } from '../_redux/all-categories-state';
-import { Product } from '@/models/product';
-import { capitalCase, kebabCase, noCase, sentenceCase } from "change-case";
-import { RequestStatus } from '@/types/enums/request-status';
-import SelectCustom from '@/app/[locale]/_components/select-custom';
-import { usePathname, useRouter } from 'next-intl/client';
 
-export default function CategoryProducts({ countryCode }: { countryCode: string }) {
-  const router = useRouter();
-  const pathName: string = usePathname();
-  const searchParams: ReadonlyURLSearchParams = useSearchParams();
-  const dispatch: AppDispatch = useAppDispatch();
+import { useSearchParams } from 'next/navigation';
+import { searchQueryChanged } from '../_redux/all-categories-slice';
+import ProductSort from '../_components/product-sort';
+
+export default function CategoryProducts() {
   const [visible, setVisible] = useState<boolean>(false);
   const categorySelectRef = useRef<HTMLDivElement>(null);
-  const allCategoriesState: AllCategoriesState = useAppSelector((state: RootState) => { return state.allCategories });
-
-  let searchParamsMemo = useMemo(() => { return searchParams; }, [searchParams])
-  let products: Product[] = useMemo(() => { return allCategoriesState.products }, [allCategoriesState.products])
-
-  let getProductsStatus = useMemo(() => {
-    return allCategoriesState.getProductsStatus;
-  }, [allCategoriesState.getProductsStatus]);
+  const locale = useSelector((state: RootState) => state.main).countryPicker.value
+  const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
+  const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
+  const state = useSelector((state: RootState) => state.allCategories)
+  const products = useSelector((state: RootState) => state.allCategories).products
+  const sort = useSelector((state: RootState) => state.allCategories).sort
+  const searchParams = useSearchParams();
+  const dispatch = useDispatch();
 
   useOutsideClick(categorySelectRef, () => { setVisible(false); })
-
   useEffect(() => {
-    dispatch(getProductStatusSet(RequestStatus.WAITING));
-    dispatch(getProductStatusSet(RequestStatus.IN_PROGRESS));
-    const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
-
-    let categories = searchParamsMemo.getAll('category[]');
-    let search = searchParamsMemo.get('search') ?? '';
-    let sort = searchParamsMemo.get('sort') ?? 'top-seller';
-    dispatch(searchProducts(productRepository, countryCode, search, categories, sort))
-
-  }, [searchParamsMemo, countryCode, dispatch])
-
-  function headerText() {
-    let str = '';
-
-    let categories = searchParamsMemo.getAll('category[]');
-    let sort = searchParamsMemo.get('sort') ?? '';
-    let search = searchParamsMemo.get('search') ?? '';
-
-    if (categories.length === 0 && sort === '' && search === '') {
-      return 'Products';
+    const searchQuery = searchParams.get('search');
+    if (!!searchQuery) {
+      dispatch(searchQueryChanged(searchQuery as string))
     }
-
-    if (categories.length > 0) {
-      if (categories.length === 1) {
-        str += categories[1];
-      }
-      else if (categories.length === 2) {
-        str += categories.join(' & ');
-      }
-      else {
-        str += categories.slice(0, categories.length - 2).join(', ');
-        str += ' & ' + categories[categories.length - 1];
-      }
-    }
-
-    if (search !== '') {
-      if (str !== '') { str += `on \"${search}\"` }
-      else { str += `\"${search}\"` }
-    }
-
-
-    if (sort !== '') {
-      if (str === '') {
-        return 'Products by ' + capitalCase(sort)
-      }
-      else {
-        str += ` by ${capitalCase(sort)}`
-      }
-    }
-
-    return str;
-  }
-
+    store.dispatch(searchProducts(productRepository, locale))
+  }, [state.sort])
   return (
     <div className='max-w-screen-2xl m-auto py-4 space-y-4'>
       <div className='flex'>
-        <ProductHeaderText text={headerText()} />
+        <ProductHeaderText text={
+          `${state.categoriesSelected.length > 0
+            ? (() => {
+              if (state.categoriesSelected.length === 2) {
+                const categoriesText = state.categoriesSelected.map((category, index) => {
+                  if (index === 0) {
+                    console.log('category', index, category);
+                    return category.toLowerCase();
+                  } else {
+                    console.log('category', index, category);
+                    return ` & ${category.toLowerCase()}`;
+                  }
+                });
+
+                return `Products under ${categoriesText.join('')}  ${!!sort ? `by ${sort}` : ``}`;
+              } else {
+                const categoriesText = state.categoriesSelected.map((category, index) => {
+                  if (index === state.categoriesSelected.length - 1 && state.categoriesSelected.length != 1) {
+                    console.log('category', index, category);
+
+                    return `& ${category.toLowerCase()}`;
+                  }
+                  else {
+                    return `${category.toLowerCase()}`
+                  }
+                });
+                return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
+              }
+            })()
+            : state.categoriesSelected.length === 0 && state.products.length > 0
+              ? `Products ${!!sort ? `by ${sort}` : ``}`
+              : 'No products'
+          }`}
+        />
         <div className='flex-none space-x-2'>
           <span>Sort</span>
-          <div className='inline-block w-48 rounded border border-tertiary-dark bg-white'>
-            <SelectCustom labelText=''
-              items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
-              value={sentenceCase(searchParamsMemo.get('sort') ?? 'Sort By:')}
-              placeholder='Sort By:'
+          <div className='inline-block w-36'>
+            {/* <CustomSelect ref={categorySelectRef} items={['Top Seller', 'Low Seller']}
+              value={undefined}
+              placeholder='Sort by:'
+              labelText={''}
               visible={visible}
-              setVisible={setVisible}
-              onSelect={(value: string) => {
-                let current: URLSearchParams = new URLSearchParams(Array.from(searchParams.entries()));
-
-                value === 'Sort By:' ? current.delete('sort') :
-                  current.set('sort', kebabCase(noCase(value)));
-                const query = current.toString() === '' ? '' : `?${current.toString()}`;
-
-                router.push(`${pathName}${query}`)
-
-                // dispatch(sortChanged(value !== 'Sort By:' ? kebabCase(noCase(value)) : ''))
-              }}
-              valueClassName={(errorText: string) => {
-                return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
-              }}
-              optionActiveClassName={(current: string, value: string) => {
-                return `p-2 cursor-pointer ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`
-              }}
-              errorText='' />
+              setVisible={setVisible} /> */}
+            <ProductSort />
           </div>
         </div>
       </div>

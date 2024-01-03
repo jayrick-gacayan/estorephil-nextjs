@@ -7,13 +7,13 @@ import { inject, injectable } from 'inversify';
 
 @injectable()
 export class ProductRepository {
-    #productService: ProductService;
+    productService: ProductService;
 
     constructor(@inject(TYPES.ProductService) productService: ProductService) {
-        this.#productService = productService;
+        this.productService = productService;
     }
     async getProductDetails(id: string) {
-        return await this.#productService.getProductDetails(id)
+        return await this.productService.getProductDetails(id)
     }
     async searchProducts({ locale, query, categories, sort }: { locale: string, query?: string, categories?: string[], sort?: string }) {
         const params = new URLSearchParams();
@@ -28,7 +28,7 @@ export class ProductRepository {
         if (!!sort) {
             params.set('sort', sort)
         }
-        return await this.#productService.searchProducts(locale, params.toString())
+        return await this.productService.searchProducts(locale, params.toString())
     }
     async addToCart(token: string, productId: number, quantity: number) {
         const body = {
@@ -37,10 +37,10 @@ export class ProductRepository {
                 quantity: quantity,
             }
         }
-        return await this.#productService.addToCart(token, JSON.stringify(body))
+        return await this.productService.addToCart(token, JSON.stringify(body))
     }
     async removeFromCart(token: string, productId: number) {
-        return await this.#productService.removeFromCart(token, productId)
+        return await this.productService.removeFromCart(token, productId)
     }
 
     async productsSearch(
@@ -60,7 +60,7 @@ export class ProductRepository {
         if (sort !== '') { params.append(encodeURIComponent('sort'), encodeURIComponent(sort)) }
 
 
-        let result = await this.#productService.productsSearch(locale,
+        let result = await this.productService.productsSearch(locale,
             params.toString() !== '' ? `?${params.toString()}` : ``)
 
         let response: any = undefined;
@@ -79,7 +79,7 @@ export class ProductRepository {
     }
 
     async getMainProducts(locale: string) {
-        let result = await this.#productService.getMainProducts(locale);
+        let result = await this.productService.getMainProducts(locale);
 
         let response: any = undefined;
         if (result.status === 200) {
