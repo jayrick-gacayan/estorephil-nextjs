@@ -11,6 +11,7 @@ const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
+
         let result = await fetch(`${process.env.API_URL}/login`, {
           method: "POST",
           body: JSON.stringify({ email, password }),
@@ -19,6 +20,7 @@ const authOptions: NextAuthOptions = {
           },
         });
         let response = await result.json();
+
         if (response?.status !== 200) {
           throw new Error(response.message);
         }
@@ -31,6 +33,7 @@ const authOptions: NextAuthOptions = {
     signIn: "/login",
 
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);

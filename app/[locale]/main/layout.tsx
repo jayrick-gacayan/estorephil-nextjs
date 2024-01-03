@@ -16,16 +16,14 @@ export default async function Layout({ children }: { children: ReactNode }) {
 
     let cookieStore = cookies();
 
-
-    countryCode === 'ph' ? cookieStore.delete('country_code') :
-      cookieStore.set({
-        name: 'country_code',
-        value: countryCode,
-        httpOnly: true,
-        path: '/',
-        secure: true,
-        expires: Date.now() + (7 * 24 * 60 * 60 * 1000)
-      });
+    cookieStore.set({
+      name: 'country_code',
+      value: countryCode,
+      httpOnly: true,
+      path: '/',
+      secure: true,
+      expires: Date.now() + (7 * 24 * 60 * 60 * 1000)
+    });
 
   }
 

@@ -4,3 +4,9 @@ export const titleize = (inputString: string) => {
     const result = capitalizedWords?.join(' ');
     return result;
 }
+
+export function toFirstUpperCase(value: string) {
+    let trimVal = value.trim();
+
+    return trimVal.charAt(0).toUpperCase() + trimVal.slice(1);
+}

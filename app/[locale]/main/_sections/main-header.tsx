@@ -90,7 +90,7 @@ export default function MainHeader({
                 src='/static_images/estorephil_logo.svg'
                 fill />
             </Link>
-            <NavbarSearch />
+            <NavbarSearch countryCookie={countryCookie} />
             <div className='md:block hidden space-x-3 w-auto'>
               <CartTypeNavbar>
                 {onSession

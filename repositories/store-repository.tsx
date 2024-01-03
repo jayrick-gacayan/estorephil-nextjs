@@ -21,13 +21,13 @@ export class StoreRepository {
         let response: any = undefined;
 
         if (result.status === 200) {
-            response = camelCase(await result.json());
+            response = await result.json();
         }
 
         return new Result<Store[]>(
             {
                 response: response,
-                data: response.data,
+                data: response.data.map((value: any) => { return camelCase({ ...value }) as any }) ?? [],
                 statusCode: result.status
             }
         );

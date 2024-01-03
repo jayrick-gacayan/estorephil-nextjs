@@ -20,10 +20,6 @@ export default function AgentRegisterContent({
   const dispatch: AppDispatch = useAppDispatch();
   const agentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
 
-  let signUpThanksRequestStatus = useMemo(() => {
-    return agentRegisterState.signUpThanksRequestStatus;
-  }, [agentRegisterState.signUpThanksRequestStatus])
-
   useEffect(() => {
     if (token !== undefined && typeof token === 'string') {
       let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
@@ -31,9 +27,9 @@ export default function AgentRegisterContent({
     }
   }, [token])
 
-  let isSuccess = signUpThanksRequestStatus === RequestStatus.SUCCESS;
 
-  return isSuccess ? (<SignUpThanksOne />) :
+  return (agentRegisterState.signUpThanksRequestStatus === RequestStatus.SUCCESS
+    && (token === undefined || typeof token !== 'string')) ? (<SignUpThanksOne />) :
     (
       <>
         <div className="w-full space-y-8">

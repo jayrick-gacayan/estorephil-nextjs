@@ -26,7 +26,6 @@ function getMainCategories(
                 dispatch(categoriesRequestStatusSet(RequestStatus.FAILURE))
                 break;
         }
-
     }
 }
 
@@ -45,16 +44,22 @@ function getMainStores(storeRepository: StoreRepository, locale: string) {
     }
 }
 
-function searchProducts(productRepository: ProductRepository, locale: string) {
-    return async function searchProducts(dispatch: AppDispatch, getState: typeof store.getState) {
-        const allCategoriesState: AllCategoriesState = getState().allCategories;
+function searchProducts(
+    productRepository: ProductRepository,
+    locale: string,
+    search: string,
+    categories: string[],
+    sort: string,
+) {
+    return async function searchProducts(dispatch: AppDispatch) {
 
-        const result: Result<Product[]> = await productRepository.productsSearch({
-            locale: locale,
-            categories: allCategoriesState.categoriesSelected,
-            query: allCategoriesState.searchQuery,
-            sort: allCategoriesState.sort
-        });
+
+        const result: Result<Product[]> = await productRepository.productsSearch(
+            locale,
+            search,
+            categories,
+            sort
+        );
 
         switch (result.resultStatus) {
             case ResultStatus.SUCCESS:

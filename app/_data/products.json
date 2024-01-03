@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "2022 Apple MacBook Air Laptop with M2 chip",
+      "rating": 4.5,
+      "totalRaters": 123,
+      "mainImageURL": "/products/product_one.png",
+      "price": 5239,
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 2,
+      "name": "CUK ROG Zephyrus Duo 16 Gaming Notebook",
+      "rating": 3.7,
+      "totalRaters": 148,
+      "price": 5239,
+      "mainImageURL": "/products/product_three.png",
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    },
+    {
+      "id": 3,
+      "name": "Apple - iPhone 14 Pro Max 128GB - Deep Purple",
+      "rating": 2.6,
+      "totalRaters": 98,
+      "price": 5239,
+      "mainImageURL": "/products/product_two.png",
+      "description": "Duis porta, ligula rhoncus euismod pretium, nisi tellus eleifend odio, luctus viverra sem dolor id sem Maecenas a venenatis enim, quis porttitor magna. Etiam nec rhoncus neque. Sed quis ultrices eros. Curabitur sit amet eros eu arcu consectetur pulvinar. Aliquam sodales, turpis eget tristique tempor, sapien lacus facilisis diam, molestie efficitur sapien velit nec magna."
+    }
+  ]
+}
