@@ -139,7 +139,7 @@ export default function BoxesTable() {
               dispatch(courierBoxesPageNumberSet(page));
             }}
             onActivePageNumber={(page: number, currentPage: number) => {
-              return `inline py-1.5 px-3 cursor-pointer ${currentPage === page ? 'bg-primary text-white' : 'text-tertiary-dark'}`;
+              return `inline py-1.5 px-3 cursor-pointer ${currentPage === page ? 'bg-primary text-white' : 'text-tertiary-dark hover:text-default-dark'}`;
             }}
             parentPaginateClassName='ml-auto bg-white w-fit border-[.5px] border-tertiary-dark flex divide-x divide-tertiary-dark rounded overflow-hidden'
             onPageCondition={(condition: boolean) => { return `p-1.5 ${condition ? `hover:cursor-not-allowed` : `cursor-pointer`}`; }}

@@ -2,7 +2,7 @@
 
 import { AppDispatch, RootState } from '@/redux/store';
 import { CourierBoxesState } from '../_redux/courier-boxes-state';
-import { boxFormFieldsReset, modalBoxesOpened } from '../_redux/courier-boxes-slice';
+import { modalBoxesOpened } from '../_redux/courier-boxes-slice';
 import Modal from '@/app/[locale]/_components/modal';
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
