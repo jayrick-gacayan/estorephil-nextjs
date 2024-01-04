@@ -20,6 +20,7 @@ type BoxInputProps = {
   weightType: string;
   price: string;
   referralPercentage: string;
+  regionFees: { region: string; price: string; }[]
 }
 
 @injectable()
@@ -31,8 +32,21 @@ export class BoxRepository {
   }
 
   async createBox(box: BoxInputProps, token: string) {
+
+    let { regionFees, ...rest } = box;
+    let toSend: any = {
+      box: snakeCase(rest)
+    };
+
+    if (regionFees.length > 0) {
+      toSend = {
+        ...toSend,
+        regionFees: regionFees
+      }
+    }
+
     let result = await this.#boxService.createBox(
-      JSON.stringify({ box: snakeCase(box) }), token
+      JSON.stringify(toSend), token
     )
 
     let response: any = undefined;

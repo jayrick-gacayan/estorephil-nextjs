@@ -11,10 +11,14 @@ import {
 } from "./courier-boxes-slice";
 import { Box } from "@/models/box";
 import { Result } from "@/types/helpers/result-helpers";
+import { PhRegion } from "@/models/ph-region";
+import { TextInputField } from "@/types/props/text-input-field";
 
 export function createBox(boxRepository: BoxRepository, token: string) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
     let courierBoxesState: CourierBoxesState = getState().courierBoxes;
+
+    let regionFees = courierBoxesState.boxFormFields.regionFees;
 
     let result: Result<Box> = await boxRepository.createBox({
       boxType: courierBoxesState.boxFormFields.boxType.value,
@@ -26,7 +30,14 @@ export function createBox(boxRepository: BoxRepository, token: string) {
       weight: courierBoxesState.boxFormFields.weight.value,
       weightType: courierBoxesState.boxFormFields.weightType.value,
       price: courierBoxesState.boxFormFields.price.value,
-      referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value
+      referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value,
+      regionFees: regionFees.length === 0 ? [] :
+        regionFees.map((regFee: { region: PhRegion; fee: TextInputField<string>; }) => {
+          return {
+            region: `${regFee.region.otherName.toUpperCase} (${regFee.region.name})`,
+            price: regFee.fee.value
+          }
+        })
     }, token);
 
     if (!!result.data && result.resultStatus === ResultStatus.SUCCESS) {
@@ -57,7 +68,8 @@ export function updateBox(boxRepository: BoxRepository, token: string, id: strin
       weight: courierBoxesState.boxFormFields.weight.value,
       weightType: courierBoxesState.boxFormFields.weightType.value,
       price: courierBoxesState.boxFormFields.price.value,
-      referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value
+      referralPercentage: courierBoxesState.boxFormFields.referralPercentage.value,
+      regionFees: []
     }, token, id);
 
     if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
