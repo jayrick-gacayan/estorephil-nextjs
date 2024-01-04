@@ -24,7 +24,9 @@ export class AccountService {
       method: 'POST',
     })
   }
-
+  async nextAuthSignOut(callbackUrl?: string) {
+    return await signOut(callbackUrl ? { callbackUrl: callbackUrl } : {})
+  }
   async registerAgentCompany(body: string) {
     return await fetch(`${process.env.API_URL}/register-company`, {
       method: 'POST',

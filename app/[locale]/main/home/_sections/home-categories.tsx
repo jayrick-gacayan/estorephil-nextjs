@@ -64,7 +64,7 @@ export function HomeCategories() {
                   className='block hover:text-primary hover:underline'
                   href={{
                     pathname: '/all-categories',
-                    query: { 'category[]': category.name }
+                    query: { "category[]": category.name }
                   }}>
                   {category.name}
                 </Link>

@@ -25,7 +25,15 @@ export class AccountRepository {
         console.log('login repo body', body)
         return await this.accountService.login({ body })
     }
+    async nextAuthSignOut(callbackUrl?: string) {
+        let result = await this.accountService.nextAuthSignOut(callbackUrl);
 
+        return new Result<undefined>({
+            response: result,
+            data: result,
+            statusCode: 200
+        })
+    }
 
     async registerAgentCompany(company: CompanyFieldProps) {
         let result = await this.accountService.registerAgentCompany(JSON.stringify({ company: snakeCase(company) }))

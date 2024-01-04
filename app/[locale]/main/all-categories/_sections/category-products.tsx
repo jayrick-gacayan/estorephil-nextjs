@@ -8,7 +8,6 @@ import ProductHeaderText from '../../_components/product-header-text';
 import { homeContainer, productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { RootState, store } from '@/redux/store';
-import { HomeRepository } from '@/repositories/home-repository';
 import { ProductRepository } from '@/repositories/product-repository';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../_redux/all-categories-thunk';
@@ -22,7 +21,6 @@ export default function CategoryProducts() {
   const categorySelectRef = useRef<HTMLDivElement>(null);
   const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
-  const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
   const state = useSelector((state: RootState) => state.allCategories)
   const products = useSelector((state: RootState) => state.allCategories).products
   const sort = useSelector((state: RootState) => state.allCategories).sort
@@ -62,11 +60,14 @@ export default function CategoryProducts() {
 
                     return `& ${category.toLowerCase()}`;
                   }
-                  else {
+                  else if(index === 0){
                     return `${category.toLowerCase()}`
                   }
+                  else {
+                    return `, ${category.toLowerCase()}`
+                  }
                 });
-                return `Products under ${categoriesText.join(', ')} ${!!sort ? `by ${sort}` : ``}`;
+                return `Products under ${categoriesText.join(' ')} ${!!sort ? `by ${sort}` : ``}`;
               }
             })()
             : state.categoriesSelected.length === 0 && state.products.length > 0

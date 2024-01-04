@@ -8,16 +8,13 @@ import { Product } from "@/models/product";
 const initialState: AllCategoriesState = {
     categories: [],
     getCategoriesStatus: RequestStatus.NONE,
-
     getStoreStatus: RequestStatus.WAITING,
     stores: [],
-
     products: [],
     getProductsStatus: RequestStatus.NONE,
-
     categoriesSelected: [],
     sort: '',
-    searchQuery: undefined,
+    searchQuery:'',
 }
 
 export const allCategoriesSlice = createSlice({
@@ -95,21 +92,22 @@ export const allCategoriesSlice = createSlice({
                 searchQuery: action.payload
             }
         },
+        setSelectedCategory: (state: AllCategoriesState, action: PayloadAction<string>) => {
+            return {
+                ...state,
+                categoriesSelected: [...state.categoriesSelected,action.payload]
+            }
+        }
 
     }
 })
 export const {
     categoriesRequestStatusSet,
-    allCategoriesSet,
-    storesRequestStatusSet,
-    allCategoriesStoresSet,
-    sortChanged,
-    getProductStatusSet,
-    allCategoriesProductsSet,
-
-    categoriesSelectedChanged,
-    getProductsSuccess,
-    searchQueryChanged
+    allCategoriesSet,getStoresLoaded,
+    storesRequestStatusSet,getStoresSuccess,
+    allCategoriesStoresSet,sortChanged,getProductStatusSet,
+    allCategoriesProductsSet,getCategoriesLoaded,getCategoriesSuccess,
+    categoriesSelectedChanged,getProductsSuccess,searchQueryChanged,setSelectedCategory
 } = allCategoriesSlice.actions;
 
 export default allCategoriesSlice.reducer;
