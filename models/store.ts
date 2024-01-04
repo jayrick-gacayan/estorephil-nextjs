@@ -1,4 +1,5 @@
 export interface Store {
-  id?: number;
-  mainImageUrl?: string;
+  id: number;
+  userId?: number;
+  mainImageUrl?: string | null;
 }

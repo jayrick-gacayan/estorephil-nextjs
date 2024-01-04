@@ -72,7 +72,9 @@ export default function MainHeader({
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
   const onSession = !!sessionData
-
+  const removeSession = async () => {
+    await signOut({ callbackUrl: `/login` })
+  }
   useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
 
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
@@ -88,7 +90,7 @@ export default function MainHeader({
                 src='/static_images/estorephil_logo.svg'
                 fill />
             </Link>
-            <NavbarSearch />
+            <NavbarSearch countryCookie={countryCookie} />
             <div className='md:block hidden space-x-3 w-auto'>
               <CartTypeNavbar>
                 {onSession
@@ -118,11 +120,8 @@ export default function MainHeader({
                         <button
                           className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
                           type='button'
-                          onClick={async () => {
-                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-                            let result = await accountRepository.nextAuthSignOut(`/login`);
-
-                            console.log('result', result)
+                          onClick={() => {
+                            removeSession()
                           }}
                         >
                           SIGNOUT
@@ -144,13 +143,16 @@ export default function MainHeader({
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              <Link href="/dashboard/orders" className='inline-block'>
-                <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
-              </Link>
-              <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-              <Link href="/dashboard/agency-information" className='inline-block'>
-                <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
-              </Link>
+              {onSession && <>
+                <Link href="/dashboard/orders" className='inline-block'>
+                  <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
+                </Link>
+                <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
+                <Link href="/dashboard/agency-information" className='inline-block'>
+                  <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
+                </Link>
+              </>
+              }
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={countries.find((value: CountryProps) => {
                   return value.code === countryCookie

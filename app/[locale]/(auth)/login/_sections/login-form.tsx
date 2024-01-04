@@ -13,7 +13,6 @@ import { useSession } from 'next-auth/react';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { LoginState } from '../_redux/login-state';
 import { FaEnvelope, FaLock } from 'react-icons/fa6';
-import { Checkbox } from '@/app/[locale]/_components/checkbox';
 import Link from 'next-intl/link';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import { RequestStatus } from '@/types/enums/request-status';
@@ -45,11 +44,7 @@ export default function LoginForm() {
                 }, 2000);
                 break;
         }
-    }, [requestStatus])
-
-    useEffect(() => {
-        if (!!sessionData) { router.push('/'); }
-    }, [sessionData, router]);
+    }, [requestStatus, dispatch])
 
     function loginFormSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -70,7 +65,9 @@ export default function LoginForm() {
                 requestStatus === RequestStatus.SUCCESS ? (<LoginSuccess />) :
                     (<div className='block'>
                         <div className='bg-white rounded-md w-[352px] shadow-lg overflow-hidden space-y-4'>
-                            <h3 className='bg-default-dark p-4 text-white text-[24px] text-center'>{translate('agent')}</h3>
+                            <h3 className='bg-default-dark p-4 text-white text-[24px] text-center'>
+                                {translate('userRole', { userRole: 'agent' }).toUpperCase()}
+                            </h3>
                             <div className='block text-center'>{translate('signIn')}</div>
                             <div className='px-8 py-4 space-y-8'>
                                 <form onSubmit={loginFormSubmit} className='space-y-4'>

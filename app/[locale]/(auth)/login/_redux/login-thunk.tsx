@@ -7,12 +7,11 @@ import { AccountRepository } from "@/repositories/account-repository";
 export function login(accountRepository: AccountRepository) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
         const loginState: LoginState = getState().login
-
-        console.log('email on login', loginState.email.value)
         let result = await accountRepository.login({
             email: loginState.email.value,
             password: loginState.password.value
         });
+
         if (!result?.error) {
             dispatch(loginRequestStatusSet(RequestStatus.SUCCESS))
         } else {

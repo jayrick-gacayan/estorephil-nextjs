@@ -5,6 +5,11 @@ import { SignInOptions, SignInResponse, signIn, signOut } from "next-auth/react"
 @injectable()
 export class AccountService {
 
+  #headers(token: string, isImage: boolean) {
+    let headers = { Authorization: `Bearer ${token}` }
+
+    return !isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
+  }
   async login({ body }: { body: SignInOptions }) {
     const res = await signIn("credentials", body)
     console.log('account service login', res)
@@ -19,7 +24,9 @@ export class AccountService {
       method: 'POST',
     })
   }
-
+  async nextAuthSignOut(callbackUrl?: string) {
+    return await signOut(callbackUrl ? { callbackUrl: callbackUrl } : {})
+  }
   async registerAgentCompany(body: string) {
     return await fetch(`${process.env.API_URL}/register-company`, {
       method: 'POST',
@@ -46,6 +53,14 @@ export class AccountService {
       method: 'POST',
       body: body,
       headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  async updateAgent(body: string | FormData, token: string, isImage: boolean = false) {
+    return await fetch(`${process.env.API_URL}/agents/update-agency`, {
+      method: 'PUT',
+      body: body,
+      headers: { ...this.#headers(token, isImage) }
     })
   }
 }

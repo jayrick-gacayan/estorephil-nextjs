@@ -15,6 +15,11 @@ import { CategoryService } from '@/services/category-service';
 import { CategoryRepository } from '@/repositories/category-repository';
 import { CookiesService } from '@/services/cookies-service';
 import { CookiesRepository } from '@/repositories/cookies-repository';
+import { BoxService } from '@/services/box-service';
+import { BoxRepository } from '@/repositories/box-repository';
+import { HomeService } from '@/services/home-service';
+import { HomeRepository } from '@/repositories/home-repository';
+
 const categoryContainer = new Container();
 categoryContainer.bind<CategoryService>(TYPES.CategoryService).to(CategoryService);
 categoryContainer.bind<CategoryRepository>(TYPES.CategoryRepository).to(CategoryRepository);
@@ -31,10 +36,18 @@ const cookieContainer = new Container();
 cookieContainer.bind<CookiesService>(TYPES.CookiesService).to(CookiesService);
 cookieContainer.bind<CookiesRepository>(TYPES.CookiesRepository).to(CookiesRepository);
 
+const boxContainer = new Container();
+boxContainer.bind<BoxService>(TYPES.BoxService).to(BoxService);
+boxContainer.bind<BoxRepository>(TYPES.BoxRepository).to(BoxRepository);
+
 const accountContainer = new Container();
 const staffContainer = new Container();
 const orderContainer = new Container();
 
+const homeContainer = new Container();
+
+homeContainer.bind<HomeService>(TYPES.HomeService).to(HomeService)
+homeContainer.bind<HomeRepository>(TYPES.HomeRepository).to(HomeRepository)
 accountContainer.bind<AccountService>(TYPES.AccountService).to(AccountService);
 accountContainer.bind<AccountRepository>(TYPES.AccountRepository).to(AccountRepository);
 staffContainer.bind<StaffRepository>(TYPES.StaffRepository).to(StaffRepository)
@@ -50,4 +63,6 @@ export {
   orderContainer,
   categoryContainer,
   cookieContainer,
+  boxContainer,
+  homeContainer,
 }

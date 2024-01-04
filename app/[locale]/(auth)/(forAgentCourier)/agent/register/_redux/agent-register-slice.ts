@@ -1,4 +1,4 @@
-import { textInputFieldValue } from '@/types/helpers/text-input-field-methods';
+import { textInputFieldValue } from '@/types/helpers/field-methods';
 import { AgentRegisterState } from './agent-register-state';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus } from '@/types/enums/request-status';

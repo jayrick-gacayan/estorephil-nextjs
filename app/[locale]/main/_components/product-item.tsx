@@ -2,13 +2,15 @@ import { Products } from '@/models/products';
 import Image from 'next/image';
 import Link from 'next-intl/link';
 import Rating from '../../_components/rating';
+import StarRating from '../../_components/star-rating';
+import { Product } from '@/models/product';
 
 export function ProductItem({
   product,
   withRatingEvents,
 }: {
-  product: any;
-  withRatingEvents: boolean;
+  product: any
+  withRatingEvents: boolean
 }) {
 
   return (
@@ -25,10 +27,12 @@ export function ProductItem({
       <div className='p-2'>
         <Link href={`/products/${product.id}`}
           className='font-bold block hover:text-primary cursor-pointer'>{product.name}</Link>
-        {/* <div className='block space-x-1'>
-          <Rating id={product.id} rating={product.rating} withRatingEvents={withRatingEvents} />
-          <span className='inline-block align-top'>&#40;{product.raters}&#41;</span>
-        </div> */}
+        <div className='block space-x-1'>
+          <div className='inline-flex relative text-left cursor-default'>
+            <StarRating activeState={product.rating!} id={product.id!} withRatingEvents={false} />
+          </div>
+          <span className='inline-block align-top'>&#40;{product.totalRaters}&#41;</span>
+        </div>
 
         <div className='font-bold text-primary'>
           &#8369; {product?.price?.toFixed(2)}

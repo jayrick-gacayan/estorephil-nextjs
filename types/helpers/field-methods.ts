@@ -1,3 +1,4 @@
+import { Paginated } from "@/models/paginated";
 import { ValidationType } from "../enums/validation-type";
 import { TextInputField } from "../props/text-input-field";
 
@@ -8,4 +9,8 @@ export function textInputFieldValue<T>(value: T, show?: boolean): TextInputField
     status: ValidationType.NONE,
     errorText: ''
   }
+}
+
+export function paginatedInit<T>(value: Paginated<T>): Paginated<T> {
+  return value;
 }

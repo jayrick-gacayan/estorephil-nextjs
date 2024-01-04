@@ -22,15 +22,14 @@ const authOptions: NextAuthOptions = {
         if (response?.status !== 200) {
           throw new Error(response.message);
         }
-
         return response?.data;
       },
     }),
   ],
   pages: {
     signIn: "/login",
-
   },
+  // secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);

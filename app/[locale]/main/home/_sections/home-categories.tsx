@@ -17,7 +17,6 @@ import { HiOutlineExclamation } from 'react-icons/hi';
 import { MainState } from '../../_redux/main-state';
 import { TextInputField } from '@/types/props/text-input-field';
 import { CategoryRepository } from '@/repositories/category-repository';
-import SpinnerLoader from '@/app/[locale]/_components/spinner-loader';
 
 export function HomeCategories() {
   const router = useRouter();
@@ -64,7 +63,7 @@ export function HomeCategories() {
                   className='block hover:text-primary hover:underline'
                   href={{
                     pathname: '/all-categories',
-                    query: { 'category[]': category.name }
+                    query: { "category[]": category.name }
                   }}>
                   {category.name}
                 </Link>
@@ -81,7 +80,7 @@ export function HomeCategories() {
                         <span className='inline-block'>No categories yet</span>
                       </div>
                     ) :
-                    (<SpinnerLoader height={128} width={128} color='#1186FF' />)
+                    (<Loading/>)
                 }
               </div>
             )
