@@ -1,9 +1,7 @@
 'use client';
 
-import { philippinesRegions } from "@/types/props/philippine-regions";
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef } from "react";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
-import LabelTextWithAmountTrash from "../../deliveries/_components/labeltext-with-amount-trash";
 import SelectCustom from "@/app/[locale]/_components/select-custom";
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -41,7 +39,7 @@ import { TYPES } from "@/inversify/types";
 import { createBox, updateBox } from "../_redux/courier-boxes-thunk";
 import { BoxTypes } from "@/types/enums/box-type";
 import { PhRegion } from "@/models/ph-region";
-
+import { TextInputField } from "@/types/props/text-input-field";
 
 export default function BoxesModalForm({
   type,
@@ -91,17 +89,11 @@ export default function BoxesModalForm({
         setTimeout(() => {
           if (sessionData?.token) {
             let boxRepository = boxContainer.get<BoxRepository>(TYPES.BoxRepository);
-            if (type === 'createBox') {
-              dispatch(createBox(boxRepository, sessionData.token));
-            }
+            if (type === 'createBox') { dispatch(createBox(boxRepository, sessionData.token)); }
             else if (type === 'updateBox') {
-              if (id) {
-                dispatch(updateBox(boxRepository, sessionData.token, id.toString()));
-              }
+              if (id) { dispatch(updateBox(boxRepository, sessionData.token, id.toString())); }
             }
-            else {
-              dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
-            }
+            else { dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS)); }
           }
         }, 2000)
         break;
@@ -153,6 +145,8 @@ export default function BoxesModalForm({
           'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary'
       }`
   }
+
+  console.log('region fees', regionFees)
 
   return (
     <div className='py-8 space-y-8 w-[768px] m-auto'>
@@ -374,27 +368,44 @@ export default function BoxesModalForm({
               </div>
               <div className="relative w-full ">
 
-                <label htmlFor="region-box-form" className="p-2 rounded border-[.5px] border-tertiary-dark w-full block cursor-pointer has-[input:focus]:border-primary">
+                <label htmlFor="region-box-form"
+                  className="peer p-2 rounded border-[.5px] border-tertiary-dark w-full block cursor-pointer has-[input:focus]:border-primary">
                   {
-                    regionFees.length === 0 ? <>&nbsp;</> : null
+                    regionFees.length === 0 ? <>&nbsp;</> :
+                      regionFees.map((regFee: {
+                        region: PhRegion;
+                        fee: TextInputField<string>;
+                      }, index: number) => {
+                        return (
+                          <span key={`region-item-form-${index}-${regFee.region.code}`}
+                            className="p-2 rounded bg-tertiary-dark text-default-dark inline-block m-1">
+                            {`${regFee.region.otherName} ${regFee.region.name}`}
+                          </span>
+                        );
+                      })
                   }
-                  <input type="text" id="region-box-form" className="cursor-pointer outline-0" readOnly />
+                  <input type="text" id="region-box-form" className="cursor-pointer outline-0 inline-block" readOnly />
                 </label>
 
-                <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute has-[&<input:focus]:h-[240px] h-0 rounded  has-[&<input:focus]:border-[.5px] border-0 border-secondary top-[110%]">
+                <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute peer-has-[:focus]:h-[240px] h-0 rounded  peer-has-[:focus]:border-[.5px] border-0 border-secondary top-[110%]">
                   {
                     regions.map((value: PhRegion) => {
-                      let getRegion = regionFees.find((region: any) => { return region.regionCode === value.code });
+                      let getRegion = regionFees.find((regFee: {
+                        region: PhRegion;
+                        fee: TextInputField<string>;
+                      }) => {
+                        return regFee.region.code === value.code
+                      });
 
                       return (
-                        <div key={value.name} className="p-2 hover:bg-tertiary-light hover:cursor-pointer">
+                        <div key={value.name} className="p-2 hover:bg-tertiary-light hover:cursor-pointer"
+                          onMouseDown={() => {
+                            dispatch(getRegion ? regionFeesRemoved(value.code) : regionFeesAdded(value))
+                          }}>
                           <div className="flex items-center gap-2">
                             <div className="flex-1">{`${value.otherName} (${value.name})`}</div>
                             <div className='flex-none w-auto'>
-                              <div className={`${getRegion ? 'text-danger' : 'text-success'} cursor-pointer`}
-                                onClick={() => {
-                                  dispatch(getRegion ? regionFeesRemoved(value.code) : regionFeesAdded(value.code))
-                                }}>
+                              <div className={`${getRegion ? 'text-danger' : 'text-success'} cursor-pointer`}>
                                 <FaMinus className={`${getRegion ? 'block' : 'hidden'}`} />
                                 <FaPlus className={`${getRegion ? 'hidden' : 'block'}`} />
                               </div>
@@ -413,52 +424,48 @@ export default function BoxesModalForm({
               (
                 <div className={`block space-y-2 ${regions.length > 5 ? 'h-[240px] overflow-auto' : ''}`}>
                   {
-                    regionFees.map((value: any) => {
+                    regionFees.map((regFee: {
+                      region: PhRegion;
+                      fee: TextInputField<string>;
+                    }) => {
                       return (
-                        <div key={`region-selected-container-${value.code}`}
+                        <div key={`region-selected-container-${regFee.region.code}`}
                           className="w-full">
                           <div className="flex items-center w-full gap-4">
                             <div className="flex-1">
                               <div className="bg-info-light rounded w-full p-2">
-                                {regions.find((reg: PhRegion) => {
-                                  return reg.code === value.regionCode
-                                })?.name}
+                                {`${regFee.region.otherName} ${regFee.region.name}`}
                               </div>
                             </div>
                             <div className="flex-none w-48">
                               <div className="flex w-full items-center gap-2">
                                 <div className="flex-1">
-                                  <InputCustom leftSideContent={<div className="font-semibold">C&#36;</div>}
-                                    divClassName={boxesFormFieldDivClassName(referralPercentage.status)}
+                                  <InputCustom leftSideContent={<div className="font-semibold p-2">C&#36;</div>}
+                                    divClassName={boxesFormFieldDivClassName(regFee.fee.status)}
                                     inputProps={{
-                                      id: `regionFees-boxes-form-${value.regionCode}`,
+                                      id: `regionFees-boxes-form-${regFee.region.code}`,
                                       type: 'number',
                                       min: 0,
                                       onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                                        dispatch(regionFeesFeeUpdated({ regionCode: value.regionCode, value: event.target.value }))
+                                        dispatch(regionFeesFeeUpdated({ code: regFee.region.code, value: event.target.value }))
                                       },
-                                      value: value.fee.value,
+                                      value: regFee.fee.value,
                                       placeholder: '',
                                       className: 'p-2 disabled:bg-tertiary-dark',
                                     }}
-                                    errorText={value.fee.errorText} />
+                                    errorText={regFee.fee.errorText} />
                                 </div>
-                                <div className="flex-none w-auto text-danger rounded border border-danger p-2"
-                                  onClick={() => {
-                                    dispatch(regionFeesRemoved(value.regionCode));
-                                  }}>
+                                <div className="flex-none w-auto text-danger rounded border border-danger p-2 cursor-pointer"
+                                  onClick={() => { dispatch(regionFeesRemoved(regFee.region.code)); }}>
                                   <FaRegTrashCan className='inline-block' />
                                 </div>
                               </div>
-
-
                             </div>
                           </div>
                         </div>
                       )
                     })
                   }
-
                 </div>
               )
             }

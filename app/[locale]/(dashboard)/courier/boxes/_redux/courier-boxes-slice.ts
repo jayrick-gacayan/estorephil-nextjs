@@ -4,6 +4,8 @@ import { paginatedInit, textInputFieldValue } from "@/types/helpers/field-method
 import { RequestStatus } from "@/types/enums/request-status";
 import { Box } from "@/models/box";
 import { Paginated } from "@/models/paginated";
+import { PhRegion } from "@/models/ph-region";
+import { TextInputField } from "@/types/props/text-input-field";
 
 const initialState: CourierBoxesState = {
   modalBoxesOpen: {
@@ -259,25 +261,28 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
-    regionFeesAdded: (state: CourierBoxesState, action: PayloadAction<string>) => {
+    regionFeesAdded: (state: CourierBoxesState, action: PayloadAction<PhRegion>) => {
       return {
         ...state,
         boxFormFields: {
           ...state.boxFormFields,
           regionFees: [
             ...state.boxFormFields.regionFees,
-            { regionCode: action.payload, fee: textInputFieldValue("") }
+            { region: action.payload, fee: textInputFieldValue("") }
           ]
         }
       }
     },
-    regionFeesFeeUpdated: (state: CourierBoxesState, action: PayloadAction<{ regionCode: string; value: string; }>) => {
+    regionFeesFeeUpdated: (state: CourierBoxesState, action: PayloadAction<{ code: string; value: string; }>) => {
       return {
         ...state,
         boxFormFields: {
           ...state.boxFormFields,
-          regionFees: state.boxFormFields.regionFees.map((regFee: any) => {
-            return regFee.regionCode === action.payload.regionCode ? {
+          regionFees: state.boxFormFields.regionFees.map((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code === action.payload.code ? {
               ...regFee, fee: textInputFieldValue(action.payload.value)
             } : regFee
           })
@@ -289,13 +294,15 @@ const courierBoxesSlice = createSlice({
         ...state,
         boxFormFields: {
           ...state.boxFormFields,
-          regionFees: state.boxFormFields.regionFees.filter((regFee: any) => {
-            return regFee.regionCode !== action.payload
+          regionFees: state.boxFormFields.regionFees.filter((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code !== action.payload
           })
         }
       }
     },
-
     boxFormFieldsReset: (state: CourierBoxesState) => {
       return {
         ...state,

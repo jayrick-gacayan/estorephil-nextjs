@@ -2,7 +2,7 @@
 
 import { AppDispatch, RootState } from '@/redux/store';
 import { CourierBoxesState } from '../_redux/courier-boxes-state';
-import { modalBoxesOpened } from '../_redux/courier-boxes-slice';
+import { boxFormFieldsReset, modalBoxesOpened } from '../_redux/courier-boxes-slice';
 import Modal from '@/app/[locale]/_components/modal';
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
@@ -35,6 +35,7 @@ export default function ModalBoxesContainer({ regions }: { regions: PhRegion[] }
       modalContentRef.current.classList.remove('animate-slide-up');
       modalContentRef.current.classList.add('animate-slide-down');
       setTimeout(() => {
+        dispatch(boxFormFieldsReset())
         dispatch(modalBoxesOpened(''))
       }, 300);
     }
