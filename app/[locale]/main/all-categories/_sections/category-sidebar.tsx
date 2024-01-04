@@ -27,9 +27,9 @@ export function CategorySidebar() {
     selected: state.categoriesSelected.includes(category.name) || searchParams.get('category[]') === category.name
   }))
   useEffect(() => {
-    if(searchParams.get('category[]') != '' || searchParams.get('category[]')  != null)
-    {
-      dispatch(setSelectedCategory(searchParams.get('category[]') as string ))
+    if (searchParams.get('category[]') !== '' && searchParams.get('category[]') !== null && searchParams.get('category[]') !== undefined) {
+      console.log('category set')
+      dispatch(setSelectedCategory(searchParams.get('category[]') as string))
     }
     store.dispatch(getMainCategories(homeRepository, locale))
   }, [])
@@ -37,7 +37,7 @@ export function CategorySidebar() {
     store.dispatch(searchProducts(productRepository, locale))
   }, [state.categoriesSelected])
 
-  
+
   return (
     <div className='flex-none bg-white w-[320px] border-r border-r-tertiary-dark py-2'>
       <div className='space-y-3 w-3/4 m-auto'>
@@ -60,10 +60,7 @@ export function CategorySidebar() {
                       current.delete('category[]')
                     }
                     else {
-                      console.log('category set')
                       current.set(`category[${index}]`, category.name);
-                      console.log('search query', current)
-
                     }
                     const search = current.toString();
                     const query = search ? `?${search}` : "";

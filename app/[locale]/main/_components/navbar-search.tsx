@@ -16,29 +16,34 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
   const [navbarSearchText, setNavbarSearchText] = useState<string>('');
   const router = useRouter();
   const pathName: string = usePathname();
-  const searchParams: ReadonlyURLSearchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const onCategoryPage: boolean = pathName.includes('all-categories')
   const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const state = useSelector((state: RootState) => state.allCategories)
   const dispatch: AppDispatch = useAppDispatch();
   const debouncedValue = useDebounce<string>(state.searchQuery, 300)
+  const current = new URLSearchParams(Array.from(searchParams.entries()));
+  // let searchText: string = useMemo(() => {
+  //   let search: string | null = searchParams.get('search');
+  //   return search !== null ? search : '';
+  // }, [searchParams.get('search')])
 
-  let searchText: string = useMemo(() => {
-    let search: string | null = searchParams.get('search');
-    return search !== null ? search : '';
-  }, [searchParams.get('search')])
-
+  // useEffect(() => {
+  //   setNavbarSearchText(searchText);
+  // }, [searchText])
   useEffect(() => {
-    setNavbarSearchText(searchText);
-  }, [searchText])
-  useEffect(() => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
     if (state.searchQuery != null && onCategoryPage) {
-      if (state.searchQuery == '') {
+      console.log('searchQuery Value: ', state.searchQuery)
+      console.log('searchQuery conidition', state.searchQuery == '' || state.searchQuery.length === 0)
+      if (state.searchQuery == '' || state.searchQuery.length === 0) {
+        console.log('attempt delete search value if zero')
         current.delete('search')
       }
       store.dispatch(searchProducts(productRepository, locale))
+      const search = current.toString();
+      const query = !!search ? `?${search}` : "";
+      router.push(`${pathName}${query}`)
     }
   }, [debouncedValue])
   return (
@@ -54,6 +59,8 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
             dispatch(searchQueryChanged(event.target.value))
 
           }}
+          value={state.searchQuery}
+          defaultValue={state.searchQuery}
           placeholder='Search products'
         />
       </div>
@@ -61,11 +68,11 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
         onClick={() => {
           let queryStringParams = new URLSearchParams(Array.from(searchParams.entries()));
 
-          if (navbarSearchText === '') {
+          if (state.searchQuery === '') {
             queryStringParams.delete('search');
           }
           else {
-            queryStringParams.set('search', navbarSearchText);
+            queryStringParams.set('search', state.searchQuery);
           }
           let qString = queryStringParams.toString();
           router.push(`/all-categories${qString !== '' ? `?${qString.toString()}` : ``}`)

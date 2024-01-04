@@ -1,7 +1,6 @@
-import { Categories } from '@/models/category'
-import { Store } from '@/models/store'
-import { RequestStatus } from '@/types/enums/request-status'
 
+import { RequestStatus } from '@/models/result'
+import { Store } from '@/models/store'
 export interface AllCategoriesState {
     categories: any[]
     stores: Store[]

@@ -20,11 +20,8 @@ export default async function AllCategories({
 }) {
   let cookieStore = cookies();
   let countryCookie = cookieStore.get('country_code');
-
   let categories = await getMainCategories(countryCookie?.value ?? 'ph');
 
-  // console.log('sdjflksdfjsdlkf', searchParams['category[]']);
-  // console.log('sdjflksdfjsdlkf', searchParams.search);
   return (
     <div>
       <div className='flex lg:flex-row flex-col'>

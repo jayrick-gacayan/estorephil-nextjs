@@ -15,6 +15,8 @@ import { searchProducts } from '../_redux/all-categories-thunk';
 import { useSearchParams } from 'next/navigation';
 import { searchQueryChanged } from '../_redux/all-categories-slice';
 import ProductSort from '../_components/product-sort';
+import { RequestStatus } from '@/models/result';
+import Loading from '../../_components/loading';
 
 export default function CategoryProducts() {
   const [visible, setVisible] = useState<boolean>(false);
@@ -41,14 +43,20 @@ export default function CategoryProducts() {
         <ProductHeaderText text={
           `${state.categoriesSelected.length > 0
             ? (() => {
+              const current = new URLSearchParams(Array.from(searchParams.entries()));
+              console.log('categories length: ',state.categoriesSelected.length)
               if (state.categoriesSelected.length === 2) {
                 const categoriesText = state.categoriesSelected.map((category, index) => {
                   if (index === 0) {
-                    console.log('category', index, category);
-                    return category.toLowerCase();
-                  } else {
-                    console.log('category', index, category);
-                    return ` & ${category.toLowerCase()}`;
+                    console.log('1')
+                    return category?.toLowerCase();
+                  } else if (state.categoriesSelected.length === 0 && current.get('search') != undefined || current.get('search') != null) {
+                    console.log('2')
+                    return `${current.get('search')}`
+                  }
+                  else {
+                    console.log('3')
+                    return ` & ${category?.toLowerCase()}`;
                   }
                 });
 
@@ -56,15 +64,16 @@ export default function CategoryProducts() {
               } else {
                 const categoriesText = state.categoriesSelected.map((category, index) => {
                   if (index === state.categoriesSelected.length - 1 && state.categoriesSelected.length != 1) {
-                    console.log('category', index, category);
-
-                    return `& ${category.toLowerCase()}`;
+                    console.log('A');
+                    return `& ${category?.toLowerCase()}`;
                   }
-                  else if(index === 0){
-                    return `${category.toLowerCase()}`
+                  else if (index === 0) {
+                    console.log('B')
+                    return `${category?.toLowerCase()}`
                   }
                   else {
-                    return `, ${category.toLowerCase()}`
+                    console.log('C')
+                    return `, ${category?.toLowerCase()}`
                   }
                 });
                 return `Products under ${categoriesText.join(' ')} ${!!sort ? `by ${sort}` : ``}`;
@@ -90,17 +99,24 @@ export default function CategoryProducts() {
       </div>
       {
         products.length === 0 ? <div>NO ITEMS</div> :
-          (
-            <div className='flex flex-row flex-wrap gap-4'>
-              {
-                products.map((product) => {
-                  return (<ProductItem key={`product-item-${product.id}`}
-                    product={product}
-                    withRatingEvents={false} />)
-                })
-              }
-            </div>
-          )
+          state.getProductsStatus === RequestStatus.SUCCESS ?
+            (
+              <div className='flex flex-row flex-wrap gap-4'>
+                {
+                  products.map((product) => {
+                    return (<ProductItem key={`product-item-${product.id}`}
+                      product={product}
+                      withRatingEvents={false} />)
+                  })
+                }
+              </div>
+            )
+            : <>
+              <div className='flex items-center justify-center'>
+                <Loading /> <p>Loading products</p>
+              </div>
+            </>
+
       }
     </div>
   );

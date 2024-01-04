@@ -1,5 +1,9 @@
 import { AppDispatch, store } from '@/redux/store'
-import {  getCategoriesLoaded, getCategoriesSuccess, getProductStatusSet, getProductsSuccess, getStoresLoaded, getStoresSuccess, storesRequestStatusSet } from './all-categories-slice'
+import {
+    getCategoriesLoaded, getCategoriesSuccess,
+    getProductStatusSet, getProductsSuccess, getStoresLoaded,
+    getStoresSuccess, searchProductsLoaded, storesRequestStatusSet
+} from './all-categories-slice'
 import { AllCategoriesState } from './all-categories-state'
 import { ProductRepository } from '@/repositories/product-repository'
 import { ApiResponse, getResultStatus, ResultStatus } from '@/models/result'
@@ -39,6 +43,7 @@ function getMainStores(homeRepository: HomeRepository, locale: string) {
 
 function searchProducts(productRepository: ProductRepository, locale: string) {
     return async function searchProducts(dispatch: AppDispatch, getState: typeof store.getState) {
+        dispatch(searchProductsLoaded())
         const state = getState().allCategories as AllCategoriesState
         const result: ApiResponse = await productRepository.searchProducts({
             locale: locale,
