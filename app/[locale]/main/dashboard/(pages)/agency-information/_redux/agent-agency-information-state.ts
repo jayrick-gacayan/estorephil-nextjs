@@ -10,6 +10,8 @@ export interface AgentAgencyInformationState {
 
   firstName: TextInputField<string>;
   lastName: TextInputField<string>;
+  province: TextInputField<string>;
+  city: TextInputField<string>;
   updateBasicInfoRequestStatus: RequestStatus;
 
   documents: FileCustomBlobString[];

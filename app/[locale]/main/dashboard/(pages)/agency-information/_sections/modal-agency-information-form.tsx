@@ -18,13 +18,16 @@ import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
 import { updateBasicInfo } from '../_redux/agent-agency-info-thunk';
 
-export default function ModalAgencyInformationForm() {
+export default function ModalAgencyInformationForm({
+  cityProvince
+}: {
+  cityProvince: { province: string; cities: string[] }[]
+}) {
   const agentAgencyInfoState: AgentAgencyInformationState = useAppSelector((state: RootState) => {
     return state.agentAgencyInfo;
   })
   const dispatch: AppDispatch = useAppDispatch();
   const { data: sessionData, update } = useSession();
-
 
   const { open, type } = useMemo(() => {
     return agentAgencyInfoState.modalUpdateFormOpen;
@@ -83,8 +86,8 @@ export default function ModalAgencyInformationForm() {
     <Modal open={open}>
       <div ref={modalContentRef}
         className={`animate-slide-up translate-y-full flex-none w-auto rounded-2xl bg-white text-center relative z-10 px-8`}>
-        {open && type === 'basicInfo' && <AgentEditBasicInfoForm />}
-        {open && type === 'businessInfo' && <AgentEditBusinessInfoForm />}
+        {open && type === 'basicInfo' && <AgentEditBasicInfoForm cityProvince={cityProvince} />}
+        {open && type === 'businessInfo' && <AgentEditBusinessInfoForm cityProvince={cityProvince} />}
         <div className='py-8 space-y-4 w-[768px] m-auto'>
           <div className='block'>
             <div className='w-1/2 m-auto'>

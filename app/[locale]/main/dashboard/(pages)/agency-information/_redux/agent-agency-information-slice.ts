@@ -15,11 +15,11 @@ const initialState: AgentAgencyInformationState = {
 
   firstName: textInputFieldValue<string>(''),
   lastName: textInputFieldValue<string>(''),
+  province: textInputFieldValue<string>(''),
+  city: textInputFieldValue<string>(''),
   updateBasicInfoRequestStatus: RequestStatus.NONE,
 
-  documents: []
-
-
+  documents: [],
 }
 
 const agentAgencyInformationSlice = createSlice({
@@ -41,6 +41,36 @@ const agentAgencyInformationSlice = createSlice({
     lastNameChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
       return { ...state, firstName: { ...state.lastName, value: action.payload } }
     },
+    provinceSelectionShown: (state: AgentAgencyInformationState, action: PayloadAction<boolean | undefined>) => {
+      return {
+        ...state,
+        province: action.payload ? {
+          ...state.province,
+          show: action.payload
+        } : textInputFieldValue(state.province.value)
+      }
+    },
+    provinceChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        province: textInputFieldValue(action.payload)
+      }
+    },
+    citySelectionShown: (state: AgentAgencyInformationState, action: PayloadAction<boolean | undefined>) => {
+      return {
+        ...state,
+        city: action.payload ? {
+          ...state.city,
+          show: action.payload
+        } : textInputFieldValue(state.city.value)
+      }
+    },
+    cityChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        city: textInputFieldValue(action.payload)
+      }
+    },
     updateBasicInfoRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
       return { ...state, updateBasicInfoRequestStatus: action.payload }
     },
@@ -55,7 +85,7 @@ const agentAgencyInformationSlice = createSlice({
         lastName: {
           ...state.lastName,
           value: action.payload.lastName ?? ''
-        }
+        },
       }
     },
     updateModalBasicInfoClicked: (state: AgentAgencyInformationState) => {
@@ -83,6 +113,8 @@ const agentAgencyInformationSlice = createSlice({
         ...state,
         firstName: textInputFieldValue<string>(''),
         lastName: textInputFieldValue<string>(''),
+        province: textInputFieldValue<string>(''),
+        city: textInputFieldValue<string>(''),
         updateBasicInfoRequestStatus: RequestStatus.NONE
       }
     }
@@ -97,7 +129,11 @@ export const {
   updateModalBasicInfoClicked,
   updateBasicInfoRequestStatusSet,
   agentBasicInfoSet,
-  agentFormBasicInfoFieldsReset
+  agentFormBasicInfoFieldsReset,
+  provinceSelectionShown,
+  provinceChanged,
+  citySelectionShown,
+  cityChanged
 } = agentAgencyInformationSlice.actions;
 
 export default agentAgencyInformationSlice.reducer;

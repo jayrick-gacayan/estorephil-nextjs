@@ -1,18 +1,48 @@
 'use client';
 
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import { AgentAgencyInformationState } from '../_redux/agent-agency-information-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import { firstNameChanged, lastNameChanged } from '../_redux/agent-agency-information-slice';
+import { cityChanged, citySelectionShown, firstNameChanged, lastNameChanged, provinceChanged, provinceSelectionShown } from '../_redux/agent-agency-information-slice';
 import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-custom';
 import { ValidationType } from '@/types/enums/validation-type';
+import SelectCustom from '@/app/[locale]/_components/select-custom';
 
-export default function AgentEditBasicInfoForm() {
+export default function AgentEditBasicInfoForm({
+  cityProvince
+}: {
+  cityProvince: { province: string; cities: string[] }[]
+}) {
+  let provinces = cityProvince.map((value: { province: string; cities: string[] }) => {
+    return value.province;
+  });
+
+
+
+  const provinceSelectRef = useRef<HTMLDivElement>(null);
+  const citySelectRef = useRef<HTMLDivElement>(null);
+
   const dispatch: AppDispatch = useAppDispatch();
   const agentAgencyInfoState: AgentAgencyInformationState = useAppSelector((state: RootState) => { return state.agentAgencyInfo });
 
-  let { firstName, lastName } = useMemo(() => { return agentAgencyInfoState }, [agentAgencyInfoState]);
+  let {
+    firstName,
+    lastName,
+    province,
+    city
+  } = useMemo(() => { return agentAgencyInfoState }, [agentAgencyInfoState]);
+
+  let cities = useMemo(() => {
+    return province.value === '' ? [] :
+      cityProvince.find((value: {
+        province: string;
+        cities: string[];
+      }) => {
+        return value.province === province.value
+      })?.cities ?? []
+  }, [province.value]);
+
 
   function googleLikeInputLabelClassName(status: ValidationType) {
     return `transition-all absolute peer-focus:text-sm cursor-text peer-placeholder-shown:top-2 peer-focus:-top-3 peer-placeholder-shown:text-base left-0 -top-3 text-sm bg-inherit mx-2 px-1 
@@ -26,6 +56,16 @@ export default function AgentEditBasicInfoForm() {
     ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger focus:border-danger border-danger' :
         status === ValidationType.VALID ? 'focus:border-success border-success text-success' :
           'focus:border-primary border-tertiary-dark'}`
+  }
+
+  function selectCustomValueClassName(errorText: string) {
+    return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 border has-[input:focus]:border-primary
+      ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
+  }
+
+  function selectCustomOptionsClassName(current: string, value: string) {
+    return `p-2 cursor-pointer 
+      ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`;
   }
 
   return (
@@ -60,6 +100,46 @@ export default function AgentEditBasicInfoForm() {
           errorText={lastName.errorText}
           status={lastName.status}
           labelClassName={googleLikeInputLabelClassName} />
+        <div className='flex gap-2 w-full'>
+          <SelectCustom ref={provinceSelectRef}
+            labelText='Province'
+            items={['Province: ', ...provinces]}
+            value={province.value === "" ? "Province: " : province.value}
+            placeholder='Province: '
+            visible={province.show ?? false}
+            setVisible={(visible: boolean) => {
+              dispatch(visible ? provinceSelectionShown(true) : provinceSelectionShown())
+            }}
+            onSelect={(value: string) => {
+              dispatch(provinceChanged(value === "Province: " ? "" : value));
+              dispatch(cityChanged(''));
+            }}
+            valueClassName={selectCustomValueClassName}
+            optionActiveClassName={selectCustomOptionsClassName}
+            errorText={province.errorText} />
+          {
+            province.value !== '' &&
+            (
+              <SelectCustom ref={citySelectRef}
+                labelText='City/Municipality'
+                items={['City/Municipality: ', ...cities]}
+                value={city.value === "" ? "City/Municipality: " : city.value}
+                placeholder='City/Municipality: '
+                visible={city.show ?? false}
+                setVisible={(visible: boolean) => {
+                  dispatch(visible ? citySelectionShown(true) : citySelectionShown())
+                }}
+                onSelect={(value: string) => {
+                  dispatch(cityChanged(value === "City: " ? "" : value));
+                }}
+                valueClassName={selectCustomValueClassName}
+                optionActiveClassName={selectCustomOptionsClassName}
+                errorText={city.errorText} />
+            )
+          }
+        </div>
+
+
       </div>
     </>
   )
