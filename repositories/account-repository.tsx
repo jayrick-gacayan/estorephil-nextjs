@@ -121,16 +121,26 @@ export class AccountRepository {
     async updateAgentBasicInfo(
         user:
             {
-                firstName: string;
-                lastName: string;
+                firstName?: string;
+                lastName?: string;
+                phoneNumber?: string,
+                address1?: string,
+                address2?: string
+                city?: string,
+                province?: string,
             }
         ,
         token: string) {
 
         let formData = new FormData();
 
-        formData.set('user["first_name"]', user.firstName);
-        formData.set('user["last_name"]', user.lastName);
+        if (!!user.firstName && user.firstName.length > 0) { formData.set('user[first_name]', user.firstName); }
+        if (!!user.lastName && user.lastName.length > 0) { formData.set('user[last_name]', user.lastName); }
+        if (!!user.phoneNumber && user.phoneNumber.length > 0) { formData.set('user[phone_number]', user.phoneNumber) }
+        if (!!user.address1 && user.address1.length > 0) { formData.set('user[address_1]', user.address1) }
+        if (!!user.address2 && user.address2.length > 0) { formData.set('user[address_2]', user.address2) }
+        if (!!user.city && user.city.length > 0) { formData.set('user[city]', user.city) }
+        if (!!user.province && user.province.length > 0) { formData.set('user[province]', user.province) }
         let result = await this.accountService.updateAgent(formData, token);
 
         let response = undefined;

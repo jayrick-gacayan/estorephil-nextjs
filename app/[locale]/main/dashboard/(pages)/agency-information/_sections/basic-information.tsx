@@ -10,7 +10,7 @@ export default function BasicInformation() {
     const dispatch = useAppDispatch();
     const translate = useTranslations();
     const { data: sessionData } = useSession();
-
+    const fullAddress = `${sessionData?.user.address_1} ${sessionData?.user?.city} ${sessionData?.user?.province}`
     console.log('data', sessionData)
 
     return (
@@ -31,7 +31,7 @@ export default function BasicInformation() {
             <div className='space-y-1'>
                 <Label label="First Name" value={sessionData?.user.first_name ?? ''} />
                 <Label label="Last Name" value={sessionData?.user.last_name ?? ''} />
-                <Label label="Address" value={sessionData?.user.address ?? 'NA'} />
+                <Label label="Address" value={fullAddress ?? 'NA'} />
                 <Label label="Email Address" value={sessionData?.user.email ?? 'NA'} />
                 <Label label="Contact" value={sessionData?.user.phone_number ?? ``} />
             </div>
