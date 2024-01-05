@@ -18,7 +18,7 @@ export default function InputCustom({
   return (
     <div className="block space-y-1" tabIndex={-1}>
       {labelText && labelText}
-      <div className={divClassName}>
+      <div className={`${divClassName} overflow-hidden`}>
         {leftSideContent && leftSideContent}
         <div className="flex-1">
           <input {...inputProps}

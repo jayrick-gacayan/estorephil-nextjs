@@ -112,7 +112,6 @@ export default function FavoritesTable() {
               return (
                 <tr key={`products-favorites-${value.id}`}
                   className="[&>td]:p-2 border-b-[.5px] border-b-tertiary-dark odd:bg-inherit even:bg-[#EFF0F0]">
-
                   <td className='w-24'>
                     <Image alt={`alt-seller-image-${value.id}`}
                       src={value.logo}

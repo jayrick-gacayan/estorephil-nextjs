@@ -7,7 +7,7 @@ export interface AgentRegisterState {
   firstName: TextInputField<string>;
   lastName: TextInputField<string>;
   email: TextInputField<string>;
-
+  phoneNumber: TextInputField<string>;
   withToken: boolean;
 
   password: TextInputField<string>;

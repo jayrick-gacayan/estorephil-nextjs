@@ -14,6 +14,7 @@ const initialState: AgentRegisterState = {
   firstName: textInputFieldValue(''),
   lastName: textInputFieldValue(''),
   email: textInputFieldValue(''),
+  phoneNumber: textInputFieldValue(''),
 
   password: textInputFieldValue(''),
   passwordConfirmation: textInputFieldValue(''),
@@ -40,6 +41,11 @@ const agentRegisterSlice = createSlice({
     },
     emailChanged: (state: AgentRegisterState, action: PayloadAction<string>) => {
       return { ...state, email: textInputFieldValue(action.payload) }
+    },
+    phoneNumberChanged: (state: AgentRegisterState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+      }
     },
     signUpThanksRequestStatusSet: (state: AgentRegisterState, action: PayloadAction<RequestStatus>) => {
       return { ...state, signUpThanksRequestStatus: action.payload }
@@ -151,6 +157,7 @@ export const {
   fieldValidResponseSet,
   agentRegisterFormReset,
   fieldInputSet,
+  phoneNumberChanged,
 } = agentRegisterSlice.actions;
 
 export default agentRegisterSlice.reducer;

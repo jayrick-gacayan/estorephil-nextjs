@@ -14,6 +14,7 @@ import {
   lastNameChanged,
   natureOfBusinessChanged,
   passwordChanged,
+  phoneNumberChanged,
   signUpThanksRequestStatusSet
 } from '../_redux/agent-register-slice';
 import { RequestStatus } from '@/types/enums/request-status';
@@ -26,6 +27,7 @@ import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-custom';
 import { useRouter } from 'next-intl/client';
+import PhoneNumberInput from '@/app/[locale]/_components/phone-number-input';
 
 export default function AgentRegisterForm({
   token
@@ -41,6 +43,7 @@ export default function AgentRegisterForm({
     businessNature,
     lastName,
     firstName,
+    phoneNumber,
     email,
     password,
     passwordConfirmation,
@@ -77,10 +80,10 @@ export default function AgentRegisterForm({
   }, [signUpThanksRequestStatus, dispatch, token, withToken]);
 
   function divClassName(status: ValidationType) {
-    return `border divide-x rounded overflow-hidden w-full flex items-center gap-2
+    return `border divide-x rounded w-full flex items-center gap-2
         ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
         status === ValidationType.VALID ? 'text-success border-success divide-success has-[input:focus]:border-success' :
-          'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary'
+          'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary has-[input:focus]:divide-primary'
       }`
   }
 
@@ -183,7 +186,22 @@ export default function AgentRegisterForm({
               onChange: (event: ChangeEvent<HTMLInputElement>) => {
                 dispatch(emailChanged(event.target.value))
               },
-              placeholder: 'Enter email Address',
+              placeholder: 'Enter email address',
+            }} />
+
+          <PhoneNumberInput defaultCountry='PH'
+            labelText={<div className={labelClassName(phoneNumber.status)}>Phone Number</div>}
+            divClassName={divClassName(phoneNumber.status)}
+            inputProps={{
+              id: 'register-phone-input',
+              type: 'text',
+              value: phoneNumber.value,
+              placeholder: 'Enter phone number:',
+              className: 'p-2 disabled:bg-tertiary-dark',
+            }}
+            errorText={phoneNumber.errorText}
+            onPhoneChanged={(phone: string) => {
+              dispatch(phoneNumberChanged(phone))
             }} />
           {
             token && typeof token === 'string' &&

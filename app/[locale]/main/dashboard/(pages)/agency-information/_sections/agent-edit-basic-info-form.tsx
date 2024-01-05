@@ -1,13 +1,14 @@
 'use client';
 
-import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
+import { ChangeEvent, useMemo, useRef } from 'react';
 import { AgentAgencyInformationState } from '../_redux/agent-agency-information-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import { cityChanged, citySelectionShown, firstNameChanged, lastNameChanged, provinceChanged, provinceSelectionShown } from '../_redux/agent-agency-information-slice';
+import { cityChanged, citySelectionShown, firstNameChanged, lastNameChanged, phoneNumberChanged, provinceChanged, provinceSelectionShown } from '../_redux/agent-agency-information-slice';
 import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import SelectCustom from '@/app/[locale]/_components/select-custom';
+import PhoneNumberInput from '@/app/[locale]/_components/phone-number-input';
 
 export default function AgentEditBasicInfoForm({
   cityProvince
@@ -30,7 +31,8 @@ export default function AgentEditBasicInfoForm({
     firstName,
     lastName,
     province,
-    city
+    city,
+    phoneNumber
   } = useMemo(() => { return agentAgencyInfoState }, [agentAgencyInfoState]);
 
   let cities = useMemo(() => {
@@ -43,6 +45,18 @@ export default function AgentEditBasicInfoForm({
       })?.cities ?? []
   }, [province.value]);
 
+  function divClassName(status: ValidationType) {
+    return `border divide-x rounded w-full flex items-center gap-2
+        ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
+        status === ValidationType.VALID ? 'text-success border-success divide-success has-[input:focus]:border-success' :
+          'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary has-[input:focus]:divide-primary'
+      }`
+  }
+
+  function labelClassName(status: ValidationType) {
+    return `font-semibold ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger' :
+      status === ValidationType.VALID ? 'text-success' : ''}`
+  }
 
   function googleLikeInputLabelClassName(status: ValidationType) {
     return `transition-all absolute peer-focus:text-sm cursor-text peer-placeholder-shown:top-2 peer-focus:-top-3 peer-placeholder-shown:text-base left-0 -top-3 text-sm bg-inherit mx-2 px-1 
@@ -100,6 +114,20 @@ export default function AgentEditBasicInfoForm({
           errorText={lastName.errorText}
           status={lastName.status}
           labelClassName={googleLikeInputLabelClassName} />
+        <PhoneNumberInput defaultCountry='PH'
+          labelText={<div className={labelClassName(phoneNumber.status)}>Phone Number</div>}
+          divClassName={divClassName(phoneNumber.status)}
+          inputProps={{
+            id: 'register-phone-input',
+            type: 'text',
+            value: phoneNumber.value,
+            placeholder: 'Enter phone number:',
+            className: 'p-2 disabled:bg-tertiary-dark',
+          }}
+          errorText={phoneNumber.errorText}
+          onPhoneChanged={(phone: string) => {
+            dispatch(phoneNumberChanged(phone))
+          }} />
         <div className='flex gap-2 w-full'>
           <SelectCustom ref={provinceSelectRef}
             labelText='Province'

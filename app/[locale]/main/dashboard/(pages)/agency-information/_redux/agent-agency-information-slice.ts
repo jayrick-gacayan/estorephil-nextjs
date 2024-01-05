@@ -17,6 +17,7 @@ const initialState: AgentAgencyInformationState = {
   lastName: textInputFieldValue<string>(''),
   province: textInputFieldValue<string>(''),
   city: textInputFieldValue<string>(''),
+  phoneNumber: textInputFieldValue<string>(''),
   updateBasicInfoRequestStatus: RequestStatus.NONE,
 
   documents: [],
@@ -41,6 +42,12 @@ const agentAgencyInformationSlice = createSlice({
     lastNameChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
       return { ...state, firstName: { ...state.lastName, value: action.payload } }
     },
+    phoneNumberChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        phoneNumber: textInputFieldValue(action.payload)
+      }
+    },
     provinceSelectionShown: (state: AgentAgencyInformationState, action: PayloadAction<boolean | undefined>) => {
       return {
         ...state,
@@ -50,12 +57,14 @@ const agentAgencyInformationSlice = createSlice({
         } : textInputFieldValue(state.province.value)
       }
     },
+
     provinceChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
       return {
         ...state,
         province: textInputFieldValue(action.payload)
       }
     },
+
     citySelectionShown: (state: AgentAgencyInformationState, action: PayloadAction<boolean | undefined>) => {
       return {
         ...state,
@@ -133,7 +142,8 @@ export const {
   provinceSelectionShown,
   provinceChanged,
   citySelectionShown,
-  cityChanged
+  cityChanged,
+  phoneNumberChanged
 } = agentAgencyInformationSlice.actions;
 
 export default agentAgencyInformationSlice.reducer;
