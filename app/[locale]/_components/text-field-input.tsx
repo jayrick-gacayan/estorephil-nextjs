@@ -7,6 +7,7 @@ export default function TextFieldInput({
     required,
     placeholder,
     errorText = '',
+    errorTextClassName,
     className = ``,
 }: {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -18,14 +19,15 @@ export default function TextFieldInput({
     placeholder?: any,
     errorText?: string,
     className?: string
+    errorTextClassName?: string
 }) {
     return (
         <>
             <div className={`block ${className != `` ? `${className}` : `w-[570px]`}`}>
                 <div className="relative py-2">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between relative">
                         {!!label && <label className="text-zinc-500 text-base font-medium">{label}</label>}
-                        <p className={`${errorText == '' ? `hidden` : ``} text-red-500`}>{errorText}</p>
+                        <p className={`${errorTextClassName ?? ``} ${errorText == '' ? `hidden` : ``} text-red-500`}>{errorText}</p>
                     </div>
                     <div className="">
                         <input required={required} onChange={onChange} placeholder={placeholder} value={value} className={`py-[4px] px-[2px] border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `} />
