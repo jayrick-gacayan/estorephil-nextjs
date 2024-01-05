@@ -6,17 +6,23 @@ import { RequestStatus } from "@/types/enums/request-status";
 import { getValidationResponse } from "@/types/helpers/validation_helpers";
 import { ValidationType } from "@/types/enums/validation-type";
 import { User } from "@/models/user";
+import Validations from "@/types/validations";
 
 const initialState: AgentAgencyInformationState = {
   modalUpdateFormOpen: {
     open: false,
     type: ''
   },
-
-  firstName: textInputFieldValue<string>(''),
-  lastName: textInputFieldValue<string>(''),
-  updateBasicInfoRequestStatus: RequestStatus.NONE,
-
+  firstName: { value: '', error: '' },
+  lastName: { value: '', error: '' },
+  phoneNumber: { value: '', error: '' },
+  address1: { value: '', error: '' },
+  address2: { value: '', error: '' },
+  city: { value: '', error: '' },
+  province: { value: '', error: '' },
+  zipCode: { value: '', error: '' },
+  country: { value: '', error: '' },
+  updateBasicInfoStatus: RequestStatus.WAITING,
   documents: []
 
 
@@ -35,11 +41,85 @@ const agentAgencyInformationSlice = createSlice({
         }
       }
     },
+    updateBasicInfoStatusLoaded: (state: AgentAgencyInformationState) => {
+      return {
+        ...state,
+        updateBasicInfoStatus: RequestStatus.IN_PROGRESS,
+      }
+    },
+    updateBasicInfoStatusSuccess: (state: AgentAgencyInformationState) => {
+      return {
+        ...state,
+        updateBasicInfoStatus: RequestStatus.SUCCESS,
+      }
+    },
     firstNameChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
-      return { ...state, firstName: { ...state.firstName, value: action.payload } }
+      const validation = new Validations()
+      const validateFullName = validation.isValidName({ name: action.payload, nameColumn: 'first name' })
+      return {
+        ...state,
+        firstName: {
+          value: action.payload,
+          valid: validateFullName.status == ValidationType.VALID,
+          error: validateFullName.errorText
+        }
+      }
     },
     lastNameChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
-      return { ...state, firstName: { ...state.lastName, value: action.payload } }
+      const validation = new Validations()
+      const validateFullName = validation.isValidName({ name: action.payload, nameColumn: 'last name' })
+      return {
+        ...state,
+        lastName: {
+          value: action.payload,
+          valid: validateFullName.status == ValidationType.VALID,
+          error: validateFullName.errorText
+        }
+      }
+    },
+    phoneNumberChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      const validation = new Validations()
+      const validatePhoneNumber = validation.isValidPhoneNumberOptional(action.payload)
+      return {
+        ...state,
+        phoneNumber: {
+          value: action.payload,
+          valid: validatePhoneNumber.status == ValidationType.VALID,
+          error: validatePhoneNumber.errorText
+        }
+      }
+    },
+    address1Changed: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        address1: {
+          value: action.payload,
+        }
+      }
+    },
+    address2Changed: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        address2: {
+          value: action.payload,
+        }
+      }
+    },
+    cityChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        city: {
+          value: action.payload,
+        }
+      }
+    },
+    provinceChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        province: {
+          value: action.payload,
+        }
+      }
     },
     updateBasicInfoRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
       return { ...state, updateBasicInfoRequestStatus: action.payload }
@@ -91,11 +171,11 @@ const agentAgencyInformationSlice = createSlice({
 
 export const {
   modalUpdateFormOpened,
-  agentInfoDocumentAdded,
-  firstNameChanged,
-  lastNameChanged,
-  updateModalBasicInfoClicked,
-  updateBasicInfoRequestStatusSet,
+  agentInfoDocumentAdded, address2Changed,
+  firstNameChanged, address1Changed, cityChanged,
+  lastNameChanged, provinceChanged, phoneNumberChanged,
+  updateModalBasicInfoClicked, updateBasicInfoStatusLoaded,
+  updateBasicInfoRequestStatusSet, updateBasicInfoStatusSuccess,
   agentBasicInfoSet,
   agentFormBasicInfoFieldsReset
 } = agentAgencyInformationSlice.actions;

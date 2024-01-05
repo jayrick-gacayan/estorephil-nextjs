@@ -14,12 +14,17 @@ export function updateBasicInfo(
   update: (data?: any) => Promise<Session | null>
 ) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
-    let agentRegisterInfoState: AgentAgencyInformationState = getState().agentAgencyInfo;
+    let state: AgentAgencyInformationState = getState().agentAgencyInfo;
 
-    console.log('session data on thunk', sessionData, agentRegisterInfoState.firstName.value,);
+    console.log('session data on thunk', sessionData, state.firstName.value,);
     let user = {
-      firstName: agentRegisterInfoState.firstName.value,
-      lastName: agentRegisterInfoState.lastName.value,
+      firstName: state.firstName.value,
+      lastName: state.lastName.value,
+      phoneNumber: state.phoneNumber.value,
+      address1: state.address1.value,
+      address2: state.address2.value,
+      city: state.city.value,
+      province: state.province.value
     }
     let result = await accountRepository.updateAgentBasicInfo(user, token);
 
@@ -31,7 +36,7 @@ export function updateBasicInfo(
           ...sessionData,
           user: {
             ...sessionData?.user,
-            first_name: agentRegisterInfoState.firstName.value,
+            first_name: state.firstName.value,
             last_name: result.data.lastName,
           }
         }
