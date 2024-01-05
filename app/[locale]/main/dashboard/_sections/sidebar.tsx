@@ -12,10 +12,11 @@ import { useMemo } from "react";
 export default function SideBar() {
     const segment = useSelectedLayoutSegment();
     const { data: sessionData } = useSession()
-    const companyOwnerName = `${sessionData?.company?.first_name} ${sessionData?.company?.last_name}`
+    const companyOwnerName = `${sessionData?.company?.first_name ?? ''} ${sessionData?.company?.last_name ?? ''}`
 
     let current = useMemo(() => { return segment ?? '' }, [segment])
 
+    console.log('dfata', sessionData)
     return current === 'orders' ? null :
         (
             <div className="border-r border-r-tertiary-dark">
