@@ -22,6 +22,7 @@ const authMiddleware: NextMiddlewareWithAuth = withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         if (req.nextUrl.pathname.includes('admin') ||
+          req.nextUrl.pathname.startsWith('courier') ||
           req.nextUrl.pathname.includes('dashboard') ||
           req.nextUrl.pathname === '/' ||
           req.nextUrl.pathname === '/home' ||

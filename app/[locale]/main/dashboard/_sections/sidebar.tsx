@@ -16,7 +16,6 @@ export default function SideBar() {
 
     let current = useMemo(() => { return segment ?? '' }, [segment])
 
-    console.log('dfata', sessionData)
     return current === 'orders' ? null :
         (
             <div className="border-r border-r-tertiary-dark">
