@@ -3,6 +3,7 @@ import { RegisterState } from "./register-state"
 import Validations from "@/types/validations"
 import { ValidationType } from "@/models/validation-response"
 import { error } from "console"
+import { RequestStatus } from "@/models/result"
 
 
 
@@ -34,7 +35,8 @@ export const initialState: RegisterState = {
         show: false,
     },
     status: 'waiting',
-    valid: false
+    registerStatus: RequestStatus.WAITING,
+    valid: false,
 }
 export const registerSlice = createSlice({
     name: "register",
@@ -145,6 +147,24 @@ export const registerSlice = createSlice({
                 ...state,
                 status: 'success'
             }
+        },
+        registerLoaded: (state: RegisterState) => {
+            return {
+                ...state,
+                registerStatus: RequestStatus.IN_PROGRESS
+            }
+        },
+        registerSuccess: (state: RegisterState) => {
+            return {
+                ...state,
+                registerStatus: RequestStatus.SUCCESS
+            }
+        },
+        registerFailed: (state: RegisterState) => {
+            return {
+                ...state,
+                registerStatus: RequestStatus.FAILURE
+            }
         }
     },
 })
@@ -153,7 +173,7 @@ export const {
     businessNameChanged,
     businessNatureChanged, confirmPassworChanged,
     emailChanged, firstNameChanged, lastNameChanged, passwordChanged, phoneNumberChanged,
-    signUpClicked
+    signUpClicked, registerFailed, registerLoaded, registerSuccess
 } = registerSlice.actions
 
 export default registerSlice.reducer
