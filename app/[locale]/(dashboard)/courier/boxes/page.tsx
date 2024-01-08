@@ -7,7 +7,7 @@ import ModalBoxesContainer from "./_sections/modal-boxes-container";
 
 export default async function Page() {
 
-  let regions: PhRegion[] = await (await import('@/app/_data/ph-regions.json')).default.regions;
+  let regions: PhRegion[] = (await import('@/app/_data/ph-regions.json')).default.regions;
 
   return (
     <>

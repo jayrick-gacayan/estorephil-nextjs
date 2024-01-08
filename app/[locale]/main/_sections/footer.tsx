@@ -1,7 +1,6 @@
 import Link from 'next-intl/link';
 import { FaCcMastercard, FaCcPaypal, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { FooterLinksContainer } from '../_components/footer_links_container';
-import { LinkProps } from '@/types/props/link-props';
 import { FooterLinksContainerWithIcons } from '../_components/footer-links-container-with-icons';
 import Image from 'next/image';
 import { RiVisaLine } from 'react-icons/ri';

@@ -81,9 +81,11 @@ export default function AgentRegisterForm({
 
   function divClassName(status: ValidationType) {
     return `border divide-x rounded w-full flex items-center gap-2
-        ${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
-        status === ValidationType.VALID ? 'text-success border-success divide-success has-[input:focus]:border-success' :
-          'border-tertiary-dark divide-tertiary-dark has-[input:focus]:border-primary has-[input:focus]:divide-primary'
+        ${status !== ValidationType.NONE && status !== ValidationType.VALID ?
+        'text-danger divide-danger has-[input:focus]:border-danger border-danger' :
+        status === ValidationType.VALID ?
+          'text-success border-success divide-success has-[input:focus]:border-success' :
+          'border-info-light divide-info-light has-[input:focus]:border-primary has-[input:focus]:divide-primary'
       }`
   }
 
