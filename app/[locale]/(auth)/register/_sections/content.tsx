@@ -9,7 +9,7 @@ export default function Content() {
     return (
         <>
             {state.status === 'waiting' ? (
-                <div className="flex items-center w-[80%] justify-between h-[90%]">
+                <div className="flex items-center w-[80%] justify-around h-[90%]">
                     <div className="flex flex-col justify-between">
                         <div className="my-4">
                             <h1 className="text-[70px] text-primary-dark font-bold">Become an Agent</h1>
@@ -26,7 +26,6 @@ export default function Content() {
                             />
                         </div>
                     </div>
-
                     <div>
                         {!state.valid && <Form />}
                     </div>
