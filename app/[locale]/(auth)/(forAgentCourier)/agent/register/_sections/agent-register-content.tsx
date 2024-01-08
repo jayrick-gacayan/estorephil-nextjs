@@ -25,7 +25,7 @@ export default function AgentRegisterContent({
       let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
       dispatch(getCompanyDataFromInvitation(accountRepository, token))
     }
-  }, [token]);
+  }, [token])
 
 
   return (agentRegisterState.signUpThanksRequestStatus === RequestStatus.SUCCESS

@@ -3,11 +3,7 @@
 import GoogleLikeInputField from '@/app/[locale]/_components/google-like-input-field';
 import { ChangeEvent } from 'react';
 
-export default function AgentEditBusinessInfoForm({
-  cityProvince
-}: {
-  cityProvince: { province: string; cities: string[] }[]
-}) {
+export default function EditBusinessInfo() {
   return (
     <>
       <div className='border-b border-secondary-light py-2'>

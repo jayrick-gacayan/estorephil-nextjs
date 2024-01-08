@@ -26,7 +26,6 @@ import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import InputGoogleLikeCustom from '@/app/[locale]/_components/input-google-like-custom';
-import { useRouter } from 'next-intl/client';
 import PhoneNumberInput from '@/app/[locale]/_components/phone-number-input';
 
 export default function AgentRegisterForm({
@@ -34,7 +33,6 @@ export default function AgentRegisterForm({
 }: {
   token: string | string[] | undefined
 }) {
-  const router = useRouter();
   const dispatch: AppDispatch = useAppDispatch();
   const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });
 
@@ -69,12 +67,7 @@ export default function AgentRegisterForm({
         else {
           dispatch(registerAgent(accountRepository))
         }
-        break;
-      case RequestStatus.SUCCESS:
-        if (withToken) {
-          alert('You can now login to your account');
-          router.push('/login');
-        }
+
         break;
     }
   }, [signUpThanksRequestStatus, dispatch, token, withToken]);

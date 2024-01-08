@@ -7,28 +7,26 @@ import { CompanyFieldProps } from '@/types/props/company-field-props';
 import { SignInProps } from '@/types/props/sign-in-props';
 import { snakeCase, camelCase } from 'change-case/keys';
 import { inject, injectable } from 'inversify';
-import { SignInResponse } from 'next-auth/react';
+import { SignInOptions, SignInResponse } from 'next-auth/react';
 
 @injectable()
 export class AccountRepository {
-    #accountService: AccountService;
+    accountService: AccountService;
 
     constructor(@inject(TYPES.AccountService) accountService: AccountService) {
-        this.#accountService = accountService;
+        this.accountService = accountService;
     }
-
-    async nextAuthSignIn(body: SignInProps): Promise<Result<SignInResponse | undefined>> {
-        let result: SignInResponse | undefined = await this.#accountService.nextAuthSignIn(body);
-
-        return new Result<SignInResponse | undefined>({
-            response: result,
-            data: result,
-            statusCode: result?.status ?? 0
-        })
+    async login({ email, password }: { email: string, password: string }) {
+        const body: SignInOptions = {
+            email,
+            password,
+            redirect: false,
+        }
+        console.log('login repo body', body)
+        return await this.accountService.login({ body })
     }
-
     async nextAuthSignOut(callbackUrl?: string) {
-        let result = await this.#accountService.nextAuthSignOut(callbackUrl);
+        let result = await this.accountService.nextAuthSignOut(callbackUrl);
 
         return new Result<undefined>({
             response: result,
@@ -36,8 +34,9 @@ export class AccountRepository {
             statusCode: 200
         })
     }
+
     async registerAgentCompany(company: CompanyFieldProps) {
-        let result = await this.#accountService.registerAgentCompany(JSON.stringify({ company: snakeCase(company) }))
+        let result = await this.accountService.registerAgentCompany(JSON.stringify({ company: snakeCase(company) }))
 
         let response: any = undefined;
 
@@ -55,7 +54,7 @@ export class AccountRepository {
     }
 
     async agentSendInvitation(id: number) {
-        let result = await this.#accountService.agentSendInvitation(id);
+        let result = await this.accountService.agentSendInvitation(id);
 
         let response: any = undefined;
 
@@ -71,7 +70,7 @@ export class AccountRepository {
     }
 
     async getCompanyDataFromInvitation(code: string) {
-        let result = await this.#accountService.getCompanyDataFromInvitation(code);
+        let result = await this.accountService.getCompanyDataFromInvitation(code);
 
         let response: any = undefined;
 
@@ -100,7 +99,7 @@ export class AccountRepository {
         };
         company: { name: string; }
     }) {
-        let result = await this.#accountService.registerUser(
+        let result = await this.accountService.registerUser(
             JSON.stringify({
                 user: snakeCase(user),
                 company: snakeCase(company)
@@ -122,17 +121,27 @@ export class AccountRepository {
     async updateAgentBasicInfo(
         user:
             {
-                firstName: string;
-                lastName: string;
+                firstName?: string;
+                lastName?: string;
+                phoneNumber?: string,
+                address1?: string,
+                address2?: string
+                city?: string,
+                province?: string,
             }
         ,
         token: string) {
 
         let formData = new FormData();
 
-        formData.set('user["first_name"]', user.firstName);
-        formData.set('user["last_name"]', user.lastName);
-        let result = await this.#accountService.updateAgent(formData, token);
+        if (!!user.firstName && user.firstName.length > 0) { formData.set('user[first_name]', user.firstName); }
+        if (!!user.lastName && user.lastName.length > 0) { formData.set('user[last_name]', user.lastName); }
+        if (!!user.phoneNumber && user.phoneNumber.length > 0) { formData.set('user[phone_number]', user.phoneNumber) }
+        if (!!user.address1 && user.address1.length > 0) { formData.set('user[address_1]', user.address1) }
+        if (!!user.address2 && user.address2.length > 0) { formData.set('user[address_2]', user.address2) }
+        if (!!user.city && user.city.length > 0) { formData.set('user[city]', user.city) }
+        if (!!user.province && user.province.length > 0) { formData.set('user[province]', user.province) }
+        let result = await this.accountService.updateAgent(formData, token);
 
         let response = undefined;
 
