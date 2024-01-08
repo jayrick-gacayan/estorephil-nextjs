@@ -1,9 +1,7 @@
 'use client';
 
-import { philippinesRegions } from "@/types/props/philippine-regions";
-import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
-import { FaMinus, FaPlus } from "react-icons/fa6";
-import LabelTextWithAmountTrash from "../../deliveries/_components/labeltext-with-amount-trash";
+import { ChangeEvent, useEffect, useMemo, useRef } from "react";
+import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import SelectCustom from "@/app/[locale]/_components/select-custom";
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { AppDispatch, RootState } from "@/redux/store";
@@ -18,6 +16,9 @@ import {
   lengthDimensionChanged,
   priceChanged,
   referralPercentageChanged,
+  regionFeesAdded,
+  regionFeesFeeUpdated,
+  regionFeesRemoved,
   unitMeasureChanged,
   unitMeasureSelectionShown,
   weightChanged,
@@ -37,13 +38,17 @@ import { BoxRepository } from "@/repositories/box-repository";
 import { TYPES } from "@/inversify/types";
 import { createBox, updateBox } from "../_redux/courier-boxes-thunk";
 import { BoxTypes } from "@/types/enums/box-type";
+import { PhRegion } from "@/models/ph-region";
+import { TextInputField } from "@/types/props/text-input-field";
 
 export default function BoxesModalForm({
   type,
   onClose,
+  regions,
 }: {
   type: string;
   onClose: () => void;
+  regions: PhRegion[];
 }) {
   const { data: sessionData } = useSession();
   const cargoTypeRef = useRef<HTMLDivElement>(null);
@@ -66,13 +71,12 @@ export default function BoxesModalForm({
     weight,
     weightType,
     requestStatus,
-    id
+    id,
+    regionFees,
   } = useMemo(() => {
     return courierBoxesState.boxFormFields;
   }, [courierBoxesState.boxFormFields]);
 
-
-  const [regions, setRegions] = useState<any[]>([]);
 
   useEffect(() => {
     switch (requestStatus) {
@@ -85,21 +89,13 @@ export default function BoxesModalForm({
         setTimeout(() => {
           if (sessionData?.token) {
             let boxRepository = boxContainer.get<BoxRepository>(TYPES.BoxRepository);
-            if (type === 'createBox') {
-              dispatch(createBox(boxRepository, sessionData.token));
-            }
+            if (type === 'createBox') { dispatch(createBox(boxRepository, sessionData.token)); }
             else if (type === 'updateBox') {
-              if (id) {
-                dispatch(updateBox(boxRepository, sessionData.token, id.toString()));
-              }
+              if (id) { dispatch(updateBox(boxRepository, sessionData.token, id.toString())); }
             }
-            else {
-              dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS))
-            }
+            else { dispatch(boxFormRequestStatusSet(RequestStatus.SUCCESS)); }
           }
         }, 2000)
-        break;
-      case RequestStatus.SUCCESS:
         break;
     }
   }, [requestStatus, dispatch, sessionData, type])
@@ -150,64 +146,67 @@ export default function BoxesModalForm({
       }`
   }
 
+  console.log('region fees', regionFees)
+
   return (
     <div className='py-8 space-y-8 w-[768px] m-auto'>
-      <div className="border-b border-secondary-light pb-2">
+      <div className="border-b border-secondary-light">
         <h3 className='text-[32px] leading-0 text-center'>{type === 'createBox' ? 'Create Box' : 'Update Box'}</h3>
       </div>
-      <div className="space-y-6 relative z-0">
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Cargo Type</div>
-          <div className="flex-1">
-            <SelectCustom ref={cargoTypeRef}
-              labelText=''
-              items={['Cargo Type: ', 'Air', 'Vessel']}
-              value={cargoType.value === "" ? "Cargo Type: " : cargoType.value === "0" ? "Air" : "Vessel"}
-              placeholder='Cargo Type: '
-              visible={cargoType.show ?? false}
-              setVisible={(visible: boolean) => {
-                dispatch(visible ? cargoTypeSelectionShown(true) : cargoTypeSelectionShown())
-              }}
-              onSelect={(value: string) => {
-                dispatch(cargoTypeChanged(value === "Cargo Type: " ? "" : value === "Air" ? "0" : "1"));
-              }}
-              valueClassName={selectCustomValueClassName}
-              optionActiveClassName={selectCustomOptionsClassName}
-              errorText={cargoType.errorText} />
+      <div className="h-[448px] overflow-auto pr-4">
+        <div className="space-y-4 relative z-0">
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Cargo Type</div>
+            <div className="flex-1">
+              <SelectCustom ref={cargoTypeRef}
+                labelText=''
+                items={['Cargo Type: ', 'Air', 'Vessel']}
+                value={cargoType.value === "" ? "Cargo Type: " : cargoType.value === "0" ? "Air" : "Vessel"}
+                placeholder='Cargo Type: '
+                visible={cargoType.show ?? false}
+                setVisible={(visible: boolean) => {
+                  dispatch(visible ? cargoTypeSelectionShown(true) : cargoTypeSelectionShown())
+                }}
+                onSelect={(value: string) => {
+                  dispatch(cargoTypeChanged(value === "Cargo Type: " ? "" : value === "Air" ? "0" : "1"));
+                }}
+                valueClassName={selectCustomValueClassName}
+                optionActiveClassName={selectCustomOptionsClassName}
+                errorText={cargoType.errorText} />
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Box Type</div>
-          <div className="flex-1">
-            <SelectCustom ref={boxTypeRef}
-              labelText=''
-              items={['Box Type: ', 'Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
-              value={boxType.value === "" ? "Box Type: " :
-                Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
-                  return boxType.value === typeBoxes[0]
-                })?.[1] ?? ""
-              }
-              placeholder='Box Type: '
-              visible={boxType.show ?? false}
-              setVisible={(visible: boolean) => {
-                dispatch(visible ? boxTypeSelectionShown(true) : boxTypeSelectionShown())
-              }}
-              onSelect={(value: string) => {
-                console.log('box value', value);
-                dispatch(boxTypeChanged(
-                  value === "Box Type: " ? "" :
-                    Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
-                      return value === typeBoxes[1]
-                    })?.[0] ?? ""
-                ));
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Box Type</div>
+            <div className="flex-1">
+              <SelectCustom ref={boxTypeRef}
+                labelText=''
+                items={['Box Type: ', 'Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
+                value={boxType.value === "" ? "Box Type: " :
+                  Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                    return boxType.value === typeBoxes[0]
+                  })?.[1] ?? ""
+                }
+                placeholder='Box Type: '
+                visible={boxType.show ?? false}
+                setVisible={(visible: boolean) => {
+                  dispatch(visible ? boxTypeSelectionShown(true) : boxTypeSelectionShown())
+                }}
+                onSelect={(value: string) => {
+                  console.log('box value', value);
+                  dispatch(boxTypeChanged(
+                    value === "Box Type: " ? "" :
+                      Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                        return value === typeBoxes[1]
+                      })?.[0] ?? ""
+                  ));
 
-              }}
-              valueClassName={selectCustomValueClassName}
-              optionActiveClassName={selectCustomOptionsClassName}
-              errorText={boxType.errorText} />
+                }}
+                valueClassName={selectCustomValueClassName}
+                optionActiveClassName={selectCustomOptionsClassName}
+                errorText={boxType.errorText} />
+            </div>
           </div>
-        </div>
-        {/* <div className="flex items-center gap-4 text-left">
+          {/* <div className="flex items-center gap-4 text-left">
           <div className="flex-none w-56 font-semibold">Measurement System</div>
           <div className="flex-1">
             <CourierCustomSelectField inputId='select-measurement-system'
@@ -218,204 +217,262 @@ export default function BoxesModalForm({
               }} />
           </div>
         </div> */}
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Dimension</div>
-          <div className="flex-1">
-            <div className="flex items-center gap-1">
-              <InputGoogleLikeCustom labelText='Length'
-                inputProps={{
-                  id: 'boxes-dimension-length',
-                  type: 'number',
-                  min: 0,
-                  value: length.value,
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(lengthDimensionChanged(event.target.value));
-                  },
-                  className: googleLikeInputClassName(length.status)
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Dimension</div>
+            <div className="flex-1">
+              <div className="flex items-center gap-1">
+                <InputGoogleLikeCustom labelText='Length'
+                  inputProps={{
+                    id: 'boxes-dimension-length',
+                    type: 'number',
+                    min: 0,
+                    value: length.value,
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(lengthDimensionChanged(event.target.value));
+                    },
+                    className: googleLikeInputClassName(length.status)
+                  }}
+                  errorText={length.errorText}
+                  status={length.status}
+                  labelClassName={googleLikeInputLabelClassName} />
+                <InputGoogleLikeCustom labelText='Width'
+                  inputProps={{
+                    id: 'boxes-dimension-width',
+                    type: 'number',
+                    value: width.value,
+                    min: 0,
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(widthDimensionChanged(event.target.value));
+                    },
+                    className: googleLikeInputClassName(width.status)
+                  }}
+                  errorText={width.errorText}
+                  status={width.status}
+                  labelClassName={googleLikeInputLabelClassName} />
+                <InputGoogleLikeCustom labelText='Height'
+                  inputProps={{
+                    id: 'boxes-dimension-height',
+                    type: 'number',
+                    value: height.value,
+                    min: 0,
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(heightDimensionChanged(event.target.value));
+                    },
+                    className: googleLikeInputClassName(height.status)
+                  }}
+                  errorText={height.errorText}
+                  status={height.status}
+                  labelClassName={googleLikeInputLabelClassName} />
+              </div>
+            </div>
+            <div className="flex-none w-20">
+              <SelectCustom ref={unitMeasureRef}
+                labelText=''
+                items={['Unit: ', 'cm', 'm', 'in']}
+                value={unitMeasure.value === "" ? "Unit: " : unitMeasure.value}
+                placeholder='Unit: '
+                visible={unitMeasure.show ?? false}
+                setVisible={(visible: boolean) => {
+                  dispatch(visible ? unitMeasureSelectionShown(true) : unitMeasureSelectionShown())
                 }}
-                errorText={length.errorText}
-                status={length.status}
-                labelClassName={googleLikeInputLabelClassName} />
-              <InputGoogleLikeCustom labelText='Width'
-                inputProps={{
-                  id: 'boxes-dimension-width',
-                  type: 'number',
-                  value: width.value,
-                  min: 0,
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(widthDimensionChanged(event.target.value));
-                  },
-                  className: googleLikeInputClassName(width.status)
+                onSelect={(value: string) => {
+                  dispatch(unitMeasureChanged(value === "Unit: " ? "" : value));
                 }}
-                errorText={width.errorText}
-                status={width.status}
-                labelClassName={googleLikeInputLabelClassName} />
-              <InputGoogleLikeCustom labelText='Height'
-                inputProps={{
-                  id: 'boxes-dimension-height',
-                  type: 'number',
-                  value: height.value,
-                  min: 0,
-                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(heightDimensionChanged(event.target.value));
-                  },
-                  className: googleLikeInputClassName(height.status)
-                }}
-                errorText={height.errorText}
-                status={height.status}
-                labelClassName={googleLikeInputLabelClassName} />
+                valueClassName={selectCustomValueClassName}
+                optionActiveClassName={selectCustomOptionsClassName}
+                errorText={unitMeasure.errorText} />
             </div>
           </div>
-          <div className="flex-none w-20">
-            <SelectCustom ref={unitMeasureRef}
-              labelText=''
-              items={['Unit: ', 'cm', 'm', 'in']}
-              value={unitMeasure.value === "" ? "Unit: " : unitMeasure.value}
-              placeholder='Unit: '
-              visible={unitMeasure.show ?? false}
-              setVisible={(visible: boolean) => {
-                dispatch(visible ? unitMeasureSelectionShown(true) : unitMeasureSelectionShown())
-              }}
-              onSelect={(value: string) => {
-                dispatch(unitMeasureChanged(value === "Unit: " ? "" : value));
-              }}
-              valueClassName={selectCustomValueClassName}
-              optionActiveClassName={selectCustomOptionsClassName}
-              errorText={unitMeasure.errorText} />
-          </div>
-        </div>
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Price</div>
-          <div className="flex-1">
-            <InputCustom
-              divClassName={boxesFormFieldDivClassName(price.status)}
-              inputProps={{
-                id: 'price-boxes-form',
-                type: 'number',
-                min: 0,
-                onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                  dispatch(priceChanged(event.target.value));
-                },
-                value: price.value,
-                placeholder: 'Enter price',
-                className: 'p-2 disabled:bg-tertiary-dark',
-              }}
-              errorText={price.errorText} />
-          </div>
-        </div>
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Weight</div>
-          <div className="flex-1">
-            <div className="flex items-center gap-1">
-              <InputGoogleLikeCustom labelText='Weight'
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Price</div>
+            <div className="flex-1">
+              <InputCustom
+                divClassName={boxesFormFieldDivClassName(price.status)}
                 inputProps={{
-                  id: 'boxes-weight',
+                  id: 'price-boxes-form',
                   type: 'number',
                   min: 0,
-                  value: weight.value,
                   onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                    dispatch(weightChanged(event.target.value));
+                    dispatch(priceChanged(event.target.value));
                   },
-                  className: googleLikeInputClassName(weight.status)
+                  value: price.value,
+                  placeholder: 'Enter price',
+                  className: 'p-2 disabled:bg-tertiary-dark',
                 }}
-                errorText={weight.errorText}
-                status={weight.status}
-                labelClassName={googleLikeInputLabelClassName} />
+                errorText={price.errorText} />
             </div>
           </div>
-          <div className="flex-none w-20">
-            <SelectCustom ref={weightTypeRef}
-              labelText=''
-              items={['Unit: ', 'gms', 'kgs', 'lbs']}
-              value={weightType.value === "" ? "Unit: " : weightType.value}
-              placeholder='Unit: '
-              visible={weightType.show ?? false}
-              setVisible={(visible: boolean) => {
-                dispatch(visible ? weightTypeSelectionShown(true) : weightTypeSelectionShown())
-              }}
-              onSelect={(value: string) => {
-                dispatch(weightTypeChanged(value === "Unit: " ? "" : value));
-              }}
-              valueClassName={selectCustomValueClassName}
-              optionActiveClassName={selectCustomOptionsClassName}
-              errorText={weightType.errorText} />
-          </div>
-        </div>
-        <div className="flex items-center gap-4 text-left">
-          <div className="flex-none w-56 font-semibold">Referral &#37;</div>
-          <div className="flex-1">
-            <InputCustom
-              divClassName={boxesFormFieldDivClassName(referralPercentage.status)}
-              inputProps={{
-                id: 'referralPercentage-boxes-form',
-                type: 'number',
-                min: 0,
-                max: 100,
-                onChange: (event: ChangeEvent<HTMLInputElement>) => {
-                  dispatch(referralPercentageChanged(event.target.value));
-                },
-                value: referralPercentage.value,
-                placeholder: 'Enter referral percentage (should be 0.01 to 100)',
-                className: 'p-2 disabled:bg-tertiary-dark',
-              }}
-              errorText={price.errorText} />
-          </div>
-        </div>
-        <div className="space-y-4 text-left">
-          <div className="text-3xl">Region Rates</div>
-          <div className="flex items-center w-full gap-4">
-            <div className="flex-none w-56 font-semibold">
-              Region
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Weight</div>
+            <div className="flex-1">
+              <div className="flex items-center gap-1">
+                <InputGoogleLikeCustom labelText='Weight'
+                  inputProps={{
+                    id: 'boxes-weight',
+                    type: 'number',
+                    min: 0,
+                    value: weight.value,
+                    onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                      dispatch(weightChanged(event.target.value));
+                    },
+                    className: googleLikeInputClassName(weight.status)
+                  }}
+                  errorText={weight.errorText}
+                  status={weight.status}
+                  labelClassName={googleLikeInputLabelClassName} />
+              </div>
             </div>
-            <div className="relative w-full">
-              <input type="text" readOnly id='inputId' className="focus:border-primary w-full peer/region p-2 rounded border-[.5px] border-secondary" />
-              <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute peer-focus/region:h-[240px] h-0 rounded peer-focus/region:border-[.5px] border-0 border-secondary top-[110%]">
-                {
-                  philippinesRegions.map((value: any) => {
-                    let getRegion = regions.find((region: any) => { return region.regionCode === value.regionCode });
+            <div className="flex-none w-20">
+              <SelectCustom ref={weightTypeRef}
+                labelText=''
+                items={['Unit: ', 'gms', 'kgs', 'lbs']}
+                value={weightType.value === "" ? "Unit: " : weightType.value}
+                placeholder='Unit: '
+                visible={weightType.show ?? false}
+                setVisible={(visible: boolean) => {
+                  dispatch(visible ? weightTypeSelectionShown(true) : weightTypeSelectionShown())
+                }}
+                onSelect={(value: string) => {
+                  dispatch(weightTypeChanged(value === "Unit: " ? "" : value));
+                }}
+                valueClassName={selectCustomValueClassName}
+                optionActiveClassName={selectCustomOptionsClassName}
+                errorText={weightType.errorText} />
+            </div>
+          </div>
+          <div className="flex items-center gap-4 text-left">
+            <div className="flex-none w-56 font-semibold">Referral &#37;</div>
+            <div className="flex-1">
+              <InputCustom
+                divClassName={boxesFormFieldDivClassName(referralPercentage.status)}
+                inputProps={{
+                  id: 'referralPercentage-boxes-form',
+                  type: 'number',
+                  min: 0,
+                  max: 100,
+                  onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                    dispatch(referralPercentageChanged(event.target.value));
+                  },
+                  value: referralPercentage.value,
+                  placeholder: 'Enter referral percentage (should be 0.01 to 100)',
+                  className: 'p-2 disabled:bg-tertiary-dark',
+                }}
+                errorText={price.errorText} />
+            </div>
+          </div>
+          <div className="space-y-4 text-left">
+            <div className="text-3xl">Region Rates</div>
+            <div className="flex items-center w-full gap-4">
+              <div className="flex-none w-56 font-semibold">
+                Region
+              </div>
+              <div className="relative w-full ">
 
-                    return (
-                      <div key={value.name} className="p-2 hover:bg-tertiary-light hover:cursor-pointer">
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1">{value.name}</div>
-                          <div className='flex-none w-auto'>
-                            <div className={`${getRegion ? 'text-danger' : 'text-success'} cursor-pointer`}
-                              onClick={() => {
-                                setRegions(getRegion === undefined ? [...regions, value] : regions.filter((filReg: any) => { return filReg.regionCode !== value.regionCode }))
-                              }}>
-                              <FaMinus className={`${getRegion ? 'block' : 'hidden'}`} />
-                              <FaPlus className={`${getRegion ? 'hidden' : 'block'}`} />
+                <label htmlFor="region-box-form"
+                  className="peer p-2 rounded border-[.5px] border-tertiary-dark w-full block cursor-pointer has-[input:focus]:border-primary">
+                  {
+                    regionFees.length === 0 ? <>&nbsp;</> :
+                      regionFees.map((regFee: {
+                        region: PhRegion;
+                        fee: TextInputField<string>;
+                      }, index: number) => {
+                        return (
+                          <span key={`region-item-form-${index}-${regFee.region.code}`}
+                            className="p-2 rounded bg-tertiary-dark text-default-dark inline-block m-1">
+                            {`${regFee.region.otherName} ${regFee.region.name}`}
+                          </span>
+                        );
+                      })
+                  }
+                  <input type="text" id="region-box-form" className="cursor-pointer outline-0 inline-block" readOnly />
+                </label>
+
+                <div className="overflow-auto w-full z-10 bg-white transition-all delay-100 absolute peer-has-[:focus]:h-[240px] h-0 rounded  peer-has-[:focus]:border-[.5px] border-0 border-secondary top-[110%]">
+                  {
+                    regions.map((value: PhRegion) => {
+                      let getRegion = regionFees.find((regFee: {
+                        region: PhRegion;
+                        fee: TextInputField<string>;
+                      }) => {
+                        return regFee.region.code === value.code
+                      });
+
+                      return (
+                        <div key={value.name} className="p-2 hover:bg-tertiary-light hover:cursor-pointer"
+                          onMouseDown={() => {
+                            dispatch(getRegion ? regionFeesRemoved(value.code) : regionFeesAdded(value))
+                          }}>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1">{`${value.otherName} (${value.name})`}</div>
+                            <div className='flex-none w-auto'>
+                              <div className={`${getRegion ? 'text-danger' : 'text-success'} cursor-pointer`}>
+                                <FaMinus className={`${getRegion ? 'block' : 'hidden'}`} />
+                                <FaPlus className={`${getRegion ? 'hidden' : 'block'}`} />
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    )
-                  })
-                }
+                      )
+                    })
+                  }
+                </div>
               </div>
             </div>
+
+            {
+              regionFees.length > 0 &&
+              (
+                <div className={`block space-y-2 ${regions.length > 5 ? 'h-[240px] overflow-auto' : ''}`}>
+                  {
+                    regionFees.map((regFee: {
+                      region: PhRegion;
+                      fee: TextInputField<string>;
+                    }) => {
+                      return (
+                        <div key={`region-selected-container-${regFee.region.code}`}
+                          className="w-full">
+                          <div className="flex items-center w-full gap-4">
+                            <div className="flex-1">
+                              <div className="bg-info-light rounded w-full p-2">
+                                {`${regFee.region.otherName} ${regFee.region.name}`}
+                              </div>
+                            </div>
+                            <div className="flex-none w-48">
+                              <div className="flex w-full items-center gap-2">
+                                <div className="flex-1">
+                                  <InputCustom leftSideContent={<div className="font-semibold p-2">C&#36;</div>}
+                                    divClassName={boxesFormFieldDivClassName(regFee.fee.status)}
+                                    inputProps={{
+                                      id: `regionFees-boxes-form-${regFee.region.code}`,
+                                      type: 'number',
+                                      min: 0,
+                                      onChange: (event: ChangeEvent<HTMLInputElement>) => {
+                                        dispatch(regionFeesFeeUpdated({ code: regFee.region.code, value: event.target.value }))
+                                      },
+                                      value: regFee.fee.value,
+                                      placeholder: '',
+                                      className: 'p-2 disabled:bg-tertiary-dark',
+                                    }}
+                                    errorText={regFee.fee.errorText} />
+                                </div>
+                                <div className="flex-none w-auto text-danger rounded border border-danger p-2 cursor-pointer"
+                                  onClick={() => { dispatch(regionFeesRemoved(regFee.region.code)); }}>
+                                  <FaRegTrashCan className='inline-block' />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              )
+            }
           </div>
-
-          {
-            regions.length > 0 &&
-            (
-              <div className={`block space-y-2 ${regions.length > 5 ? 'h-[240px] overflow-auto' : ''}`}>
-                {
-                  regions.map((value: any) => {
-                    return (
-                      <div key={`region-selected-container-${value.name}`}
-                        className="w-full">
-                        <LabelTextWithAmountTrash labelText={value.name} />
-                      </div>
-                    )
-                  })
-                }
-
-              </div>
-            )
-          }
         </div>
       </div>
+
       <div className='block'>
         <div className='w-1/2 m-auto'>
           <div className='flex items-stretch gap-2 justify-center'>

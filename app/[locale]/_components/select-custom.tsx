@@ -81,7 +81,9 @@ export const SelectCustom = forwardRef<HTMLDivElement, SelectProps<any, any>>(
               />
             </div>
           </div>
-          <div className={`overflow-auto rounded border bg-white border-tertiary-dark absolute top-[110%] z-50 w-full text-default-dark left-0  ${visible ? 'block' : 'hidden'}`}>
+          <div className={`overflow-auto rounded border bg-white border-tertiary-dark absolute top-[110%] z-50 w-full text-default-dark left-0  
+            ${items.length > 5 ? 'h-[200px]' : `h-auto`}
+            ${visible ? 'block' : 'hidden'}`}>
             {items.map((item: any, index: number) => {
               let itemValue =
                 typeof item === 'string'

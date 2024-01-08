@@ -1,43 +1,37 @@
-
 'use client'
+
+import { camelCase } from "change-case";
+import Link from 'next-intl/link';
 import { useTranslations } from "next-intl"
-import { usePathname, useRouter } from "next-intl/client"
+import { useSelectedLayoutSegment } from "next/navigation";
+import { useMemo } from "react";
 
 export default function Header() {
-    const translate = useTranslations()
-    const url = usePathname()
-    const router = useRouter()
-    const onDetailsPage = url.startsWith('/dashboard/orders/')
-    const onSpecificReportPage = url.startsWith('/dashboard/reports/')
-    const section = url.includes('agency-information') ? translate('agencyInformation')
-        : url.includes('orders') ? translate('orders')
-            : url.includes('staff') ? translate('staff')
-                : url.includes('customers') ? translate('customers')
-                    : url.includes('notifications') ? translate('notifications')
-                        : translate('reports')
+    const segment = useSelectedLayoutSegment();
+    let page: string = useMemo(() => { return segment ?? '' }, [segment]);
+    const translate = useTranslations();
+
     return (
-        <>
-            <div className={`flex items-center ${onDetailsPage && `justify-between` || onSpecificReportPage && `justify-between`} w-full px-[153px] py-8 border-b border-tertiary-dark`}>
-                <div className="text-gray-700 text-[30px]"> {onDetailsPage ? translate('order') : onSpecificReportPage ? translate("specificReport^") : section} </div>
-                {onDetailsPage &&
-                    (
-                        <button className="text-primary text-[20px] font-bold" onClick={() => {
-                            router.push('/dashboard/orders')
-                        }}>
-                            BACK
-                        </button>
-                    )
-                }
-                {onSpecificReportPage &&
-                    (
-                        <button className="text-primary text-[20px] font-semibold" onClick={() => {
-                            router.push('/dashboard/reports')
-                        }}>
-                            All Reports
-                        </button>
-                    )
-                }
+        <div className="border-b border-tertiary-dark">
+            <div className="max-w-screen-2xl m-auto py-8">
+                <div className="flex justify-between items-center gap-4">
+                    <div className="flex-1">
+                        <h1 className="text-[36px] leading-0">{translate(camelCase(page)).toUpperCase()}</h1>
+                    </div>
+                    {
+                        (page === 'orders' || page === 'reports') &&
+                        (
+                            <div className="flex-none">
+                                <Link href={`/dashboard/${page}`}
+                                    className="transition-all delay-100 block text-primary text-[20px] p-2 rounded hover:bg-tertiary-dark hover:underline">
+                                    BACK
+                                </Link>
+                            </div>
+                        )
+                    }
+                </div>
             </div>
-        </>
+        </div>
+
     )
 }

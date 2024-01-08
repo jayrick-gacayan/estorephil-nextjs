@@ -8,6 +8,7 @@ export default function CustomCountryPicker<T>({
   items,
   onToggle,
   onSelect,
+  selectedClassName,
 }: {
   show: boolean;
   value: T
@@ -15,6 +16,7 @@ export default function CustomCountryPicker<T>({
   items: T[];
   onToggle: () => void;
   onSelect: (value: T) => void | Promise<void>;
+  selectedClassName: (value: T) => string;
 }) {
   return (
     <div className='relative'>
@@ -28,19 +30,21 @@ export default function CustomCountryPicker<T>({
         ${show ? 'block' : 'hidden'}`}>
         {
           items.map((item: any, index: number) => {
-            return (<div key={`${index}-${item.code}`}
-              className='flex items-center gap-4 p-2 hover:bg-tertiary-dark cursor-pointer'
-              onMouseDown={() => { onSelect(item); }}
-              onTouchEnd={() => { onSelect(item) }}>
-              <div className='block'>
-                <Image alt='selected-country-picker-alt'
-                  src={`/flags/${item.code}_flag.svg`}
-                  height={24}
-                  width={24}
-                  className='w-6 h-6' />
+            return (
+              <div key={`${index}-${item.code}`}
+                className={`flex items-center gap-4 p-2 hover:bg-tertiary-dark cursor-pointer ${selectedClassName(item)}`}
+                onMouseDown={() => { onSelect(item); }}
+                onTouchEnd={() => { onSelect(item) }}>
+                <div className='block'>
+                  <Image alt='selected-country-picker-alt'
+                    src={`/flags-svg/${item.code}.svg`}
+                    height={24}
+                    width={24}
+                    className='w-6 h-6' />
+                </div>
+                <div className='block'>{item.code.toUpperCase()}</div>
               </div>
-              <div className='block'>{item.code.toUpperCase()}</div>
-            </div>)
+            )
           })
         }
       </div>

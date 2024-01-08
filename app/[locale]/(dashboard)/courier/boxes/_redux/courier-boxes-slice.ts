@@ -4,6 +4,8 @@ import { paginatedInit, textInputFieldValue } from "@/types/helpers/field-method
 import { RequestStatus } from "@/types/enums/request-status";
 import { Box } from "@/models/box";
 import { Paginated } from "@/models/paginated";
+import { PhRegion } from "@/models/ph-region";
+import { TextInputField } from "@/types/props/text-input-field";
 
 const initialState: CourierBoxesState = {
   modalBoxesOpen: {
@@ -22,6 +24,7 @@ const initialState: CourierBoxesState = {
     weight: textInputFieldValue(''),
     weightType: textInputFieldValue(''),
     requestStatus: RequestStatus.NONE,
+    regionFees: []
   },
   courierBoxes: paginatedInit<Box>({
     data: [],
@@ -56,6 +59,17 @@ const courierBoxesSlice = createSlice({
         courierBoxes: {
           ...state.courierBoxes,
           currentPage: action.payload
+        }
+      }
+    },
+    courierBoxesUpdated: (state: CourierBoxesState, action: PayloadAction<{ id: number; box: Box; }>) => {
+      return {
+        ...state,
+        courierBoxes: {
+          ...state.courierBoxes,
+          data: state.courierBoxes.data.map((box: Box) => {
+            return box.id! === action.payload.id ? action.payload.box : box
+          })
         }
       }
     },
@@ -247,6 +261,48 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
+    regionFeesAdded: (state: CourierBoxesState, action: PayloadAction<PhRegion>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: [
+            ...state.boxFormFields.regionFees,
+            { region: action.payload, fee: textInputFieldValue("") }
+          ]
+        }
+      }
+    },
+    regionFeesFeeUpdated: (state: CourierBoxesState, action: PayloadAction<{ code: string; value: string; }>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.map((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code === action.payload.code ? {
+              ...regFee, fee: textInputFieldValue(action.payload.value)
+            } : regFee
+          })
+        }
+      }
+    },
+    regionFeesRemoved: (state: CourierBoxesState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.filter((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code !== action.payload
+          })
+        }
+      }
+    },
     boxFormFieldsReset: (state: CourierBoxesState) => {
       return {
         ...state,
@@ -261,7 +317,8 @@ const courierBoxesSlice = createSlice({
           referralPercentage: textInputFieldValue(''),
           weight: textInputFieldValue(''),
           weightType: textInputFieldValue(''),
-          requestStatus: RequestStatus.NONE
+          requestStatus: RequestStatus.NONE,
+          regionFees: []
         }
       }
     }
@@ -291,7 +348,11 @@ export const {
   editFormFieldsFilled,
   courierBoxesSet,
   courierBoxesRequestStatusSet,
-  courierBoxesPageNumberSet
+  courierBoxesPageNumberSet,
+  courierBoxesUpdated,
+  regionFeesAdded,
+  regionFeesFeeUpdated,
+  regionFeesRemoved
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;
