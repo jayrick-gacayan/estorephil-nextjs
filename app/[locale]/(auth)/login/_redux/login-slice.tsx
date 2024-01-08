@@ -62,6 +62,7 @@ export const {
     emailChanged,
     passwordChanged,
     loginFormSubmitted,
-    passwordShown
+    passwordShown,
+    loginMessagePrinted,
 } = loginSlice.actions
 export default loginSlice.reducer

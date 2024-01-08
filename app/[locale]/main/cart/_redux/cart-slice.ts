@@ -1,33 +1,33 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { PurchaseMethodState } from './purchase-method-state';
+import { CartState } from './cart-state';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { Products } from '@/models/products';
 import { Seller } from '@/models/seller';
 
-const initialState: PurchaseMethodState = {
+const initialState: CartState = {
   purchaseMethodItems: [],
   purchaseMethodItemToInteract: undefined,
 }
 
-export const shopMethodSlice = createSlice({
-  name: 'purchaseMethod',
+export const cartSlice = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
-    purchaseMethodItemsSet: (state: PurchaseMethodState, action: PayloadAction<Cart[] | BalikbayanBox[]>) => {
+    purchaseMethodItemsSet: (state: CartState, action: PayloadAction<Cart[] | BalikbayanBox[]>) => {
       return { ...state, purchaseMethodItems: action.payload };
     },
-    isSelectAllSet: (state: PurchaseMethodState, action: PayloadAction<boolean>) => {
+    isSelectAllSet: (state: CartState, action: PayloadAction<boolean>) => {
       return { ...state, isSelectAll: action.payload };
     },
-    addToShopMethodItem: (state: PurchaseMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
+    addToShopMethodItem: (state: CartState, action: PayloadAction<Cart | BalikbayanBox>) => {
       return {
         ...state,
         purchaseMethodItems: [...state.purchaseMethodItems, action.payload],
         purchaseMethodItemToInteract: action.payload
       };
     },
-    removeFromToPurchaseMethodItem: (state: PurchaseMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
+    removeFromToPurchaseMethodItem: (state: CartState, action: PayloadAction<Cart | BalikbayanBox>) => {
 
       if (state.purchaseMethodItems.length > 0) {
         let { product } = action.payload;
@@ -43,7 +43,7 @@ export const shopMethodSlice = createSlice({
         }
       }
     },
-    productItemQuantitySet: (state: PurchaseMethodState, action: PayloadAction<{ product: Products; quantity: number; }>) => {
+    productItemQuantitySet: (state: CartState, action: PayloadAction<{ product: Products; quantity: number; }>) => {
       if (state.purchaseMethodItems.length > 0) {
         const { product, quantity } = action.payload;
         let existingData = state.purchaseMethodItems.find((purchaseMethod: Cart | BalikbayanBox) => {
@@ -56,7 +56,7 @@ export const shopMethodSlice = createSlice({
         }
       }
     },
-    productItemisGoingToCheckoutChanged: (state: PurchaseMethodState, action: PayloadAction<Cart | BalikbayanBox>) => {
+    productItemisGoingToCheckoutChanged: (state: CartState, action: PayloadAction<Cart | BalikbayanBox>) => {
       if (state.purchaseMethodItems.length > 0) {
         let existingData = state.purchaseMethodItems.find((purchaseMethod: Cart | BalikbayanBox) => {
           return purchaseMethod.product.id === action.payload.product.id
@@ -67,7 +67,7 @@ export const shopMethodSlice = createSlice({
         }
       }
     },
-    isAllProductsGoingToCheckoutBySeller: (state: PurchaseMethodState, action: PayloadAction<{ seller: Seller; isAllGoingToCheckOut: boolean; }>) => {
+    isAllProductsGoingToCheckoutBySeller: (state: CartState, action: PayloadAction<{ seller: Seller; isAllGoingToCheckOut: boolean; }>) => {
       if (state.purchaseMethodItems.length > 0) {
         let { seller, isAllGoingToCheckOut } = action.payload;
 
@@ -77,7 +77,7 @@ export const shopMethodSlice = createSlice({
         });
       }
     },
-    isSelectAllProductsGoingToCheckout: (state: PurchaseMethodState, action: PayloadAction<boolean>) => {
+    isSelectAllProductsGoingToCheckout: (state: CartState, action: PayloadAction<boolean>) => {
       if (state.purchaseMethodItems.length > 0) {
         state.purchaseMethodItems = state.purchaseMethodItems.map((purchaseMethod: Cart | BalikbayanBox) => {
           return { ...purchaseMethod, isGoingToCheckout: !action.payload }
@@ -97,6 +97,6 @@ export const {
   productItemisGoingToCheckoutChanged,
   isAllProductsGoingToCheckoutBySeller,
   isSelectAllProductsGoingToCheckout
-} = shopMethodSlice.actions;
+} = cartSlice.actions;
 
-export default shopMethodSlice.reducer;
+export default cartSlice.reducer;

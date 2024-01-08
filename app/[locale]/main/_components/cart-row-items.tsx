@@ -3,7 +3,7 @@ import { Cart } from '@/models/cart';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
-export default function PurchaseMethodRowItems({
+export default function CartRowItems({
   purchaseMethodItem,
   withCheckboxComponent,
   withQuantityComponent,
@@ -15,7 +15,6 @@ export default function PurchaseMethodRowItems({
   return (
     <div className='flex gap-2 p-2 items-center'>
       {withCheckboxComponent && withCheckboxComponent}
-
       <div className='flex-none w-24 text-center overflow-hidden'>
         <Image alt={`alt-cart-image-${purchaseMethodItem.product.id}-${purchaseMethodItem.seller.id}`}
           src={purchaseMethodItem.product.productImage}

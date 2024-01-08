@@ -7,30 +7,33 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import { BalikbayanBox } from '@/models/balikbayan-box';
-import { PurchaseMethodState } from '../_redux/purchase-method-state';
+import { CartState } from '../_redux/cart-state';
 import SelectAll from '../_components/select-all';
-import { isSelectAllProductsGoingToCheckout, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged, productItemQuantitySet } from '../_redux/purchase-method-slice';
-import Collapsible from '../../../_components/collapsible';
-import CollapsibleItem from '../../../_components/collapsible-item';
-import PurchaseMethodRowItems from '../../../_components/purchase-method-row-items';
-import PurchaseMethodQuantityContainer from '../../../_components/purchase-method-quantity-container';
+import { isSelectAllProductsGoingToCheckout, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged, productItemQuantitySet } from '../_redux/cart-slice';
+import Collapsible from '../../_components/collapsible';
+import CollapsibleItem from '../../_components/collapsible-item';
+import CartRowItems from '../../_components/cart-row-items';
+import CartQuantityContainer from '../../_components/cart-quantity-container';
+import { useSession } from 'next-auth/react';
 
 export default function CartItemsContainer() {
-  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; })
+  const { data: sessionData } = useSession();
+  const cartState: CartState = useAppSelector((state: RootState) => { return state.cart; })
   const dispatch: AppDispatch = useAppDispatch();
-  const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
+  const purchaseMethodItems = useMemo(() => { return cartState.purchaseMethodItems }, [cartState.purchaseMethodItems]);
 
   const sellers = useMemo(() => {
-    return purchaseMethodState.purchaseMethodItems.length === 0 ? [] :
-      purchaseMethodState.purchaseMethodItems.map((valueShopMethod: Cart | BalikbayanBox) => {
+    return cartState.purchaseMethodItems.length === 0 ? [] :
+      cartState.purchaseMethodItems.map((valueShopMethod: Cart | BalikbayanBox) => {
         return valueShopMethod.seller;
       }).filter((valueSeller: Seller, index: number, arrayCurrent: Seller[]) => {
         let arrayCurrentTemp = arrayCurrent.map((current: Seller) => { return current.id });
         return arrayCurrentTemp.indexOf(valueSeller.id) === index;
       })
 
-  }, [purchaseMethodState.purchaseMethodItems]);
+  }, [cartState.purchaseMethodItems]);
 
+  console.log('sdfjsdlkfjds', sessionData)
   return sellers.length === 0 || purchaseMethodItems.length === 0 ? (<div>No Items</div>) : (
     <>
       <SelectAll current={purchaseMethodItems.every((value: Cart | BalikbayanBox) => { return value.isGoingToCheckout; })}
@@ -63,7 +66,7 @@ export default function CartItemsContainer() {
                           return purchaseMethodItem.seller.id === seller.id;
                         }).map((valuePurchaseMethod: Cart) => {
                           return (
-                            <PurchaseMethodRowItems key={`purchase-method-${valuePurchaseMethod.product.id}`}
+                            <CartRowItems key={`purchase-method-${valuePurchaseMethod.product.id}`}
                               purchaseMethodItem={valuePurchaseMethod}
                               withCheckboxComponent={
                                 <div className='flex-none w-auto'>
@@ -81,7 +84,7 @@ export default function CartItemsContainer() {
                                 </div>
                               }
                               withQuantityComponent={
-                                <PurchaseMethodQuantityContainer quantity={valuePurchaseMethod.quantity}
+                                <CartQuantityContainer quantity={valuePurchaseMethod.quantity}
                                   minusQuantityComponent={
                                     <div className={`py-1.5 pl-2.5 pr-1 w-8 flex-none hover:bg-secondary-light
                                         ${valuePurchaseMethod.quantity === 1 ? 'disabled:cursor-not-allowed' : 'cursor-pointer'}`}

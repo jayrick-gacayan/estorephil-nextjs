@@ -13,7 +13,7 @@ import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
-import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_redux/purchase-method-slice';
+import cartReducer from '@/app/[locale]/main/cart/_redux/cart-slice';
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
@@ -34,7 +34,7 @@ export const store = configureStore({
         login: loginReducer,
         store: storeReducer,
         product: productReducer,
-        purchaseMethod: purchaseMethodReducer,
+        cart: cartReducer,
         register: registerReducer,
         checkout: checkoutReducer,
         sender: senderReducer,

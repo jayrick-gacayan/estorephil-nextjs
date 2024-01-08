@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export default function PurchaseMethodQuantityContainer({
+export default function CartQuantityContainer({
   quantity,
   minusQuantityComponent,
   addQuantityComponent,

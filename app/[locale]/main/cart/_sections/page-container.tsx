@@ -3,30 +3,28 @@
 import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
-import { PurchaseMethodState } from '../_redux/purchase-method-state';
 import { useRouter } from 'next-intl/client';
 import CartItemsContainer from './cart-items-container';
 import Image from 'next/image';
-import { MainState } from '../../../_redux/main-state';
+import { MainState } from '../../_redux/main-state';
 import { useSession } from 'next-auth/react';
+import CartHeader from './cart-header';
+import SummaryCheckout from './summary-checkout';
+import { capitalCase } from 'change-case';
 
-export default function PageContainer({
-  checkoutSlug
-}: {
-  checkoutSlug: string
-}): JSX.Element | null {
+export default function PageContainer(): JSX.Element | null {
   const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const { data: sessionData } = useSession()
-  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => {
-    return state.purchaseMethod;
-  });
 
   const cartType = useMemo(() => {
-    const cartType = !!sessionData ? sessionData.cart?.cart_type : mainState.cartType;
-    return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+    const cartType = sessionData?.cart?.cart_type ?? mainState.cartType;
+    return cartType === '' ? '' : capitalCase(cartType);
   }, [mainState.cartType]);
+
+  const cartProducts = useMemo(() => {
+    return sessionData?.cart?.cart_products ?? (mainState?.cart?.cart_products ?? []);
+  }, []);
 
   useEffect(() => {
     if (cartType === '') {
@@ -34,13 +32,8 @@ export default function PageContainer({
     }
   }, [cartType, router]);
 
-  const purchaseMethodItems = useMemo(() => {
-    return purchaseMethodState.purchaseMethodItems;
-  }, [purchaseMethodState.purchaseMethodItems]);
-
-
   return cartType === '' ? null :
-    purchaseMethodItems.length === 0 ?
+    cartProducts.length === 0 ?
       (
         <div className='max-w-screen-2xl m-auto p-8'>
           <div className='flex items-center justify-center'>
@@ -55,9 +48,9 @@ export default function PageContainer({
                   className='z-10' />
               </div>
 
-              <h1 className='font-semibold text-[56px] leading-0'>{`${checkoutSlug[0].toUpperCase()}${checkoutSlug.slice(1)}`} Empty</h1>
+              <h1 className='font-semibold text-[56px] leading-0'>{`${cartType}`} Empty</h1>
               <div className='text-tertiary'>
-                You have not added any items yet in your {checkoutSlug}.
+                You have not added any items yet in your {cartType.toLowerCase()}.
               </div>
               <button className='block p-4 rounded text-white w-full bg-warning hover:bg-warning-light'>
                 SHOP NOW
@@ -67,6 +60,24 @@ export default function PageContainer({
         </div>
       ) :
       (
-        <CartItemsContainer />
+        <div className='flex'>
+          <div className='flex-1 bg-white'>
+            <CartHeader text={cartType.toUpperCase()} />
+            <div className='p-8 space-y-3'>
+              <CartItemsContainer />
+            </div>
+          </div>
+          <SummaryCheckout
+            totalItems={
+              cartProducts.filter((value: any) => {
+                return value.isGoingToCheckout
+              }).length
+            }
+            onRedirectToCheckout={
+              () => {
+                router.push('/checkout/sender');
+              }
+            } />
+        </div>
       )
 }
