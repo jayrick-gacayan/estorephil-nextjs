@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next-intl/link';
-import { AgentRegisterState } from '../(forAgentCourier)/agent/register/_redux/agent-register-state';
+
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
 import { usePathname, useRouter } from 'next-intl/client';
-import { agentRegisterFormReset } from '../(forAgentCourier)/agent/register/_redux/agent-register-slice';
+import { AgentRegisterState } from '../agent/register/_redux/agent-register-state';
+
 
 export default function SignUpThanksOne() {
   const agentRegisterState: AgentRegisterState = useAppSelector((state: RootState) => { return state.agentRegister });

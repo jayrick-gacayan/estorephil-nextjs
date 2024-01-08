@@ -27,6 +27,26 @@ export class AccountService {
   async nextAuthSignOut(callbackUrl?: string) {
     return await signOut(callbackUrl ? { callbackUrl: callbackUrl } : {})
   }
+  async register({ body }: { body: FormData }) {
+    return await fetch(
+      `${process.env.API_URL}/register-company`,
+      {
+        method: 'POST',
+        body,
+      }
+    );
+  }
+  async registerAgent({ body }: { body: string }) {
+    console.log('register agent service')
+    return await fetch(
+      `${process.env.API_URL}/register-user`,
+      {
+        method: 'POST',
+        body: body,
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+  }
   async registerAgentCompany(body: string) {
     return await fetch(`${process.env.API_URL}/register-company`, {
       method: 'POST',
