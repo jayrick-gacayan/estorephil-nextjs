@@ -1,39 +1,78 @@
 'use client'
-import PasswordFieldInput from "@/app/[locale]/_components/password-field-input";
-import TextFieldInput from "@/app/[locale]/_components/text-field-input";
-import { RootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { businessNameChanged, businessNatureChanged, confirmPassworChanged, emailChanged, firstNameChanged, lastNameChanged, passwordChanged, phoneNumberChanged, signUpClicked } from "../../../register/_redux/register-slice";
 
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
+import TextFieldInput from "../_components/text-field-input";
+import PasswordFieldInput from "../_components/password-field-input";
+import { useEffect } from "react";
+import { useAppDispatch } from "@/app/_hooks/redux_hooks";
+import { useSearchParams } from "next/navigation";
+import { getCompanyDataByInvitation, registerAgent } from "../_redux/agent-register-thunk";
+import { accountContainer } from "@/inversify/inversify.config";
+import { TYPES } from "@/inversify/types";
+import { AccountRepository } from "@/repositories/account-repository";
+import { signUpClicked } from "../../../register/_redux/register-slice";
+import { passwordChanged, confirmPassworChanged } from "../_redux/agent-register-slice";
+import { RequestStatus } from "@/models/result";
+import Image from "next/image";
 
 export default function Form() {
     const state = useSelector((state: RootState) => state.agentRegister)
-    const dispatch = useDispatch()
+    const token = useSearchParams().get('token')
+    const accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+    const registerAgentStatus = state.registerAgentStatus
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        if (!!token) {
+            console.log('token ', token)
+            dispatch(getCompanyDataByInvitation(accountRepository, token))
+        }
+    }, [])
     return (
-        <>
-            <div className="bg-white shadow-md py-[30px] px-[25px] w-full rounded-md">
-                <div>
-                    <h1 className="text-[35px] text-primary-dark font-bold">Agent Sign Up</h1>
-                </div>
-                <div>
-                    <TextFieldInput label={"Business Name"} value={state.businessName.value} onChange={(e) => { dispatch(businessNameChanged(e.target.value)) }} errorText={state.businessName.error} type={"text"} />
-                    <TextFieldInput label={"Nature of Business"} value={state.businessNature.value} onChange={(e) => { dispatch(businessNatureChanged(e.target.value)) }} errorText={state.businessNature.error} type={"text"} />
-                    <div className="">
-                        <label className="text-base font-medium text-zinc-500">Company Owner</label>
-                        <div className="flex gap-2">
-                            <TextFieldInput label={"First Name"} className={"w-full "} placeholder={"First name"} value={state.firstName.value} onChange={(e) => { dispatch(firstNameChanged(e.target.value)) }} errorText={state.firstName.error} type={"text"} />
-                            <TextFieldInput label={"Last Name"} className={"w-full "} placeholder={"Last name"} value={state.lastName.value} onChange={(e) => { dispatch(lastNameChanged(e.target.value)) }} errorText={state.lastName.error} type={"text"} />
+        <>{
+            registerAgentStatus === RequestStatus.SUCCESS ? (<>
+                <div className="flex flex-col items-center justify-center gap-4 h-[90vh]">
+                    <div className="text-center">
+                        <Image
+                            src={'/thank-you.png'}
+                            height={357}
+                            width={373}
+                            alt="success"
+                        />
+                    </div>
+                    <div className="text-center">
+                        <h1 className="text-[#2F353D] text-[56px] font-semibold">Register Successful</h1>
+                    </div>
+                    <div className="w-full flex items-center justify-center">
+                        <button className="text-white bg-primary py-2 w-[60%]">Home</button>
+                    </div>
+                </div></>)
+                : (<>
+                    <div className="bg-white shadow-md w-[45rem] rounded-md">
+                        <div className=" bg-[#3a3f51] w-full p-4">
+                            <h1 className="text-[30px] text-white font-medium text-center">Agent Sign Up</h1>
+                        </div>
+                        <div className="p-4 text-center">
+                            <p className="text-sm">Please enter the password that you will be using to sign-up as an agent.</p>
+                        </div>
+                        <div className="p-4">
+                            <TextFieldInput disabled={true} placeholder={"Company Name"} className="w-full" value={state.businessName.value} errorText={state.businessName.error} type={"text"} />
+                            <TextFieldInput disabled={true} className={"w-full "} placeholder={"First name"} value={state.firstName.value} errorText={state.firstName.error} type={"text"} />
+                            <TextFieldInput disabled={true} className={"w-full "} placeholder={"Last name"} value={state.lastName.value} errorText={state.lastName.error} type={"text"} />
+                            <TextFieldInput disabled={true} placeholder={'Email'} className="w-full" value={state.email.value} errorText={state.email.error} type={"text"} />
+                            <PasswordFieldInput placeholder={'Password'} className="w-full" value={state.password.value} onChange={(e) => { dispatch(passwordChanged(e.target.value)) }} errorText={state.password.error} show={state.password.show} />
+                            <PasswordFieldInput placeholder={'Confirm Password'} className="w-full" value={state.confirmPassword.value} onChange={(e) => { dispatch(confirmPassworChanged({ confirmPassword: e.target.value, password: state.password.value })) }} errorText={state.confirmPassword.error} show={state.password.show} />
+                        </div>
+                        <div className="w-full p-4">
+                            <button className="w-full bg-primary text-white py-2 rounded-sm" onClick={() => {
+                                console.log('register button clicked')
+                                dispatch(signUpClicked('clicked'))
+                                dispatch(registerAgent(accountRepository))
+                            }}>Sign up</button>
                         </div>
                     </div>
-                    <TextFieldInput label={"Email Address"} value={state.email.value} onChange={(e) => { dispatch(emailChanged(e.target.value)) }} errorText={state.email.error} type={"text"} />
-                    <TextFieldInput label={"Phone Number"} value={state.phoneNumber.value} onChange={(e) => { dispatch(phoneNumberChanged(e.target.value)) }} errorText={state.phoneNumber.error} type={"text"} />
-                    <PasswordFieldInput label="Password" value={state.password.value} onChange={(e) => { dispatch(passwordChanged(e.target.value)) }} errorText={state.password.error} show={state.password.show} />
-                    <PasswordFieldInput label="Confirm Password" value={state.confirmPassword.value} onChange={(e) => { dispatch(confirmPassworChanged({ confirmPassword: e.target.value, password: state.password.value })) }} errorText={state.confirmPassword.error} show={state.password.show} />
-                </div>
-                <div className="w-full">
-                    <button className="w-full bg-primary text-white py-2 rounded-sm" onClick={() => dispatch(signUpClicked('clicked'))}>Sign up</button>
-                </div>
-            </div>
+                </>)
+        }
         </>
     )
 }

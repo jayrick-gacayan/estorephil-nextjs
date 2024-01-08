@@ -1,4 +1,5 @@
 import { FieldInput } from "@/models/field-input";
+import { RequestStatus } from "@/models/result";
 
 export interface RegisterState {
     businessName: FieldInput,
@@ -10,5 +11,6 @@ export interface RegisterState {
     password: FieldInput,
     confirmPassword: FieldInput,
     valid: boolean
+    registerStatus: RequestStatus
     status: 'success' | 'loaded' | 'failed' | 'waiting',
 }

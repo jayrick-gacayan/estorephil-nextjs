@@ -135,11 +135,10 @@ export default function LoginForm() {
                                     </button>
                                 </form>
                                 <div className='space-y-4'>
-                                    <Link href='#'
-                                        className='transition-all delay-100 text-tertiary-dark w-full block text-center hover:text-primary hover:underline'>{translate('needToSignUp?')}</Link>
+                                    <p className='transition-all delay-100 text-slate-700 w-full block text-center'>{translate('needToSignUp?')}</p>
                                     <button className='transition-all delay-100 bg-white w-full border-tertiary-dark rounded border py-2 hover:bg-warning-light hover:text-white'
                                         onClick={(e) => {
-                                            // store.dispatch(login(accountRepository))
+                                          router.push('/register')
                                         }}
                                     >
                                         {translate('registerNow')}

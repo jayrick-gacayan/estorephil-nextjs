@@ -41,6 +41,10 @@ const agentAgencyInformationSlice = createSlice({
         }
       }
     },
+    agentRegisterFormReset: () => {
+      return initialState;
+    },
+
     updateBasicInfoStatusLoaded: (state: AgentAgencyInformationState) => {
       return {
         ...state,
@@ -176,7 +180,7 @@ export const {
   lastNameChanged, provinceChanged, phoneNumberChanged,
   updateModalBasicInfoClicked, updateBasicInfoStatusLoaded,
   updateBasicInfoRequestStatusSet, updateBasicInfoStatusSuccess,
-  agentBasicInfoSet,
+  agentBasicInfoSet,agentRegisterFormReset,
   agentFormBasicInfoFieldsReset
 } = agentAgencyInformationSlice.actions;
 

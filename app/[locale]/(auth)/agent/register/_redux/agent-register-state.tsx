@@ -1,4 +1,5 @@
 import { FieldInput } from "@/models/field-input";
+import { RequestStatus } from "@/models/result";
 
 export interface AgentRegisterState {
     businessName: FieldInput,
@@ -10,5 +11,8 @@ export interface AgentRegisterState {
     password: FieldInput,
     confirmPassword: FieldInput,
     valid: boolean
+    withToken: boolean
+    getCompanyDataByInvitationStatus: RequestStatus,
+    registerAgentStatus: RequestStatus,
     status: 'success' | 'loaded' | 'failed' | 'waiting',
 }
