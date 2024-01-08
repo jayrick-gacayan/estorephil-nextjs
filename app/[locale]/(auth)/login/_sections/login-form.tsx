@@ -22,6 +22,7 @@ import { RequestStatus } from '@/types/enums/request-status';
 import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import { AccountRepository } from '@/repositories/account-repository';
+import { sentenceCase } from 'change-case';
 
 export default function LoginForm() {
     const dispatch: AppDispatch = useAppDispatch();
@@ -68,7 +69,7 @@ export default function LoginForm() {
                         {translate('userRole', { userRole: 'agent' }).toUpperCase()}
                     </h3>
                     <div className='block text-center'>{translate('signIn')}</div>
-                    {message !== '' && (<div className='rounded bg-danger text-white'>Invalid credentials</div>)}
+                    {message !== '' && (<div className='px-8 text-white'><div className='bg-danger p-2 rounded'>{sentenceCase(message)}</div></div>)}
                     <div className='px-8 py-4 space-y-8'>
                         <form onSubmit={loginFormSubmit} className='space-y-4'>
                             <InputCustom errorText={email.errorText}

@@ -15,7 +15,7 @@ export function login(accountRepository: AccountRepository) {
         if (!result?.error) {
             dispatch(loginRequestStatusSet(RequestStatus.SUCCESS))
         } else {
-            dispatch(loginMessagePrinted('Invalid Credentials'))
+            dispatch(loginMessagePrinted(result.error))
             dispatch(loginRequestStatusSet(RequestStatus.FAILURE))
         }
     }
