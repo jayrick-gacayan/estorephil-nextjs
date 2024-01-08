@@ -9,10 +9,11 @@ export default function TextFieldInput({
     errorText = '',
     errorTextClassName,
     className = ``,
+    disabled,
 }: {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     required?: boolean,
-    label: string,
+    label?: string,
     type: 'number' | 'text',
     show?: boolean,
     value?: any,
@@ -20,6 +21,7 @@ export default function TextFieldInput({
     errorText?: string,
     className?: string
     errorTextClassName?: string
+    disabled?: boolean,
 }) {
     return (
         <>
@@ -30,7 +32,14 @@ export default function TextFieldInput({
                         <p className={`${errorTextClassName ?? ``} ${errorText == '' ? `hidden` : ``} text-red-500`}>{errorText}</p>
                     </div>
                     <div className="">
-                        <input required={required} onChange={onChange} placeholder={placeholder} value={value} className={`py-[4px] px-[2px] border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `} />
+                        <input
+                            required={required}
+                            disabled={disabled ?? false}
+                            onChange={onChange}
+                            placeholder={placeholder}
+                            value={value}
+                            className={`py-[4px] text-slate-400 px-[8px] border-[1.5px] disabled:bg-[#f5f7fa] border-gray-200 rounded-sm outline-blue-500 w-full `}
+                        />
                     </div >
                 </div >
             </div >
