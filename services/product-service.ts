@@ -42,4 +42,33 @@ export class ProductService {
     async productsSearch(locale: string, queryString: string) {
         return await fetch(`${process.env.API_URL}/${locale}/products${queryString}`)
     }
+
+    async getAllProductFavorites(token: string) {
+        return await fetch(`${process.env.API_URL}/favorite-products`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+    }
+
+    async addProductToFavorites(token: string, id: string) {
+        return await fetch(`${process.env.API_URL}/product/${id}/add-to-favorites`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+    }
+
+    async deleteProductFromFavorites(token: string, id: string) {
+        return await fetch(`${process.env.API_URL}/product/${id}/remove-from-favorites`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+    }
 }

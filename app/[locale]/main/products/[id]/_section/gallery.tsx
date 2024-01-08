@@ -1,27 +1,13 @@
 'use client'
 import Image from "next/image";
-import { ProductPreviewImage } from "./product-image-preview";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, store } from "@/redux/store";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { getProductDetails } from "../_redux/product-thunk";
-import { productContainer } from "@/inversify/inversify.config";
-import { ProductRepository } from "@/repositories/product-repository";
-import { TYPES } from "@/inversify/types";
+import { RootState } from "@/redux/store";
 import { previewImageChanged } from "../_redux/product-slice";
 
 export default function Gallery() {
     const state = useSelector((state: RootState) => state.product)
     const images = state.product.gallery
-    const productId = useParams().id.toString()
-    const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
     const dispatch = useDispatch()
-    useEffect(() => {
-        if (!!productId) {
-            store.dispatch(getProductDetails(productRepository, productId))
-        }
-    }, [productId])
     return (
         <>
             <div className='basis-1/2 py-6 px-8 '>

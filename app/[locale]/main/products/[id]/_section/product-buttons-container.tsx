@@ -4,8 +4,8 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useEffect, useMemo, useState, useRef } from 'react';
-import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
+import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
+import { FaCartShopping, FaHeartCrack, FaRegHeart } from 'react-icons/fa6';
 import { BsBox2 } from 'react-icons/bs';
 import { addToCartQuantityChanged, cartChanged, mainModalOpened } from '../../../_redux/main-slice';
 import { CartState } from '../../../cart/_redux/cart-state';
@@ -17,19 +17,29 @@ import { productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { ProductRepository } from '@/repositories/product-repository';
 import { addToCart, removeFromCart } from '../../../_redux/main-thunk';
+import { ProductState } from '../_redux/product-state';
+import { addProductToFavorites, deleteProductFromFavorites } from '../_redux/product-thunk';
 
-export default function ProductButtonsContainer({ }) {
+export default function ProductButtonsContainer() {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethod: CartState = useAppSelector((state: RootState) => { return state.cart; });
   const dispatch: AppDispatch = useAppDispatch();
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
-  const currentProduct = useSelector((state: RootState) => state.product).product
+  const productState: ProductState = useAppSelector((state: RootState) => { return state.product });
+
+  const { currentProduct, isLoved } = useMemo(() => {
+    return {
+      currentProduct: productState.product,
+      isLoved: productState.isLoved
+    }
+  }, [productState.product, productState.isLoved])
   const productMemo: Cart | BalikbayanBox | undefined = useMemo(() => {
     let productShopMethod = shopMethod.purchaseMethodItems.find((value: Cart | BalikbayanBox) => {
       return currentProduct.id === value.product.id;
     });
     return productShopMethod;
   }, [currentProduct, shopMethod.purchaseMethodItems]);
+
   const { data: sessionData, update: updateSession } = useSession()
   const cartProducts: [] = !!sessionData?.cart ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
   const productExistsOnCart = cartProducts?.find((product: { id: number; }) => product.id === currentProduct?.id ?? 0);
@@ -72,13 +82,8 @@ export default function ProductButtonsContainer({ }) {
       }
     }
   }, [mainState.cart])
-  // useEffect(() => {
-  //   if (!!sessionData) {
-  //     if (mainState.cart === undefined) {
-  //       dispatch(cartChanged(sessionData.cart))
-  //     }
-  //   }
-  // }, [sessionData?.cart])
+
+
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
@@ -145,8 +150,19 @@ export default function ProductButtonsContainer({ }) {
               )
           }
         </button>
-        <button className='rounded-full w-20 h-auto bg-danger-light text-danger hover:bg-danger hover:text-white border border-danger space-x-2 px-6 py-3 text-center'>
-          <FaRegHeart className='inline-block' />
+        <button className={`rounded-full w-20 h-auto space-x-2 px-6 py-3 text-center border
+          ${isLoved ? 'bg-danger border-danger-light text-white hover:bg-danger-light hover:text-danger hover:border-danger' :
+            'bg-danger-light border-danger text-danger hover:bg-danger hover:text-white hover:border-danger-light'}`}
+          onClick={() => {
+            let productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
+            if (sessionData?.token && Object.keys(currentProduct).length > 0) {
+
+              isLoved ? dispatch(deleteProductFromFavorites(productRepository, sessionData.token, currentProduct.id)) :
+                dispatch(addProductToFavorites(productRepository, sessionData.token, currentProduct.id))
+            }
+          }}>
+          {isLoved ? <FaHeartCrack className='inline-block' /> : <FaRegHeart className='inline-block' />}
+
         </button>
       </div>
     </div>

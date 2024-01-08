@@ -4,6 +4,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export const initialState: ProductState = {
     getProductDetailsStatus: RequestStatus.WAITING,
+    isLoved: undefined,
     product: {},
     currentPreviewImage: {},
 }
@@ -11,7 +12,12 @@ export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-
+        productFavoriteSet: (state: ProductState, action: PayloadAction<boolean | undefined>) => {
+            return {
+                ...state,
+                isLoved: action.payload
+            }
+        },
         getProductDetailsLoaded: (state: ProductState) => {
             return {
                 ...state,
@@ -37,6 +43,8 @@ export const productSlice = createSlice({
 
 export const {
     getProductDetailsLoaded,
-    getProductDetailsSuccess, previewImageChanged
+    getProductDetailsSuccess,
+    previewImageChanged,
+    productFavoriteSet,
 } = productSlice.actions
 export default productSlice.reducer
