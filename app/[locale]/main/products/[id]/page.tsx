@@ -32,10 +32,6 @@ export default async function Page({ params }: { params: { id: string } }) {
   // if (!product) {
   //   notFound();
   // }
-
-
-
-
   return (
     <div className='bg-default p-8'>
       <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>

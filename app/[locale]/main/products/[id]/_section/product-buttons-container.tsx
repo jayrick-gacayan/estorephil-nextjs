@@ -34,11 +34,7 @@ export default function ProductButtonsContainer({ }) {
   const cartProducts: [] = !!sessionData?.cart ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
   const productExistsOnCart = cartProducts?.find((product: { id: number; }) => product.id === currentProduct?.id ?? 0);
   const [quantity, setQuantity] = useState<number>(!productMemo ? 1 : productMemo.quantity);
-  const cartType = useMemo(() => {
-    const cartType = sessionData?.cart?.cart_type ?? ``;
-    return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
-  }, [mainState.cartType]);
+  const cartType = sessionData?.cart?.cart_type === 'shopping_cart' ? 'Shopping Cart' : sessionData?.cart?.cart_type === 'balikbayan_box' ? 'Balikbayan Box' : ''
   const updateCartSession = async () => {
     if (!!sessionData) {
       await updateSession({
@@ -79,6 +75,7 @@ export default function ProductButtonsContainer({ }) {
   //     }
   //   }
   // }, [sessionData?.cart])
+  console.log('cart type: ', cartType)
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
@@ -132,7 +129,7 @@ export default function ProductButtonsContainer({ }) {
             }
           }}>
           {
-            cartType === '' ? (<span>Create An Order</span>) :
+            !(!!cartType) ? (<span>Create An Order</span>) :
               (
                 <>
                   {
