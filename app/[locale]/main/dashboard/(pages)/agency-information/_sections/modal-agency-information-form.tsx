@@ -18,7 +18,11 @@ import EditBasicInfo from './edit-basic-info';
 import EditBusinessInfo from './edit-business-info';
 import { useSelector } from 'react-redux';
 
-export default function ModalAgencyInformationForm() {
+export default function ModalAgencyInformationForm({
+  cityProvince
+}: {
+  cityProvince: { province: string; cities: string[] }[]
+}) {
   const agentAgencyInfoState: AgentAgencyInformationState = useAppSelector((state: RootState) => {
     return state.agentAgencyInfo;
   })

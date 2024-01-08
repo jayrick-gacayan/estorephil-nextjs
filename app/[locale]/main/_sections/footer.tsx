@@ -1,42 +1,42 @@
 import Link from 'next-intl/link';
 import { FaCcMastercard, FaCcPaypal, FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import { FooterLinksContainer } from '../_components/footer_links_container';
-import { LinkProps } from '@/types/props/link-props';
 import { FooterLinksContainerWithIcons } from '../_components/footer-links-container-with-icons';
 import Image from 'next/image';
 import { RiVisaLine } from 'react-icons/ri';
 import { FaStripe } from 'react-icons/fa6';
+import { NextLinkProps } from '@/types/props/nextlink-props';
 
-const customerCareLinks: LinkProps[] = [
-  { link: '#', text: 'Order Tracking' },
-  { link: '#', text: 'Return and Refund Policy' },
-  { link: '#', text: 'Payment Methods' },
-  { link: '#', text: 'Become a Seller' },
-  { link: '#', text: 'Become a Courier' },
-  { link: '#', text: 'Become an Agent' },
-  { link: '#', text: 'Contact Us' },
+const customerCareLinks: NextLinkProps[] = [
+  { link: '#', text: 'Order Tracking', altText: "" },
+  { link: '#', text: 'Return and Refund Policy', altText: "" },
+  { link: '#', text: 'Payment Methods', altText: "" },
+  { link: '#', text: 'Become a Seller', altText: "" },
+  { link: '#', text: 'Become a Courier', altText: "" },
+  { link: '#', text: 'Become an Agent', altText: "" },
+  { link: '#', text: 'Contact Us', altText: "" },
 ]
 
-const aboutEstorePhilLinks: LinkProps[] = [
-  { link: '#', text: 'About Us' },
-  { link: '#', text: 'Terms and Conditions' },
-  { link: '#', text: 'Privacy Policy' },
+const aboutEstorePhilLinks: NextLinkProps[] = [
+  { link: '#', text: 'About Us', altText: "" },
+  { link: '#', text: 'Terms and Conditions', altText: "" },
+  { link: '#', text: 'Privacy Policy', altText: "" },
 ]
 
-const socialLinks: LinkProps[] = [
-  { link: '#', icon: <FaFacebook size={30} /> },
-  { link: '#', icon: <FaTwitter size={30} /> },
-  { link: '#', icon: <FaInstagram size={30} /> },
+const socialLinks: NextLinkProps[] = [
+  { link: '#', icon: <FaFacebook size={30} />, altText: "" },
+  { link: '#', icon: <FaTwitter size={30} />, altText: "" },
+  { link: '#', icon: <FaInstagram size={30} />, altText: "" },
 ];
 
-const paymentTypeLinks: LinkProps[] = [
-  { link: '#', icon: <RiVisaLine size={30} /> },
-  { link: '#', icon: <FaStripe size={30} /> },
-  { link: '#', icon: <FaCcPaypal size={30} /> },
-  { link: '#', icon: <FaCcMastercard size={30} /> },
+const paymentTypeLinks: NextLinkProps[] = [
+  { link: '#', icon: <RiVisaLine size={30} />, altText: "" },
+  { link: '#', icon: <FaStripe size={30} />, altText: "" },
+  { link: '#', icon: <FaCcPaypal size={30} />, altText: "" },
+  { link: '#', icon: <FaCcMastercard size={30} />, altText: "" },
 ]
 
-const deliveryServicesLinks: LinkProps[] = [
+const deliveryServicesLinks: NextLinkProps[] = [
   {
     link: '#',
     icon: <Image alt='delivery-services-lbc'
@@ -44,7 +44,8 @@ const deliveryServicesLinks: LinkProps[] = [
       height={24}
       width={24}
       className='w-6 h-6'
-    />
+    />,
+    altText: ""
   },
   {
     link: '#',
@@ -53,8 +54,9 @@ const deliveryServicesLinks: LinkProps[] = [
       height={24}
       width={24}
       className='w-6 h-6'
-    />
-  },
+    />,
+    altText: ""
+  }
 ];
 
 export function Footer() {

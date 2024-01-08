@@ -8,8 +8,8 @@ import { useEffect, useMemo, useState, useRef } from 'react';
 import { FaCartShopping, FaRegHeart } from 'react-icons/fa6';
 import { BsBox2 } from 'react-icons/bs';
 import { addToCartQuantityChanged, cartChanged, mainModalOpened } from '../../../_redux/main-slice';
-import { PurchaseMethodState } from '../../../purchase-method/[slug]/_redux/purchase-method-state';
-import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../purchase-method/[slug]/_redux/purchase-method-slice';
+import { CartState } from '../../../cart/_redux/cart-state';
+import { productItemQuantitySet, addToShopMethodItem, removeFromToPurchaseMethodItem } from '../../../cart/_redux/cart-slice';
 import { MainState } from '../../../_redux/main-state';
 import { useSelector } from 'react-redux';
 import { useSession } from 'next-auth/react';
@@ -20,7 +20,7 @@ import { addToCart, removeFromCart } from '../../../_redux/main-thunk';
 
 export default function ProductButtonsContainer({ }) {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
-  const shopMethod: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; });
+  const shopMethod: CartState = useAppSelector((state: RootState) => { return state.cart; });
   const dispatch: AppDispatch = useAppDispatch();
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const currentProduct = useSelector((state: RootState) => state.product).product

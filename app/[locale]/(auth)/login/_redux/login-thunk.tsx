@@ -1,6 +1,6 @@
 import { AppDispatch, store } from "@/redux/store";
 import { LoginState } from "./login-state";
-import { loginRequestStatusSet } from "./login-slice";
+import { loginMessagePrinted, loginRequestStatusSet } from "./login-slice";
 import { RequestStatus } from "@/types/enums/request-status";
 import { AccountRepository } from "@/repositories/account-repository";
 
@@ -15,6 +15,7 @@ export function login(accountRepository: AccountRepository) {
         if (!result?.error) {
             dispatch(loginRequestStatusSet(RequestStatus.SUCCESS))
         } else {
+            dispatch(loginMessagePrinted(result.error))
             dispatch(loginRequestStatusSet(RequestStatus.FAILURE))
         }
     }

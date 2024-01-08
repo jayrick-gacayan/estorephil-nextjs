@@ -1,4 +1,4 @@
-import { LinkProps } from '@/types/props/link-props';
+import { NextLinkProps } from '@/types/props/nextlink-props';
 
 export function FooterLinksContainerWithIcons({
   headerText,
@@ -6,7 +6,7 @@ export function FooterLinksContainerWithIcons({
   linkChildrenClassName,
 }: {
   headerText: string;
-  links: LinkProps[];
+  links: NextLinkProps[];
   linkChildrenClassName: string;
 }) {
   return (
@@ -14,7 +14,7 @@ export function FooterLinksContainerWithIcons({
       <h1 className='font-bold'>{headerText}</h1>
       <div className='flex flex-wrap gap-1'>
         {
-          links.map((link: LinkProps, index: number) => {
+          links.map((link: NextLinkProps, index: number) => {
             return (
               <div className={`${linkChildrenClassName} cursor-pointer relative hover:text-primary`} key={`${link.text}-${index}`}>
                 {link.icon}

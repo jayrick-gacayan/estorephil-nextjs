@@ -4,5 +4,6 @@ import { TextInputField } from "@/types/props/text-input-field"
 export interface LoginState {
     email: TextInputField<string>;
     password: TextInputField<string>;
-    requestStatus: RequestStatus
+    requestStatus: RequestStatus;
+    message: string;
 }
