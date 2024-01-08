@@ -111,6 +111,7 @@ export default function MainHeader({
                           SIGNOUT
                         </button>
                       </div>
+                    </div>
                   </Dropdown>
                   : (
                     <button onClick={() => { push('/login') }}
