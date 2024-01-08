@@ -3,12 +3,13 @@
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { AppDispatch, RootState } from "@/redux/store";
 import { CourierBoxesState } from "../_redux/courier-boxes-state";
-import { useMemo, } from "react";
+import { useCallback, useMemo, useRef, } from "react";
 import ModalAlertResponse from "@/app/[locale]/_components/modal-alert-response";
 import { RequestStatus } from "@/types/enums/request-status";
 import { boxFormFieldsReset } from "../_redux/courier-boxes-slice";
 
 export default function ModalAlertInfo() {
+  const modalContentRef = useRef<HTMLDivElement>(null);
   const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => {
     return state.courierBoxes;
   });
@@ -18,20 +19,31 @@ export default function ModalAlertInfo() {
     return courierBoxesState.boxFormFields.requestStatus
   }, [courierBoxesState.boxFormFields.requestStatus]);
 
+  const type = useMemo(() => {
+    return courierBoxesState.modalBoxesOpen.type
+  }, [courierBoxesState.modalBoxesOpen.type]);
+
+  const cbOnModalClose = useCallback(() => {
+    if (modalContentRef.current) {
+      modalContentRef.current.classList.remove('animate-slide-up');
+      modalContentRef.current.classList.add('animate-slide-down');
+      setTimeout(() => {
+        dispatch(boxFormFieldsReset())
+      }, 300);
+    }
+  }, [dispatch]);
 
   return (
-    <ModalAlertResponse open={requestStatus === RequestStatus.SUCCESS || requestStatus === RequestStatus.FAILURE}
+    <ModalAlertResponse ref={modalContentRef}
+      open={requestStatus === RequestStatus.SUCCESS || requestStatus === RequestStatus.FAILURE}
       message={
-        requestStatus === RequestStatus.SUCCESS ? 'Successfully added to the box list.' :
+        requestStatus === RequestStatus.SUCCESS ? `Successfully ${type === 'createBox' ? 'added' : 'updated'} to the box list.` :
           requestStatus === RequestStatus.FAILURE ? 'Something went wrong. Please try again.' : ''
       }
       type={
         requestStatus === RequestStatus.SUCCESS ? 'success' :
-          requestStatus === RequestStatus.FAILURE ? 'danger' :
-            'none'
+          requestStatus === RequestStatus.FAILURE ? 'danger' : 'none'
       }
-      onCloseModal={() => {
-        dispatch(boxFormFieldsReset())
-      }} />
+      onCloseModal={cbOnModalClose} />
   )
 }

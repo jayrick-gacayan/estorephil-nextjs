@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from 'next-intl/client';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { RootState, store } from '@/redux/store';
 import { getMainCategories, searchProducts } from '../_redux/all-categories-thunk';
 import { homeContainer, productContainer } from '@/inversify/inversify.config';
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { categoriesSelectedChanged, searchQueryChanged, setSelectedCategory } from '../_redux/all-categories-slice';
 import { ProductRepository } from '@/repositories/product-repository';
 
-export function CategorySidebar() {
+export function CategorySidebar({ countryCode }: { countryCode: string }) {
   const router = useRouter();
   const allSearchParams = useSearchParams()
   const searchParams = useSearchParams();
@@ -21,17 +21,27 @@ export function CategorySidebar() {
   const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
-  const state = useSelector((state: RootState) => state.allCategories)
-  const categories: any[] = useSelector((state: RootState) => state.allCategories).categories.map(category => ({
-    ...category,
-    selected: state.categoriesSelected.includes(category.name) || searchParams.get('category[]') === category.name
-  }))
+  const state = useSelector((state: RootState) => state.allCategories);
+
+  const categories = useMemo(() => {
+    return state.categories.map((value) => {
+      return {
+        ...value,
+        selected: state.categoriesSelected.includes(value.name) ||
+          searchParams.getAll('category').includes(value.name)
+      }
+    })
+  }, [state.categories, searchParams.getAll('category')]);
+
+
   useEffect(() => {
-    if (searchParams.get('category[]') !== '' && searchParams.get('category[]') !== null && searchParams.get('category[]') !== undefined) {
-      console.log('category set')
-      dispatch(setSelectedCategory(searchParams.get('category[]') as string))
+    let allCategories = searchParams.getAll('category')
+    if (allCategories.length > 0) {
+      allCategories.forEach((value: string) => {
+        dispatch(setSelectedCategory(value))
+      })
     }
-    store.dispatch(getMainCategories(homeRepository, locale))
+    store.dispatch(getMainCategories(homeRepository, countryCode))
   }, [])
   useEffect(() => {
     store.dispatch(searchProducts(productRepository, locale))

@@ -6,14 +6,14 @@ import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
 import { BsBox2 } from 'react-icons/bs';
 import { FaCartShopping } from 'react-icons/fa6';
 import DropdownItem from '../../_components/dropdown-item';
-import ShopMethodDropdownItem from '../_components/shop-method-dropdown-item';
+import CartDropdownItem from '../_components/cart-dropdown-item';
 import Dropdown from '../../_components/dropdown';
 import Link from 'next-intl/link';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { PurchaseMethodState } from '../purchase-method/[slug]/_redux/purchase-method-state';
+import { CartState } from '../cart/_redux/cart-state';
 import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
-import { removeFromToPurchaseMethodItem } from '../purchase-method/[slug]/_redux/purchase-method-slice';
+import { removeFromToPurchaseMethodItem } from '../cart/_redux/cart-slice';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { MainState } from '../_redux/main-state';
 import { useSelector } from 'react-redux';
@@ -30,7 +30,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
   const { data: sessionData } = useSession()
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
-  const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod });
+  const purchaseMethodState: CartState = useAppSelector((state: RootState) => { return state.cart });
   const cartType = useMemo(() => {
     const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
@@ -164,8 +164,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
                     cartProducts?.slice(0, 4)?.map((product: any) => {
                       return (
                         <DropdownItem key={`shop-method-key-${product.name}-${product.id}`}>
-                          <ShopMethodDropdownItem onDelete={() => {
-                            dispatch(removeFromToPurchaseMethodItem(product))
+                          <CartDropdownItem onDelete={() => {
                             dispatch(removeFromCart(productRepository, sessionData?.token ?? ``, product.id ?? 0))
                           }} {...product} />
                         </DropdownItem>
@@ -176,7 +175,7 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
               )
           }
         </div>
-        <Link href={`/purchase-method/${cartType === 'Shopping Cart' ? 'cart' : 'balikbayan'}`}
+        <Link href={`/cart`}
           className='text-warning underline block text-center cursor-pointer'
           onClick={() => {
             if (dropdownRef.current) {

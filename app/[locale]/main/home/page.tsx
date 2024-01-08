@@ -10,6 +10,7 @@ import { TYPES } from '@/inversify/types';
 import { StoreRepository } from '@/repositories/store-repository';
 import { ProductRepository } from '@/repositories/product-repository';
 import { HomeRepository } from '@/repositories/home-repository';
+import { Suspense } from 'react';
 
 async function getMainCategories(countryCode: string) {
   let categoriesRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
@@ -45,7 +46,9 @@ export default async function Home({ params }: { params: { locale: string } }) {
         </div>
       </div>
       <OurSellers stores={stores ?? []} />
-      <OurProducts products={ourProducts ?? []} />
+      <Suspense fallback={<div>Loading....</div>}>
+        <OurProducts products={ourProducts ?? []} />
+      </Suspense>
       {/* <BalikbayanItems />
       <NewItems /> */}
     </div>

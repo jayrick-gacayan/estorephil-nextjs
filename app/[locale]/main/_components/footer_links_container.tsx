@@ -1,11 +1,11 @@
-import { LinkProps } from '@/types/props/link-props';
+import { NextLinkProps } from '@/types/props/nextlink-props';
 import Link from 'next-intl/link';
 
 export function FooterLinksContainer({
+  links,
   headerText,
-  links
 }: {
-  links: LinkProps[],
+  links: NextLinkProps[],
   headerText: string;
 }): JSX.Element {
   return (
@@ -13,7 +13,7 @@ export function FooterLinksContainer({
       <h1 className='font-bold'>{headerText}</h1>
       <div>
         {
-          links.map((link: LinkProps, index: number) => {
+          links.map((link: NextLinkProps, index: number) => {
             return <Link key={`${link.text}-${index}`} href={link.link} className='block hover:text-primary'>{link.text}</Link>
           })
         }
