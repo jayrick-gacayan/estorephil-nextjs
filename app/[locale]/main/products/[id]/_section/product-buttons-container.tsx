@@ -21,6 +21,8 @@ import { ProductState } from '../_redux/product-state';
 import { addProductToFavorites, deleteProductFromFavorites } from '../_redux/product-thunk';
 
 export default function ProductButtonsContainer() {
+  const [favoriteDisabled, setFavoriteDisabled] = useState(false);
+
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const shopMethod: CartState = useAppSelector((state: RootState) => { return state.cart; });
   const dispatch: AppDispatch = useAppDispatch();
@@ -150,15 +152,17 @@ export default function ProductButtonsContainer() {
               )
           }
         </button>
-        <button className={`rounded-full w-20 h-auto space-x-2 px-6 py-3 text-center border
+        <button disabled={favoriteDisabled}
+          className={`rounded-full w-20 h-auto space-x-2 px-6 py-3 text-center border disabled:cursor-not-allowed
           ${isLoved ? 'bg-danger border-danger-light text-white hover:bg-danger-light hover:text-danger hover:border-danger' :
-            'bg-danger-light border-danger text-danger hover:bg-danger hover:text-white hover:border-danger-light'}`}
+              'bg-danger-light border-danger text-danger hover:bg-danger hover:text-white hover:border-danger-light'}`}
           onClick={() => {
+            setFavoriteDisabled(true)
             let productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
             if (sessionData?.token && Object.keys(currentProduct).length > 0) {
 
-              isLoved ? dispatch(deleteProductFromFavorites(productRepository, sessionData.token, currentProduct.id)) :
-                dispatch(addProductToFavorites(productRepository, sessionData.token, currentProduct.id))
+              isLoved ? dispatch(deleteProductFromFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled)) :
+                dispatch(addProductToFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled))
             }
           }}>
           {isLoved ? <FaHeartCrack className='inline-block' /> : <FaRegHeart className='inline-block' />}

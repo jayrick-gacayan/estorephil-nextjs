@@ -6,6 +6,8 @@ import { getProductDetailsLoaded, getProductDetailsSuccess, productFavoriteSet }
 import { Result } from "@/types/helpers/result-helpers"
 import { Product } from "@/models/product"
 import { ResultStatus as MyResultStatus } from '@/types/enums/result-status';
+import { Dispatch, SetStateAction } from "react"
+import { toastAdded } from "@/app/[locale]/redux/start-slice"
 
 export function getProductDetails(productRepository: ProductRepository, id: string) {
     return async function getProductDetails(dispatch: AppDispatch, getState: typeof store.getState) {
@@ -43,22 +45,53 @@ export function isProductFavorite(productRepository: ProductRepository, token: s
     }
 }
 
-export function addProductToFavorites(productRepository: ProductRepository, token: string, id: string) {
+export function addProductToFavorites(
+    productRepository: ProductRepository,
+    token: string,
+    id: string,
+    setFavoriteDisabled: Dispatch<SetStateAction<boolean>>
+) {
     return async function (dispatch: AppDispatch) {
         let result = await productRepository.addProductToFavorites(token, id);
 
         if (!!result.data && result.resultStatus === MyResultStatus.SUCCESS) {
             dispatch(isProductFavorite(productRepository, token))
         }
+
+        dispatch(toastAdded({
+            id: Date.now(),
+            type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
+            duration: 3,
+            message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully added product to favorites' : 'Something went wrong. Try again.',
+            position: ''
+        }))
+
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 4000)
+
     }
 }
 
-export function deleteProductFromFavorites(productRepository: ProductRepository, token: string, id: string) {
+export function deleteProductFromFavorites(
+    productRepository: ProductRepository,
+    token: string,
+    id: string,
+    setFavoriteDisabled: Dispatch<SetStateAction<boolean>>
+) {
     return async function (dispatch: AppDispatch) {
         let result = await productRepository.deleteProductFromFavorites(token, id);
 
         if (result.message !== '' && result.resultStatus === MyResultStatus.SUCCESS) {
             dispatch(isProductFavorite(productRepository, token))
         }
+
+        dispatch(toastAdded({
+            id: Date.now(),
+            type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
+            duration: 2,
+            message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully removed product to favorites' : 'Something went wrong. Try again.',
+            position: ''
+        }));
+
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 3000)
     }
 }
