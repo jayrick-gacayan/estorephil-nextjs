@@ -26,8 +26,10 @@ import courierBoxesReducer from '@/app/[locale]/(dashboard)/courier/boxes/_redux
 import courierStaffInfoReducer from '@/app/[locale]/(dashboard)/courier/staffs/[id]/_redux/courier-staff-info-slice';
 import agentAgencyInfoReducer from '@/app/[locale]/main/dashboard/(pages)/agency-information/_redux/agent-agency-information-slice';
 import agentRegisterReducer from '@/app/[locale]/(auth)/agent/register/_redux/agent-register-slice'
+import agentFavoriteReducer from '@/app/[locale]/main/dashboard/(pages)/favorites/_redux/agent-favorite-slice';
 
-import startReducer from '@/app/[locale]/redux/start-slice';
+import startReducer from '@/app/[locale]/_redux/start-slice';
+
 export const store = configureStore({
     reducer: {
         start: startReducer,
@@ -58,6 +60,7 @@ export const store = configureStore({
         courierBoxes: courierBoxesReducer,
         courierStaffInfo: courierStaffInfoReducer,
         agentRegister: agentRegisterReducer,
+        agentFavorite: agentFavoriteReducer,
     }
 });
 

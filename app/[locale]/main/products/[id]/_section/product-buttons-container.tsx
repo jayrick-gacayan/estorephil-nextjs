@@ -19,6 +19,8 @@ import { ProductRepository } from '@/repositories/product-repository';
 import { addToCart, removeFromCart } from '../../../_redux/main-thunk';
 import { ProductState } from '../_redux/product-state';
 import { addProductToFavorites, deleteProductFromFavorites } from '../_redux/product-thunk';
+import { RequestStatus } from '@/types/enums/request-status';
+import CirclingLoader from '@/app/[locale]/_components/circling-loader';
 
 export default function ProductButtonsContainer() {
   const [favoriteDisabled, setFavoriteDisabled] = useState(false);
@@ -29,10 +31,11 @@ export default function ProductButtonsContainer() {
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const productState: ProductState = useAppSelector((state: RootState) => { return state.product });
 
-  const { currentProduct, isLoved } = useMemo(() => {
+  const { currentProduct, isLoved, isLovedLoadStatus } = useMemo(() => {
     return {
       currentProduct: productState.product,
-      isLoved: productState.isLoved
+      isLoved: productState.isLoved,
+      isLovedLoadStatus: productState.getIsLovedLoadStatus,
     }
   }, [productState.product, productState.isLoved])
   const productMemo: Cart | BalikbayanBox | undefined = useMemo(() => {
@@ -152,22 +155,35 @@ export default function ProductButtonsContainer() {
               )
           }
         </button>
-        <button disabled={favoriteDisabled}
-          className={`rounded-full w-20 h-auto space-x-2 px-6 py-3 text-center border disabled:cursor-not-allowed
-          ${isLoved ? 'bg-danger border-danger-light text-white hover:bg-danger-light hover:text-danger hover:border-danger' :
-              'bg-danger-light border-danger text-danger hover:bg-danger hover:text-white hover:border-danger-light'}`}
-          onClick={() => {
-            setFavoriteDisabled(true)
-            let productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
-            if (sessionData?.token && Object.keys(currentProduct).length > 0) {
+        {
+          isLovedLoadStatus !== RequestStatus.SUCCESS ?
+            (
+              <div className='rounded-full w-20 bg-tertiark-dark border border-tertiary px-6 py-3'>
+                <div className="w-fit m-auto block">
+                  <CirclingLoader height={32} width={32} color='#2F353D' />
+                </div>
+              </div>
+            ) :
+            (
+              <button disabled={favoriteDisabled}
+                className={`rounded-full w-20 h-auto space-x-2 px-6 py-3 text-center border disabled:cursor-not-allowed
+                  ${isLoved ? 'bg-danger border-danger-light text-white hover:bg-danger-light hover:text-danger hover:border-danger' :
+                    'bg-danger-light border-danger text-danger hover:bg-danger hover:text-white hover:border-danger-light'}`}
+                onClick={() => {
+                  setFavoriteDisabled(true)
+                  let productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
+                  if (sessionData?.token && Object.keys(currentProduct).length > 0) {
 
-              isLoved ? dispatch(deleteProductFromFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled)) :
-                dispatch(addProductToFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled))
-            }
-          }}>
-          {isLoved ? <FaHeartCrack className='inline-block' /> : <FaRegHeart className='inline-block' />}
+                    isLoved ? dispatch(deleteProductFromFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled)) :
+                      dispatch(addProductToFavorites(productRepository, sessionData.token, currentProduct.id, setFavoriteDisabled))
+                  }
+                }}>
+                {isLoved ? <FaHeartCrack className='inline-block' /> : <FaRegHeart className='inline-block' />}
 
-        </button>
+              </button>
+            )
+        }
+
       </div>
     </div>
   )

@@ -1,9 +1,12 @@
-import FavoritesTable from "./sections/favorites-table";
+import FavoritesTable from "./_sections/favorites-table";
+import Providers from "./_sections/providers";
 
-export default function Page() {
+export default async function Page() {
   return (
-    <div className="p-8">
-      <FavoritesTable />
-    </div>
+    <Providers>
+      <div className="p-8">
+        <FavoritesTable />
+      </div>
+    </Providers>
   )
 }

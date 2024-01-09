@@ -49,6 +49,9 @@ export class ProductService {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
+            next: {
+                revalidate: 0
+            }
         })
     }
 

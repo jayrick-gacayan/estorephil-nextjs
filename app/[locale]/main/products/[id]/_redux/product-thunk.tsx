@@ -2,12 +2,13 @@ import { ApiResponse, ResultStatus, getResultStatus } from "@/models/result"
 import { AppDispatch, store } from "@/redux/store"
 import { ProductRepository } from "@/repositories/product-repository"
 import { ProductState } from "./product-state"
-import { getProductDetailsLoaded, getProductDetailsSuccess, productFavoriteSet } from "./product-slice"
+import { getIsLovedLoadStatusSet, getProductDetailsLoaded, getProductDetailsSuccess, productFavoriteSet } from "./product-slice"
 import { Result } from "@/types/helpers/result-helpers"
 import { Product } from "@/models/product"
 import { ResultStatus as MyResultStatus } from '@/types/enums/result-status';
 import { Dispatch, SetStateAction } from "react"
-import { toastAdded } from "@/app/[locale]/redux/start-slice"
+import { toastAdded } from "@/app/[locale]/_redux/start-slice"
+import { RequestStatus } from "@/types/enums/request-status"
 
 export function getProductDetails(productRepository: ProductRepository, id: string) {
     return async function getProductDetails(dispatch: AppDispatch, getState: typeof store.getState) {
@@ -39,7 +40,7 @@ export function isProductFavorite(productRepository: ProductRepository, token: s
             let product = result.data.find((value: Product) => {
                 return value.id === productState.product.id
             })
-
+            dispatch(getIsLovedLoadStatusSet(RequestStatus.SUCCESS));
             dispatch(productFavoriteSet(product ? true : undefined))
         }
     }

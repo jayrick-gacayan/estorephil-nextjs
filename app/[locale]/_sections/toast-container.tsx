@@ -1,10 +1,10 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
-import { StartState } from "../redux/start-state";
+import { StartState } from "../_redux/start-state";
 import { AppDispatch, RootState } from "@/redux/store";
 import { useMemo } from "react";
-import { toastRemoved } from "../redux/start-slice";
+import { toastRemoved } from "../_redux/start-slice";
 import { ToastProps } from "@/types/props/toast-props";
 import Toast from "../_components/toast";
 
