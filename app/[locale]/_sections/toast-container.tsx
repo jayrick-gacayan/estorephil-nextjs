@@ -3,8 +3,8 @@
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { StartState } from "../_redux/start-state";
 import { AppDispatch, RootState } from "@/redux/store";
-import { useMemo } from "react";
-import { toastRemoved } from "../_redux/start-slice";
+import { useEffect, useMemo } from "react";
+import { toastAdded, toastRemoved } from "../_redux/start-slice";
 import { ToastProps } from "@/types/props/toast-props";
 import Toast from "../_components/toast";
 
@@ -21,7 +21,6 @@ export default function ToastContainer() {
     }
   }, [startState.toasts]);
 
-  console.log('dfjlaskdfjsd', toasts);
 
   return toasts.length === 0 ? null :
     (
