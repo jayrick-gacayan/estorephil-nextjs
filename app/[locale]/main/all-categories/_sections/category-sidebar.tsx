@@ -19,7 +19,6 @@ export function CategorySidebar({ countryCode }: { countryCode: string }) {
   const searchParams = useSearchParams();
   const dispatch: AppDispatch = useAppDispatch()
   const pathName = usePathname()
-  const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const state = useSelector((state: RootState) => state.allCategories);

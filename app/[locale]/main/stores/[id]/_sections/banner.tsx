@@ -9,14 +9,13 @@ import { storeContainer } from "@/inversify/inversify.config";
 import { StoreRepository } from "@/repositories/store-repository";
 import { TYPES } from "@/inversify/types";
 
-export default function Banner() {
+export default function Banner({ countryCode }: { countryCode: string }) {
     const state = useSelector((state: RootState) => state.store)
-    const locale = useSelector((state: RootState) => state.main).countryPicker.value
     const storeId = useParams().id.toString()
     const storeRepository = storeContainer.get<StoreRepository>(TYPES.StoreRepository)
     useEffect(() => {
         if (!!storeId) {
-            store.dispatch(getStoreDetail(storeRepository, storeId, locale))
+            store.dispatch(getStoreDetail(storeRepository, storeId, countryCode))
             console.log('use effect dispatch')
         }
     }, [storeId])

@@ -14,18 +14,17 @@ import { TYPES } from '@/inversify/types';
 import { StoreRepository } from '@/repositories/store-repository';
 import Product from '../_components/product';
 
-export default function StoreProducts() {
+export default function StoreProducts({ countryCode }: { countryCode: string }) {
   const state = useSelector((state: RootState) => state.store)
   const products = state.products
   const storeId = useParams().id.toString()
-  const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const storeRepository = storeContainer.get<StoreRepository>(TYPES.StoreRepository)
   useEffect(() => {
     if (!!storeId) {
-        store.dispatch(getStoreDetail(storeRepository, storeId, locale))
-        console.log('use effect dispatch')
+      store.dispatch(getStoreDetail(storeRepository, storeId, countryCode))
+      console.log('use effect dispatch')
     }
-}, [storeId])
+  }, [storeId])
   return (
     <>
       <div className='px-8 h-full'>
