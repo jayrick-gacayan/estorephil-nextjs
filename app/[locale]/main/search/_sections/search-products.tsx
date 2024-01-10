@@ -1,14 +1,12 @@
 'use client';
 
 import { Products } from '@/models/products';
-import CustomSelect from '@/app/[locale]/_components/custom-select';
-import { useOutsideClick } from '@/app/_hooks/use-outside-click';
-import { useState, useRef } from 'react';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
-import SelectCustom from '@/app/[locale]/_components/select-custom';
 import { sentenceCase } from 'change-case';
+import SelectTagCustom from '@/app/[locale]/_components/select-tag-cutsom';
+import { ValidationType } from '@/types/enums/validation-type';
 
 export function SearchProducts({
   products
@@ -16,12 +14,7 @@ export function SearchProducts({
   products: Products[]
 }): JSX.Element {
   const searchParams: ReadonlyURLSearchParams = useSearchParams();
-  const [visible, setVisible] = useState<boolean>(false);
-  const searchSelectRef = useRef<HTMLDivElement>(null);
-
   let keyword = searchParams.get('keyword') ?? '';
-
-  useOutsideClick(searchSelectRef, () => { setVisible(false); })
 
   return (
     <div className='max-w-screen-2xl m-auto py-4'>
@@ -30,22 +23,16 @@ export function SearchProducts({
         <div className='flex-none space-x-2'>
           <span>Sort</span>
           <div className='inline-block w-36'>
-            <SelectCustom labelText=''
-              items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
-              value={sentenceCase('top-seller')}
-              placeholder='Sort By:'
-              visible={visible}
-              setVisible={setVisible}
-              onSelect={(value: string) => {
+            <SelectTagCustom items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
+              onSelect={(item: string) => {
                 return;
               }}
-              valueClassName={(errorText: string) => {
-                return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
-              }}
+              value={''}
+              placeholder='Sort By:'
               optionActiveClassName={(current: string, value: string) => {
-                return `p-2 cursor-pointer ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`
+                return `${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`;
               }}
-              errorText='' />
+              valueClassName={(status: ValidationType) => { return 'bg-white border-tertiary-dark has-[input:focus]:border-primary' }} />
           </div>
         </div>
       </div>

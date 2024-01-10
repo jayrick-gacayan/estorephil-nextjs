@@ -1,22 +1,22 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import CustomSelect from '@/app/[locale]/_components/custom-select';
 import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { ProductItem } from '../../_components/product-item';
 import ProductHeaderText from '../../_components/product-header-text';
-import { homeContainer, productContainer } from '@/inversify/inversify.config';
+import { productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { RootState, store } from '@/redux/store';
 import { ProductRepository } from '@/repositories/product-repository';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchProducts } from '../_redux/all-categories-thunk';
-
 import { useSearchParams } from 'next/navigation';
-import { searchQueryChanged } from '../_redux/all-categories-slice';
-import ProductSort from '../_components/product-sort';
+import { searchQueryChanged, sortChanged } from '../_redux/all-categories-slice';
 import { RequestStatus } from '@/models/result';
 import Loading from '../../_components/loading';
+import { ValidationType } from '@/types/enums/validation-type';
+import SelectTagCustom from '@/app/[locale]/_components/select-tag-cutsom';
+import { kebabCase, sentenceCase } from 'change-case';
 
 export default function CategoryProducts() {
   const [visible, setVisible] = useState<boolean>(false);
@@ -44,7 +44,7 @@ export default function CategoryProducts() {
           `${state.categoriesSelected.length > 0
             ? (() => {
               const current = new URLSearchParams(Array.from(searchParams.entries()));
-              console.log('categories length: ',state.categoriesSelected.length)
+              console.log('categories length: ', state.categoriesSelected.length)
               if (state.categoriesSelected.length === 2) {
                 const categoriesText = state.categoriesSelected.map((category, index) => {
                   if (index === 0) {
@@ -86,14 +86,20 @@ export default function CategoryProducts() {
         />
         <div className='flex-none space-x-2'>
           <span>Sort</span>
-          <div className='inline-block w-36'>
-            {/* <CustomSelect ref={categorySelectRef} items={['Top Seller', 'Low Seller']}
-              value={undefined}
-              placeholder='Sort by:'
-              labelText={''}
-              visible={visible}
-              setVisible={setVisible} /> */}
-            <ProductSort />
+          <div className='inline-block w-48'>
+            <SelectTagCustom items={['Sort By:', 'Top Seller', 'Lowest Seller', 'Highest Price', 'Lowest Price']}
+              onSelect={(item: string) => {
+                dispatch(sortChanged(kebabCase(item)))
+                const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
+
+                store.dispatch(searchProducts(productRepository, locale));
+              }}
+              value={sentenceCase(sort)}
+              placeholder='Sort By:'
+              optionActiveClassName={(current: string, value: string) => {
+                return `${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`;
+              }}
+              valueClassName={(status: ValidationType) => { return 'bg-white border-tertiary-dark has-[input:focus]:border-primary' }} />
           </div>
         </div>
       </div>
@@ -116,7 +122,6 @@ export default function CategoryProducts() {
                 <Loading /> <p>Loading products</p>
               </div>
             </>
-
       }
     </div>
   );
