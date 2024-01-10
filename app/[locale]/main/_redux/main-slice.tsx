@@ -18,7 +18,7 @@ const initialState: MainState = {
   deliveryType: '',
   deliveryAddressCity: '',
   deliveryAddressCountry: '',
-  addToCartQuantity: 0,
+  addToCartQuantity: 1,
   addToCartStatus: RequestStatus.WAITING,
   removeFromCartStatus: RequestStatus.WAITING,
   setCartStatus: RequestStatus.WAITING
