@@ -27,11 +27,22 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
           dispatch(mainModalOpened({ open: true, type: 'deliveryAddress' }));
         }}>
         <div className='space-y-1 '>
-          <Image alt={`${!!cartType ? cartType === 'Shopping Cart' : sessionData.cart.cart_type === 'shopping_cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
-            src={`/others/${!!cartType ? cartType === 'Shopping Cart' : sessionData.cart.cart_type === 'balikbayan_box' ? 'custom_cart' : 'balik_box'}_icon.svg`}
-            width={88}
-            height={88}
-            className='h-[88px] w-[88px] block m-auto' />
+          {
+            sessionData.cart.cart_type === 'shopping_cart'
+              ? (<>
+                <Image alt={`custom_cart-icon-alt`}
+                  src={`/others/custom_cart_icon.svg`}
+                  width={88}
+                  height={88}
+                  className='h-[88px] w-[88px] block m-auto' /></>)
+              : (<>
+                <Image alt={`balik_box-icon-alt`}
+                  src={`/others/balik_box_icon.svg`}
+                  width={88}
+                  height={88}
+                  className='h-[88px] w-[88px] block m-auto' /></>)
+          }
+
           <span className='block text-center'>Change</span>
         </div>
       </div>
