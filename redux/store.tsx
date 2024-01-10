@@ -13,32 +13,33 @@ import reportDetailreducer from '@/app/[locale]/main/dashboard/(pages)/reports/[
 import staffReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/_redux/staff-slice'
 import staffDetailReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/[id]/_redux/staff-details-slice'
 import staffAddReducer from '@/app/[locale]/main/dashboard/(pages)/staffs/add/_redux/staff-add-slice';
-import purchaseMethodReducer from '@/app/[locale]/main/purchase-method/[slug]/_redux/purchase-method-slice';
+import cartReducer from '@/app/[locale]/main/cart/_redux/cart-slice';
 import registerReducer from '@/app/[locale]/(auth)/register/_redux/register-slice'
 import loginReducer from '@/app/[locale]/(auth)/login/_redux/login-slice'
 import homeReducer from '@/app/[locale]/main/home/_redux/home-slice'
 import storeReducer from '@/app/[locale]/main/stores/[id]/_redux/store-slice'
 import productReducer from '@/app/[locale]/main/products/[id]/_redux/product-slice'
 import allCategoriesReducer from '@/app/[locale]/main/all-categories/_redux/all-categories-slice'
-
-import agentRegisterReducer from '@/app/[locale]/(auth)/(forAgentCourier)/agent/register/_redux/agent-register-slice';
-
 import courierDeliveryRatesReducer from '@/app/[locale]/(dashboard)/courier/delivery-rates/_redux/courier-delivery-rates-slice';
 import courierStaffReducer from '@/app/[locale]/(dashboard)/courier/staffs/_redux/courier-staff-slice';
 import courierBoxesReducer from '@/app/[locale]/(dashboard)/courier/boxes/_redux/courier-boxes-slice';
 import courierStaffInfoReducer from '@/app/[locale]/(dashboard)/courier/staffs/[id]/_redux/courier-staff-info-slice';
-
 import agentAgencyInfoReducer from '@/app/[locale]/main/dashboard/(pages)/agency-information/_redux/agent-agency-information-slice';
+import agentRegisterReducer from '@/app/[locale]/(auth)/agent/register/_redux/agent-register-slice'
+import agentFavoriteReducer from '@/app/[locale]/main/dashboard/(pages)/favorites/_redux/agent-favorite-slice';
+
+import startReducer from '@/app/[locale]/_redux/start-slice';
 
 export const store = configureStore({
     reducer: {
+        start: startReducer,
         main: mainReducer,
         home: homeReducer,
         allCategories: allCategoriesReducer,
         login: loginReducer,
         store: storeReducer,
         product: productReducer,
-        purchaseMethod: purchaseMethodReducer,
+        cart: cartReducer,
         register: registerReducer,
         checkout: checkoutReducer,
         sender: senderReducer,
@@ -58,8 +59,8 @@ export const store = configureStore({
         courierStaff: courierStaffReducer,
         courierBoxes: courierBoxesReducer,
         courierStaffInfo: courierStaffInfoReducer,
-
         agentRegister: agentRegisterReducer,
+        agentFavorite: agentFavoriteReducer,
     }
 });
 

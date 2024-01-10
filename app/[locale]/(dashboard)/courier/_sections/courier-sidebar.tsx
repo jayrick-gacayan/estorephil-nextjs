@@ -11,7 +11,6 @@ import { FaCalculator, FaMoneyBill1Wave, FaTruck, FaUserTie, FaUsers } from 'rea
 import DashboardMenuItemWithSubLinks from '../../_components/dashboard-menu-item-with-sublinks';
 import { useRouter } from 'next-intl/client';
 
-
 function CourierSidebar() {
   let courierDashboardMenus: MenuProps[] = [
     {
@@ -92,9 +91,15 @@ function CourierSidebar() {
     if (segments.includes('profile')) {
       return 'profile'
     }
-    if (segments.length > 1) {
+    else if (segments.includes('orders')) {
       return segments[segments.length - 1];
     }
+    else {
+      if (segments.length > 1) {
+        return segments[segments.length - 2];
+      }
+    }
+
     return segments[0];
   }, [segments]);
 

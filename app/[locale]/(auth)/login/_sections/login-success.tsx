@@ -25,10 +25,10 @@ export default function LoginSuccess() {
                     router.push(
                         role.includes('agent') ? '/' : role.includes('courier') ? '/courier' : '/admin'
                     );
-                    dispatch(loginRequestStatusSet(RequestStatus.NONE))
                 }, 2000);
-            }
 
+
+            }
         }
     }, [loginStatus, dispatch, router, sessionData?.user]);
 

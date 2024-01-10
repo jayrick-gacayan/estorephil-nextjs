@@ -1,79 +1,67 @@
 import { AppDispatch, store } from '@/redux/store'
-import { allCategoriesProductsSet, allCategoriesSet, allCategoriesStoresSet, categoriesRequestStatusSet, getProductStatusSet, getProductsSuccess, storesRequestStatusSet } from './all-categories-slice'
+import {
+    getCategoriesLoaded, getCategoriesSuccess,
+    getProductStatusSet, getProductsSuccess, getStoresLoaded,
+    getStoresSuccess, searchProductsLoaded, storesRequestStatusSet
+} from './all-categories-slice'
 import { AllCategoriesState } from './all-categories-state'
 import { ProductRepository } from '@/repositories/product-repository'
-import { Result } from '@/types/helpers/result-helpers'
-import { Categories } from '@/models/category'
-import { ResultStatus } from '@/types/enums/result-status'
-import { RequestStatus } from '@/types/enums/request-status'
-import { CategoryRepository } from '@/repositories/category-repository'
-import { StoreRepository } from '@/repositories/store-repository'
-import { Store } from '@/models/store'
-import { Product } from '@/models/product'
+import { ApiResponse, getResultStatus, ResultStatus } from '@/models/result'
+import { HomeRepository } from '@/repositories/home-repository'
 
-function getMainCategories(
-    categoryRepository: CategoryRepository,
-    locale: string
-): (dispatch: AppDispatch) => Promise<void> {
-    return async function (dispatch: AppDispatch) {
-        let result: Result<Categories[]> = await categoryRepository.getMainCategories(locale);
-        switch (result.resultStatus) {
+function getMainCategories(homeRepository: HomeRepository, locale: string) {
+    return async function getMainCategories(dispatch: AppDispatch, getState: typeof store.getState) {
+        const state = getState().allCategories as AllCategoriesState
+        dispatch(getCategoriesLoaded())
+        const result: ApiResponse = await homeRepository.getMainCategories(locale)
+        switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                dispatch(categoriesRequestStatusSet(RequestStatus.SUCCESS))
-                dispatch(allCategoriesSet(result.data ?? []))
+                dispatch(getCategoriesSuccess(result.data))
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(categoriesRequestStatusSet(RequestStatus.FAILURE))
+                dispatch(getCategoriesSuccess([]))
                 break;
         }
     }
 }
 
-function getMainStores(storeRepository: StoreRepository, locale: string) {
-    return async function (dispatch: AppDispatch) {
-        let result: Result<Store[]> = await storeRepository.getMainStores(locale);
-        switch (result.resultStatus) {
+function getMainStores(homeRepository: HomeRepository, locale: string) {
+    return async function getMainStores(dispatch: AppDispatch, getState: typeof store.getState) {
+        const state = getState().allCategories as AllCategoriesState
+        const result: ApiResponse = await homeRepository.getMainStores(locale)
+        dispatch(getStoresLoaded())
+        switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                dispatch(storesRequestStatusSet(RequestStatus.SUCCESS))
-                dispatch(allCategoriesStoresSet(result.data ?? []))
+                dispatch(getStoresSuccess(result.data))
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(storesRequestStatusSet(RequestStatus.FAILURE))
+                dispatch(getStoresSuccess([]))
                 break;
         }
     }
 }
 
-function searchProducts(
-    productRepository: ProductRepository,
-    locale: string,
-    search: string,
-    categories: string[],
-    sort: string,
-) {
-    return async function searchProducts(dispatch: AppDispatch) {
-
-
-        const result: Result<Product[]> = await productRepository.productsSearch(
-            locale,
-            search,
-            categories,
-            sort
-        );
-
-        switch (result.resultStatus) {
+function searchProducts(productRepository: ProductRepository, locale: string) {
+    return async function searchProducts(dispatch: AppDispatch, getState: typeof store.getState) {
+        dispatch(searchProductsLoaded())
+        const state = getState().allCategories as AllCategoriesState
+        const result: ApiResponse = await productRepository.searchProducts({
+            locale: locale,
+            categories: state.categoriesSelected,
+            query: state.searchQuery,
+            sort: state.sort
+        })
+        switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                dispatch(getProductStatusSet(RequestStatus.SUCCESS));
-                dispatch(allCategoriesProductsSet(result.data ?? []))
+                dispatch(getProductsSuccess(result.data))
+                console.log('search products result: ', result.data)
                 break;
             case ResultStatus.NO_CONTENT:
-                dispatch(getProductStatusSet(RequestStatus.FAILURE));
-                dispatch(allCategoriesProductsSet([]))
+                dispatch(getProductsSuccess([]))
                 break;
         }
     }
 }
-
 export {
     getMainCategories,
     getMainStores,

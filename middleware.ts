@@ -1,9 +1,9 @@
-import { NextMiddlewareWithAuth, withAuth } from 'next-auth/middleware';
+import { withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
 const locales = ['en', 'ph'];
-const publicPages = ['/', '/home', '/all-categories', '/login', '/agent/register',];
+const publicPages = ['/', '/home', '/register', '/all-categories', '/login', '/agent/register',];
 
 const intlMiddleware = createMiddleware({
   locales: locales,
@@ -11,34 +11,29 @@ const intlMiddleware = createMiddleware({
 
 });
 
-const authMiddleware: NextMiddlewareWithAuth = withAuth(
+const authMiddleware: any = withAuth(
   function onSuccess(req) {
-
-
     return intlMiddleware(req);
   },
-
   {
     callbacks: {
       authorized: ({ token, req }) => {
         if (req.nextUrl.pathname.includes('admin') ||
+          req.nextUrl.pathname.startsWith('courier') ||
           req.nextUrl.pathname.includes('dashboard') ||
           req.nextUrl.pathname === '/' ||
           req.nextUrl.pathname === '/home' ||
+          req.nextUrl.pathname === '/register' ||
           req.nextUrl.pathname === '/agent/register' ||
           req.nextUrl.pathname === '/all-categories'
         ) {
           return true;
-
         }
-
         return token != null
       }
     },
-    secret: process.env.NEXTAUTH_SECRET,
     pages: {
       signIn: '/login'
-
     }
   }
 );
@@ -51,13 +46,10 @@ export default function middleware(req: NextRequest) {
     'i'
   );
   const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
-
-  console.log('on success', req.headers.get('host'));
-
   if (isPublicPage) {
     return intlMiddleware(req)
   } else {
-    return (authMiddleware as any)(req);
+    return (authMiddleware)(req);
   }
 }
 

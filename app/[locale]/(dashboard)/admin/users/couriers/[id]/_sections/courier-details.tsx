@@ -66,7 +66,7 @@ export default function CourierDetails() {
         title={"Company Staff"}
         data={[
           {
-            label: "Company Logo:",
+            label: "Photo ID:",
             value: (
               <Image
                 src={"/static_images/txc.jpeg"}

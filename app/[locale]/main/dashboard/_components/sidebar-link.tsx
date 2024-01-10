@@ -1,19 +1,22 @@
-'use client'
-import { usePathname, useRouter } from "next/navigation";
-import { ReactNode } from "react";
 import Link from 'next-intl/link';
+import { NextLinkProps } from "@/types/props/nextlink-props";
 
-export default function SidebarLink({ icon, href, label }: { label: string, icon: ReactNode, href: string }) {
-    const url = usePathname()
-    const router = useRouter()
+export default function SidebarLink({
+    link,
+    icon,
+    text,
+    altText,
+    current,
+    onActiveLink,
+}: NextLinkProps & {
+    current: string;
+    onActiveLink: (altText: string, current: string) => string;
+}) {
     return (
-        <>
-            <div className="flex gap-2 items-center w-full">
-                {icon}
-                <button onClick={() => {
-                    router.push(`${href}`)
-                }} className={`${url.includes(`${href}`) ? `text-blue-500` : ``} text-[18px] font-medium`}>{label}</button>
-            </div >
-        </>
+        <Link href={link}
+            className={`flex items-center gap-2 w-full ${onActiveLink(altText, current)}`}>
+            {icon && <span className="flex-none">{icon}</span>}
+            <span className="flex-1">{text}</span>
+        </Link>
     )
 }

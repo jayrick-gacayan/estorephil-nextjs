@@ -1,6 +1,6 @@
 'use client';
 
-import { PurchaseMethodState } from '@/app/[locale]/main/purchase-method/[slug]/_redux/purchase-method-state';
+import { CartState } from '@/app/[locale]/main/cart/_redux/cart-state';
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
@@ -9,11 +9,11 @@ import { RootState, AppDispatch } from '@/redux/store';
 import { useMemo } from 'react';
 import Collapsible from '@/app/[locale]/main/_components/collapsible';
 import CollapsibleItem from '@/app/[locale]/main/_components/collapsible-item';
-import PurchaseMethodRowItems from '@/app/[locale]/main/_components/purchase-method-row-items';
-import PurchaseMethodQuantityContainer from '@/app/[locale]/main/_components/purchase-method-quantity-container';
+import CartRowItems from '@/app/[locale]/main/_components/cart-row-items';
+import CartQuantityContainer from '@/app/[locale]/main/_components/cart-quantity-container';
 
 export default function CartDetails() {
-    const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; })
+    const purchaseMethodState: CartState = useAppSelector((state: RootState) => { return state.cart; })
     const dispatch: AppDispatch = useAppDispatch();
     const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
 
@@ -87,10 +87,10 @@ export default function CartDetails() {
                                             return purchaseMethodItem.seller.id === seller.id && purchaseMethodItem.isGoingToCheckout;
                                         }).map((valuePurchaseMethod: Cart) => {
                                             return (
-                                                <PurchaseMethodRowItems key={`purchase-method-${valuePurchaseMethod.product.id}`}
+                                                <CartRowItems key={`purchase-method-${valuePurchaseMethod.product.id}`}
                                                     purchaseMethodItem={valuePurchaseMethod}
                                                     withQuantityComponent={
-                                                        <PurchaseMethodQuantityContainer quantity={valuePurchaseMethod.quantity} />
+                                                        <CartQuantityContainer quantity={valuePurchaseMethod.quantity} />
                                                     } />
                                             )
                                         })

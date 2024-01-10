@@ -1,5 +1,6 @@
 import { Box } from "@/models/box";
 import { Paginated } from "@/models/paginated";
+import { PhRegion } from "@/models/ph-region";
 import { RequestStatus } from "@/types/enums/request-status";
 import { TextInputField } from "@/types/props/text-input-field";
 
@@ -22,6 +23,7 @@ export interface CourierBoxesState {
     weight: TextInputField<string>;
     weightType: TextInputField<string>;
     requestStatus: RequestStatus;
+    regionFees: { region: PhRegion; fee: TextInputField<string> }[]
   }
 
   courierBoxes: Paginated<Box>;

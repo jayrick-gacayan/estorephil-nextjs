@@ -9,8 +9,8 @@ export function ProductItem({
   product,
   withRatingEvents,
 }: {
-  product: Product;
-  withRatingEvents: boolean;
+  product: any
+  withRatingEvents: boolean
 }) {
 
   return (
@@ -18,7 +18,7 @@ export function ProductItem({
       <div className=' w-full h-60 overflow-hidden'>
         <div className='transition-all delay-200 ease-in hover:scale-125 h-full'>
           <Image alt={`product-image-${product.id}`}
-            src={product.mainImageUrl ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}
+            src={product.main_image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}
             width={240}
             height={240}
             className='w-auto h-auto' />

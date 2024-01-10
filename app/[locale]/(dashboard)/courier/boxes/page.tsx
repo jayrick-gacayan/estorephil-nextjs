@@ -1,11 +1,14 @@
+import { PhRegion } from "@/models/ph-region";
 import BoxesHeader from "./_sections/boxes-header";
-import BoxesPagination from "./_sections/boxes-pagination";
 import BoxesSearchContainer from "./_sections/boxes-search-container";
 import BoxesTable from "./_sections/boxes-table";
 import ModalAlertInfo from "./_sections/modal-alert-info";
 import ModalBoxesContainer from "./_sections/modal-boxes-container";
 
-export default function Page() {
+export default async function Page() {
+
+  let regions: PhRegion[] = (await import('@/app/_data/ph-regions.json')).default.regions;
+
   return (
     <>
       <BoxesHeader />
@@ -13,10 +16,9 @@ export default function Page() {
         <div className="bg-white p-4 rounded space-y-4">
           <BoxesSearchContainer />
           <BoxesTable />
-          <BoxesPagination />
         </div>
       </div>
-      <ModalBoxesContainer />
+      <ModalBoxesContainer regions={regions} />
       <ModalAlertInfo />
     </>
   )

@@ -16,8 +16,13 @@ export default class Validations {
     isValidPhoneNumber(phoneNumber: string) {
 
         return this.validationResponse = phoneNumber.length == 0 ? { status: ValidationType.EMPTY, errorText: 'phone number is required' }
-            : !(/^(?:\+65\d{8}|\+63\d{10})$/.test(phoneNumber)) ? { status: ValidationType.INVALID_FORMAT, errorText: 'invalid phone number' }
+            : !(/^(?:\+65\d{8}|\+63\d{10}|09\d{9}|63\d{10})$/.test(phoneNumber)) ? { status: ValidationType.INVALID_FORMAT, errorText: 'invalid phone number' }
                 : { status: ValidationType.VALID, errorText: '' }
+    }
+    isValidPhoneNumberOptional(phoneNumber: string) {
+        return this.validationResponse = !(/^(?:\+65\d{8}|\+63\d{10}|09\d{9}|63\d{10})$/.test(phoneNumber))
+            ? { status: ValidationType.INVALID_FORMAT, errorText: 'invalid phone number' }
+            : { status: ValidationType.VALID, errorText: '' }
     }
     isValidName({ name, nameColumn = 'name' }: { name: string, nameColumn?: string }) {
 

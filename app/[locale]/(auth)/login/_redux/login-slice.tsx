@@ -9,7 +9,8 @@ import { ValidationType } from "@/types/enums/validation-type";
 export const initialState: LoginState = {
     email: textInputFieldValue<string>(''),
     password: textInputFieldValue<string>(''),
-    requestStatus: RequestStatus.NONE
+    requestStatus: RequestStatus.NONE,
+    message: ''
 }
 
 export const loginSlice = createSlice({
@@ -22,6 +23,15 @@ export const loginSlice = createSlice({
         emailChanged: (state: LoginState, action: PayloadAction<string>) => {
             return { ...state, email: textInputFieldValue(action.payload.trim()) }
         },
+        passwordShown: (state: LoginState) => {
+            return {
+                ...state,
+                password: state.password.show ? textInputFieldValue(state.password.value) : {
+                    ...state.password,
+                    show: true
+                }
+            }
+        },
         passwordChanged: (state: LoginState, action: PayloadAction<string>) => {
             return { ...state, password: textInputFieldValue(action.payload.trim()) }
         },
@@ -31,20 +41,28 @@ export const loginSlice = createSlice({
 
             return {
                 ...state,
+                message: '',
                 email: { ...state.email, ...emailError },
                 password: { ...state.password, ...passwordError },
                 requestStatus: emailError.status === ValidationType.VALID &&
                     passwordError.status === ValidationType.VALID ?
                     RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
             }
+        },
+        loginMessagePrinted: (state: LoginState, action: PayloadAction<string>) => {
+            return {
+                ...state,
+                message: action.payload
+            }
         }
     }
-});
-
+})
 export const {
     loginRequestStatusSet,
     emailChanged,
     passwordChanged,
-    loginFormSubmitted
+    loginFormSubmitted,
+    passwordShown,
+    loginMessagePrinted,
 } = loginSlice.actions
 export default loginSlice.reducer

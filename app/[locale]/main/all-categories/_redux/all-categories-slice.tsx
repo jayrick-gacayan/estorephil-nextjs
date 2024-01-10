@@ -1,23 +1,21 @@
-import { RequestStatus } from "@/types/enums/request-status";
+
 import { AllCategoriesState } from "./all-categories-state";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Categories } from "@/models/category";
 import { Store } from '@/models/store'
 import { Product } from "@/models/product";
+import { RequestStatus } from "@/models/result";
 
 const initialState: AllCategoriesState = {
     categories: [],
-    getCategoriesStatus: RequestStatus.NONE,
-
+    getCategoriesStatus: RequestStatus.WAITING,
     getStoreStatus: RequestStatus.WAITING,
     stores: [],
-
     products: [],
-    getProductsStatus: RequestStatus.NONE,
-
+    getProductsStatus: RequestStatus.WAITING,
     categoriesSelected: [],
     sort: '',
-    searchQuery: undefined,
+    searchQuery: '',
 }
 
 export const allCategoriesSlice = createSlice({
@@ -45,7 +43,12 @@ export const allCategoriesSlice = createSlice({
         sortChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
             return { ...state, sort: action.payload }
         },
-
+        searchProductsLoaded: (state: AllCategoriesState) => {
+            return {
+                ...state,
+                getProductsStatus: RequestStatus.IN_PROGRESS
+            }
+        },
         categoriesSelectedChanged: (state: AllCategoriesState, action: PayloadAction<string>) => {
 
             return {
@@ -95,21 +98,23 @@ export const allCategoriesSlice = createSlice({
                 searchQuery: action.payload
             }
         },
+        setSelectedCategory: (state: AllCategoriesState, action: PayloadAction<string>) => {
+            return {
+                ...state,
+                categoriesSelected: [...state.categoriesSelected, action.payload]
+            }
+        }
 
     }
 })
 export const {
     categoriesRequestStatusSet,
-    allCategoriesSet,
-    storesRequestStatusSet,
-    allCategoriesStoresSet,
-    sortChanged,
-    getProductStatusSet,
-    allCategoriesProductsSet,
-
-    categoriesSelectedChanged,
-    getProductsSuccess,
-    searchQueryChanged
+    allCategoriesSet, getStoresLoaded,
+    storesRequestStatusSet, getStoresSuccess,
+    allCategoriesStoresSet, sortChanged, getProductStatusSet,
+    allCategoriesProductsSet, getCategoriesLoaded, getCategoriesSuccess,
+    categoriesSelectedChanged, getProductsSuccess, searchQueryChanged, setSelectedCategory,
+    searchProductsLoaded,
 } = allCategoriesSlice.actions;
 
 export default allCategoriesSlice.reducer;
