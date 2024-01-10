@@ -15,44 +15,31 @@ import { categoriesRequestStatusSet } from '../_redux/home-slice';
 import { Categories } from '@/models/category';
 import { HiOutlineExclamation } from 'react-icons/hi';
 import { MainState } from '../../_redux/main-state';
-import { TextInputField } from '@/types/props/text-input-field';
 import { CategoryRepository } from '@/repositories/category-repository';
 
-export function HomeCategories() {
+export function HomeCategories({ countryCode }: { countryCode: string }) {
   const router = useRouter();
   const homeState: HomeState = useAppSelector((state: RootState) => { return state.home; });
-  const mainState: MainState = useAppSelector((state: RootState) => { return state.main });
   const dispatch: AppDispatch = useAppDispatch();
 
   let categoriesRequestStatus: RequestStatus = useMemo(() => {
     return homeState.getMainCategoriesStatus
   }, [homeState.getMainCategoriesStatus]);
 
-  let countryPicker: TextInputField<string> = useMemo(() => {
-    return mainState.countryPicker;
-  }, [mainState.countryPicker])
 
   useEffect(() => {
-    switch (categoriesRequestStatus) {
-      case RequestStatus.NONE:
-        dispatch(categoriesRequestStatusSet(RequestStatus.WAITING));
-        break;
-      case RequestStatus.WAITING:
-        dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
-        break;
-      case RequestStatus.IN_PROGRESS:
-        const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
-        dispatch(getMainCategories(categoryRepository, countryPicker.value));
-        break;
-    }
-  }, [categoriesRequestStatus, dispatch, countryPicker.value]);
+    dispatch(categoriesRequestStatusSet(RequestStatus.WAITING));
+    dispatch(categoriesRequestStatusSet(RequestStatus.IN_PROGRESS));
+    const categoryRepository = categoryContainer.get<CategoryRepository>(TYPES.CategoryRepository);
+    dispatch(getMainCategories(categoryRepository, countryCode));
+  }, [dispatch, countryCode]);
 
   return (
     <div className='lg:block hidden flex-none border rounded border-secondary-light p-3 space-y-2 bg-white w-64'>
       <div className='flex'>
         <div className='flex-1 font-semibold'>CATEGORIES</div>
-        <button className='w-auto flex-none underline text-primary text-sm hover:text-primary-dark'
-          onClick={() => { router.push('/all-categories') }}>View All</button>
+        <Link href='/all-categories'
+          className='w-auto flex-none underline text-primary text-sm hover:text-primary-dark'>View All</Link>
       </div>
       <div className='flex flex-col h-[348px]'>
         {
@@ -80,7 +67,7 @@ export function HomeCategories() {
                         <span className='inline-block'>No categories yet</span>
                       </div>
                     ) :
-                    (<Loading/>)
+                    (<Loading />)
                 }
               </div>
             )

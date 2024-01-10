@@ -23,13 +23,13 @@ export default function SideBar() {
                     <div className="space-y-4">
                         <div className="relative h-[180px] w-[180px] m-auto block">
                             <Image alt='profile-image'
-                                src={`https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
+                                src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
                                 height={180}
                                 width={180}
                                 className="h-full w-full rounded-full m-auto block"
                             />
-                            <div className="bg-primary border border-white rounded-full absolute bottom-0 text-white right-0 z-10 p-2">
-                                <FaCamera size={24} />
+                            <div className="bg-primary border border-white rounded-full absolute bottom-0 text-white -right-2 cursor-pointer z-10 p-4">
+                                <FaCamera size={32} />
                             </div>
                         </div>
                         <div className="text-center">
