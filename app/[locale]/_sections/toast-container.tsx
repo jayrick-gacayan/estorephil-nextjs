@@ -21,21 +21,22 @@ export default function ToastContainer() {
     }
   }, [startState.toasts]);
 
-
   return toasts.length === 0 ? null :
     (
-      <div className="fixed max-w-[400px] z-[9999] bottom-4 right-4">
-        {
-          toasts.map((toast: ToastProps, index: number) => {
-            return (
-              <Toast key={`${toast.id}`}
-                {...toast}
-                onClose={() => {
-                  dispatch(toastRemoved(toast.id));
-                }} />
-            )
-          })
-        }
+      <div className="fixed max-w-[400px] z-[9999] bottom-4 right-0">
+        <div className="space-y-2 px-2">
+          {
+            toasts.map((toast: ToastProps, index: number) => {
+              return (
+                <Toast key={`${toast.id}`}
+                  {...toast}
+                  onClose={() => {
+                    dispatch(toastRemoved(toast.id));
+                  }} />
+              )
+            })
+          }
+        </div>
       </div>
     )
 }

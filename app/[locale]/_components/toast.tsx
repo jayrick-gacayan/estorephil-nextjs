@@ -53,7 +53,7 @@ export default function Toast(toast: ToastProps & { onClose: () => void }) {
         <div className="flex-1">
           {toast.message}
         </div>
-        <div className="flex-none w-auto">
+        <div className="flex-none w-auto text-white">
           <FaXmark />
         </div>
       </div>

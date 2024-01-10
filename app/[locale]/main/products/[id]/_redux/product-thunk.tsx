@@ -31,15 +31,17 @@ export function getProductDetails(productRepository: ProductRepository, id: stri
 export function isProductFavorite(productRepository: ProductRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
         let productState: ProductState = getState().product;
+        dispatch(getIsLovedLoadStatusSet(RequestStatus.WAITING));
+        dispatch(getIsLovedLoadStatusSet(RequestStatus.IN_PROGRESS));
 
         let result: Result<Product[]> = await productRepository.getAllProductFavorites(token);
 
-        if (result.resultStatus === MyResultStatus.SUCCESS && !!result.data) {
-
+        if (!!result.data && result.resultStatus === MyResultStatus.SUCCESS) {
 
             let product = result.data.find((value: Product) => {
                 return value.id === productState.product.id
-            })
+            });
+            console.log('I am here...', product)
             dispatch(getIsLovedLoadStatusSet(RequestStatus.SUCCESS));
             dispatch(productFavoriteSet(product ? true : undefined))
         }
