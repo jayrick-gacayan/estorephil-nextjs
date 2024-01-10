@@ -97,11 +97,21 @@ export function getAllCourierBoxes(boxRepository: BoxRepository, token: string, 
     setTimeout(async () => {
       let result = await boxRepository.getAllCourierBoxes(currentPage, token);
 
-      dispatch(
-        courierBoxesSet(result.data ??
-          { ...courierBoxesState.courierBoxes, requestStatus: RequestStatus.FAILURE }
-        )
-      );
+      if (!!result.data && result.resultStatus === ResultStatus.SUCCESS) {
+        dispatch(courierBoxesSet({
+          data: result.data,
+          count: result.response.data.count ?? 0,
+          currentPage: currentPage,
+          requestStatus: RequestStatus.SUCCESS
+        }))
+      }
+
+      else {
+        dispatch(courierBoxesSet({
+          ...courierBoxesState.courierBoxes,
+          requestStatus: RequestStatus.FAILURE
+        }))
+      }
     }, 1000)
 
   }

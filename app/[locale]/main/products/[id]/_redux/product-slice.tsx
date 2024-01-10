@@ -1,17 +1,25 @@
 import { RequestStatus } from "@/models/result";
 import { ProductState } from "./product-state";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RequestStatus as MyRequestStatus } from '@/types/enums/request-status';
 
 export const initialState: ProductState = {
     getProductDetailsStatus: RequestStatus.WAITING,
+    isLoved: undefined,
     product: {},
     currentPreviewImage: {},
+    getIsLovedLoadStatus: MyRequestStatus.NONE
 }
 export const productSlice = createSlice({
     name: 'product',
     initialState,
     reducers: {
-
+        productFavoriteSet: (state: ProductState, action: PayloadAction<boolean | undefined>) => {
+            return {
+                ...state,
+                isLoved: action.payload
+            }
+        },
         getProductDetailsLoaded: (state: ProductState) => {
             return {
                 ...state,
@@ -26,6 +34,12 @@ export const productSlice = createSlice({
                 currentPreviewImage: action.payload.gallery[0]
             }
         },
+        getIsLovedLoadStatusSet: (state: ProductState, action: PayloadAction<MyRequestStatus>) => {
+            return {
+                ...state,
+                getIsLovedLoadStatus: action.payload
+            }
+        },
         previewImageChanged: (state: ProductState, action: PayloadAction<any>) => {
             return {
                 ...state,
@@ -37,6 +51,9 @@ export const productSlice = createSlice({
 
 export const {
     getProductDetailsLoaded,
-    getProductDetailsSuccess, previewImageChanged
+    getProductDetailsSuccess,
+    previewImageChanged,
+    productFavoriteSet,
+    getIsLovedLoadStatusSet
 } = productSlice.actions
 export default productSlice.reducer

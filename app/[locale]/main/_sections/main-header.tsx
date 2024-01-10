@@ -127,15 +127,20 @@ export default function MainHeader({
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              {onSession && <>
-                <Link href="/dashboard/orders" className='inline-block'>
-                  <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
-                </Link>
-                <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-                <Link href="/dashboard/agency-information" className='inline-block'>
-                  <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
-                </Link>
-              </>
+              {onSession &&
+                (
+                  <>
+                    <LinkForSubTopNav href='/dashboard/orders'
+                      icon={<FaTruck className='inline-block' />}
+                      text='TRACK MY ORDER' />
+                    <LinkForSubTopNav href='/dashboard/favorites'
+                      icon={<FaRegHeart className='inline-block' />}
+                      text='FAVORITES' />
+                    <LinkForSubTopNav href='/dashboard/agency-information'
+                      icon={<FaUser className='inline-block' />}
+                      text={userFullName} />
+                  </>
+                )
               }
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={COUNTRIES.find((value: any) => {
