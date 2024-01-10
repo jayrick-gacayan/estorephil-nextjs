@@ -65,11 +65,8 @@ export default function SelectTagCustom({
           return (
             <div key={`${index}-select`}
               className={`p-2 cursor-pointer ${optionActiveClassName(currentValue, itemValue)}`}
-              onMouseDown={
-                () => {
-                  onSelect(item);
-                }
-              }>
+              onMouseDown={() => { onSelect(item); }}
+              onTouchEnd={() => { onSelect(item); }}>
               {itemValue}
             </div>
           );
