@@ -55,10 +55,8 @@ export default function MainHeader({
 
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
-  const onSession = !!sessionData
-  const removeSession = async () => {
-    await signOut({ callbackUrl: `/login` })
-  }
+  const onSession = !!sessionData;
+
   useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
 
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
@@ -101,13 +99,13 @@ export default function MainHeader({
                           className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
                           PROFILE
                         </button>
-                        <button
-                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
-                          type='button'
-                          onClick={() => {
-                            removeSession()
-                          }}
-                        >
+                        <button className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
+                          onClick={async () => {
+                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                            let result = await accountRepository.nextAuthSignOut(`/login`);
+
+                            console.log('result', result)
+                          }}>
                           SIGNOUT
                         </button>
                       </div>
@@ -144,7 +142,7 @@ export default function MainHeader({
               }
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={COUNTRIES.find((value: any) => {
-                  return value.code === countryCookie;
+                  return value.code === countryCookie.toUpperCase();
                 }) ?? countries[1]}
                   labelText={(value: any) => {
                     return (
@@ -164,7 +162,7 @@ export default function MainHeader({
                   }}
                   items={countries}
                   onToggle={() => { dispatch(countryPickerToggled()); }}
-                  onSelect={async (value: any) => { onCountryCookieSet(value.code); }}
+                  onSelect={async (value: any) => { onCountryCookieSet(value.code.toLowerCase()); }}
                   show={countryPicker.show ?? false}
                   selectedClassName={(value: any) => {
                     return value.code === countryCookie ? 'bg-primary text-white' : ''
