@@ -1,17 +1,14 @@
 'use client';
 
-import { ChangeEvent, useEffect, useMemo, useRef } from "react";
+import { ChangeEvent, useEffect, useMemo } from "react";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
-import SelectCustom from "@/app/[locale]/_components/select-custom";
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { AppDispatch, RootState } from "@/redux/store";
 import { CourierBoxesState } from "../_redux/courier-boxes-state";
 import {
   boxFormRequestStatusSet,
   boxTypeChanged,
-  boxTypeSelectionShown,
   cargoTypeChanged,
-  cargoTypeSelectionShown,
   heightDimensionChanged,
   lengthDimensionChanged,
   priceChanged,
@@ -20,16 +17,13 @@ import {
   regionFeesFeeUpdated,
   regionFeesRemoved,
   unitMeasureChanged,
-  unitMeasureSelectionShown,
   weightChanged,
   weightTypeChanged,
-  weightTypeSelectionShown,
   widthDimensionChanged
 } from "../_redux/courier-boxes-slice";
 import { ValidationType } from "@/types/enums/validation-type";
 import InputGoogleLikeCustom from "@/app/[locale]/_components/input-google-like-custom";
 import InputCustom from "@/app/[locale]/_components/input-custom";
-import { useOutsideClick } from "@/app/_hooks/use-outside-click";
 import { RequestStatus } from "@/types/enums/request-status";
 import LineDotLoader from "@/app/[locale]/_components/line-dot-loader";
 import { useSession } from "next-auth/react";
@@ -40,6 +34,7 @@ import { createBox, updateBox } from "../_redux/courier-boxes-thunk";
 import { BoxTypes } from "@/types/enums/box-type";
 import { PhRegion } from "@/models/ph-region";
 import { TextInputField } from "@/types/props/text-input-field";
+import SelectTagCustom from "@/app/[locale]/_components/select-tag-cutsom";
 
 export default function BoxesModalForm({
   type,
@@ -51,11 +46,6 @@ export default function BoxesModalForm({
   regions: PhRegion[];
 }) {
   const { data: sessionData } = useSession();
-  const cargoTypeRef = useRef<HTMLDivElement>(null);
-  const boxTypeRef = useRef<HTMLDivElement>(null);
-  const unitMeasureRef = useRef<HTMLDivElement>(null);
-  const weightTypeRef = useRef<HTMLDivElement>(null);
-
   const dispatch: AppDispatch = useAppDispatch();
   const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => { return state.courierBoxes; });
 
@@ -100,28 +90,13 @@ export default function BoxesModalForm({
     }
   }, [requestStatus, dispatch, sessionData, type])
 
-  // useOutsideClick(cargoTypeRef, () => {
-  //   dispatch(cargoTypeSelectionShown())
-  // });
-
-  // useOutsideClick(boxTypeRef, () => {
-  //   dispatch(boxTypeSelectionShown())
-  // });
-  // useOutsideClick(unitMeasureRef, () => {
-  //   dispatch(unitMeasureSelectionShown())
-  // });
-  // useOutsideClick(weightTypeRef, () => {
-  //   dispatch(weightTypeSelectionShown())
-  // });
-
-  function selectCustomValueClassName(errorText: string) {
-    return `flex rounded overflow-hidden items-center justify-center hover:cursor-pointer p-2 border has-[input:focus]:border-primary
-      ${errorText !== '' ? 'border-danger' : 'border-tertiary-dark'}`;
+  function selectValueClassname(status: ValidationType) {
+    return `${status !== ValidationType.NONE && status !== ValidationType.VALID ? 'border-danger has-[input:focus]:border-danger' :
+      status === ValidationType.VALID ? 'border-success has-[input:focus]:border-success' : 'border-tertiary-dark has-[input:focus]:border-primary'}`;
   }
 
   function selectCustomOptionsClassName(current: string, value: string) {
-    return `p-2 cursor-pointer 
-      ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`;
+    return `p-2 cursor-pointer ${current === value && current !== '' ? `bg-primary text-white` : `bg-inherit hover:bg-primary hover:text-white`}`;
   }
 
   function googleLikeInputLabelClassName(status: ValidationType) {
@@ -146,8 +121,6 @@ export default function BoxesModalForm({
       }`
   }
 
-  console.log('region fees', regionFees)
-
   return (
     <div className='py-8 space-y-8 w-[768px] m-auto'>
       <div className="border-b border-secondary-light">
@@ -158,52 +131,38 @@ export default function BoxesModalForm({
           <div className="flex items-center gap-4 text-left">
             <div className="flex-none w-56 font-semibold">Cargo Type</div>
             <div className="flex-1">
-              <SelectCustom ref={cargoTypeRef}
-                labelText=''
-                items={['Cargo Type: ', 'Air', 'Vessel']}
-                value={cargoType.value === "" ? "Cargo Type: " : cargoType.value === "0" ? "Air" : "Vessel"}
-                placeholder='Cargo Type: '
-                visible={cargoType.show ?? false}
-                setVisible={(visible: boolean) => {
-                  dispatch(visible ? cargoTypeSelectionShown(true) : cargoTypeSelectionShown())
+              <SelectTagCustom items={['Cargo Type:', 'Air', 'Vessel']}
+                onSelect={(item: string) => {
+                  dispatch(cargoTypeChanged(item === "Cargo Type:" ? "" : item === "Air" ? "0" : "1"));
                 }}
-                onSelect={(value: string) => {
-                  dispatch(cargoTypeChanged(value === "Cargo Type: " ? "" : value === "Air" ? "0" : "1"));
-                }}
-                valueClassName={selectCustomValueClassName}
+                value={cargoType.value === "0" ? "Air" : cargoType.value === "1" ? "Vessel" : cargoType.value}
+                placeholder='Cargo Type:'
                 optionActiveClassName={selectCustomOptionsClassName}
-                errorText={cargoType.errorText} />
+                errorText={cargoType.errorText}
+                status={cargoType.status}
+                valueClassName={selectValueClassname} />
             </div>
           </div>
           <div className="flex items-center gap-4 text-left">
             <div className="flex-none w-56 font-semibold">Box Type</div>
             <div className="flex-1">
-              <SelectCustom ref={boxTypeRef}
-                labelText=''
-                items={['Box Type: ', 'Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
-                value={boxType.value === "" ? "Box Type: " :
-                  Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
-                    return boxType.value === typeBoxes[0]
-                  })?.[1] ?? ""
-                }
-                placeholder='Box Type: '
-                visible={boxType.show ?? false}
-                setVisible={(visible: boolean) => {
-                  dispatch(visible ? boxTypeSelectionShown(true) : boxTypeSelectionShown())
-                }}
+              <SelectTagCustom items={['Box Type: ', 'Small', 'Medium', 'Large', 'Extra-Large', 'Odd']}
                 onSelect={(value: string) => {
-                  console.log('box value', value);
                   dispatch(boxTypeChanged(
                     value === "Box Type: " ? "" :
                       Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
                         return value === typeBoxes[1]
                       })?.[0] ?? ""
                   ));
-
                 }}
-                valueClassName={selectCustomValueClassName}
+                value={Object.entries(BoxTypes).find((typeBoxes: [string, string]) => {
+                  return boxType.value === typeBoxes[0]
+                })?.[1] ?? ""}
+                placeholder='Box Type:'
                 optionActiveClassName={selectCustomOptionsClassName}
-                errorText={boxType.errorText} />
+                errorText={boxType.errorText}
+                status={boxType.status}
+                valueClassName={selectValueClassname} />
             </div>
           </div>
           {/* <div className="flex items-center gap-4 text-left">
@@ -266,21 +225,16 @@ export default function BoxesModalForm({
               </div>
             </div>
             <div className="flex-none w-20">
-              <SelectCustom ref={unitMeasureRef}
-                labelText=''
-                items={['Unit: ', 'cm', 'm', 'in']}
-                value={unitMeasure.value === "" ? "Unit: " : unitMeasure.value}
-                placeholder='Unit: '
-                visible={unitMeasure.show ?? false}
-                setVisible={(visible: boolean) => {
-                  dispatch(visible ? unitMeasureSelectionShown(true) : unitMeasureSelectionShown())
-                }}
+              <SelectTagCustom items={['Unit:', 'cm', 'm', 'in']}
                 onSelect={(value: string) => {
-                  dispatch(unitMeasureChanged(value === "Unit: " ? "" : value));
+                  dispatch(unitMeasureChanged(value === "Unit:" ? "" : value));
                 }}
-                valueClassName={selectCustomValueClassName}
+                value={unitMeasure.value}
+                placeholder='Unit:'
                 optionActiveClassName={selectCustomOptionsClassName}
-                errorText={unitMeasure.errorText} />
+                errorText={unitMeasure.errorText}
+                status={unitMeasure.status}
+                valueClassName={selectValueClassname} />
             </div>
           </div>
           <div className="flex items-center gap-4 text-left">
@@ -323,21 +277,16 @@ export default function BoxesModalForm({
               </div>
             </div>
             <div className="flex-none w-20">
-              <SelectCustom ref={weightTypeRef}
-                labelText=''
-                items={['Unit: ', 'gms', 'kgs', 'lbs']}
-                value={weightType.value === "" ? "Unit: " : weightType.value}
-                placeholder='Unit: '
-                visible={weightType.show ?? false}
-                setVisible={(visible: boolean) => {
-                  dispatch(visible ? weightTypeSelectionShown(true) : weightTypeSelectionShown())
-                }}
+              <SelectTagCustom items={['Unit:', 'gms', 'kgs', 'lbs']}
                 onSelect={(value: string) => {
-                  dispatch(weightTypeChanged(value === "Unit: " ? "" : value));
+                  dispatch(weightTypeChanged(value === "Unit:" ? "" : value));
                 }}
-                valueClassName={selectCustomValueClassName}
+                value={weightType.value}
+                placeholder='Unit:'
                 optionActiveClassName={selectCustomOptionsClassName}
-                errorText={weightType.errorText} />
+                errorText={weightType.errorText}
+                status={weightType.status}
+                valueClassName={selectValueClassname} />
             </div>
           </div>
           <div className="flex items-center gap-4 text-left">
@@ -366,8 +315,7 @@ export default function BoxesModalForm({
               <div className="flex-none w-56 font-semibold">
                 Region
               </div>
-              <div className="relative w-full ">
-
+              <div className="relative w-full">
                 <label htmlFor="region-box-form"
                   className="peer p-2 rounded border-[.5px] border-tertiary-dark w-full block cursor-pointer has-[input:focus]:border-primary">
                   {

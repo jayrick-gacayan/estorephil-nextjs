@@ -44,7 +44,7 @@ export default function BoxesTable() {
 
   return (
     <>
-      <div className="block overflow-auto">
+      <div className="block overflow-auto clear-both">
         <table className="min-w-[768px] w-full">
           <thead>
             <tr className="text-left [&>th]:font-normal [&>th]:px-2 [&>th]:py-3 border-y-[.5px] border-tertiary bg-[#F8FAFC]">
@@ -100,7 +100,7 @@ export default function BoxesTable() {
                       </td>
                       <td>
                         <div className="space-x-2">
-                          <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary'
+                          <div className='inline-block p-2 m-auto rounded border cursor-pointer border-primary w-fit text-primary hover:bg-primary hover:text-white'
                             onClick={() => {
                               dispatch(editFormFieldsFilled({
                                 ...box,
@@ -117,7 +117,7 @@ export default function BoxesTable() {
                             }}>
                             <FaRegPenToSquare />
                           </div>
-                          <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger'
+                          <div className='inline-block p-2 m-auto rounded border cursor-pointer border-danger w-fit text-danger hover:bg-danger hover:text-white'
                             onClick={() => { }}>
                             <RxCircleBackslash />
                           </div>
