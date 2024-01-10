@@ -4,7 +4,8 @@ import {
   FaCircleCheck,
   FaCircleExclamation,
   FaCircleInfo,
-  FaCircleXmark
+  FaCircleXmark,
+  FaXmark
 } from "react-icons/fa6";
 import { useTimeout } from "usehooks-ts";
 
@@ -45,7 +46,7 @@ export default function Toast(toast: ToastProps & { onClose: () => void }) {
   return (
     <div ref={toastRef}
       className={`w-[448px] block rounded overflow-auto h-auto text-white ${colors[toast.type as keyof typeof colors]} hover:bg-opacity-80`}>
-      <div className={`flex items-center gap-1 p-2`}>
+      <div className={`flex items-center gap-1 py-4 px-2`}>
         <div className="w-auto flex-none">
           {toastIcons[toast.type as keyof typeof toastIcons]}
         </div>
@@ -53,7 +54,7 @@ export default function Toast(toast: ToastProps & { onClose: () => void }) {
           {toast.message}
         </div>
         <div className="flex-none w-auto">
-
+          <FaXmark />
         </div>
       </div>
     </div>
