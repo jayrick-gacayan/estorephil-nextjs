@@ -1,6 +1,6 @@
 'use client';
 
-import { useAppSelector } from '@/app/_hooks/redux_hooks';
+import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RootState } from '@/redux/store';
 import { useEffect, useMemo } from 'react';
 import { useRouter } from 'next-intl/client';
@@ -11,27 +11,28 @@ import { useSession } from 'next-auth/react';
 import CartHeader from './cart-header';
 import SummaryCheckout from './summary-checkout';
 import { capitalCase } from 'change-case';
+import { CartState } from '../_redux/cart-state';
 
 export default function PageContainer(): JSX.Element | null {
   const router = useRouter();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
+  const state: CartState = useAppSelector((state: RootState) => { return state.cart });
   const { data: sessionData } = useSession()
-
+  const dispatch = useAppDispatch();
   const cartType = useMemo(() => {
     const cartType = sessionData?.cart?.cart_type ?? mainState.cartType;
     return cartType === '' ? '' : capitalCase(cartType);
   }, [mainState.cartType]);
 
-  const cartProducts = useMemo(() => {
-    return sessionData?.cart?.cart_products ?? (mainState?.cart?.cart_products ?? []);
-  }, []);
-
+  const cartProducts = state.cartCheckout
   useEffect(() => {
     if (cartType === '') {
       router.push('/')
     }
   }, [cartType, router]);
+  useEffect(() => {
 
+  })
   return cartType === '' ? null :
     cartProducts.length === 0 ?
       (

@@ -1,25 +1,19 @@
-
 import { TYPES } from "@/inversify/types";
-import { AccountService } from "@/services/account-service";
-import { OrderService } from "@/services/order-service";
-import { inject, injectable } from "inversify";
-import { SignInOptions } from "next-auth/react";
-
+import { CartService } from "@/services/cart-service";
+import { injectable, inject } from "inversify";
 
 @injectable()
-export class OrderRepository {
-    private orderService: OrderService;
+export class CartRepository {
+    private cartService: CartService;
     public constructor(
-        @inject(TYPES.OrderService) orderService: OrderService,
+        @inject(TYPES.CartService) cartService: CartService,
     ) {
-        this.orderService = orderService;
+        this.cartService = cartService;
     }
     async getMainCart() {
 
     }
-    async getAgentOrders(token: string, page: number, limit: number) {
-        return await this.orderService.getAgentOrders(token, page, limit)
-    }
+
     async setCart({
         token,
         cartType,
@@ -59,7 +53,7 @@ export class OrderRepository {
             }
         }
         console.log('set cart repository dispatched', JSON.stringify(body))
-        return await this.orderService.setCart(token, JSON.stringify(body))
+        return await this.cartService.setCart(token, JSON.stringify(body))
     }
 
 }

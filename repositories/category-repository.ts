@@ -26,8 +26,8 @@ export class CategoryRepository {
     return new Result<Categories[]>(
       {
         response: response,
-        data: (response.data && response.data.length > 0) ? response.data.map((value: any) => { return camelCase({ ...value }) as any }) : [],
-        statusCode: response.status
+        data: (response?.data && response?.data.length > 0) ? response.data.map((value: any) => { return camelCase({ ...value }) as any }) : [],
+        statusCode: response?.status
       }
     )
   }
