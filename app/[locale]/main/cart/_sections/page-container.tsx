@@ -27,9 +27,9 @@ export default function PageContainer() {
   const cartRepository = cartContainer.get<CartRepository>(TYPES.CartRepository)
   const dispatch = useAppDispatch();
   const cartType = useMemo(() => {
-    const cartType = sessionData?.cart?.cart_type ?? mainState.cartType;
+    const cartType = sessionData?.cart?.cart_type ?? '';
     return cartType === '' ? '' : capitalCase(cartType);
-  }, [mainState.cartType]);
+  }, [sessionData]);
   const cartProducts = state.cartCheckout
 
   useEffect(() => {

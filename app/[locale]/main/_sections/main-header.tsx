@@ -78,7 +78,8 @@ export default function MainHeader({
             <div className='md:block hidden space-x-3 w-auto'>
               <CartTypeNavbar>
                 {onSession
-                  ? <Dropdown ref={dropdownProfileImageRef}
+                  ? <>
+                  <Dropdown ref={dropdownProfileImageRef}
                     className='relative inline'>
                     <Image alt='profile-image'
                       src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
@@ -113,6 +114,7 @@ export default function MainHeader({
                       </div>
                     </div>
                   </Dropdown>
+                  </>
                   : (
                     <button onClick={() => { push('/login') }}
                       className='transition-all delay-50 text-white border border-transparent py-2 px-4 h-full rounded text-xl align-middle bg-primary hover:bg-primary-light'>Login

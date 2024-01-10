@@ -6,4 +6,6 @@ export interface CartState {
   cartCheckout: any[]
   itemsSelected: any[]
   getMainCartStatus: RequestStatus
+  purchaseMethodItems: Cart[] | BalikbayanBox[];
+  purchaseMethodItemToInteract: Cart | BalikbayanBox | undefined;
 }

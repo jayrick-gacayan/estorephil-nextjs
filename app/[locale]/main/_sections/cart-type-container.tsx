@@ -55,14 +55,14 @@ export default function CartTypeContainer({
   const cartType = useMemo(() => {
     const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
   function setCartTypeClass(cartTypeMethod: string) {
     return `${cartTypeMethod === cartType ? 'bg-primary-dark text-white' : 'bg-default'} cursor-pointer hover:bg-primary-dark hover:text-white`;
   }
 
   function onCartTypeSet(cartTypeMethod: string) {
-    dispatch(cartTypeChanged(cartTypeMethod === 'Shopping Cart' ? `shopping_cart` : cartTypeMethod === 'Balikbayan Box' ? 'balikbayan_box' : ''))
+    dispatch(cartTypeChanged(cartTypeMethod === 'Shopping Cart' ? `shopping_cart` : cartTypeMethod === 'Balikbayan Box' ? 'balikbayan' : ''))
   }
   const updateCartSession = async () => {
     if (!!sessionData) {

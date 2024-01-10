@@ -34,7 +34,7 @@ export default function ProductButtonsContainer({ }) {
   const cartProducts: [] = !!sessionData?.cart ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
   const productExistsOnCart = cartProducts?.find((product: { id: number; }) => product.id === currentProduct?.id ?? 0);
   const [quantity, setQuantity] = useState<number>(!productMemo ? 1 : productMemo.quantity);
-  const cartType = sessionData?.cart?.cart_type === 'shopping_cart' ? 'Shopping Cart' : sessionData?.cart?.cart_type === 'balikbayan_box' ? 'Balikbayan Box' : ''
+  const cartType = sessionData?.cart?.cart_type === 'shopping_cart' ? 'Shopping Cart' : sessionData?.cart?.cart_type === 'balikbayan' ? 'Balikbayan Box' : ''
   const updateCartSession = async () => {
     if (!!sessionData) {
       await updateSession({

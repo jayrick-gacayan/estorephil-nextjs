@@ -34,8 +34,8 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
   const cartType = useMemo(() => {
     const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
-  }, [mainState.cartType]);
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
+  }, [sessionData]);
   const productImage = useSelector((state: RootState) => state.product)?.product?.gallery?.[0]?.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`
   // const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
   const cartProducts = !!sessionData ? sessionData?.cart?.cart_products : mainState?.cart?.cart_products
@@ -127,7 +127,8 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
                         <Image alt='shop-method-toast-on-dropdown'
                           src={productImage}
                           fill
-                          className='object-fill rounded' />
+                          className='object-fill rounded' 
+                          />
                       </div>
 
                     </div>

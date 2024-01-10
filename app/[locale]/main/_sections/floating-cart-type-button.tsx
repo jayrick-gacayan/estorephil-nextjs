@@ -13,12 +13,12 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const { data: sessionData } = useSession()
   const cartType = useMemo(() => {
-    const cartType = mainState.cartType;
+    const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
-  }, [mainState.cartType]);
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
+  }, [sessionData]);
 
-  return cartType === '' ? !!sessionData?.cart ?
+  return cartType === '' ? null :
     (
       <div className='fixed bottom-8 right-[184px] z-[1999] cursor-pointer bg-primary-dark shadow-xl ml-auto flex items-center justify-center h-44 w-44 text-white rounded-full border-4 border-white p-4
         hover:border-primary-dark hover:bg-white hover:text-primary-dark'
@@ -28,7 +28,7 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
         }}>
         <div className='space-y-1 '>
           {
-            sessionData.cart.cart_type === 'shopping_cart'
+            cartType === 'Shopping Cart'
               ? (<>
                 <Image alt={`custom_cart-icon-alt`}
                   src={`/others/custom_cart_icon.svg`}
@@ -46,5 +46,5 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
           <span className='block text-center'>Change</span>
         </div>
       </div>
-    ) : null : null
+    )
 }

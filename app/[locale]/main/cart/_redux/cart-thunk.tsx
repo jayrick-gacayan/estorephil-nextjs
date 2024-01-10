@@ -11,7 +11,7 @@ export function getMainCart(cartRepository: CartRepository, token: string) {
         console.log('get main cart result thunk: ', result)
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                console.log()
+                console.log('get main cart success')
                 dispatch(getMainCartSuccess(result.data))
                 break;
             case ResultStatus.NO_CONTENT:

@@ -12,7 +12,7 @@ export default function PurchaseMethodProviders({ children }: { children: ReactN
   const cartType = useMemo(() => {
     const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
 
   // useEffect(() => {
