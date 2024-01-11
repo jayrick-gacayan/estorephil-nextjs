@@ -19,6 +19,8 @@ import { BoxService } from '@/services/box-service';
 import { BoxRepository } from '@/repositories/box-repository';
 import { HomeService } from '@/services/home-service';
 import { HomeRepository } from '@/repositories/home-repository';
+import { CartRepository } from '@/repositories/cart-repository';
+import { CartService } from '@/services/cart-service';
 
 const categoryContainer = new Container();
 categoryContainer.bind<CategoryService>(TYPES.CategoryService).to(CategoryService);
@@ -41,19 +43,28 @@ boxContainer.bind<BoxService>(TYPES.BoxService).to(BoxService);
 boxContainer.bind<BoxRepository>(TYPES.BoxRepository).to(BoxRepository);
 
 const accountContainer = new Container();
-const staffContainer = new Container();
-const orderContainer = new Container();
-
-const homeContainer = new Container();
-
-homeContainer.bind<HomeService>(TYPES.HomeService).to(HomeService)
-homeContainer.bind<HomeRepository>(TYPES.HomeRepository).to(HomeRepository)
 accountContainer.bind<AccountService>(TYPES.AccountService).to(AccountService);
 accountContainer.bind<AccountRepository>(TYPES.AccountRepository).to(AccountRepository);
+
+const staffContainer = new Container();
 staffContainer.bind<StaffRepository>(TYPES.StaffRepository).to(StaffRepository)
 staffContainer.bind<StaffService>(TYPES.StaffService).to(StaffService)
+
+const orderContainer = new Container();
 orderContainer.bind<OrderRepository>(TYPES.OrderRepository).to(OrderRepository)
 orderContainer.bind<OrderService>(TYPES.OrderService).to(OrderService)
+
+const cartContainer = new Container();
+cartContainer.bind<CartService>(TYPES.CartService).to(CartService)
+cartContainer.bind<CartRepository>(TYPES.CartRepository).to(CartRepository)
+
+const homeContainer = new Container();
+homeContainer.bind<HomeService>(TYPES.HomeService).to(HomeService)
+homeContainer.bind<HomeRepository>(TYPES.HomeRepository).to(HomeRepository)
+
+
+
+
 
 export {
   accountContainer,
@@ -65,4 +76,5 @@ export {
   cookieContainer,
   boxContainer,
   homeContainer,
+  cartContainer
 }
