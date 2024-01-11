@@ -8,4 +8,10 @@ export interface CartState {
   getMainCartStatus: RequestStatus
   purchaseMethodItems: Cart[] | BalikbayanBox[];
   purchaseMethodItemToInteract: Cart | BalikbayanBox | undefined;
+  summary: {
+    items?: number
+    subtotal?: number
+    total?: number
+
+  }
 }

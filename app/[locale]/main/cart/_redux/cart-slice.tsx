@@ -11,8 +11,13 @@ const initialState: CartState = {
   cartCheckout: [],
   itemsSelected: [],
   purchaseMethodItems: [],
+  summary: {
+    items: 0,
+    subtotal: 0,
+    total: 0
+  },
   purchaseMethodItemToInteract: undefined,
-  getMainCartStatus: RequestStatus.WAITING
+  getMainCartStatus: RequestStatus.WAITING,
 }
 
 export const cartSlice = createSlice({
@@ -150,6 +155,33 @@ export const cartSlice = createSlice({
         };
       }
     },
+    summaryItemsquantityChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          items: action.payload,
+        }
+      }
+    },
+    subTotalChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          subtotal: action.payload
+        }
+      }
+    },
+    totalChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          total: action.payload
+        }
+      }
+    }
 
   }
 
@@ -161,8 +193,8 @@ export const {
   isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged,
   purchaseMethodItemsSet, removeFromToPurchaseMethodItem,
   selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
-  itemQuantityChanged,
-  unselectProduct
+  itemQuantityChanged, subTotalChanged, summaryItemsquantityChanged,
+  unselectProduct, totalChanged
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

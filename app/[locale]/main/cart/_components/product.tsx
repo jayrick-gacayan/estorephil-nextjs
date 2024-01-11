@@ -24,7 +24,6 @@ export default function Product({ product }: { product: any }) {
     };
     useEffect(() => {
         console.log('items selected:', state.itemsSelected)
-        console.log('items in cart:', state.cartCheckout)
     }, [state.itemsSelected, state.cartCheckout])
     return (
         <tr className=" text-left">

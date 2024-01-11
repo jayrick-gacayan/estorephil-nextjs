@@ -5,15 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
 export default function Store({ store }: { store: any }) {
-    console.log('store', store)
     const storeDetails = store?.details
     const storeProducts = store?.products
     const state = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch();
-    console.log('store products', storeProducts)
     const isStoreSelected = () => {
         const selectedProductsInStore = state.itemsSelected.filter((item) => item.store_id === storeDetails.id);
-        console.log('isStoreSelected:', selectedProductsInStore.length === storeProducts.length, storeProducts.length, selectedProductsInStore.length)
         return selectedProductsInStore.length === storeProducts.length;
     };
 
