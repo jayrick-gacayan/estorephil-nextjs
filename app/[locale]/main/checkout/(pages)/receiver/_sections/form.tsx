@@ -20,8 +20,8 @@ export default function Form() {
     //sample
     const couriers = [
         {
-            courierImageUrl: 'https://scontent.fceb2-1.fna.fbcdn.net/v/t1.6435-9/186564316_283225073454661_3848347978895062992_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=dd63ad&_nc_ohc=PsjZKwSP4MIAX-xHTI3&_nc_ht=scontent.fceb2-1.fna&oh=00_AfBJ2iZVy7YVITrrJS_eTjZK-S-TesjpFjj4Qmr4bQUCcQ&oe=657BA7C9',
-            courierName: 'LBC',
+            courierImageUrl: 'https://www.ninjavan.co/cover.png',
+            courierName: 'Ninja Van US',
             courierDeliveryPrice: 100,
             currency: "C$",
             selected: true,

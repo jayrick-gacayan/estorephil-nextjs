@@ -70,7 +70,7 @@ export default function NextButton() {
                     }
                     break;
                 case 'order-summary':
-                    router.push('/checkout/payment-method');
+                    // router.push('/checkout/payment-method');
                     break;
             }
         }
@@ -104,6 +104,9 @@ export default function NextButton() {
                         break;
                     case 'receiver':
                         dispatch(receiverRequestStatus(RequestStatus.WAITING));
+                        break;
+                    case 'order-summary':
+                        router.push('/checkout/payment-method');
                         break;
                     case 'payment-method':
                         dispatch(paymentMethodRequestStatusChanged(RequestStatus.WAITING));
