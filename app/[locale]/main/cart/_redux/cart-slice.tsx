@@ -102,15 +102,67 @@ export const cartSlice = createSlice({
         getMainCartStatus: RequestStatus.SUCCESS,
         cartCheckout: action.payload,
       }
-    }
+    },
+    selectAllStoreProducts: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: action.payload
+      }
+    },
+    selectProduct: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: [...state.itemsSelected, action.payload]
+      }
+    },
+    unselectProduct: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: state.itemsSelected.filter(
+          (item) => item.id !== action.payload
+        ),
+      };
+    },
+    unselectAllStoreProducts: (state: CartState, action: PayloadAction<any>) => {
+
+      return {
+        ...state,
+        itemsSelected: state.itemsSelected.filter(
+          (item) => item.store_id !== action.payload
+        ),
+      };
+    },
+    itemQuantityChanged: (state: CartState, action: PayloadAction<{ isSelected: boolean, payload: any }>) => {
+      const { isSelected, payload } = action.payload;
+
+      if (isSelected) {
+        return {
+          ...state,
+          itemsSelected: state.itemsSelected.map(item => (item.id === payload.id ? { ...item, quantity: payload.quantity } : item)),
+        };
+      } else {
+        return {
+          ...state,
+          cartCheckout: state.cartCheckout.map(store => ({
+            ...store,
+            products: store.products.map((product: any) => (product.id === payload.id ? { ...product, quantity: payload.quantity } : product)),
+          })),
+        };
+      }
+    },
+
   }
 
 })
 
 export const {
-  getMainCartLoaded, isSelectAllProductsGoingToCheckout, isSelectAllSet, productItemQuantitySet,
-  getMainCartSuccess, addToShopMethodItem, isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged
-  , purchaseMethodItemsSet, removeFromToPurchaseMethodItem
+  getMainCartLoaded, isSelectAllProductsGoingToCheckout, isSelectAllSet,
+  productItemQuantitySet, getMainCartSuccess, addToShopMethodItem,
+  isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged,
+  purchaseMethodItemsSet, removeFromToPurchaseMethodItem,
+  selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
+  itemQuantityChanged,
+  unselectProduct
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

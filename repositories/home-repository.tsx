@@ -17,6 +17,7 @@ export class HomeRepository {
         return await this.homeService.getMainStores(locale)
     }
     async getMainProducts(locale: string) {
+        console.log('main products repository called')
         return await this.homeService.getMainProducts(locale)
     }
 

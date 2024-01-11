@@ -13,6 +13,7 @@ export class HomeService {
         return result;
     }
     async getMainProducts(locale:string) {
+        console.log('main products service called')
         const response = await fetch(`${process.env.API_URL}/main-products/${locale}`)
         var result = await response.json();
         return result;
