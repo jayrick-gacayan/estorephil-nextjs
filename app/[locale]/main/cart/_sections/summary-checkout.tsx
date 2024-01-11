@@ -1,5 +1,10 @@
+'use client'
+import { RootState } from '@/redux/store';
 import Link from 'next-intl/link';
+import { useEffect } from 'react';
 import { FaCcAmex, FaCcDiscover, FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from 'react-icons/fa6';
+import { useDispatch, useSelector } from 'react-redux';
+import { subTotalChanged, summaryItemsquantityChanged, totalChanged } from '../_redux/cart-slice';
 
 export default function SummaryCheckout({
   totalItems,
@@ -8,6 +13,18 @@ export default function SummaryCheckout({
   totalItems: number;
   onRedirectToCheckout: () => void;
 }) {
+  const state = useSelector((state: RootState) => state.cart)
+  const summary = state.summary
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const totalQuantity = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0), 0);
+    const totalPrice = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
+    console.log('use effect called summary checkout')
+    dispatch(summaryItemsquantityChanged(totalQuantity));
+    dispatch(subTotalChanged(totalPrice));
+    dispatch(totalChanged(totalPrice));
+  }, [state.itemsSelected, dispatch]);
+
   return (
     <div className='w-[384px] bg-default border-l border-secondary-light'>
       <div className="p-8">
@@ -20,20 +37,20 @@ export default function SummaryCheckout({
           <div className="space-y-2 pb-2 border-b border-tertiary">
             <div className="flex">
               <div className="flex-1">ITEMS</div>
-              <div className="text-primary">{totalItems}</div>
+              <div className="text-primary">{summary.items}</div>
             </div>
             <div className="flex">
               <div className="flex-1">SUBTOTAL</div>
               <div className="flex-none w-auto">
-                C&#36; <span>{(228).toFixed(2)}</span>
+                C&#36; <span>{(summary.subtotal)?.toFixed(2)}</span>
               </div>
             </div>
-            <div className="flex">
+            {/* <div className="flex">
               <div className="flex-1">SALES TAX</div>
               <div className="flex-none w-auto"><span className="text-success">Included</span></div>
-            </div>
+            </div> */}
           </div>
-          <div className="space-y-2 py-2 border-b border-tertiary">
+          {/* <div className="space-y-2 py-2 border-b border-tertiary">
             <div>SHIPPING &#38; HANDLING</div>
             <div className="space-y-2 pl-2 pb-2">
               <div className="flex">
@@ -73,26 +90,27 @@ export default function SummaryCheckout({
                 </div>
               </div>
             </div>
-          </div>
-          <div className="pb-2 border-b border-tertiary">
+          </div> */}
+          {/* <div className="pb-2 border-b border-tertiary">
             <div className="flex">
               <div className="flex-1">PH</div>
               <div className="flex-none w-auto">
                 <span>10&#37;</span>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="pb-2">
             <div className="flex items-center">
               <div className="flex-1">TOTAL</div>
               <div className="flex-none w-auto text-[20px]">
-                C&#36; <span>{(25).toFixed(2)}</span>
+                C&#36; <span>{(summary.total)?.toFixed(2)}</span>
               </div>
             </div>
           </div>
         </div>
         <Link href="/" className="text-primary block text-right text-sm py-2 underline cursor-pointer hover:text-primary-light">APPLY A PROMO CODE</Link>
-        <button disabled={totalItems === 0}
+        <button
+          disabled={state.itemsSelected.length === 0}
           className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
           onClick={onRedirectToCheckout}>
           CHECK OUT

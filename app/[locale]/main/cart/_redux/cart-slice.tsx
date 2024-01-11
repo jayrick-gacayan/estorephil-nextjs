@@ -1,13 +1,23 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CartState } from './cart-state';
+import { RequestStatus } from '@/models/result';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { Products } from '@/models/products';
 import { Seller } from '@/models/seller';
 
+
 const initialState: CartState = {
+  cartCheckout: [],
+  itemsSelected: [],
   purchaseMethodItems: [],
+  summary: {
+    items: 0,
+    subtotal: 0,
+    total: 0
+  },
   purchaseMethodItemToInteract: undefined,
+  getMainCartStatus: RequestStatus.WAITING,
 }
 
 export const cartSlice = createSlice({
@@ -83,20 +93,108 @@ export const cartSlice = createSlice({
           return { ...purchaseMethod, isGoingToCheckout: !action.payload }
         })
       }
+    },
+    getMainCartLoaded: (state: CartState) => {
+      return {
+        ...state,
+        getMainCartStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    getMainCartSuccess: (state: CartState, action: PayloadAction<any>) => {
+      console.log('get cart main success slice', action.payload)
+      return {
+        ...state,
+        getMainCartStatus: RequestStatus.SUCCESS,
+        cartCheckout: action.payload,
+      }
+    },
+    selectAllStoreProducts: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: action.payload
+      }
+    },
+    selectProduct: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: [...state.itemsSelected, action.payload]
+      }
+    },
+    unselectProduct: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: state.itemsSelected.filter(
+          (item) => item.id !== action.payload
+        ),
+      };
+    },
+    unselectAllStoreProducts: (state: CartState, action: PayloadAction<any>) => {
+
+      return {
+        ...state,
+        itemsSelected: state.itemsSelected.filter(
+          (item) => item.store_id !== action.payload
+        ),
+      };
+    },
+    itemQuantityChanged: (state: CartState, action: PayloadAction<{ isSelected: boolean, payload: any }>) => {
+      const { isSelected, payload } = action.payload;
+
+      if (isSelected) {
+        return {
+          ...state,
+          itemsSelected: state.itemsSelected.map(item => (item.id === payload.id ? { ...item, quantity: payload.quantity } : item)),
+        };
+      } else {
+        return {
+          ...state,
+          cartCheckout: state.cartCheckout.map(store => ({
+            ...store,
+            products: store.products.map((product: any) => (product.id === payload.id ? { ...product, quantity: payload.quantity } : product)),
+          })),
+        };
+      }
+    },
+    summaryItemsquantityChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          items: action.payload,
+        }
+      }
+    },
+    subTotalChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          subtotal: action.payload
+        }
+      }
+    },
+    totalChanged: (state: CartState, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        summary: {
+          ...state.summary,
+          total: action.payload
+        }
+      }
     }
-  },
+
+  }
 
 })
 
 export const {
-  purchaseMethodItemsSet,
-  isSelectAllSet,
-  addToShopMethodItem,
-  removeFromToPurchaseMethodItem,
-  productItemQuantitySet,
-  productItemisGoingToCheckoutChanged,
-  isAllProductsGoingToCheckoutBySeller,
-  isSelectAllProductsGoingToCheckout
+  getMainCartLoaded, isSelectAllProductsGoingToCheckout, isSelectAllSet,
+  productItemQuantitySet, getMainCartSuccess, addToShopMethodItem,
+  isAllProductsGoingToCheckoutBySeller, productItemisGoingToCheckoutChanged,
+  purchaseMethodItemsSet, removeFromToPurchaseMethodItem,
+  selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
+  itemQuantityChanged, subTotalChanged, summaryItemsquantityChanged,
+  unselectProduct, totalChanged
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

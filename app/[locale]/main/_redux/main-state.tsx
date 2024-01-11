@@ -16,7 +16,6 @@ export interface MainState {
   deliveryType: string,
   deliveryAddressCountry: string,
   deliveryAddressCity: string,
-
   addToCartQuantity: number
   addToCartStatus: RequestStatus
   removeFromCartStatus: RequestStatus

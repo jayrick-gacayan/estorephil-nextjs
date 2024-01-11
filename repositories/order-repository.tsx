@@ -14,6 +14,9 @@ export class OrderRepository {
     ) {
         this.orderService = orderService;
     }
+    async getMainCart() {
+
+    }
     async getAgentOrders(token: string, page: number, limit: number) {
         return await this.orderService.getAgentOrders(token, page, limit)
     }
@@ -55,7 +58,8 @@ export class OrderRepository {
                 zip_code: zipCode
             }
         }
-        console.log('set cart repository dispatched',JSON.stringify(body))
+        console.log('set cart repository dispatched', JSON.stringify(body))
         return await this.orderService.setCart(token, JSON.stringify(body))
     }
+
 }
