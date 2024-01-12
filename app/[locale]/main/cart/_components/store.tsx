@@ -51,17 +51,13 @@ export default function Store({ store }: { store: any }) {
                     </div>
                 </div>
                 <div>
-                    {
-                        !isCollapse &&
-                        (
-                            <div>
-                                <CiCircleMinus className={`transition-all duration-100 w-5 h-5 text-[#857114] stroke-1 ${isCollapse ? 'block' : 'hidden'}`}
-                                    onClick={() => { setIsCollapse(false) }} />
-                                <CiCirclePlus className={`transition-all duration-100 w-5 h-5 text-[#857114] stroke-1 ${isCollapse ? 'hidden' : 'block'}`}
-                                    onClick={() => { setIsCollapse(true) }} />
-                            </div>
-                        )
-                    }
+
+                    <div>
+                        <CiCircleMinus className={`transition-all duration-100 w-5 h-5 text-[#857114] stroke-1 ${isCollapse ? 'block' : 'hidden'}`}
+                            onClick={() => { setIsCollapse(false) }} />
+                        <CiCirclePlus className={`transition-all duration-100 w-5 h-5 text-[#857114] stroke-1 ${isCollapse ? 'hidden' : 'block'}`}
+                            onClick={() => { setIsCollapse(true) }} />
+                    </div>
                 </div>
             </div>
             <div className="bg-white">
