@@ -60,7 +60,7 @@ export default function Store({ store }: { store: any }) {
                     </div>
                 </div>
             </div>
-            <div className="bg-white">
+            <div className={`bg-white ${isCollapse ? 'block' : 'hidden'}`}>
                 <table className="border-collapse w-full">
                     <thead>
                         <tr className="text-gray-400 text-sm font-light text-left">
@@ -82,6 +82,6 @@ export default function Store({ store }: { store: any }) {
                 </table>
 
             </div>
-        </div>
+        </div >
     )
 }
