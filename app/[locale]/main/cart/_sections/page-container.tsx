@@ -21,16 +21,17 @@ import Loading from '../../_components/loading';
 
 export default function PageContainer() {
   const router = useRouter();
-  const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
   const state: CartState = useAppSelector((state: RootState) => { return state.cart });
   const { data: sessionData } = useSession()
   const cartRepository = cartContainer.get<CartRepository>(TYPES.CartRepository)
   const dispatch = useAppDispatch();
+
   const cartType = useMemo(() => {
     const cartType = sessionData?.cart?.cart_type ?? '';
     return cartType === '' ? '' : capitalCase(cartType);
   }, [sessionData]);
-  const cartProducts = state.cartCheckout
+
+  const cartProducts = useMemo(() => { return state.cartCheckout }, [state.cartCheckout])
 
   useEffect(() => {
     console.log('use effect trigger')
@@ -39,7 +40,7 @@ export default function PageContainer() {
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
     }
   }, [sessionData])
-  console.log('main cart', state.cartCheckout, state.getMainCartStatus)
+
   return (
     <>
       {
@@ -95,7 +96,6 @@ export default function PageContainer() {
             <div className='flex items-center justify-center text-center m-auto w-full h-[400px]'>
               <Loading height={100} width={100} />
             </div>
-
           )
       }
     </>
