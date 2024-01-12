@@ -13,10 +13,10 @@ export default function Store({ store }: { store: any }) {
     const state = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch();
 
-    const isStoreSelected = useCallback(() => {
+    const isStoreSelected = () => {
         const selectedProductsInStore = state.itemsSelected.filter((item) => item.store_id === storeDetails.id);
         return selectedProductsInStore.length === storeProducts.length;
-    }, [state.itemsSelected, storeProducts.length, storeDetails])
+    };
 
     const handleSelectAllStoreProducts = () => {
         const newItemsSelected = state.itemsSelected.map((item) => ({ ...item }));
