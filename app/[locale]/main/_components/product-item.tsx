@@ -21,7 +21,7 @@ export function ProductItem({
             src={product.main_image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}
             width={240}
             height={240}
-            className='w-auto h-auto' />
+            className='w-[240px] h-[240px] object-contain' />
         </div>
       </div>
       <div className='p-2'>
