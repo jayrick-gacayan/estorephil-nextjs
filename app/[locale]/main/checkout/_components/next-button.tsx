@@ -71,9 +71,6 @@ export default function NextButton() {
                             break;
                     }
                     break;
-                case 'order-summary':
-                    router.push('/checkout/payment-method');
-                    break;
             }
         }
 
