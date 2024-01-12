@@ -45,7 +45,7 @@ export default function Toast(toast: ToastProps & { onClose: () => void }) {
 
   return (
     <div ref={toastRef}
-      className={`w-[448px] block rounded overflow-auto h-auto text-white ${colors[toast.type as keyof typeof colors]} hover:bg-opacity-80`}>
+      className={`w-full block rounded overflow-auto h-auto text-white ${colors[toast.type as keyof typeof colors]} hover:bg-opacity-80`}>
       <div className={`flex items-center gap-1 py-4 px-2`}>
         <div className="w-auto flex-none">
           {toastIcons[toast.type as keyof typeof toastIcons]}
@@ -54,7 +54,7 @@ export default function Toast(toast: ToastProps & { onClose: () => void }) {
           {toast.message}
         </div>
         <div className="flex-none w-auto text-white">
-          <FaXmark />
+          <FaXmark onClick={() => { toast.onClose(); }} />
         </div>
       </div>
     </div>

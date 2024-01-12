@@ -41,7 +41,6 @@ export function isProductFavorite(productRepository: ProductRepository, token: s
             let product = result.data.find((value: Product) => {
                 return value.id === productState.product.id
             });
-            console.log('I am here...', product)
             dispatch(getIsLovedLoadStatusSet(RequestStatus.SUCCESS));
             dispatch(productFavoriteSet(product ? true : undefined))
         }
@@ -64,12 +63,12 @@ export function addProductToFavorites(
         dispatch(toastAdded({
             id: Date.now(),
             type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
-            duration: 3,
+            duration: 1,
             message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully added product to favorites' : 'Something went wrong. Try again.',
             position: ''
         }))
 
-        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 4000)
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 2000)
 
     }
 }
@@ -90,11 +89,11 @@ export function deleteProductFromFavorites(
         dispatch(toastAdded({
             id: Date.now(),
             type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
-            duration: 2,
+            duration: 1,
             message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully removed product to favorites' : 'Something went wrong. Try again.',
             position: ''
         }));
 
-        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 3000)
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 2000)
     }
 }
