@@ -33,6 +33,8 @@ export default function Store({ store }: { store: any }) {
         dispatch(unselectAllStoreProducts(storeDetails.id));
     };
 
+    console.log('on cart page cart items selected', state.itemsSelected)
+
     return (
         <div className="border shadow-md mb-8">
             <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">
@@ -75,13 +77,18 @@ export default function Store({ store }: { store: any }) {
                     <tbody>
                         {storeProducts.map((product: any, index: any) =>
                             <>
-                                <Product product={product} />
+                                <Product product={{
+                                    ...product, store: {
+                                        id: storeDetails.id,
+                                        name: storeDetails.business_name,
+                                        image: storeDetails.main_image
+                                    }
+                                }} />
                             </>
                         )}
                     </tbody>
                 </table>
-
             </div>
-        </div >
+        </div>
     )
 }
