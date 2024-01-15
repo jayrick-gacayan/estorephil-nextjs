@@ -176,18 +176,37 @@ export class AccountRepository {
         ,
         token: string) {
 
-        let formData = new FormData();
+        let objectToSend: any = {};
 
-        if (!!user.firstName && user.firstName.length > 0) { formData.set('user[first_name]', user.firstName); }
-        if (!!user.lastName && user.lastName.length > 0) { formData.set('user[last_name]', user.lastName); }
-        if (!!user.phoneNumber && user.phoneNumber.length > 0) { formData.set('user[phone_number]', user.phoneNumber) }
-        if (!!user.address1 && user.address1.length > 0) { formData.set('user[address_1]', user.address1) }
-        if (!!user.address2 && user.address2.length > 0) { formData.set('user[address_2]', user.address2) }
-        if (!!user.city && user.city.length > 0) { formData.set('user[city]', user.city) }
-        if (!!user.province && user.province.length > 0) { formData.set('user[province]', user.province) }
-        let result = await this.accountService.updateAgent(formData, token);
+        if (user.firstName && user.firstName.length > 0) {
+            objectToSend['first_name'] = user.firstName;
+        }
 
-        let response = undefined;
+        if (user.lastName && user.lastName.length > 0) {
+            objectToSend['last_name'] = user.lastName;
+        }
+
+        if (user.phoneNumber && user.phoneNumber.length > 0) {
+            objectToSend['phone_number'] = user.phoneNumber;
+        }
+        if (user.address1 && user.address1.length > 0) {
+            objectToSend['address_1'] = user.address1;
+        }
+
+        if (!!user.address2 && user.address2.length > 0) {
+            objectToSend['address_2'] = user.address2;
+        }
+
+        if (!!user.city && user.city.length > 0) {
+            objectToSend['city'] = user.city;
+        }
+        if (!!user.province && user.province.length > 0) {
+            objectToSend['province'] = user.province;
+        }
+
+        let result = await this.accountService.updateAgent(JSON.stringify({ user: { ...objectToSend } }), token);
+
+        let response: any = undefined;
 
         if (result.status === 200) {
             response = await result.json();
@@ -195,10 +214,37 @@ export class AccountRepository {
 
         return new Result<User>({
             response: response,
-            data: camelCase({ ...response.data.user }) ?? undefined,
+            data: response?.data?.user ? camelCase({ ...response.data.user }) as any : undefined,
+            error: response?.error ?? undefined,
             statusCode: response.status
         });
 
     }
+
+    async updateAgentProfileImage(user: {
+        profileImage?: File
+    }, token: string) {
+        let formData = new FormData();
+        if (user.profileImage) {
+            formData.set('user[profile_image]', user.profileImage)
+        }
+
+
+        let result = await this.accountService.updateAgent(formData, token, true);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<User>({
+            response: response,
+            data: response?.data?.user ? camelCase({ ...response.data.user }) as any : undefined,
+            error: response?.error ?? undefined,
+            statusCode: response.status
+        });
+    }
+
 
 }

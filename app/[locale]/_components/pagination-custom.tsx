@@ -1,8 +1,10 @@
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa6";
 import PageIconButton from "./page-icon-button";
 import { ReactNode } from "react";
+import Link from 'next-intl/link';
 
 export default function PaginationCustom({
+  pathName,
   currentPage,
   totalPageNumbers,
   totalPageCount,
@@ -13,6 +15,7 @@ export default function PaginationCustom({
   leftIcon = <FaCaretLeft className='inline' />,
   rightIcon = <FaCaretRight className='inline' />
 }: {
+  pathName: string;
   currentPage: number;
   totalPageNumbers: number[];
   totalPageCount: number;
@@ -30,24 +33,31 @@ export default function PaginationCustom({
     <div className="block">
       <div className={parentPaginateClassName}>
         <PageIconButton icon={leftIcon}
+          pathName={pathName}
           pageCondition={currentPage === 1}
           onPageCondition={onPageCondition}
-          onClick={() => { currentPage > 1 && onPageChanged(currentPage - 1) }} />
+          page={currentPage - 1} />
         {
           totalPageNumbers.map((value: number, index: number) => {
             return (
-              <div key={`pagination-${index}-${value}`}
+              <Link href={{
+                pathname: pathName,
+                query: { page: value }
+              }}
+
+                key={`pagination-${index}-${value}`}
                 className={onActivePageNumber(value, currentPage)}
                 onClick={() => { onPageChanged(value) }}>
                 {value}
-              </div>
+              </Link>
             )
           })
         }
         <PageIconButton icon={rightIcon}
+          pathName={pathName}
           pageCondition={currentPage === totalPageCount}
           onPageCondition={onPageCondition}
-          onClick={() => { currentPage < totalPageCount && onPageChanged(currentPage + 1) }} />
+          page={currentPage - 1} />
       </div>
     </div>
   )

@@ -17,7 +17,7 @@ export default function BusinessInformation() {
                 <h3 className="font-semibold text-[24px]">{translate('businessInformation')}</h3>
                 <button className='underline hover:no-underline text-primary'
                     onClick={() => {
-                        dispatch(modalUpdateFormOpened('businessInfo'));
+                        dispatch(modalUpdateFormOpened({ type: 'businessInfo', open: true }));
                     }}>{translate('update')}
                 </button>
             </div>

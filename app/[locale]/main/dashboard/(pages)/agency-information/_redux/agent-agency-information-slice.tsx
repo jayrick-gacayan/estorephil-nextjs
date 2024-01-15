@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AgentAgencyInformationState } from "./agent-agency-information-state";
 import { FileCustomBlobString } from "@/models/file-custom-blob-string";
-import { textInputFieldValue } from "@/types/helpers/field-methods";
 import { RequestStatus } from "@/types/enums/request-status";
 import { getValidationResponse } from "@/types/helpers/validation_helpers";
 import { ValidationType } from "@/types/enums/validation-type";
@@ -22,22 +21,39 @@ const initialState: AgentAgencyInformationState = {
   province: { value: '', error: '' },
   zipCode: { value: '', error: '' },
   country: { value: '', error: '' },
-  updateBasicInfoStatus: RequestStatus.WAITING,
-  documents: []
-
-
+  updateBasicInfoStatus: RequestStatus.NONE,
+  updateProfileImageRequestStatus: RequestStatus.NONE,
+  documents: [],
+  modalChangeImage: false
 }
 
 const agentAgencyInformationSlice = createSlice({
   name: 'agentAgencyInfo',
   initialState,
   reducers: {
-    modalUpdateFormOpened: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+    modalImageChangeOpened: (state: AgentAgencyInformationState, action: PayloadAction<boolean>) => {
+      return { ...state, modalChangeImage: action.payload }
+    },
+    profileImageChanged: (state: AgentAgencyInformationState, action: PayloadAction<File | undefined>) => {
+      let { profileImage, ...rest } = state;
+      return action.payload ? {
+        ...state,
+        profileImage: action.payload
+      } : rest;
+    },
+    updateProfileImageRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
+      return {
+        ...state,
+        updateProfileImageRequestStatus: action.payload,
+      }
+    },
+
+    modalUpdateFormOpened: (state: AgentAgencyInformationState, action: PayloadAction<{ type: string; open: boolean }>) => {
       return {
         ...state,
         modalUpdateFormOpen: {
-          open: !state.modalUpdateFormOpen.open,
-          type: action.payload
+          open: action.payload.open,
+          type: action.payload.type
         }
       }
     },
@@ -126,7 +142,7 @@ const agentAgencyInformationSlice = createSlice({
       }
     },
     updateBasicInfoRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
-      return { ...state, updateBasicInfoRequestStatus: action.payload }
+      return { ...state, updateBasicInfoStatus: action.payload }
     },
     agentBasicInfoSet: (state: AgentAgencyInformationState, action: PayloadAction<User>) => {
 
@@ -165,8 +181,15 @@ const agentAgencyInformationSlice = createSlice({
     agentFormBasicInfoFieldsReset: (state: AgentAgencyInformationState) => {
       return {
         ...state,
-        firstName: textInputFieldValue<string>(''),
-        lastName: textInputFieldValue<string>(''),
+        firstName: { value: '', error: '' },
+        lastName: { value: '', error: '' },
+        phoneNumber: { value: '', error: '' },
+        address1: { value: '', error: '' },
+        address2: { value: '', error: '' },
+        city: { value: '', error: '' },
+        province: { value: '', error: '' },
+        zipCode: { value: '', error: '' },
+        country: { value: '', error: '' },
         updateBasicInfoRequestStatus: RequestStatus.NONE
       }
     }
@@ -175,12 +198,16 @@ const agentAgencyInformationSlice = createSlice({
 
 export const {
   modalUpdateFormOpened,
+  profileImageChanged,
+  modalImageChangeOpened,
+  updateProfileImageRequestStatusSet,
+
   agentInfoDocumentAdded, address2Changed,
   firstNameChanged, address1Changed, cityChanged,
   lastNameChanged, provinceChanged, phoneNumberChanged,
   updateModalBasicInfoClicked, updateBasicInfoStatusLoaded,
   updateBasicInfoRequestStatusSet, updateBasicInfoStatusSuccess,
-  agentBasicInfoSet,agentRegisterFormReset,
+  agentBasicInfoSet, agentRegisterFormReset,
   agentFormBasicInfoFieldsReset
 } = agentAgencyInformationSlice.actions;
 
