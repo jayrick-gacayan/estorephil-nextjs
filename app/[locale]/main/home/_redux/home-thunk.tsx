@@ -24,7 +24,6 @@ function getMainCategories(
 ): (dispatch: AppDispatch) => Promise<void> {
     return async function (dispatch: AppDispatch) {
         let result: Result<Categories[]> = await categoryRepository.getMainCategories(locale);
-        console.log('result status:',result.resultStatus)
         switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
                 dispatch(categoriesRequestStatusSet(RequestStatus.SUCCESS))

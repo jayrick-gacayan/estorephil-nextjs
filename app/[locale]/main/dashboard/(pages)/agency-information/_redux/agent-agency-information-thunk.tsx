@@ -48,24 +48,26 @@ export function updateBasicInfo(
 export function updateAgentProfileImage(
   accountRepository: AccountRepository,
   token: string,
-  update: (data?: any) => Promise<Session | null>,
-  sessionData: Session
+  file: File,
+  updateImage: (imageUrl: any) => void
 ) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
-    let agentAgencyInfoState: AgentAgencyInformationState = getState().agentAgencyInfo;
     dispatch(updateProfileImageRequestStatusSet(RequestStatus.WAITING));
     dispatch(updateProfileImageRequestStatusSet(RequestStatus.IN_PROGRESS));
 
+    setTimeout(async () => {
+      let result = await accountRepository.updateAgentProfileImage({
+        profileImage: file
+      }, token);
 
-    let result = await accountRepository.updateAgentProfileImage({
-      profileImage: agentAgencyInfoState.profileImage
-    }, token);
+      if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
+        updateImage(result.data.profileImageUrl);
+        dispatch(updateProfileImageRequestStatusSet(RequestStatus.SUCCESS));
+      }
+      else {
+        dispatch(updateProfileImageRequestStatusSet(RequestStatus.FAILURE));
+      }
+    }, 2000);
 
-    if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
-      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.SUCCESS))
-    }
-    else {
-      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.FAILURE))
-    }
   }
 }

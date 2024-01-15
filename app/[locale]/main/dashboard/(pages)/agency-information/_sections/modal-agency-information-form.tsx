@@ -59,30 +59,34 @@ export default function ModalAgencyInformationForm({
 
   useEffect(() => {
     if (updateBasicInfoStatus === RequestStatus.SUCCESS) {
-      if (!!sessionData) {
 
-        updateSession({
-          user: {
-            ...sessionData,
-            first_name: state.firstName.value ?? sessionData.user.first_name,
-            last_name: state.lastName.value ?? sessionData.user.last_name,
-            phone_number: state.phoneNumber ?? sessionData.user.phone_number,
-            city: state.city.value ?? sessionData.user.city,
-            province: state.province.value ?? sessionData.user.province
-          }
-        })
-
-        cbOnModalClose();
-
+      async function updateAgentBasicInfo() {
+        if (!!sessionData) {
+          await updateSession({
+            user: {
+              ...sessionData,
+              user: {
+                ...sessionData.user,
+                first_name: state.firstName.value ?? sessionData.user.first_name,
+                last_name: state.lastName.value ?? sessionData.user.last_name,
+                phone_number: state.phoneNumber ?? sessionData.user.phone_number,
+                city: state.city.value ?? sessionData.user.city,
+                province: state.province.value ?? sessionData.user.province
+              }
+            }
+          })
+        }
       }
+      updateAgentBasicInfo();
+      cbOnModalClose();
     }
 
-  }, [updateBasicInfoStatus, sessionData, updateSession, dispatch])
+  }, [updateBasicInfoStatus, sessionData, updateSession, dispatch, updateSession])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 
 
-  console.log('open', open)
+  console.log('session data', sessionData);
 
   return (
     <Modal open={open}>
