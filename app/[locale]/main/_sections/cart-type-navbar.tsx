@@ -15,7 +15,7 @@ export default function CartTypeNavbar({ children }: { children: ReactNode }) {
   const cartType = useMemo(() => {
     const cartType = sessionData?.cart?.cart_type ?? '';
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
 
   return !!sessionData?.cart ?

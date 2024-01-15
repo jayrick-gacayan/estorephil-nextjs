@@ -6,16 +6,17 @@ import { isToChangeSet, mainModalOpened } from '../_redux/main-slice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import { MainState } from '../_redux/main-state';
+import { useSession } from 'next-auth/react';
 
 export default function FloatingCartTypeButton(): JSX.Element | null {
   const dispatch: AppDispatch = useAppDispatch();
   const mainState: MainState = useAppSelector((state: RootState) => { return state.main; });
-
+  const { data: sessionData } = useSession()
   const cartType = useMemo(() => {
-    const cartType = mainState.cartType;
+    const cartType = sessionData?.cart?.cart_type ?? ``;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
-  }, [mainState.cartType]);
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
+  }, [sessionData]);
 
   return cartType === '' ? null :
     (
@@ -26,11 +27,22 @@ export default function FloatingCartTypeButton(): JSX.Element | null {
           dispatch(mainModalOpened({ open: true, type: 'deliveryAddress' }));
         }}>
         <div className='space-y-1 '>
-          <Image alt={`${cartType === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}-icon-alt`}
-            src={`/others/${cartType === 'Shopping Cart' ? 'custom_cart' : 'balik_box'}_icon.svg`}
-            width={88}
-            height={88}
-            className='h-[88px] w-[88px] block m-auto' />
+          {
+            cartType === 'Shopping Cart'
+              ? (<>
+                <Image alt={`custom_cart-icon-alt`}
+                  src={`/others/custom_cart_icon.svg`}
+                  width={88}
+                  height={88}
+                  className='h-[88px] w-[88px] block m-auto' /></>)
+              : (<>
+                <Image alt={`balik_box-icon-alt`}
+                  src={`/others/balik_box_icon.svg`}
+                  width={88}
+                  height={88}
+                  className='h-[88px] w-[88px] block m-auto' /></>)
+          }
+
           <span className='block text-center'>Change</span>
         </div>
       </div>

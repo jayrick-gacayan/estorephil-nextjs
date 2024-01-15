@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { usePathname, useRouter } from 'next-intl/client';
 import { useEffect, useMemo } from 'react';
-import { RootState, store } from '@/redux/store';
+import { AppDispatch, RootState, store } from '@/redux/store';
 import { getMainCategories, searchProducts } from '../_redux/all-categories-thunk';
 import { homeContainer, productContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
@@ -11,14 +11,14 @@ import { HomeRepository } from '@/repositories/home-repository';
 import { useDispatch, useSelector } from 'react-redux';
 import { categoriesSelectedChanged, searchQueryChanged, setSelectedCategory } from '../_redux/all-categories-slice';
 import { ProductRepository } from '@/repositories/product-repository';
+import { useAppDispatch } from '@/app/_hooks/redux_hooks';
 
 export function CategorySidebar({ countryCode }: { countryCode: string }) {
   const router = useRouter();
   const allSearchParams = useSearchParams()
   const searchParams = useSearchParams();
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useAppDispatch()
   const pathName = usePathname()
-  const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const homeRepository = homeContainer.get<HomeRepository>(TYPES.HomeRepository)
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const state = useSelector((state: RootState) => state.allCategories);
@@ -31,8 +31,11 @@ export function CategorySidebar({ countryCode }: { countryCode: string }) {
           searchParams.getAll('category').includes(value.name)
       }
     })
-  }, [state.categories, searchParams.getAll('category')]);
+  }, [state.categories, searchParams]);
 
+  useEffect(() => {
+    dispatch(getMainCategories(homeRepository, countryCode))
+  }, [dispatch, countryCode])
 
   useEffect(() => {
     let allCategories = searchParams.getAll('category')
@@ -41,12 +44,12 @@ export function CategorySidebar({ countryCode }: { countryCode: string }) {
         dispatch(setSelectedCategory(value))
       })
     }
-    store.dispatch(getMainCategories(homeRepository, countryCode))
-  }, [])
-  useEffect(() => {
-    store.dispatch(searchProducts(productRepository, locale))
-  }, [state.categoriesSelected])
 
+  }, [dispatch, searchParams]);
+
+  useEffect(() => {
+    store.dispatch(searchProducts(productRepository, countryCode))
+  }, [state.categoriesSelected])
 
   return (
     <div className='flex-none bg-white w-[320px] border-r border-r-tertiary-dark py-2'>

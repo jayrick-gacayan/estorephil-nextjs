@@ -93,13 +93,10 @@ export default function FavoritesTable() {
                       className="[&>td]:p-2 border-b-[.5px] border-b-tertiary-dark odd:bg-inherit even:bg-[#EFF0F0]">
                       <td className='w-24'>
                         <Image alt={`${product.id}-${index}-${product.name}`}
-                          src={`${product.mainImageUrl ?? 'https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`'}`}
+                          src='https://www.odnetwork.org/global_graphics/default-store-350x350.jpg'
                           width={48}
                           height={48}
-                          className='rounded-full w-12 h-12 m-auto'
-                          onError={(event) => {
-                            event.currentTarget.src = 'https://www.odnetwork.org/global_graphics/default-store-350x350.jpg';
-                          }} />
+                          className='rounded-full w-12 h-12 m-auto' />
                       </td>
                       <td className='text-left'>{product.name}</td>
                       <td className='w-48 text-center'>

@@ -15,7 +15,7 @@ export default function Gallery() {
                     <div className='flex-1 relative overflow-hidden justify-center items-center'>
                         <Image
                             alt={`current-product-${state.currentPreviewImage.id}-${state.currentPreviewImage?.id}`}
-                            src={state.currentPreviewImage?.image_url}
+                            src={state.currentPreviewImage?.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}
                             height={516}
                             width={574}
                             className='transition-all duration-100 hover:scale-150 m-auto' />
@@ -31,7 +31,7 @@ export default function Gallery() {
                                             <div className='w-32 h-32 relative overflow-hidden'>
                                                 <Image
                                                     alt={i.id}
-                                                    src={i.image_url}
+                                                    src={i.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}
                                                     fill
                                                     className='transition duration-100 object-fill hover:scale-150' />
                                             </div>
