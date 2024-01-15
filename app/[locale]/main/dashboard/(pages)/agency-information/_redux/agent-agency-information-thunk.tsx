@@ -62,7 +62,7 @@ export function updateAgentProfileImage(
 
       if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
         updateImage(result.data.profileImageUrl);
-        dispatch(updateProfileImageRequestStatusSet(RequestStatus.SUCCESS));
+        setTimeout(() => { dispatch(updateProfileImageRequestStatusSet(RequestStatus.SUCCESS)) }, 1000);
       }
       else {
         dispatch(updateProfileImageRequestStatusSet(RequestStatus.FAILURE));

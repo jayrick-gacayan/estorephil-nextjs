@@ -69,9 +69,6 @@ export default function ModalAgencyInformationForm({
                 ...sessionData.user,
                 first_name: state.firstName.value ?? sessionData.user.first_name,
                 last_name: state.lastName.value ?? sessionData.user.last_name,
-                phone_number: state.phoneNumber ?? sessionData.user.phone_number,
-                city: state.city.value ?? sessionData.user.city,
-                province: state.province.value ?? sessionData.user.province
               }
             }
           })
