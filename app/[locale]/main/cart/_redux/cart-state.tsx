@@ -6,12 +6,12 @@ export interface CartState {
   cartCheckout: any[]
   itemsSelected: any[]
   getMainCartStatus: RequestStatus
+  createOrderStatus: RequestStatus
   purchaseMethodItems: Cart[] | BalikbayanBox[];
   purchaseMethodItemToInteract: Cart | BalikbayanBox | undefined;
   summary: {
     items?: number
     subtotal?: number
     total?: number
-
   }
 }

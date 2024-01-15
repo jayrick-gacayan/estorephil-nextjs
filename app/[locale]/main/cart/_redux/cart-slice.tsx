@@ -18,6 +18,7 @@ const initialState: CartState = {
   },
   purchaseMethodItemToInteract: undefined,
   getMainCartStatus: RequestStatus.WAITING,
+  createOrderStatus: RequestStatus.WAITING
 }
 
 export const cartSlice = createSlice({
@@ -181,6 +182,18 @@ export const cartSlice = createSlice({
           total: action.payload
         }
       }
+    },
+    createOrderLoaded: (state: CartState) => {
+      return {
+        ...state,
+        createOrderStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    createOrderSuccess: (state: CartState) => {
+      return {
+        ...state,
+        createOrderStatus: RequestStatus.SUCCESS
+      }
     }
 
   }
@@ -194,7 +207,8 @@ export const {
   purchaseMethodItemsSet, removeFromToPurchaseMethodItem,
   selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
   itemQuantityChanged, subTotalChanged, summaryItemsquantityChanged,
-  unselectProduct, totalChanged
+  unselectProduct, totalChanged, createOrderLoaded, createOrderSuccess
+
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

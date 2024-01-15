@@ -14,8 +14,13 @@ export class OrderRepository {
     ) {
         this.orderService = orderService;
     }
-    async getMainCart() {
-
+    async createOrder({ token, stores, boxes }: { token: string, stores: any[], boxes?: any[] | null }) {
+        var order_boxes = !!boxes ? boxes : null;
+        const data = {
+            stores: stores,
+            boxes: order_boxes
+        }
+        return await this.orderService.createOrder(token, JSON.stringify(data))
     }
     async getAgentOrders(token: string, page: number, limit: number) {
         return await this.orderService.getAgentOrders(token, page, limit)

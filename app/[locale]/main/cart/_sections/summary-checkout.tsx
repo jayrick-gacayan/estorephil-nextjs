@@ -3,19 +3,28 @@ import { RootState } from '@/redux/store';
 import Link from 'next-intl/link';
 import { useEffect } from 'react';
 import { FaCcAmex, FaCcDiscover, FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from 'react-icons/fa6';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { subTotalChanged, summaryItemsquantityChanged, totalChanged } from '../_redux/cart-slice';
+import { useAppDispatch } from '@/app/_hooks/redux_hooks';
+import { createOrder } from '../_redux/cart-thunk';
+import { orderContainer } from '@/inversify/inversify.config';
+import { OrderRepository } from '@/repositories/order-repository';
+import { TYPES } from '@/inversify/types';
+import { useSession } from 'next-auth/react';
 
 export default function SummaryCheckout({
   totalItems,
-  onRedirectToCheckout,
 }: {
   totalItems: number;
-  onRedirectToCheckout: () => void;
 }) {
   const state = useSelector((state: RootState) => state.cart)
   const summary = state.summary
-  const dispatch = useDispatch()
+  const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
+  const { data: sessionData } = useSession()
+  const dispatch = useAppDispatch()
+  const handleCheckOut = () => {
+    dispatch(createOrder(orderRepository, sessionData?.token ?? ''))
+  }
   useEffect(() => {
     const totalQuantity = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0), 0);
     const totalPrice = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
@@ -24,7 +33,6 @@ export default function SummaryCheckout({
     dispatch(subTotalChanged(totalPrice));
     dispatch(totalChanged(totalPrice));
   }, [state.itemsSelected, dispatch]);
-
   return (
     <div className='w-[384px] bg-default border-l border-secondary-light'>
       <div className="p-8">
@@ -112,7 +120,7 @@ export default function SummaryCheckout({
         <button
           disabled={state.itemsSelected.length === 0}
           className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
-          onClick={onRedirectToCheckout}>
+          onClick={handleCheckOut}>
           CHECK OUT
         </button>
       </div>

@@ -85,11 +85,7 @@ export default function PageContainer() {
                       return value.isGoingToCheckout
                     }).length
                   }
-                  onRedirectToCheckout={
-                    () => {
-                      router.push('/checkout/sender');
-                    }
-                  } />
+                />
               </div>
             )
           : (
