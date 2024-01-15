@@ -81,7 +81,7 @@ export default function ModalAgencyInformationForm({
       cbOnModalClose();
     }
 
-  }, [updateBasicInfoStatus, sessionData, updateSession, dispatch, updateSession])
+  }, [updateBasicInfoStatus, sessionData, updateSession, dispatch, cbOnModalClose])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
 
