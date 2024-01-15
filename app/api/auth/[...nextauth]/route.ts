@@ -22,6 +22,7 @@ const authOptions: NextAuthOptions = {
         if (response?.status !== 200) {
           throw new Error(response.message);
         }
+
         return response?.data;
       },
     }),
@@ -34,9 +35,10 @@ const authOptions: NextAuthOptions = {
     jwt: async ({ token, user, trigger, session }) => {
       user && (token.user = user);
       if (trigger === "update") {
-        console.log('route token', token, session)
-        return session
+        console.log('route session', session)
+        return session;
       }
+      console.log('route token', token)
       return token;
     },
     session: async ({ session, token, trigger, newSession }) => {

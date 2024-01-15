@@ -225,10 +225,10 @@ export class AccountRepository {
         profileImage?: File
     }, token: string) {
         let formData = new FormData();
+
         if (user.profileImage) {
             formData.set('user[profile_image]', user.profileImage)
         }
-
 
         let result = await this.accountService.updateAgent(formData, token, true);
 
@@ -238,7 +238,7 @@ export class AccountRepository {
             response = await result.json();
         }
 
-        return new Result<User>({
+        return new Result<any>({
             response: response,
             data: response?.data?.user ? camelCase({ ...response.data.user }) as any : undefined,
             error: response?.error ?? undefined,
