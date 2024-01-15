@@ -2,21 +2,20 @@ import { AppDispatch, store } from "@/redux/store";
 import { AccountRepository } from "@/repositories/account-repository";
 import { AgentAgencyInformationState } from "./agent-agency-information-state";
 import { ResultStatus } from "@/types/enums/result-status";
-import { updateBasicInfoRequestStatusSet } from "./agent-agency-information-slice";
+import { updateBasicInfoRequestStatusSet, updateProfileImageRequestStatusSet } from "./agent-agency-information-slice";
 import { RequestStatus } from "@/types/enums/request-status";
 import { Session } from "next-auth";
-import { snakeCase } from "change-case/keys";
+import { toastAdded } from "@/app/[locale]/_redux/start-slice";
 
 export function updateBasicInfo(
   accountRepository: AccountRepository,
   token: string,
-  sessionData: Session | null,
-  update: (data?: any) => Promise<Session | null>
 ) {
   return async function (dispatch: AppDispatch, getState: typeof store.getState) {
     let state: AgentAgencyInformationState = getState().agentAgencyInfo;
+    dispatch(updateBasicInfoRequestStatusSet(RequestStatus.WAITING))
+    dispatch(updateBasicInfoRequestStatusSet(RequestStatus.IN_PROGRESS));
 
-    console.log('session data on thunk', sessionData, state.firstName.value,);
     let user = {
       firstName: state.firstName.value,
       lastName: state.lastName.value,
@@ -29,19 +28,41 @@ export function updateBasicInfo(
     let result = await accountRepository.updateAgentBasicInfo(user, token);
 
     if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
-      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.SUCCESS))
-      console.log('session data on thunk', result.data);
-      await update({
-        user: {
-          ...sessionData,
-          user: {
-            ...sessionData?.user,
-            first_name: state.firstName.value,
-            last_name: result.data.lastName,
-          }
-        }
-      })
 
+      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.SUCCESS))
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        position: "",
+        type: 'success',
+        message: 'Successfully update information.'
+      }));
+    }
+    else {
+      console.log('I am here')
+      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.FAILURE))
+    }
+  }
+}
+
+export function updateAgentProfileImage(
+  accountRepository: AccountRepository,
+  token: string,
+  update: (data?: any) => Promise<Session | null>,
+  sessionData: Session
+) {
+  return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+    let agentAgencyInfoState: AgentAgencyInformationState = getState().agentAgencyInfo;
+    dispatch(updateProfileImageRequestStatusSet(RequestStatus.WAITING));
+    dispatch(updateProfileImageRequestStatusSet(RequestStatus.IN_PROGRESS));
+
+
+    let result = await accountRepository.updateAgentProfileImage({
+      profileImage: agentAgencyInfoState.profileImage
+    }, token);
+
+    if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.SUCCESS))
     }
     else {
       dispatch(updateBasicInfoRequestStatusSet(RequestStatus.FAILURE))

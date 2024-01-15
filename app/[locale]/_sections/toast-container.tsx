@@ -23,7 +23,7 @@ export default function ToastContainer() {
 
   return toasts.length === 0 ? null :
     (
-      <div className="fixed max-w-[448px] z-[9999] bottom-4 right-0">
+      <div className="fixed max-w-[448px] z-[99999] bottom-4 right-0">
         <div className="space-y-2 px-2">
           {
             toasts.map((toast: ToastProps, index: number) => {
