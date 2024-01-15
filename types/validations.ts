@@ -20,9 +20,11 @@ export default class Validations {
                 : { status: ValidationType.VALID, errorText: '' }
     }
     isValidPhoneNumberOptional(phoneNumber: string) {
-        return this.validationResponse = !(/^(?:\+65\d{8}|\+63\d{10}|09\d{9}|63\d{10})$/.test(phoneNumber))
-            ? { status: ValidationType.INVALID_FORMAT, errorText: 'invalid phone number' }
-            : { status: ValidationType.VALID, errorText: '' }
+        return this.validationResponse = phoneNumber.length > 0 
+        ? !(/^(?:\+65\d{8}|\+63\d{10}|09\d{9}|63\d{10})$/.test(phoneNumber)) 
+        ? { status: ValidationType.INVALID_FORMAT, errorText: 'invalid phone number' } 
+        : { status: ValidationType.VALID, errorText: '' }
+        : { status: ValidationType.VALID, errorText: '' }
     }
     isValidName({ name, nameColumn = 'name' }: { name: string, nameColumn?: string }) {
 
