@@ -1,11 +1,9 @@
 'use client';
 
 import { CartState } from '@/app/[locale]/main/cart/_redux/cart-state';
-import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
-import { BalikbayanBox } from '@/models/balikbayan-box';
-import { Cart } from '@/models/cart';
+import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { Seller } from '@/models/seller';
-import { RootState, AppDispatch } from '@/redux/store';
+import { RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import Image from 'next/image';
 
@@ -18,6 +16,7 @@ export default function CartDetails() {
                 let arrayCurrentTemp = currentStore.map((current: Seller) => { return current.id });
                 return arrayCurrentTemp.indexOf(tempStore.id) === index;
             });
+
         return stores.map((store: any) => {
             return {
                 store: store,
