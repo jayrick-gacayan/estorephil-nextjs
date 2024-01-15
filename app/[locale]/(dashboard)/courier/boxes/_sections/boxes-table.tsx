@@ -4,7 +4,12 @@ import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { AppDispatch, RootState } from "@/redux/store";
 import { FaRegPenToSquare, FaXmark } from "react-icons/fa6";
 import { RxCircleBackslash } from "react-icons/rx";
-import { courierBoxesPageNumberSet, courierBoxesRequestStatusSet, editFormFieldsFilled, modalBoxesOpened } from "../_redux/courier-boxes-slice";
+import {
+  courierBoxesPageNumberSet,
+  courierBoxesRequestStatusSet,
+  editFormFieldsFilled,
+  modalBoxesOpened
+} from "../_redux/courier-boxes-slice";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo } from "react";
 import { CourierBoxesState } from "../_redux/courier-boxes-state";
@@ -20,8 +25,12 @@ import { CargoTypes } from "@/types/enums/cargo-type";
 import { toFirstUpperCase } from "@/types/helpers/string-helper";
 import PaginationCustom from "@/app/[locale]/_components/pagination-custom";
 import { getPageIndexOptions } from "@/types/helpers/pagination-helper";
+import { usePathname } from "next-intl/client";
+import { useSearchParams } from "next/navigation";
 
 export default function BoxesTable() {
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
   const { data: sessionData } = useSession();
   const courierBoxesState: CourierBoxesState = useAppSelector((state: RootState) => {
     return state.courierBoxes;
@@ -32,15 +41,20 @@ export default function BoxesTable() {
     return courierBoxesState.courierBoxes
   }, [courierBoxesState.courierBoxes]);
 
+  const page = useMemo(() => {
+    let page = searchParams.get('page');
+    return page ? parseInt(page) : 1;
+  }, [searchParams.get('page')]);
+
   useEffect(() => {
     dispatch(courierBoxesRequestStatusSet(RequestStatus.NONE))
     setTimeout(() => {
       if (sessionData?.token) {
         let boxRepository = boxContainer.get<BoxRepository>(TYPES.BoxRepository);
-        dispatch(getAllCourierBoxes(boxRepository, sessionData.token, currentPage));
+        dispatch(getAllCourierBoxes(boxRepository, sessionData.token, page));
       }
     }, 2000);
-  }, [currentPage, sessionData, dispatch])
+  }, [page, sessionData, dispatch]);
 
   return (
     <>
@@ -133,7 +147,8 @@ export default function BoxesTable() {
       {
         Math.ceil(count / 10) > 1 &&
         (
-          <PaginationCustom currentPage={currentPage}
+          <PaginationCustom pathName={pathName}
+            currentPage={currentPage}
             totalPageNumbers={getPageIndexOptions(count, 5, currentPage)}
             onPageChanged={(page: number) => {
               dispatch(courierBoxesPageNumberSet(page));
@@ -142,7 +157,7 @@ export default function BoxesTable() {
               return `inline py-1.5 px-3 cursor-pointer ${currentPage === page ? 'bg-primary text-white' : 'text-tertiary-dark hover:text-default-dark'}`;
             }}
             parentPaginateClassName='ml-auto bg-white w-fit border-[.5px] border-tertiary-dark flex divide-x divide-tertiary-dark rounded overflow-hidden'
-            onPageCondition={(condition: boolean) => { return `p-1.5 ${condition ? `hover:cursor-not-allowed` : `cursor-pointer`}`; }}
+            onPageCondition={(condition: boolean) => { return `p-1.5 block ${condition ? `hover:cursor-not-allowed` : `cursor-pointer`}`; }}
             totalPageCount={Math.ceil(count / 10)} />
         )
       }
