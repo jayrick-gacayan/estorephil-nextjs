@@ -11,8 +11,6 @@ export default function BasicInformation() {
     const translate = useTranslations();
     const { data: sessionData } = useSession();
     const fullAddress = `${sessionData?.user.address_1} ${sessionData?.user?.city} ${sessionData?.user?.province}`
-    console.log('data', sessionData)
-
     return (
         <div className='space-y-4'>
             <div className='flex items-center justify-between w-full'>
