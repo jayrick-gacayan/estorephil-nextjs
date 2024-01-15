@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState, store } from '@/redux/store';
@@ -16,6 +16,7 @@ import { MainState } from '../_redux/main-state';
 import Image from 'next/image';
 import TabItem from '../../_components/tab-item';
 import Tabs from '../../_components/tabs';
+import { RequestStatus } from '@/models/result';
 
 type tabItemsProps = {
   labelText: string;
@@ -28,7 +29,7 @@ export default function CartTypeContainer({
   onClose: () => void;
 }): JSX.Element {
   const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
-  const { data: sessionData } = useSession();
+  const { data: sessionData, update: updateSession } = useSession()
 
   const [tempDeliveryMethod, setTempDeliveryMethod] = useState<string>('Vessel');
   const [sizeBox, setSizeBox] = useState<string>('Small');
@@ -54,17 +55,46 @@ export default function CartTypeContainer({
   const cartType = useMemo(() => {
     const cartType = mainState.cartType;
     return cartType === 'shopping_cart' ? 'Shopping Cart' :
-      cartType === 'balikbayan_box' ? 'Balikbayan Box' : '';
+      cartType === 'balikbayan' ? 'Balikbayan Box' : '';
   }, [mainState.cartType]);
-
   function setCartTypeClass(cartTypeMethod: string) {
     return `${cartTypeMethod === cartType ? 'bg-primary-dark text-white' : 'bg-default'} cursor-pointer hover:bg-primary-dark hover:text-white`;
   }
 
   function onCartTypeSet(cartTypeMethod: string) {
-    dispatch(cartTypeChanged(cartTypeMethod === 'Shopping Cart' ? `shopping_cart` : cartTypeMethod === 'Balikbayan Box' ? 'balikbayan_box' : ''))
+    dispatch(cartTypeChanged(cartTypeMethod === 'Shopping Cart' ? `shopping_cart` : cartTypeMethod === 'Balikbayan Box' ? 'balikbayan' : ''))
   }
-
+  const updateCartSession = async () => {
+    if (!!sessionData) {
+      await updateSession({
+        user: {
+          ...sessionData,
+          cart: mainState.cart,
+        },
+      })
+    }
+  }
+  useEffect(() => {
+    console.log('use effect trigger setCartStatus: ', mainState.setCartStatus)
+    if (mainState.setCartStatus === RequestStatus.SUCCESS) {
+      console.log('set cart status is true')
+      if (!!sessionData) {
+        if (mainState.cart === undefined) {
+          console.log('update -1st condition called')
+          return
+        }
+        else if (mainState.cart != undefined && sessionData.cart === undefined) {
+          console.log('update cart condition 2 calleed')
+          updateCartSession()
+        }
+        else {
+          console.log('update cart condition 3s calleed')
+          updateCartSession()
+          console.log('sessionData:', sessionData)
+        }
+      }
+    }
+  }, [mainState.setCartStatus])
   return (
     <div className="py-8 space-y-3 w-[640px] px-8">
       <div className="justify-around items-center h-full w-full text-center space-y-2">

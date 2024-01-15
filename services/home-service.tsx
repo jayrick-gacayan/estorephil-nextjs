@@ -15,8 +15,6 @@ export class HomeService {
     async getMainProducts(locale: string) {
         const response = await fetch(`${process.env.API_URL}/main-products/${locale}`)
         var result = await response.json();
-
-        console.log('result main products', result)
         return result;
     }
 }

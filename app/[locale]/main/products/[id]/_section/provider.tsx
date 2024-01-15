@@ -25,14 +25,11 @@ export default function Provider({ id, children }: { id: string, children: React
 
   useEffect(() => {
     const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository);
-    dispatch(getIsLovedLoadStatusSet(RequestStatus.WAITING));
-    dispatch(getIsLovedLoadStatusSet(RequestStatus.IN_PROGRESS));
-    if (sessionData?.token) {
-      dispatch(isProductFavorite(productRepository, sessionData.token))
-    }
-  }, [sessionData]);
+    dispatch(isProductFavorite(productRepository, sessionData?.token ?? ''))
 
-  console.log('isLvoed', productState.isLoved)
+  }, [dispatch, sessionData?.token]);
 
+
+  console.log('product')
   return (<>{children}</>)
 }

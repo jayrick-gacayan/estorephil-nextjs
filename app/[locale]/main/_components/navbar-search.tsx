@@ -18,7 +18,6 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
   const pathName: string = usePathname();
   const searchParams = useSearchParams();
   const onCategoryPage: boolean = pathName.includes('all-categories')
-  const locale = useSelector((state: RootState) => state.main).countryPicker.value
   const productRepository = productContainer.get<ProductRepository>(TYPES.ProductRepository)
   const state = useSelector((state: RootState) => state.allCategories)
   const dispatch: AppDispatch = useAppDispatch();
@@ -40,7 +39,7 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
         console.log('attempt delete search value if zero')
         current.delete('search')
       }
-      store.dispatch(searchProducts(productRepository, locale))
+      store.dispatch(searchProducts(productRepository, countryCookie))
       const search = current.toString();
       const query = !!search ? `?${search}` : "";
       router.push(`${pathName}${query}`)

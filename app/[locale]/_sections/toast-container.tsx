@@ -3,8 +3,8 @@
 import { useAppDispatch, useAppSelector } from "@/app/_hooks/redux_hooks";
 import { StartState } from "../_redux/start-state";
 import { AppDispatch, RootState } from "@/redux/store";
-import { useMemo } from "react";
-import { toastRemoved } from "../_redux/start-slice";
+import { useEffect, useMemo } from "react";
+import { toastAdded, toastRemoved } from "../_redux/start-slice";
 import { ToastProps } from "@/types/props/toast-props";
 import Toast from "../_components/toast";
 
@@ -21,22 +21,22 @@ export default function ToastContainer() {
     }
   }, [startState.toasts]);
 
-  console.log('dfjlaskdfjsd', toasts);
-
   return toasts.length === 0 ? null :
     (
-      <div className="fixed max-w-[400px] z-[9999] bottom-4 right-4">
-        {
-          toasts.map((toast: ToastProps, index: number) => {
-            return (
-              <Toast key={`${toast.id}`}
-                {...toast}
-                onClose={() => {
-                  dispatch(toastRemoved(toast.id));
-                }} />
-            )
-          })
-        }
+      <div className="fixed max-w-[448px] z-[9999] bottom-4 right-0">
+        <div className="space-y-2 px-2">
+          {
+            toasts.map((toast: ToastProps, index: number) => {
+              return (
+                <Toast key={`${toast.id}`}
+                  {...toast}
+                  onClose={() => {
+                    dispatch(toastRemoved(toast.id));
+                  }} />
+              )
+            })
+          }
+        </div>
       </div>
     )
 }

@@ -31,15 +31,16 @@ export function getProductDetails(productRepository: ProductRepository, id: stri
 export function isProductFavorite(productRepository: ProductRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
         let productState: ProductState = getState().product;
+        dispatch(getIsLovedLoadStatusSet(RequestStatus.WAITING));
+        dispatch(getIsLovedLoadStatusSet(RequestStatus.IN_PROGRESS));
 
         let result: Result<Product[]> = await productRepository.getAllProductFavorites(token);
 
-        if (result.resultStatus === MyResultStatus.SUCCESS && !!result.data) {
-
+        if (!!result.data && result.resultStatus === MyResultStatus.SUCCESS) {
 
             let product = result.data.find((value: Product) => {
                 return value.id === productState.product.id
-            })
+            });
             dispatch(getIsLovedLoadStatusSet(RequestStatus.SUCCESS));
             dispatch(productFavoriteSet(product ? true : undefined))
         }
@@ -62,12 +63,12 @@ export function addProductToFavorites(
         dispatch(toastAdded({
             id: Date.now(),
             type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
-            duration: 3,
+            duration: 1,
             message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully added product to favorites' : 'Something went wrong. Try again.',
             position: ''
         }))
 
-        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 4000)
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 2000)
 
     }
 }
@@ -88,11 +89,11 @@ export function deleteProductFromFavorites(
         dispatch(toastAdded({
             id: Date.now(),
             type: result.resultStatus === MyResultStatus.SUCCESS ? 'success' : 'danger',
-            duration: 2,
+            duration: 1,
             message: result.resultStatus === MyResultStatus.SUCCESS ? 'Successfully removed product to favorites' : 'Something went wrong. Try again.',
             position: ''
         }));
 
-        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 3000)
+        setTimeout(() => { setFavoriteDisabled((value) => { return !value; }) }, 2000)
     }
 }
