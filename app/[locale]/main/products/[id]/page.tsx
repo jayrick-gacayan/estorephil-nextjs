@@ -14,6 +14,7 @@ import { FaCalendarAlt } from 'react-icons/fa';
 import ProductGallery from './_section/gallery';
 import Gallery from './_section/gallery';
 import Details from './_section/details';
+import Provider from './_section/provider';
 
 export async function generateStaticParams() {
   let products = (await import('@/app/_data/product.json')).default;
@@ -32,15 +33,18 @@ export default async function Page({ params }: { params: { id: string } }) {
   // if (!product) {
   //   notFound();
   // }
+
   return (
-    <div className='bg-default p-8'>
-      <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>
-        <div className='flex w-full divide-x-2 divide-secondary-light items-stretch'>
-          <Gallery />
-          <Details />
+    <Provider id={params.id}>
+      <div className='bg-default p-8'>
+        <div className='max-w-screen-2xl m-auto bg-white border border-secondary-light divide-y divide-secondary-light'>
+          <div className='flex w-full divide-x-2 divide-secondary-light items-stretch'>
+            <Gallery />
+            <Details />
+          </div>
+          <ProductInformation />
         </div>
-        <ProductInformation />
       </div>
-    </div>
+    </Provider>
   )
 }

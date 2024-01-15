@@ -1,10 +1,10 @@
-import { ResultStatus, getResultStatus } from "@/models/result"
+
 import { AppDispatch, store } from "@/redux/store"
 import { AccountRepository } from "@/repositories/account-repository"
-import { registerLoaded, registerSuccess, registerFailed } from "../../../register/_redux/register-slice"
-import { RegisterState } from "../../../register/_redux/register-state"
 import { getCompanyDataByInvitationLoaded, getCompanyDataByInvitationSuccess, registerAgentLoaded, registerAgentSuccess } from "./agent-register-slice"
 import { AgentRegisterState } from "./agent-register-state"
+import { toastAdded } from "@/app/[locale]/_redux/start-slice"
+import { ResultStatus } from "@/types/enums/result-status"
 
 export function getCompanyDataByInvitation(accountRepository: AccountRepository, invitationToken: string) {
     return async function register(dispatch: AppDispatch, getState: typeof store.getState) {
@@ -20,7 +20,7 @@ export function getCompanyDataByInvitation(accountRepository: AccountRepository,
         }
     }
 }
-export function registerAgent(accountRepository: AccountRepository) {
+export function registerAgent(accountRepository: AccountRepository, onRedirect: () => void) {
     return async function registerAgent(dispatch: AppDispatch, getState: typeof store.getState) {
         const state = getState().agentRegister as AgentRegisterState
         const data = {
@@ -37,6 +37,16 @@ export function registerAgent(accountRepository: AccountRepository) {
         switch (result.resultStatus) {
             case ResultStatus.SUCCESS:
                 dispatch(registerAgentSuccess())
+
+                dispatch(toastAdded({
+                    id: Date.now(),
+                    duration: 2,
+                    message: "You can now login to your account.",
+                    position: '',
+                    type: 'success'
+                }));
+
+                setTimeout(() => { onRedirect(); }, 3000)
                 break;
         }
     }

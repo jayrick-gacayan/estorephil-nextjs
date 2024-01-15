@@ -101,22 +101,16 @@ export class BoxRepository {
       response = await result.json();
     }
 
-    return new Result<Paginated<Box>>({
+    return new Result<Box[]>({
       response: response,
-      data: {
-        currentPage: currentPage,
-        count: response.data.count ?? 0,
-        data: response.data.boxes.map((value: any) => {
-
-          return camelCase({
-            ...value,
-            boxType: kebabCase(capitalCase(value.box_type ?? '')),
-            referralPercentage: value.referral_percentage ?? undefined,
-            price: value.price ?? undefined
-          })
-        }) ?? [],
-        requestStatus: response.status === 200 ? RequestStatus.SUCCESS : RequestStatus.FAILURE
-      },
+      data: response.data.boxes.map((value: any) => {
+        return camelCase({
+          ...value,
+          boxType: kebabCase(capitalCase(value.box_type ?? '')),
+          referralPercentage: value.referral_percentage ?? undefined,
+          price: value.price ?? undefined
+        })
+      }),
       statusCode: response.status
     })
   }

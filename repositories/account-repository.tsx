@@ -122,9 +122,14 @@ export class AccountRepository {
         // formData.append('user[token]', data.token)
         // formData.append('company[name]', data.companyName)
 
-        var response = await this.accountService.registerAgent({ body: JSON.stringify(body) })
-        var res = await response.json()
-        return res;
+        let result = await this.accountService.registerAgent({ body: JSON.stringify(body) })
+        let response = await result.json();
+
+        return new Result<any>({
+            response: response,
+            data: response.data,
+            statusCode: response.status
+        })
     }
     async registerUser({ user, company }: {
         user: {

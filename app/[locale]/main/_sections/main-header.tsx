@@ -55,10 +55,8 @@ export default function MainHeader({
 
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
-  const onSession = !!sessionData
-  const removeSession = async () => {
-    await signOut({ callbackUrl: `/login` })
-  }
+  const onSession = !!sessionData;
+
   useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
 
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
@@ -102,13 +100,13 @@ export default function MainHeader({
                           className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
                           PROFILE
                         </button>
-                        <button
-                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
-                          type='button'
-                          onClick={() => {
-                            removeSession()
-                          }}
-                        >
+                        <button className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
+                          onClick={async () => {
+                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                            let result = await accountRepository.nextAuthSignOut(`/login`);
+
+                            console.log('result', result)
+                          }}>
                           SIGNOUT
                         </button>
                       </div>
@@ -129,19 +127,24 @@ export default function MainHeader({
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              {onSession && <>
-                <Link href="/dashboard/orders" className='inline-block'>
-                  <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
-                </Link>
-                <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-                <Link href="/dashboard/agency-information" className='inline-block'>
-                  <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
-                </Link>
-              </>
+              {onSession &&
+                (
+                  <>
+                    <LinkForSubTopNav href='/dashboard/orders'
+                      icon={<FaTruck className='inline-block' />}
+                      text='TRACK MY ORDER' />
+                    <LinkForSubTopNav href='/dashboard/favorites'
+                      icon={<FaRegHeart className='inline-block' />}
+                      text='FAVORITES' />
+                    <LinkForSubTopNav href='/dashboard/agency-information'
+                      icon={<FaUser className='inline-block' />}
+                      text={userFullName} />
+                  </>
+                )
               }
               <div className='inline-block align-middle w-[100px] px-2'>
                 <CustomCountryPicker value={COUNTRIES.find((value: any) => {
-                  return value.code === countryCookie;
+                  return value.code === countryCookie.toUpperCase();
                 }) ?? countries[1]}
                   labelText={(value: any) => {
                     return (
@@ -161,7 +164,7 @@ export default function MainHeader({
                   }}
                   items={countries}
                   onToggle={() => { dispatch(countryPickerToggled()); }}
-                  onSelect={async (value: any) => { onCountryCookieSet(value.code); }}
+                  onSelect={async (value: any) => { onCountryCookieSet(value.code.toLowerCase()); }}
                   show={countryPicker.show ?? false}
                   selectedClassName={(value: any) => {
                     return value.code === countryCookie ? 'bg-primary text-white' : ''

@@ -35,12 +35,11 @@ export default async function Home({ params }: { params: { locale: string } }) {
   let stores = await getMainStores(countryCookie?.value ?? 'ph');
   let ourProducts = await getMainProducts(countryCookie?.value ?? 'ph');
 
-  // let ourProducts = (await import('@/app/_data/products.json')).default.products;
   return (
     <div className='bg-default px-8'>
       <div className='max-w-screen-2xl m-auto py-4'>
         <div className='flex md:flex-row flex-col gap-2 h-[400px]'>
-          <HomeCategories />
+          <HomeCategories countryCode={countryCookie?.value ?? 'ph'} />
           <Carousel />
           <BayanSection />
         </div>

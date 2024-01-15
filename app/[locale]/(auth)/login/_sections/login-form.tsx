@@ -23,6 +23,7 @@ import InputCustom from '@/app/[locale]/_components/input-custom';
 import { ValidationType } from '@/types/enums/validation-type';
 import { AccountRepository } from '@/repositories/account-repository';
 import { sentenceCase } from 'change-case';
+import Link from 'next-intl/link';
 
 export default function LoginForm() {
     const dispatch: AppDispatch = useAppDispatch();
@@ -133,9 +134,10 @@ export default function LoginForm() {
                         </form>
                         <div className='space-y-4'>
                             <span className='transition-all delay-100 text-tertiary-dark w-full block text-center'>{translate('needToSignUp')}</span>
-                            <button className='transition-all delay-100 bg-white w-full border-tertiary-dark rounded border py-2 hover:bg-warning-light hover:text-white'>
+                            <Link href='/register'
+                                className='block text-center transition-all delay-100 bg-white w-full border-tertiary-dark rounded border py-2 hover:bg-warning-light hover:text-white'>
                                 {translate('registerNow')}
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
