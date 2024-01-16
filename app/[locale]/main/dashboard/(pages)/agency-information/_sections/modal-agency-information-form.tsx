@@ -6,17 +6,18 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { AgentAgencyInformationState } from '../_redux/agent-agency-information-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { AppDispatch, RootState } from '@/redux/store';
-import { agentRegisterFormReset, modalUpdateFormOpened, updateBasicInfoRequestStatusSet, } from '../_redux/agent-agency-information-slice';
+import { agentRegisterFormReset, modalUpdateFormOpened, resetPasswordFormClicked, resetPasswordFormReset, resetPasswordRequestStatusChanged, updateBasicInfoRequestStatusSet, } from '../_redux/agent-agency-information-slice';
 import { RequestStatus } from '@/types/enums/request-status';
 import LineDotLoader from '@/app/[locale]/_components/line-dot-loader';
 import { useSession } from 'next-auth/react';
 import { accountContainer } from '@/inversify/inversify.config';
 import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
-import { updateBasicInfo } from '../_redux/agent-agency-information-thunk';
+import { agentResetPassword, updateBasicInfo } from '../_redux/agent-agency-information-thunk';
 import EditBasicInfo from './edit-basic-info';
 import EditBusinessInfo from './edit-business-info';
 import { useSelector } from 'react-redux';
+import ResetPasswordInfo from './reset-password-info';
 
 export default function ModalAgencyInformationForm({
   cityProvince
@@ -33,11 +34,24 @@ export default function ModalAgencyInformationForm({
   const { open, type } = useMemo(() => {
     return agentAgencyInfoState.modalUpdateFormOpen;
   }, [agentAgencyInfoState.modalUpdateFormOpen]);
-  const updateBasicInfoStatus = useMemo(() => { return agentAgencyInfoState.updateBasicInfoStatus }, [agentAgencyInfoState.updateBasicInfoStatus])
+
+  const { updateBasicInfoStatus, resetPasswordInfoStatus } = useMemo(() => {
+    return {
+      updateBasicInfoStatus: agentAgencyInfoState.updateBasicInfoStatus,
+      resetPasswordInfoStatus: agentAgencyInfoState.resetPasswordRequestStatus
+    }
+  }, [
+    agentAgencyInfoState.updateBasicInfoStatus,
+    agentAgencyInfoState.resetPasswordRequestStatus,
+  ]);
 
   let updateStatus: boolean = useMemo(() => {
-    return updateBasicInfoStatus === RequestStatus.IN_PROGRESS || updateBasicInfoStatus === RequestStatus.WAITING;
-  }, [updateBasicInfoStatus])
+
+    return type === 'basicInfo' ? updateBasicInfoStatus === RequestStatus.IN_PROGRESS || updateBasicInfoStatus === RequestStatus.WAITING :
+      type === 'resetPassword' ? resetPasswordInfoStatus === RequestStatus.IN_PROGRESS || resetPasswordInfoStatus === RequestStatus.WAITING :
+        false;
+  }, [updateBasicInfoStatus, type, resetPasswordInfoStatus]);
+
   const modalContentRef = useRef<HTMLDivElement>(null);
 
   const cbOnModalClose = useCallback(() => {
@@ -48,18 +62,34 @@ export default function ModalAgencyInformationForm({
         setTimeout(() => {
           if (type === 'basicInfo') {
             dispatch(agentRegisterFormReset());
-
+          }
+          else if (type === 'resetPassword') {
+            dispatch(resetPasswordFormReset())
           }
           dispatch(modalUpdateFormOpened({ type: '', open: false }));
 
         }, 300);
       }
     }
-  }, [dispatch, updateBasicInfoStatus]);
+  }, [dispatch, updateStatus, type]);
+
+  useEffect(() => {
+    switch (resetPasswordInfoStatus) {
+      case RequestStatus.IN_PROGRESS:
+        if (sessionData?.token) {
+          let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+          dispatch(agentResetPassword(accountRepository, sessionData.token));
+        }
+        break;
+      case RequestStatus.SUCCESS:
+        cbOnModalClose();
+
+        break;
+    }
+  }, [resetPasswordInfoStatus, sessionData, dispatch, cbOnModalClose])
 
   useEffect(() => {
     if (updateBasicInfoStatus === RequestStatus.SUCCESS) {
-
       async function updateAgentBasicInfo() {
         if (!!sessionData) {
           await updateSession({
@@ -93,26 +123,33 @@ export default function ModalAgencyInformationForm({
       >
         {open && type === 'basicInfo' && <EditBasicInfo />}
         {open && type === 'businessInfo' && <EditBusinessInfo />}
+        {open && type === 'resetPassword' && <ResetPasswordInfo />
+        }
         <div className='py-8 space-y-4 w-[768px] m-auto'>
           <div className='block'>
             <div className='w-1/2 m-auto'>
               <div className='flex items-stretch gap-2 justify-center'>
-                <button className='bg-info p-2 rounded text-white disabled:cursor-not-allowed'
+                <button className={`${type === 'resetPassword' ? 'bg-success hover:bg-success-dark' : 'bg-info hover:bg-info-light'} p-2 rounded text-white disabled:cursor-not-allowed`}
                   disabled={updateStatus}
                   onClick={() => {
+                    if (sessionData?.token) {
+                      if (type === 'basicInfo') {
 
-                    if (type === 'basicInfo') {
-                      if (sessionData?.token) {
                         let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
                         dispatch(updateBasicInfo(
                           accountRepository,
                           sessionData.token
                         ));
+
+                      }
+                      else if (type === 'resetPassword') {
+                        dispatch(resetPasswordRequestStatusChanged(RequestStatus.WAITING));
+                        dispatch(resetPasswordFormClicked());
                       }
                     }
                   }}>
                   {
-                    !(updateStatus) ? 'Update' :
+                    !(updateStatus) ? (type === 'resetPassword' ? 'Reset' : 'Update') :
                       (
                         <div className='w-fit m-auto block space-x-0.5'>
                           <span className='inline-block align-middle'>
@@ -123,7 +160,8 @@ export default function ModalAgencyInformationForm({
                       )
                   }
                 </button>
-                <button className='border border-info p-2 rounded text-info disabled:cursor-not-allowed'
+                <button className={`border p-2 rounded disabled:cursor-not-allowed 
+                  ${type === 'resetPassword' ? 'border-success text-success' : 'border-info text-info'}`}
                   disabled={updateStatus}
                   onClick={cbOnModalClose}>Cancel</button>
               </div>

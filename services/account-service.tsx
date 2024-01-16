@@ -5,10 +5,10 @@ import { SignInOptions, SignInResponse, signIn, signOut } from "next-auth/react"
 @injectable()
 export class AccountService {
 
-  #headers(token: string, isImage: boolean) {
+  #headers(token: string, isFile?: boolean) {
     let headers = { Authorization: `Bearer ${token}` }
 
-    return isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
+    return isFile ? headers : { ...headers, 'Content-Type': 'application/json' };
   }
   async login({ body }: { body: SignInOptions }) {
     const res = await signIn("credentials", body)
@@ -76,11 +76,42 @@ export class AccountService {
     })
   }
 
-  async updateAgent(body: string | FormData, token: string, isImage: boolean = false) {
+  async updateAgent(body: string | FormData, token: string, isFile: boolean = false) {
     return await fetch(`${process.env.API_URL}/agents/update-agency`, {
       method: 'PUT',
       body: body,
-      headers: { ...this.#headers(token, isImage) }
+      headers: { ...this.#headers(token, isFile) }
+    })
+  }
+
+  async resetPassword(body: string, token: string) {
+    return await fetch(`${process.env.API_URL}/reset-password`, {
+      method: 'PUT',
+      body: body,
+      headers: this.#headers(token),
+    })
+  }
+
+  async agencyInfoDocFiles(token: string) {
+    return await fetch(`${process.env.API_URL}/get-files`, {
+      method: 'GET',
+      headers: this.#headers(token),
+    })
+  }
+
+  async uploadAgencyInfoDocFile(body: FormData, token: string) {
+    return await fetch(`${process.env.API_URL}/upload-file`, {
+      method: 'POST',
+      body: body,
+      headers: this.#headers(token, true),
+    })
+  }
+
+  async removeAgencyInfoDocFile(body: string, token: string) {
+    return await fetch(`${process.env.API_URL}/purge-file`, {
+      method: 'DELETE',
+      body: body,
+      headers: this.#headers(token),
     })
   }
 }

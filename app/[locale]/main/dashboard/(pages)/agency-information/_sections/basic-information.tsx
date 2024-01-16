@@ -11,7 +11,6 @@ export default function BasicInformation() {
     const translate = useTranslations();
     const { data: sessionData } = useSession();
     const fullAddress = `${sessionData?.user.address_1} ${sessionData?.user?.city} ${sessionData?.user?.province}`
-    console.log('data', sessionData)
 
     return (
         <div className='space-y-4'>
@@ -40,7 +39,12 @@ export default function BasicInformation() {
                     &nbsp;
                 </div>
                 <div className='block'>
-                    <button className='transition-all delay-100 bg-success-dark p-2 w-auto text-white rounded hover:bg-success'>Reset Password</button>
+                    <button onClick={() => {
+                        dispatch(modalUpdateFormOpened({ type: 'resetPassword', open: true }));
+                    }}
+                        className='transition-all delay-100 bg-success-dark p-2 w-auto text-white rounded hover:bg-success'>
+                        Reset Password
+                    </button>
                 </div>
             </div>
         </div>
