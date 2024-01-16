@@ -23,27 +23,22 @@ export function getMainCart(cartRepository: CartRepository, token: string) {
 }
 export function createOrder(orderRepository: OrderRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
-        createOrderLoaded();
+        dispatch(createOrderLoaded());
         const state = getState().cart
         const items = state.itemsSelected
         console.log(items)
         const stores: { [storeId: string]: any[] } = items.reduce((result, item) => {
             const storeId = item.store_id;
-
             if (!result[storeId]) {
                 result[storeId] = [];
             }
             result[storeId].push(item);
             return result;
         }, {});
-
-        // Convert the stores object to an array if needed
         const allStores = Object.entries(stores).map(([storeId, products]) => ({
             storeId,
             products,
         }));
-
-        // Now 'storesArray' contains the grouped stores with their respective products
         console.log(allStores);
         // const result = await orderRepository.createOrder({})
     }
