@@ -77,13 +77,7 @@ export default function PageContainer() {
                     <CartItemsContainer />
                   </div>
                 </div>
-                <SummaryCheckout
-                  totalItems={
-                    cartProducts.filter((value: any) => {
-                      return value.isGoingToCheckout
-                    }).length
-                  }
-                />
+                <SummaryCheckout />
               </div>
             )
           : (

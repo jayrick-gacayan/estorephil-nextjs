@@ -4,6 +4,7 @@ import { getResultStatus, ResultStatus } from "@/models/result";
 import { AppDispatch, store } from "@/redux/store";
 import { setCartSuccess } from "../../_redux/main-slice";
 import { OrderRepository } from "@/repositories/order-repository";
+import { createOrderSuccess as createOrderSuccessCheckout } from "../../checkout/_redux/checkout-slice";
 
 export function getMainCart(cartRepository: CartRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
@@ -23,6 +24,7 @@ export function createOrder(orderRepository: OrderRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
         dispatch(createOrderLoaded());
         const state = getState().cart
+
         const items = state.itemsSelected
         console.log(items)
         const stores: { [storeId: string]: any[] } = items.reduce((result, item) => {
@@ -37,12 +39,13 @@ export function createOrder(orderRepository: OrderRepository, token: string) {
             storeId,
             products,
         }));
-        
+
         console.log(allStores);
         const result = await orderRepository.createOrder({ token: token, stores: allStores })
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(createOrderSuccess())
+                dispatch(createOrderSuccessCheckout(result.data.id))
                 break;
             default:
                 dispatch(createOrderFailed())

@@ -16,11 +16,7 @@ import { useRouter } from 'next-intl/client';
 import { CartRepository } from '@/repositories/cart-repository';
 import Loading from '../../_components/loading';
 
-export default function SummaryCheckout({
-  totalItems,
-}: {
-  totalItems: number;
-}) {
+export default function SummaryCheckout() {
   const state = useSelector((state: RootState) => state.cart)
   const summary = state.summary
   const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
@@ -31,44 +27,64 @@ export default function SummaryCheckout({
     dispatch(createOrder(orderRepository, sessionData?.token ?? ''))
   }
   const cartRepository = cartContainer.get<CartRepository>(TYPES.CartRepository)
-  const updateCartSession = async () => {
-    const itemsCheckedOut = state.itemsSelected
-    const sessionCartProducts = sessionData?.cart?.cart_products
+  const updateCartSession = async (method: string) => {
+    if (method === 'checkout') {
+      const itemsCheckedOut = state.itemsSelected
+      const sessionCartProducts = sessionData?.cart?.cart_products
 
-    if (sessionCartProducts && itemsCheckedOut) {
-      const updatedCartProducts = sessionCartProducts.map(cartProduct => {
-        const selectedItem = itemsCheckedOut.find(item => item.id === cartProduct.id);
-        if (selectedItem) {
-          const sessionCartItemQuantity = cartProduct.quantity || 0;
-          if (selectedItem.quantity < sessionCartItemQuantity) {
-            return { ...cartProduct, quantity: sessionCartItemQuantity - selectedItem.quantity };
-          } else {
-            return null;
+      if (sessionCartProducts && itemsCheckedOut) {
+        const updatedCartProducts = sessionCartProducts.map(cartProduct => {
+          const selectedItem = itemsCheckedOut.find(item => item.id === cartProduct.id);
+          if (selectedItem) {
+            const sessionCartItemQuantity = cartProduct.quantity || 0;
+            if (selectedItem.quantity < sessionCartItemQuantity) {
+              return { ...cartProduct, quantity: sessionCartItemQuantity - selectedItem.quantity };
+            } else {
+              return null;
+            }
           }
-        }
-        return cartProduct;
-      });
-      const cartProducts = updatedCartProducts.filter(Boolean)
+          return cartProduct;
+        });
+        const cartProducts = updatedCartProducts.filter(Boolean)
+        await updateSession({
+          user: {
+            ...sessionData,
+            cart: {
+              ...sessionData.cart,
+              cart_products: cartProducts
+            }
+          }
+        })
+      }
+    }
+    else if (method === 'mainCart') {
+      const cartCheckout = state.cartCheckout
+      const allProducts = cartCheckout.reduce((acc, store) => {
+        return acc.concat(store.products);
+      }, []);
       await updateSession({
         user: {
           ...sessionData,
           cart: {
-            ...sessionData.cart,
-            cart_products: cartProducts
+            ...sessionData?.cart,
+            cart_products: allProducts,
           }
         }
       })
     }
+
   }
   useEffect(() => {
-
     if (!!sessionData && state.createOrderStatus === RequestStatus.SUCCESS) {
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
-      updateCartSession();
+      updateCartSession('checkout');
       router.push('/checkout/sender')
     }
+    if (state.getMainCartStatus === RequestStatus.SUCCESS) {
+      updateCartSession('mainCart');
+    }
 
-  }, [state.createOrderStatus])
+  }, [state.createOrderStatus, state.getMainCartStatus])
   useEffect(() => {
     const totalQuantity = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0), 0);
     const totalPrice = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
@@ -77,7 +93,7 @@ export default function SummaryCheckout({
     dispatch(totalChanged(totalPrice));
   }, [state.itemsSelected]);
   return (
-    <div className='w-[384px] bg-default border-l border-secondary-light'>
+    <div className=' bg-default border-l border-secondary-light'>
       <div className="p-8">
         <div className='border-b border-b-transparent'>
           <div className='text-[44px] leading-0 font-[500]'>SUMMARY</div>

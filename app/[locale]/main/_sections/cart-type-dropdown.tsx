@@ -74,7 +74,6 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
       }
     }
   }, [cartProducts?.length, prevCountRef]);
-
   useEffect(() => {
     if (cartType !== '') {
       closeDropdown();
