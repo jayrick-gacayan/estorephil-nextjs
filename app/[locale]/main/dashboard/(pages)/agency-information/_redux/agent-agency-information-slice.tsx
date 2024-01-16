@@ -35,7 +35,6 @@ const initialState: AgentAgencyInformationState = {
   passwordConfirmation: textInputFieldValue(''),
   currentPassword: textInputFieldValue(''),
   resetPasswordRequestStatus: RequestStatus.NONE,
-
 }
 
 const agentAgencyInformationSlice = createSlice({
@@ -230,18 +229,9 @@ const agentAgencyInformationSlice = createSlice({
 
       return {
         ...state,
-        currentPassword: {
-          ...state.currentPassword,
-          ...currentPasswordError
-        },
-        password: {
-          ...state.password,
-          ...passwordError
-        },
-        passwordConfirmation: {
-          ...state.passwordConfirmation,
-          ...passwordConfirmationError
-        },
+        currentPassword: { ...state.currentPassword, ...currentPasswordError },
+        password: { ...state.password, ...passwordError },
+        passwordConfirmation: { ...state.passwordConfirmation, ...passwordConfirmationError },
         resetPasswordRequestStatus:
           (currentPasswordError['status'] === ValidationType.VALID &&
             passwordError['status'] === ValidationType.VALID &&
@@ -252,8 +242,9 @@ const agentAgencyInformationSlice = createSlice({
     resetPasswordFormReset: (state: AgentAgencyInformationState) => {
       return {
         ...state,
-
         currentPassword: textInputFieldValue(''),
+        password: textInputFieldValue(''),
+        passwordConfirmation: textInputFieldValue(''),
         resetPasswordRequestStatus: RequestStatus.NONE,
       }
     },
