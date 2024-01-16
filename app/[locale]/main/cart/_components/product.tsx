@@ -22,9 +22,6 @@ export default function Product({ product }: { product: any }) {
         setQuantity(newQuantity);
         dispatch(itemQuantityChanged({ isSelected: isSelected(), payload: { id: product.id, quantity: newQuantity } }));
     };
-    useEffect(() => {
-        console.log('items selected:', state.itemsSelected)
-    }, [state.itemsSelected, state.cartCheckout])
     return (
         <tr className=" text-left">
             <th className="w-[60px] p-4">

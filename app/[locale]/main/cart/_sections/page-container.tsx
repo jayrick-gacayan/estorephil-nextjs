@@ -34,12 +34,10 @@ export default function PageContainer() {
   const cartProducts = useMemo(() => { return state.cartCheckout }, [state.cartCheckout])
 
   useEffect(() => {
-    console.log('use effect trigger')
     if (!!sessionData) {
-      console.log('dispatch get main cart:')
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
     }
-  }, [sessionData])
+  }, [sessionData?.cart?.cart_products])
 
   return (
     <>

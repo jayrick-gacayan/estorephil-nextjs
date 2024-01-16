@@ -102,7 +102,6 @@ export const cartSlice = createSlice({
       }
     },
     getMainCartSuccess: (state: CartState, action: PayloadAction<any>) => {
-      console.log('get cart main success slice', action.payload)
       return {
         ...state,
         getMainCartStatus: RequestStatus.SUCCESS,
@@ -194,6 +193,12 @@ export const cartSlice = createSlice({
         ...state,
         createOrderStatus: RequestStatus.SUCCESS
       }
+    },
+    createOrderFailed: (state: CartState) => {
+      return {
+        ...state,
+        createOrderStatus: RequestStatus.FAILURE,
+      }
     }
 
   }
@@ -207,7 +212,8 @@ export const {
   purchaseMethodItemsSet, removeFromToPurchaseMethodItem,
   selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
   itemQuantityChanged, subTotalChanged, summaryItemsquantityChanged,
-  unselectProduct, totalChanged, createOrderLoaded, createOrderSuccess
+  unselectProduct, totalChanged, createOrderLoaded, createOrderSuccess,
+  createOrderFailed
 
 } = cartSlice.actions;
 

@@ -4,6 +4,7 @@ import { injectable } from "inversify";
 
 export class CartService {
     async getMainCart(token: string) {
+        console.log('mmain cart called')
         const response = await fetch(`${process.env.API_URL}/cart-main`, {
             method: 'GET',
             headers: {
