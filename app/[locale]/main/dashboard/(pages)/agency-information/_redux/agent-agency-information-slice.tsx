@@ -24,15 +24,18 @@ const initialState: AgentAgencyInformationState = {
   zipCode: { value: '', error: '' },
   country: { value: '', error: '' },
   updateBasicInfoStatus: RequestStatus.NONE,
+
   updateProfileImageRequestStatus: RequestStatus.NONE,
+  modalChangeImage: false,
+
   documents: [],
+  documentsRequestStatus: RequestStatus.NONE,
 
   password: textInputFieldValue(''),
   passwordConfirmation: textInputFieldValue(''),
   currentPassword: textInputFieldValue(''),
   resetPasswordRequestStatus: RequestStatus.NONE,
 
-  modalChangeImage: false
 }
 
 const agentAgencyInformationSlice = createSlice({
@@ -211,33 +214,6 @@ const agentAgencyInformationSlice = createSlice({
     currentPasswordChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
       return { ...state, currentPassword: { ...state.currentPassword, value: action.payload } }
     },
-    currentPasswordShown: (state: AgentAgencyInformationState) => {
-      return {
-        ...state,
-        currentPassword: state.currentPassword.show ? textInputFieldValue(state.currentPassword.value) : {
-          ...state.currentPassword,
-          show: true
-        }
-      }
-    },
-    passwordShown: (state: AgentAgencyInformationState) => {
-      return {
-        ...state,
-        password: state.password.show ? textInputFieldValue(state.password.value) : {
-          ...state.password,
-          show: true
-        }
-      }
-    },
-    passwordConfirmationShown: (state: AgentAgencyInformationState) => {
-      return {
-        ...state,
-        passwordConfirmation: state.passwordConfirmation.show ? textInputFieldValue(state.passwordConfirmation.value) : {
-          ...state.passwordConfirmation,
-          show: true
-        }
-      }
-    },
     resetPasswordRequestStatusChanged: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
       return { ...state, resetPasswordRequestStatus: action.payload };
     },
@@ -290,8 +266,14 @@ const agentAgencyInformationSlice = createSlice({
           errorText: action.payload.errorText
         }
       }
-    }
+    },
 
+    documentsSet: (state: AgentAgencyInformationState, action: PayloadAction<any[]>) => {
+      return { ...state, documents: action.payload };
+    },
+    documentsRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
+      return { ...state, documentsRequestStatus: action.payload };
+    }
   }
 });
 
@@ -307,10 +289,10 @@ export const {
   resetPasswordFormClicked,
   resetPasswordRequestStatusChanged,
   resetPasswordFormReset,
-  currentPasswordShown,
-  passwordShown,
-  passwordConfirmationShown,
   currentPasswordSetErrors,
+
+  documentsSet,
+  documentsRequestStatusSet,
 
   agentInfoDocumentAdded, address2Changed,
   firstNameChanged, address1Changed, cityChanged,

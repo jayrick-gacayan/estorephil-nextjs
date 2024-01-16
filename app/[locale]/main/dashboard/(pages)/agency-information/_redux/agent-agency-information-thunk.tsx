@@ -4,6 +4,7 @@ import { AgentAgencyInformationState } from "./agent-agency-information-state";
 import { ResultStatus } from "@/types/enums/result-status";
 import {
   currentPasswordSetErrors,
+  documentsRequestStatusSet,
   resetPasswordRequestStatusChanged,
   updateBasicInfoRequestStatusSet,
   updateProfileImageRequestStatusSet
@@ -106,5 +107,83 @@ export function agentResetPassword(accountRepository: AccountRepository, token: 
       dispatch(resetPasswordRequestStatusChanged(RequestStatus.FAILURE));
     }
 
+  }
+}
+
+export function agencyInfoDocuments(accountRepository: AccountRepository, token: string) {
+  return async function (dispatch: AppDispatch) {
+    dispatch(documentsRequestStatusSet(RequestStatus.WAITING));
+    dispatch(documentsRequestStatusSet(RequestStatus.IN_PROGRESS));
+
+    let result = await accountRepository.agencyInfoDocFiles(token);
+
+    if (result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(documentsRequestStatusSet(RequestStatus.SUCCESS));
+
+      console.log('result', result.data);
+    }
+    else {
+      dispatch(documentsRequestStatusSet(RequestStatus.FAILURE));
+    }
+  }
+}
+
+export function uploadAgencyInfoDocument(
+  accountRepository: AccountRepository,
+  document: File,
+  token: string
+) {
+  return async function (dispatch: AppDispatch) {
+    let result = await accountRepository.uploadAgencyInfoDocFile(document, token);
+
+    if (result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(agencyInfoDocuments(accountRepository, token));
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        message: 'Successfully uploaded a file.',
+        position: '',
+        type: 'success'
+      }))
+    }
+    else {
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        message: 'Something wrong when uploading a file.',
+        position: '',
+        type: 'danger'
+      }))
+    }
+  }
+}
+
+export function removeAgencyInfoDocument(
+  accountRepository: AccountRepository,
+  id: number,
+  token: string,
+) {
+  return async function (dispatch: AppDispatch) {
+    let result = await accountRepository.removeAgencyInfoDocFile(id, token);
+
+    if (result.resultStatus === ResultStatus.SUCCESS) {
+      dispatch(agencyInfoDocuments(accountRepository, token));
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        message: 'Successfully remove a file.',
+        position: '',
+        type: 'success'
+      }))
+    }
+    else {
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        message: 'Something wrong when removing a file.',
+        position: '',
+        type: 'danger'
+      }))
+    }
   }
 }

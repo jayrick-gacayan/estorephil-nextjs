@@ -24,10 +24,10 @@ export interface AgentAgencyInformationState {
   currentPassword: TextInputField<string>;
   resetPasswordRequestStatus: RequestStatus;
 
-
   modalChangeImage: boolean;
   profileImage?: File;
   updateProfileImageRequestStatus: RequestStatus;
 
-  documents: FileCustomBlobString[];
+  documents: any[];
+  documentsRequestStatus: RequestStatus;
 }

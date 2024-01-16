@@ -128,7 +128,7 @@ export default function SideBar() {
     return current === 'orders' ? null :
         (
             <div className="border-r border-r-tertiary-dark relative">
-                <div className="p-8 w-[416px] space-y-4">
+                <div className="p-8 w-[416px] space-y-8">
                     <div className="space-y-4">
                         <div className="relative h-[180px] w-[180px] m-auto block">
                             <Image alt='profile-image'

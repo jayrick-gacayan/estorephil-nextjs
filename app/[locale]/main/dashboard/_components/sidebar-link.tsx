@@ -14,9 +14,11 @@ export default function SidebarLink({
 }) {
     return (
         <Link href={link}
-            className={`flex items-center gap-2 w-full ${onActiveLink(altText, current)}`}>
-            {icon && <span className="flex-none">{icon}</span>}
-            <span className="flex-1">{text}</span>
+            className={`w-[256px] m-auto block ${onActiveLink(altText, current)}`}>
+            <div className='space-x-2'>
+                {icon && <span className='inline-block align-middle'>{icon}</span>}
+                <span className='inline-block'>{text}</span>
+            </div>
         </Link>
     )
 }
