@@ -28,7 +28,6 @@ export default function ModalAgencyInformationForm({
     return state.agentAgencyInfo;
   })
   const dispatch: AppDispatch = useAppDispatch();
-  // const { data: sessionData, update } = useSession();
   const { data: sessionData, update: updateSession } = useSession()
   const state = useSelector((state: RootState) => state.agentAgencyInfo)
   const { open, type } = useMemo(() => {
@@ -99,6 +98,9 @@ export default function ModalAgencyInformationForm({
                 ...sessionData.user,
                 first_name: state.firstName.value ?? sessionData.user.first_name,
                 last_name: state.lastName.value ?? sessionData.user.last_name,
+                phone_number: state.phoneNumber.value ?? sessionData.user.phone_number,
+                city: state.city.value ?? sessionData.user.city,
+                province: state.province.value ?? sessionData.user.province
               }
             }
           })
@@ -107,7 +109,6 @@ export default function ModalAgencyInformationForm({
       updateAgentBasicInfo();
       cbOnModalClose();
     }
-
   }, [updateBasicInfoStatus, sessionData, updateSession, dispatch, cbOnModalClose])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
