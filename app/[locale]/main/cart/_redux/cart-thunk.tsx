@@ -24,7 +24,6 @@ export function createOrder(orderRepository: OrderRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
         dispatch(createOrderLoaded());
         const state = getState().cart
-
         const items = state.itemsSelected
         console.log(items)
         const stores: { [storeId: string]: any[] } = items.reduce((result, item) => {
@@ -45,7 +44,7 @@ export function createOrder(orderRepository: OrderRepository, token: string) {
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(createOrderSuccess())
-                dispatch(createOrderSuccessCheckout(result.data.id))
+                dispatch(createOrderSuccessCheckout(result.data))
                 break;
             default:
                 dispatch(createOrderFailed())

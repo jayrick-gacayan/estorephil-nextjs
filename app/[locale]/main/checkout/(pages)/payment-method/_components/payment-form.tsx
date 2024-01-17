@@ -6,7 +6,7 @@ import { FaCcDiscover, FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from "rea
 import { SiAmericanexpress } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { cardExpiryDateChanged, cardHolderNameChanged, cardNumberChanged, ccvChanged, selectPaymentMethod } from "../_redux/payment-method-slice";
+import { cardExpiryDateChanged, cardHolderNameChanged, cardNumberChanged, cvvChanged, selectPaymentMethod } from "../_redux/payment-method-slice";
 import CardInput from "@/app/[locale]/main/_components/card-input";
 import TextFieldInput from "@/app/[locale]/main/_components/text-field-input";
 
@@ -14,6 +14,7 @@ export default function PaymentForm() {
     const translate = useTranslations()
     const state = useSelector((state: RootState) => state.paymentMethod)
     const dispatch = useDispatch()
+    console.log('card value', state.card)
     return (
         <>
             <div className="w-full">
@@ -47,7 +48,7 @@ export default function PaymentForm() {
                         <CardInput type="month" label="Date" value={state.card.expiryDate.value} onChange={(e) => dispatch(cardExpiryDateChanged(e.target.value))} errorText={state.card.expiryDate.error} />
                     </div>
                     <div className="grow">
-                        <CardInput name="ccv" type="tel" value={state.card.ccv.value} label="CCV" onChange={(e) => dispatch(ccvChanged(e.target.value))} errorText={state.card.ccv.error} />
+                        <CardInput name="cvv" type="tel" value={state.card.cvv.value} label="CCV" onChange={(e) => dispatch(cvvChanged(e.target.value))} errorText={state.card.cvv.error} />
                     </div>
                 </div>
             </div>

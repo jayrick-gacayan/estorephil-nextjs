@@ -23,7 +23,7 @@ export const initialState: PaymentMethodState = {
             value: '',
             error: '',
         },
-        ccv: {
+        cvv: {
             value: '',
             error: '',
         }
@@ -101,14 +101,14 @@ export const paymentMethodSlice = createSlice({
                 }
             }
         },
-        ccvChanged: (state: PaymentMethodState, action: PayloadAction<string>) => {
+        cvvChanged: (state: PaymentMethodState, action: PayloadAction<string>) => {
             const validation = new Validations()
             const validateCCV = validation.isCcvValid(action.payload, 'ccv')
             return {
                 ...state,
                 card: {
                     ...state.card,
-                    ccv: {
+                    cvv: {
                         value: action.payload,
                         error: validateCCV.errorText,
                         valid: validateCCV.status == ValidationType.VALID
@@ -219,7 +219,7 @@ export const paymentMethodSlice = createSlice({
 export const {
     selectPaymentMethod,
     cardExpiryDateChanged, cardHolderNameChanged,
-    cardNumberChanged, ccvChanged, billingAddressChanged,
+    cardNumberChanged, cvvChanged, billingAddressChanged,
     contactNumberChanged, emailAddressChanged, firstNameChanged,
     lastNameChanged, billingInformationCheckboxClicked,
     paymentMethodRequestStatusChanged

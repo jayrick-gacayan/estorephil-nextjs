@@ -13,10 +13,10 @@ export default function CheckoutIndicator() {
     const router = useRouter()
     const url = usePathname()
     useEffect(() => {
-        if (state.orderId === null || cartState.itemsSelected.length === 0) {
+        if (state.order.id === null || cartState.itemsSelected.length === 0) {
             router.push('/cart')
         }
-    }, [state.orderId])
+    }, [state.order])
     console.log('params', url)
     return (
         <>

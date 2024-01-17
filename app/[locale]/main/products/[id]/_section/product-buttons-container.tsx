@@ -83,8 +83,6 @@ export default function ProductButtonsContainer() {
       }
     }
   }, [mainState.cart])
-
-
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
@@ -102,7 +100,8 @@ export default function ProductButtonsContainer() {
               &#8722;
             </div>
             <div>{quantity}</div>
-            <div className='transition duration-100 cursor-pointer hover:bg-primary-light rounded px-4 py-2 bg-primary text-white text-2xl'
+            <div className={`transition duration-100 cursor-pointer hover:bg-primary-light rounded px-4 py-2 bg-primary text-white text-2xl 
+            ${quantity === productState?.product?.inventory?.quantity ? 'cursor-not-allowed' : 'cursor-pointer'}`}
               onClick={() => {
                 setQuantity(quantity + 1);
                 dispatch(addToCartQuantityChanged(quantity + 1))

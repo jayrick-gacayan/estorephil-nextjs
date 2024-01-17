@@ -2,8 +2,7 @@ import { RequestStatus } from "@/models/result";
 
 export interface CheckoutState {
     checkoutProgress: number,
-    orderId: string | number | null,
+    order: any,
     createOrderStatus: RequestStatus,
-    updateOrderSenderStatus: RequestStatus,
-    updateOrderReceiverStatus: RequestStatus
+    checkoutStatus: RequestStatus
 }

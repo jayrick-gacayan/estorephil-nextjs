@@ -5,10 +5,9 @@ import { RequestStatus } from "@/models/result";
 
 export const initialState: CheckoutState = {
     checkoutProgress: 0,
-    orderId: null,
+    order: {},
     createOrderStatus: RequestStatus.WAITING,
-    updateOrderSenderStatus: RequestStatus.WAITING,
-    updateOrderReceiverStatus: RequestStatus.WAITING,
+    checkoutStatus: RequestStatus.WAITING,
 }
 export const checkoutSlice = createSlice({
     name: "checkout",
@@ -23,7 +22,7 @@ export const checkoutSlice = createSlice({
         createOrderSuccess: (state: CheckoutState, action: PayloadAction<any>) => {
             return {
                 ...state,
-                orderId: action.payload,
+                order: action.payload,
                 createOrderStatus: RequestStatus.SUCCESS
             }
         },
@@ -32,12 +31,25 @@ export const checkoutSlice = createSlice({
                 ...state,
                 createOrderStatus: RequestStatus.FAILURE,
             }
+        },
+        checkoutLoaded: (state: CheckoutState) => {
+            return {
+                ...state,
+                checkoutStatus: RequestStatus.IN_PROGRESS
+            }
+        },
+        checkoutSuccess: (state: CheckoutState) => {
+            return {
+                ...state,
+                checkoutStatus: RequestStatus.SUCCESS
+            }
         }
     }
 })
 export const {
     createOrderLoaded, createOrderSuccess,
-    createOrderFailed
+    createOrderFailed, checkoutLoaded,
+    checkoutSuccess
 
 } = checkoutSlice.actions;
 

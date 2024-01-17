@@ -46,15 +46,17 @@ export default function SummaryCheckout() {
           return cartProduct;
         });
         const cartProducts = updatedCartProducts.filter(Boolean)
-        await updateSession({
-          user: {
-            ...sessionData,
-            cart: {
-              ...sessionData.cart,
-              cart_products: cartProducts
+        if (!!sessionData) {
+          await updateSession({
+            user: {
+              ...sessionData,
+              cart: {
+                ...sessionData?.cart,
+                cart_products: cartProducts
+              }
             }
-          }
-        })
+          })
+        }
       }
     }
     else if (method === 'mainCart') {
@@ -62,15 +64,17 @@ export default function SummaryCheckout() {
       const allProducts = cartCheckout.reduce((acc, store) => {
         return acc.concat(store.products);
       }, []);
-      await updateSession({
-        user: {
-          ...sessionData,
-          cart: {
-            ...sessionData?.cart,
-            cart_products: allProducts,
+      if (!!sessionData) {
+        await updateSession({
+          user: {
+            ...sessionData,
+            cart: {
+              ...sessionData?.cart,
+              cart_products: allProducts,
+            }
           }
-        }
-      })
+        })
+      }
     }
 
   }
