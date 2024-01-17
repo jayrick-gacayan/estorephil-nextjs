@@ -5,4 +5,8 @@ export enum ValidationType {
   INVALID_FORMAT,
   EXISTS,
   NONE,
+  MIN,
+  MAX,
+  MISMATCH,
+  ERROR,
 }

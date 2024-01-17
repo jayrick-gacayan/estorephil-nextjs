@@ -1,4 +1,4 @@
-import { withAuth } from 'next-auth/middleware';
+import { NextRequestWithAuth, withAuth } from 'next-auth/middleware';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -12,7 +12,9 @@ const intlMiddleware = createMiddleware({
 });
 
 const authMiddleware: any = withAuth(
-  function onSuccess(req) {
+  function onSuccess(req: NextRequestWithAuth) {
+
+    console.log('request ', req.nextauth.token)
     return intlMiddleware(req);
   },
   {

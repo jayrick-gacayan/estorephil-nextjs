@@ -6,6 +6,8 @@ import { getValidationResponse } from "@/types/helpers/validation_helpers";
 import { ValidationType } from "@/types/enums/validation-type";
 import { User } from "@/models/user";
 import Validations from "@/types/validations";
+import { textInputFieldValue } from "@/types/helpers/field-methods";
+import { ValidationCustom } from "@/types/helpers/validation-custom";
 
 const initialState: AgentAgencyInformationState = {
   modalUpdateFormOpen: {
@@ -22,9 +24,17 @@ const initialState: AgentAgencyInformationState = {
   zipCode: { value: '', error: '' },
   country: { value: '', error: '' },
   updateBasicInfoStatus: RequestStatus.NONE,
+
   updateProfileImageRequestStatus: RequestStatus.NONE,
+  modalChangeImage: false,
+
   documents: [],
-  modalChangeImage: false
+  documentsRequestStatus: RequestStatus.NONE,
+
+  password: textInputFieldValue(''),
+  passwordConfirmation: textInputFieldValue(''),
+  currentPassword: textInputFieldValue(''),
+  resetPasswordRequestStatus: RequestStatus.NONE,
 }
 
 const agentAgencyInformationSlice = createSlice({
@@ -192,6 +202,68 @@ const agentAgencyInformationSlice = createSlice({
         country: { value: '', error: '' },
         updateBasicInfoRequestStatus: RequestStatus.NONE
       }
+    },
+
+    passwordChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return { ...state, password: { ...state.password, value: action.payload } }
+    },
+    passwordConfirmationChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return { ...state, passwordConfirmation: { ...state.passwordConfirmation, value: action.payload } }
+    },
+    currentPasswordChanged: (state: AgentAgencyInformationState, action: PayloadAction<string>) => {
+      return { ...state, currentPassword: { ...state.currentPassword, value: action.payload } }
+    },
+    resetPasswordRequestStatusChanged: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
+      return { ...state, resetPasswordRequestStatus: action.payload };
+    },
+    resetPasswordFormClicked: (state: AgentAgencyInformationState) => {
+      let errors = new ValidationCustom([
+        { currentPassword: { field: 'Current Password', value: state.currentPassword.value, validations: 'required|min:8' } },
+        { password: { field: 'Password', value: state.password.value, validations: 'required|min:8|match:passwordConfirmation' } },
+        { passwordConfirmation: { field: 'Confirm Password', value: state.passwordConfirmation.value, validations: 'required|min:8' } },
+      ]);
+
+      let currentPasswordError = errors.getErrors()['currentPassword'];
+      let passwordError = errors.getErrors()['password'];
+      let passwordConfirmationError = errors.getErrors()['passwordConfirmation']
+
+      return {
+        ...state,
+        currentPassword: { ...state.currentPassword, ...currentPasswordError },
+        password: { ...state.password, ...passwordError },
+        passwordConfirmation: { ...state.passwordConfirmation, ...passwordConfirmationError },
+        resetPasswordRequestStatus:
+          (currentPasswordError['status'] === ValidationType.VALID &&
+            passwordError['status'] === ValidationType.VALID &&
+            passwordConfirmationError['status'] === ValidationType.VALID) ?
+            RequestStatus.IN_PROGRESS : RequestStatus.FAILURE
+      }
+    },
+    resetPasswordFormReset: (state: AgentAgencyInformationState) => {
+      return {
+        ...state,
+        currentPassword: textInputFieldValue(''),
+        password: textInputFieldValue(''),
+        passwordConfirmation: textInputFieldValue(''),
+        resetPasswordRequestStatus: RequestStatus.NONE,
+      }
+    },
+    currentPasswordSetErrors: (state: AgentAgencyInformationState, action: PayloadAction<{ status: ValidationType; errorText: string; }>) => {
+      return {
+        ...state,
+        currentPassword: {
+          ...state.currentPassword,
+          status: action.payload.status,
+          errorText: action.payload.errorText
+        }
+      }
+    },
+
+    documentsSet: (state: AgentAgencyInformationState, action: PayloadAction<any[]>) => {
+      return { ...state, documents: action.payload };
+    },
+    documentsRequestStatusSet: (state: AgentAgencyInformationState, action: PayloadAction<RequestStatus>) => {
+      return { ...state, documentsRequestStatus: action.payload };
     }
   }
 });
@@ -201,6 +273,17 @@ export const {
   profileImageChanged,
   modalImageChangeOpened,
   updateProfileImageRequestStatusSet,
+
+  passwordChanged,
+  passwordConfirmationChanged,
+  currentPasswordChanged,
+  resetPasswordFormClicked,
+  resetPasswordRequestStatusChanged,
+  resetPasswordFormReset,
+  currentPasswordSetErrors,
+
+  documentsSet,
+  documentsRequestStatusSet,
 
   agentInfoDocumentAdded, address2Changed,
   firstNameChanged, address1Changed, cityChanged,
