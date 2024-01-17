@@ -101,7 +101,7 @@ export class AccountService {
 
   async uploadAgencyInfoDocFile(body: FormData, token: string) {
     return await fetch(`${process.env.API_URL}/upload-file`, {
-      method: 'POST',
+      method: 'PUT',
       body: body,
       headers: this.#headers(token, true),
     })

@@ -1,5 +1,6 @@
 import { TYPES } from '@/inversify/types';
 import { Company } from '@/models/company';
+import { Document } from '@/models/document';
 import { User } from '@/models/user';
 import { AccountService } from '@/services/account-service';
 import { Result } from '@/types/helpers/result-helpers';
@@ -280,9 +281,9 @@ export class AccountRepository {
             response = await result.json();
         }
 
-        return new Result<any>({
+        return new Result<Document[]>({
             response: response,
-            data: response?.data ?? undefined,
+            data: response?.data ? response.data.map((value: any) => { return camelCase({ ...value }) }) : undefined,
             statusCode: response?.status ?? result.status
         });
     }
@@ -318,7 +319,7 @@ export class AccountRepository {
         return new Result<any>({
             response: response,
             data: response?.data ?? undefined,
-            statusCode: response?.status ?? result.status
+            statusCode: result.status === 200 ? 200 : response.status ?? 400
         });
     }
 }

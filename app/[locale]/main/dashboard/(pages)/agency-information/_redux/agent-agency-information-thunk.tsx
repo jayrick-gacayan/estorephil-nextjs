@@ -5,6 +5,7 @@ import { ResultStatus } from "@/types/enums/result-status";
 import {
   currentPasswordSetErrors,
   documentsRequestStatusSet,
+  documentsSet,
   resetPasswordRequestStatusChanged,
   updateBasicInfoRequestStatusSet,
   updateProfileImageRequestStatusSet
@@ -119,7 +120,7 @@ export function agencyInfoDocuments(accountRepository: AccountRepository, token:
 
     if (result.resultStatus === ResultStatus.SUCCESS) {
       dispatch(documentsRequestStatusSet(RequestStatus.SUCCESS));
-
+      dispatch(documentsSet(result.data ?? []))
       console.log('result', result.data);
     }
     else {
