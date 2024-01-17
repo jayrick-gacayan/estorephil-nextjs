@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { BalikbayanBox } from '@/models/balikbayan-box';
 import { Cart } from '@/models/cart';
 import { AppDispatch, RootState } from '@/redux/store';
-import { useEffect, useMemo, useState, useRef, useCallback } from 'react';
+import { useEffect, useMemo, useState, useRef, useCallback, ChangeEvent } from 'react';
 import { FaCartShopping, FaHeartCrack, FaRegHeart } from 'react-icons/fa6';
 import { BsBox2 } from 'react-icons/bs';
 import { addToCartQuantityChanged, cartChanged, mainModalOpened } from '../../../_redux/main-slice';
@@ -60,6 +60,12 @@ export default function ProductButtonsContainer() {
       })
     }
   }
+
+  let stocks = useCallback(() => {
+    return Object.keys(currentProduct).length === 0 ? 1 : currentProduct.inventory.quantity;
+  }, [currentProduct]);
+
+
   useEffect(() => {
     if (productMemo) {
       dispatch(productItemQuantitySet({ product: currentProduct, quantity: quantity }));
@@ -84,13 +90,15 @@ export default function ProductButtonsContainer() {
     }
   }, [mainState.cart])
 
+  console.log('sdafasdfsd', currentProduct)
+
 
   return (
     <div className='flex w-full gap-8'>
       <div className='w-full flex gap-12 items-center'>
         <div className='flex-none w-auto'>Quantity</div>
         <div className='flex-1'>
-          <div className='flex items-center justify-between gap-4 text-center'>
+          <div className='flex items-center justify-between gap-2 text-center'>
             <div className={`transition duration-100 rounded px-4 py-2 bg-tertiary-dark text-2xl 
             ${quantity > 1 ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={() => {
@@ -101,11 +109,22 @@ export default function ProductButtonsContainer() {
             >
               &#8722;
             </div>
-            <div>{quantity}</div>
-            <div className='transition duration-100 cursor-pointer hover:bg-primary-light rounded px-4 py-2 bg-primary text-white text-2xl'
+            <div className='has-[input:focus]:border rounded has-[input:focus]:border-tertiary-dark overflow-hidden text-2xl py-2'>
+              <input type='text' inputMode='numeric' value={quantity}
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  let { value } = event.target;
+                  let tempVal = value === '' ? 1 : parseInt(value);
+
+                  setQuantity(tempVal <= stocks() ? tempVal : stocks);
+                  dispatch(addToCartQuantityChanged(tempVal <= stocks() ? tempVal : stocks()))
+                }}
+                className='w-full text-center outline-0 outline-transparent' />
+            </div>
+            <div className={`transition duration-100 cursor-pointer hover:bg-primary-light rounded px-4 py-2 bg-primary text-white text-2xl 
+              ${quantity < stocks() ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={() => {
-                setQuantity(quantity + 1);
-                dispatch(addToCartQuantityChanged(quantity + 1))
+                setQuantity(quantity < stocks() ? quantity + 1 : stocks());
+                dispatch(addToCartQuantityChanged(quantity < stocks() ? quantity + 1 : stocks()))
               }}
               onChange={() => { dispatch(addToCartQuantityChanged(quantity)) }}
             >
@@ -124,14 +143,6 @@ export default function ProductButtonsContainer() {
             }
             else {
               dispatch(!productExistsOnCart ?
-                // addToShopMethodItem({
-                //   product: product,
-                //   seller: seller,
-                //   quantity,
-                //   total: product.price * quantity,
-                //   isGoingToCheckout: false
-                // }) :
-                // removeFromToPurchaseMethodItem(productMemo)
                 addToCart(productRepository, sessionData?.token ?? `yliaster`) :
                 removeFromCart(productRepository, sessionData?.token ?? `yliaster`)
               )
