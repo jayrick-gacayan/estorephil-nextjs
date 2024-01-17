@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
-import PurchaseMethodProviders from './_sections/purchase-method-providers';
+import ToastContainer from './_sections/toast-container';
 
 async function getMessages(locale: string) {
   try { return (await import(`../../messages/${locale}.json`)).default; }
@@ -23,9 +23,8 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <PurchaseMethodProviders>
-        {children}
-      </PurchaseMethodProviders>
+      {children}
+      <ToastContainer />
     </NextIntlClientProvider>
   )
 }

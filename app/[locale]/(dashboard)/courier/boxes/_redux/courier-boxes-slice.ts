@@ -4,6 +4,8 @@ import { paginatedInit, textInputFieldValue } from "@/types/helpers/field-method
 import { RequestStatus } from "@/types/enums/request-status";
 import { Box } from "@/models/box";
 import { Paginated } from "@/models/paginated";
+import { PhRegion } from "@/models/ph-region";
+import { TextInputField } from "@/types/props/text-input-field";
 
 const initialState: CourierBoxesState = {
   modalBoxesOpen: {
@@ -22,6 +24,7 @@ const initialState: CourierBoxesState = {
     weight: textInputFieldValue(''),
     weightType: textInputFieldValue(''),
     requestStatus: RequestStatus.NONE,
+    regionFees: []
   },
   courierBoxes: paginatedInit<Box>({
     data: [],
@@ -36,170 +39,90 @@ const courierBoxesSlice = createSlice({
   initialState,
   reducers: {
     courierBoxesSet: (state: CourierBoxesState, action: PayloadAction<Paginated<Box>>) => {
-      return {
-        ...state,
-        courierBoxes: action.payload
-      }
+      return { ...state, courierBoxes: action.payload };
     },
     courierBoxesRequestStatusSet: (state: CourierBoxesState, action: PayloadAction<RequestStatus>) => {
       return {
         ...state,
-        courierBoxes: {
-          ...state.courierBoxes,
-          requestStatus: action.payload
-        }
-      }
+        courierBoxes: { ...state.courierBoxes, requestStatus: action.payload }
+      };
     },
     courierBoxesPageNumberSet: (state: CourierBoxesState, action: PayloadAction<number>) => {
       return {
         ...state,
+        courierBoxes: { ...state.courierBoxes, currentPage: action.payload }
+      }
+    },
+    courierBoxesUpdated: (state: CourierBoxesState, action: PayloadAction<{ id: number; box: Box; }>) => {
+      return {
+        ...state,
         courierBoxes: {
           ...state.courierBoxes,
-          currentPage: action.payload
+          data: state.courierBoxes.data.map((box: Box) => {
+            return box.id! === action.payload.id ? action.payload.box : box
+          })
         }
       }
     },
     modalBoxesOpened: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        modalBoxesOpen: {
-          open: !state.modalBoxesOpen.open,
-          type: action.payload
-        }
+        modalBoxesOpen: { open: !state.modalBoxesOpen.open, type: action.payload }
       }
-    },
-    cargoTypeSelectionShown: (state: CourierBoxesState, action: PayloadAction<boolean | undefined>) => {
-      return {
-        ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          cargoType: action.payload ? {
-            ...state.boxFormFields.cargoType,
-            show: action.payload
-          } : textInputFieldValue(state.boxFormFields.cargoType.value)
-        }
-      }
-
     },
     cargoTypeChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          cargoType: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, cargoType: textInputFieldValue(action.payload) }
       }
-    },
-    boxTypeSelectionShown: (state: CourierBoxesState, action: PayloadAction<boolean | undefined>) => {
-      return {
-        ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          boxType: action.payload ? {
-            ...state.boxFormFields.boxType,
-            show: action.payload
-          } : textInputFieldValue(state.boxFormFields.boxType.value)
-        }
-      }
-
     },
     boxTypeChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          boxType: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, boxType: textInputFieldValue(action.payload) }
       }
     },
     lengthDimensionChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          length: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, length: textInputFieldValue(action.payload) }
       }
     },
     widthDimensionChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          width: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, width: textInputFieldValue(action.payload) }
       }
     },
     heightDimensionChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          height: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, height: textInputFieldValue(action.payload) }
       }
-    },
-    unitMeasureSelectionShown: (state: CourierBoxesState, action: PayloadAction<boolean | undefined>) => {
-      return {
-        ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          unitMeasure: action.payload ? {
-            ...state.boxFormFields.unitMeasure,
-            show: action.payload
-          } : textInputFieldValue(state.boxFormFields.unitMeasure.value)
-        }
-      }
-
     },
     unitMeasureChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          unitMeasure: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, unitMeasure: textInputFieldValue(action.payload) }
       }
     },
     priceChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          price: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, price: textInputFieldValue(action.payload) }
       }
     },
     referralPercentageChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          referralPercentage: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, referralPercentage: textInputFieldValue(action.payload) }
       }
     },
     weightChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
         ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          weight: textInputFieldValue(action.payload)
-        }
+        boxFormFields: { ...state.boxFormFields, weight: textInputFieldValue(action.payload) }
       }
-    },
-    weightTypeSelectionShown: (state: CourierBoxesState, action: PayloadAction<boolean | undefined>) => {
-      return {
-        ...state,
-        boxFormFields: {
-          ...state.boxFormFields,
-          weightType: action.payload ? {
-            ...state.boxFormFields.weightType,
-            show: action.payload
-          } : textInputFieldValue(state.boxFormFields.weightType.value)
-        }
-      }
-
     },
     weightTypeChanged: (state: CourierBoxesState, action: PayloadAction<string>) => {
       return {
@@ -247,6 +170,48 @@ const courierBoxesSlice = createSlice({
         }
       }
     },
+    regionFeesAdded: (state: CourierBoxesState, action: PayloadAction<PhRegion>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: [
+            ...state.boxFormFields.regionFees,
+            { region: action.payload, fee: textInputFieldValue("") }
+          ]
+        }
+      }
+    },
+    regionFeesFeeUpdated: (state: CourierBoxesState, action: PayloadAction<{ code: string; value: string; }>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.map((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code === action.payload.code ? {
+              ...regFee, fee: textInputFieldValue(action.payload.value)
+            } : regFee
+          })
+        }
+      }
+    },
+    regionFeesRemoved: (state: CourierBoxesState, action: PayloadAction<string>) => {
+      return {
+        ...state,
+        boxFormFields: {
+          ...state.boxFormFields,
+          regionFees: state.boxFormFields.regionFees.filter((regFee: {
+            region: PhRegion;
+            fee: TextInputField<string>;
+          }) => {
+            return regFee.region.code !== action.payload
+          })
+        }
+      }
+    },
     boxFormFieldsReset: (state: CourierBoxesState) => {
       return {
         ...state,
@@ -261,7 +226,8 @@ const courierBoxesSlice = createSlice({
           referralPercentage: textInputFieldValue(''),
           weight: textInputFieldValue(''),
           weightType: textInputFieldValue(''),
-          requestStatus: RequestStatus.NONE
+          requestStatus: RequestStatus.NONE,
+          regionFees: []
         }
       }
     }
@@ -271,19 +237,15 @@ const courierBoxesSlice = createSlice({
 
 export const {
   modalBoxesOpened,
-  cargoTypeSelectionShown,
   cargoTypeChanged,
-  boxTypeSelectionShown,
   boxTypeChanged,
   lengthDimensionChanged,
   widthDimensionChanged,
   heightDimensionChanged,
-  unitMeasureSelectionShown,
   unitMeasureChanged,
   priceChanged,
   referralPercentageChanged,
   weightChanged,
-  weightTypeSelectionShown,
   weightTypeChanged,
   boxFormFieldsReset,
   boxFormRequestStatusSet,
@@ -291,7 +253,11 @@ export const {
   editFormFieldsFilled,
   courierBoxesSet,
   courierBoxesRequestStatusSet,
-  courierBoxesPageNumberSet
+  courierBoxesPageNumberSet,
+  courierBoxesUpdated,
+  regionFeesAdded,
+  regionFeesFeeUpdated,
+  regionFeesRemoved
 } = courierBoxesSlice.actions;
 
 export default courierBoxesSlice.reducer;

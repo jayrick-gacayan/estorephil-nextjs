@@ -23,7 +23,7 @@ export default function BasicInformation() {
                             firstName: sessionData?.user.first_name ?? '',
                             lastName: sessionData?.user.last_name
                         }))
-                        dispatch(modalUpdateFormOpened('basicInfo'));
+                        dispatch(modalUpdateFormOpened({ type: 'basicInfo', open: true }));
                     }}>{translate('update')}
                 </button>
             </div>

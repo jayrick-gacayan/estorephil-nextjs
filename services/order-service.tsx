@@ -2,6 +2,22 @@ import { injectable } from "inversify";
 
 @injectable()
 export class OrderService {
+    async createOrder(token: string, body: string) {
+        console.log('body create order:', body)
+        const response = await fetch(`${process.env.API_URL}/create-order`, {
+            method: 'PUT',
+            body: body,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+
+        })
+
+        var result = await response.json();
+        console.log('result', result)
+        return result;
+    }
     async getAgentOrders(token: string, page: number, limit: number) {
         const response = await fetch(`${process.env.API_URL}/orders?page=${page}&limit=${limit}`, {
             method: 'GET',
@@ -26,4 +42,5 @@ export class OrderService {
         console.log('set cart service: ', result)
         return result
     }
+
 }

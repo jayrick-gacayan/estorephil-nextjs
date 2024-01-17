@@ -20,7 +20,7 @@ export default function Pagination({
           totalPageNumbers.map((value: number, index: number) => {
             return (
               <div key={`pagination-${index}-${value}`}
-                className={`text-[#DEE2E6] inline p-1.5 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
+                className={`text-[#DEE2E6] inline py-1.5 px-3 ${currentPage === value ? 'bg-primary text-white' : ''}`}>
                 {value}
               </div>
             )

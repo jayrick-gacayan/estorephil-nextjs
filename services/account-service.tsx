@@ -8,7 +8,7 @@ export class AccountService {
   #headers(token: string, isImage: boolean) {
     let headers = { Authorization: `Bearer ${token}` }
 
-    return !isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
+    return isImage ? headers : { ...headers, 'Content-Type': 'application/json' };
   }
   async login({ body }: { body: SignInOptions }) {
     const res = await signIn("credentials", body)

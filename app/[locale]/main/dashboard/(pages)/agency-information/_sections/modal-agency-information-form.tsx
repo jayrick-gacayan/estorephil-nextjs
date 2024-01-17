@@ -18,7 +18,11 @@ import EditBasicInfo from './edit-basic-info';
 import EditBusinessInfo from './edit-business-info';
 import { useSelector } from 'react-redux';
 
-export default function ModalAgencyInformationForm() {
+export default function ModalAgencyInformationForm({
+  cityProvince
+}: {
+  cityProvince: { province: string; cities: string[] }[]
+}) {
   const agentAgencyInfoState: AgentAgencyInformationState = useAppSelector((state: RootState) => {
     return state.agentAgencyInfo;
   })
@@ -29,11 +33,13 @@ export default function ModalAgencyInformationForm() {
   const { open, type } = useMemo(() => {
     return agentAgencyInfoState.modalUpdateFormOpen;
   }, [agentAgencyInfoState.modalUpdateFormOpen]);
-  const { updateBasicInfoStatus } = useMemo(() => { return agentAgencyInfoState }, [agentAgencyInfoState])
+  const updateBasicInfoStatus = useMemo(() => { return agentAgencyInfoState.updateBasicInfoStatus }, [agentAgencyInfoState.updateBasicInfoStatus])
+
   let updateStatus: boolean = useMemo(() => {
-    return (updateBasicInfoStatus === RequestStatus.IN_PROGRESS)
+    return updateBasicInfoStatus === RequestStatus.IN_PROGRESS || updateBasicInfoStatus === RequestStatus.WAITING;
   }, [updateBasicInfoStatus])
   const modalContentRef = useRef<HTMLDivElement>(null);
+
   const cbOnModalClose = useCallback(() => {
     if (!updateStatus) {
       if (modalContentRef.current) {
@@ -44,53 +50,39 @@ export default function ModalAgencyInformationForm() {
             dispatch(agentRegisterFormReset());
 
           }
-          dispatch(modalUpdateFormOpened(''));
+          dispatch(modalUpdateFormOpened({ type: '', open: false }));
 
         }, 300);
       }
     }
-  }, [dispatch, updateStatus]);
-  const updateAgentBasicInfo = async () => {
-    if (!!sessionData) {
-      await updateSession({
-        user: {
-          ...sessionData,
-          first_name: state.firstName.value ?? sessionData.user.first_name,
-          last_name: state.lastName.value ?? sessionData.user.last_name,
-          phone_number: state.phoneNumber ?? sessionData.user.phone_number,
-          city: state.city.value ?? sessionData.user.city,
-          province: state.province.value ?? sessionData.user.province
-        }
-      })
-    }
-  }
+  }, [dispatch, updateBasicInfoStatus]);
+
   useEffect(() => {
-    if (state.updateBasicInfoStatus === RequestStatus.SUCCESS) {
-      updateAgentBasicInfo()
+    if (updateBasicInfoStatus === RequestStatus.SUCCESS) {
+      if (!!sessionData) {
+
+        updateSession({
+          user: {
+            ...sessionData,
+            first_name: state.firstName.value ?? sessionData.user.first_name,
+            last_name: state.lastName.value ?? sessionData.user.last_name,
+            phone_number: state.phoneNumber ?? sessionData.user.phone_number,
+            city: state.city.value ?? sessionData.user.city,
+            province: state.province.value ?? sessionData.user.province
+          }
+        })
+
+        cbOnModalClose();
+
+      }
     }
-  }, [state.updateBasicInfoStatus])
-  // useEffect(() => {
-  //   switch (updateBasicInfoRequestStatus) {
-  //     case RequestStatus.WAITING:
-  //       setTimeout(() => { dispatch(updateModalBasicInfoClicked()) }, 1000)
-  //       break;
-  //     case RequestStatus.IN_PROGRESS:
-  //       setTimeout(() => {
-  //         if (sessionData?.token) {
-  //           let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
-  //           dispatch(updateBasicInfo(
-  //             accountRepository,
-  //             sessionData.token,
-  //             sessionData,
-  //             update
-  //           ));
-  //         }
-  //       }, 1000);
-  //       break;
-  //   }
-  // }, [updateBasicInfoRequestStatus, dispatch, sessionData])
+
+  }, [updateBasicInfoStatus, sessionData, updateSession, dispatch])
 
   useOutsideClick(modalContentRef, () => { cbOnModalClose(); });
+
+
+  console.log('open', open)
 
   return (
     <Modal open={open}>
@@ -107,13 +99,19 @@ export default function ModalAgencyInformationForm() {
                 <button className='bg-info p-2 rounded text-white disabled:cursor-not-allowed'
                   disabled={updateStatus}
                   onClick={() => {
-                    if (type === 'basicInfo') {
-                      dispatch(updateBasicInfoRequestStatusSet(RequestStatus.WAITING))
 
+                    if (type === 'basicInfo') {
+                      if (sessionData?.token) {
+                        let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                        dispatch(updateBasicInfo(
+                          accountRepository,
+                          sessionData.token
+                        ));
+                      }
                     }
                   }}>
                   {
-                    !updateStatus ? 'Update' :
+                    !(updateStatus) ? 'Update' :
                       (
                         <div className='w-fit m-auto block space-x-0.5'>
                           <span className='inline-block align-middle'>

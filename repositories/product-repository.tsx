@@ -93,4 +93,40 @@ export class ProductRepository {
             statusCode: result.status
         });
     }
+
+
+    async getAllProductFavorites(token: string) {
+        let result = await this.productService.getAllProductFavorites(token);
+        let response = await result.json();
+
+        return new Result<Product[]>({
+            response: response,
+            data: response.data ?? [],
+            statusCode: response.status
+        })
+    }
+
+    async addProductToFavorites(token: string, id: string) {
+        let result = await this.productService.addProductToFavorites(token, id);
+
+        let response = await result.json();
+
+        return new Result<Product>({
+            response: response,
+            data: response.data ?? undefined,
+            statusCode: response.status
+        })
+    }
+
+    async deleteProductFromFavorites(token: string, id: string) {
+        let result = await this.productService.deleteProductFromFavorites(token, id);
+
+        let response = await result.json();
+
+        return new Result<Product>({
+            response: response,
+            message: response.message,
+            statusCode: response.status
+        })
+    }
 }

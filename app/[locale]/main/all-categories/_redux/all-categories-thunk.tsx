@@ -14,6 +14,7 @@ function getMainCategories(homeRepository: HomeRepository, locale: string) {
         const state = getState().allCategories as AllCategoriesState
         dispatch(getCategoriesLoaded())
         const result: ApiResponse = await homeRepository.getMainCategories(locale)
+        console.log('result ', result, locale)
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
                 dispatch(getCategoriesSuccess(result.data))

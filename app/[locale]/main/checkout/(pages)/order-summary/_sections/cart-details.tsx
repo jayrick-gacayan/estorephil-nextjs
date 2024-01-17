@@ -1,103 +1,79 @@
 'use client';
 
-import { PurchaseMethodState } from '@/app/[locale]/main/purchase-method/[slug]/_redux/purchase-method-state';
-import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
-import { BalikbayanBox } from '@/models/balikbayan-box';
-import { Cart } from '@/models/cart';
+import { CartState } from '@/app/[locale]/main/cart/_redux/cart-state';
+import { useAppSelector } from '@/app/_hooks/redux_hooks';
 import { Seller } from '@/models/seller';
-import { RootState, AppDispatch } from '@/redux/store';
+import { RootState } from '@/redux/store';
 import { useMemo } from 'react';
-import Collapsible from '@/app/[locale]/main/_components/collapsible';
-import CollapsibleItem from '@/app/[locale]/main/_components/collapsible-item';
-import PurchaseMethodRowItems from '@/app/[locale]/main/_components/purchase-method-row-items';
-import PurchaseMethodQuantityContainer from '@/app/[locale]/main/_components/purchase-method-quantity-container';
+import Image from 'next/image';
 
 export default function CartDetails() {
-    const purchaseMethodState: PurchaseMethodState = useAppSelector((state: RootState) => { return state.purchaseMethod; })
-    const dispatch: AppDispatch = useAppDispatch();
-    const purchaseMethodItems = useMemo(() => { return purchaseMethodState.purchaseMethodItems }, [purchaseMethodState.purchaseMethodItems]);
+    const cartState: CartState = useAppSelector((state: RootState) => { return state.cart; })
 
-    const sellers = useMemo(() => {
-        return purchaseMethodState.purchaseMethodItems.length === 0 ? [] :
-            purchaseMethodState.purchaseMethodItems.filter(
-                (purchaseMethodItem: Cart | BalikbayanBox) => {
-                    return purchaseMethodItem.isGoingToCheckout
-                }
-            ).map(
-                (purchaseMethodItem: Cart | BalikbayanBox) => {
-                    return purchaseMethodItem.seller;
-                }
-            ).filter((valueSeller: Seller, index: number, arrayCurrent: Seller[]) => {
-                let arrayCurrentTemp = arrayCurrent.map((current: Seller) => { return current.id });
-                return arrayCurrentTemp.indexOf(valueSeller.id) === index;
-            })
+    const stores = useMemo(() => {
+        let stores = cartState.itemsSelected.map((product: any) => { return product.store })
+            .filter((tempStore: any, index: number, currentStore: any[]) => {
+                let arrayCurrentTemp = currentStore.map((current: Seller) => { return current.id });
+                return arrayCurrentTemp.indexOf(tempStore.id) === index;
+            });
 
-    }, [purchaseMethodState.purchaseMethodItems]);
+        return stores.map((store: any) => {
+            return {
+                store: store,
+                products: cartState.itemsSelected.filter((product: any) => {
+                    return product.store.id === store.id
+                })
+            }
+        })
+    }, [cartState.itemsSelected])
 
-    const productOrders = [
-        {
-            imageUrl: 'https://example.com/product1.jpg',
-            name: 'Product 1',
-            price: 20.99,
-            quantity: 3,
-            total: 62.97
-        },
-        {
-            imageUrl: 'https://example.com/product2.jpg',
-            name: 'Product 2',
-            price: 15.49,
-            quantity: 2,
-            total: 30.98
-        },
-        {
-            imageUrl: 'https://example.com/product3.jpg',
-            name: 'Product 3',
-            price: 30.00,
-            quantity: 1,
-            total: 30.00
-        },
-        {
-            imageUrl: 'https://example.com/product4.jpg',
-            name: 'Product 4',
-            price: 25.99,
-            quantity: 4,
-            total: 103.96
-        },
-        {
-            imageUrl: 'https://example.com/product5.jpg',
-            name: 'Product 5',
-            price: 10.00,
-            quantity: 5,
-            total: 50.00
-        }
-    ];
-
+    console.log('stores', stores[0])
     return (
         <div className='space-y-8'>
             {
-                sellers.map((seller: Seller) => {
+                stores.map(({ store, products }: any) => {
                     return (
-                        <Collapsible data={seller}
-                            key={`checkout-method-${seller.name}`}
-                            isNotCollapsible={true}>
-                            <CollapsibleItem>
-                                <>
-                                    {
-                                        purchaseMethodItems.filter((purchaseMethodItem: Cart | BalikbayanBox) => {
-                                            return purchaseMethodItem.seller.id === seller.id && purchaseMethodItem.isGoingToCheckout;
-                                        }).map((valuePurchaseMethod: Cart) => {
-                                            return (
-                                                <PurchaseMethodRowItems key={`purchase-method-${valuePurchaseMethod.product.id}`}
-                                                    purchaseMethodItem={valuePurchaseMethod}
-                                                    withQuantityComponent={
-                                                        <PurchaseMethodQuantityContainer quantity={valuePurchaseMethod.quantity} />
-                                                    } />
-                                            )
-                                        })
-                                    }
-                                </>
-                            </CollapsibleItem>
-                        </Collapsible>
+                        <div className="border shadow-md mb-8">
+                            <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">
+                                <div className="flex items-center gap-4 flex-1">
+                                    <div className="flex items-center gap-4">
+                                        <Image src={`${store.image ?? `/sellers/asianhome.png`}`}
+                                            alt={`image-${store.id}`} width={48} height={48} quality={100} priority
+                                            className='w-12 h-12' />
+                                        <h1 className="text-slate-800">{store.name}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='bg-white'>
+                                <table className="border-collapse w-full">
+                                    <thead>
+                                        <tr className="text-gray-400 text-sm font-light text-left">
+                                            <th className="w-[150px] p-4">Image</th>
+                                            <th className="w-auto p-4">Product Name</th>
+                                            <th className="w-[200px] p-4">Price</th>
+                                            <th className="w-[200px] p-4">Quantity</th>
+                                            <th className="w-[140px] p-4">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {products.map((product: any) =>
+                                            <tr className="text-left">
+                                                <th className="w-[150px] p-4">
+                                                    <Image alt={`${product.name}`}
+                                                        src={`${product.image ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}`}
+                                                        width={50} height={50} />
+                                                </th>
+                                                <th className="w-auto p-4">{product.name}</th>
+                                                <th className="w-[200px] p-4">{product.price}</th>
+                                                <th className="w-[200px] p-4">{product.quantity}
+                                                </th>
+                                                <th className="w-[140px] p-4">{product.quantity * product.price}</th>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     )
                 })
             }

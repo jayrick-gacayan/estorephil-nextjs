@@ -25,14 +25,14 @@ export default async function AllCategories({
   return (
     <div>
       <div className='flex lg:flex-row flex-col'>
-        <CategorySidebar  />
+        <CategorySidebar countryCode={countryCookie?.value ?? 'ph'} />
         <div className='flex-1'>
           <div className='bg-white px-4 pt-4 pb-8 space-y-1.5 border-b border-b-tertiary-dark'>
             <BreadcrumbsContainer basePath='all-categories' text='All Categories' />
-            <SellerByCategory />
+            <SellerByCategory countryCode={countryCookie?.value ?? 'ph'} />
           </div>
           <div className='p-4 bg-default space-y-4'>
-            <CategoryProducts />
+            <CategoryProducts countryCode={countryCookie?.value ?? 'ph'} />
           </div>
         </div>
       </div>

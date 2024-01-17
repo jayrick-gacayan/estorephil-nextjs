@@ -16,33 +16,17 @@ import { useRouter } from 'next-intl/client';
 import CustomCountryPicker from '../_components/custom-country-picker';
 import { MainState } from '../_redux/main-state';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
-import { CountryProps } from '@/types/props/country-props';
 import { TextInputField } from '@/types/props/text-input-field';
 import { countryPickerToggled } from '../_redux/main-slice';
 import { accountContainer } from '@/inversify/inversify.config';
 import { AccountRepository } from '@/repositories/account-repository';
 import { TYPES } from '@/inversify/types';
+import LinkForSubTopNav from '../_components/link-for-sub-top-nav';
+import { COUNTRIES } from '@/types/helpers/country-helper';
 
-export const countries: CountryProps[] = [
-  {
-    code: "us",
-    code3: "USA",
-    name: "United States of America",
-    number: 840,
-  },
-  {
-    code: "ca",
-    code3: "CAN",
-    name: "Canada",
-    number: 124,
-  },
-  {
-    code: "ph",
-    code3: "PHL",
-    name: "Philippines",
-    number: 608,
-  },
-];
+let countries = COUNTRIES.filter((value: any) => {
+  return value.code === 'PH' || value.code === 'CA' || value.code === 'US';
+});
 
 export default function MainHeader({
   countryCookie,
@@ -71,14 +55,8 @@ export default function MainHeader({
 
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
-  const onSession = !!sessionData
-  const removeSession = async () => {
-    await signOut({ callbackUrl: `/login` })
-  }
-  useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
-
+  const onSession = !!sessionData;
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
-
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />
@@ -94,7 +72,8 @@ export default function MainHeader({
             <div className='md:block hidden space-x-3 w-auto'>
               <CartTypeNavbar>
                 {onSession
-                  ? <Dropdown ref={dropdownProfileImageRef}
+                  ? <>
+                  <Dropdown ref={dropdownProfileImageRef}
                     className='relative inline'>
                     <Image alt='profile-image'
                       src={sessionData?.user?.profile_image_url ?? `https://estorephilbucketv1.s3.us-west-2.amazonaws.com/assets/images/profile_image_default.jpg`}
@@ -117,18 +96,19 @@ export default function MainHeader({
                           className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'>
                           PROFILE
                         </button>
-                        <button
-                          className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
-                          type='button'
-                          onClick={() => {
-                            removeSession()
-                          }}
-                        >
+                        <button className='transition-all delay-100 px-4 py-2 block hover:bg-primary-dark cursor-pointer hover:text-white w-full'
+                          onClick={async () => {
+                            let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
+                            let result = await accountRepository.nextAuthSignOut(`/login`);
+
+                            console.log('result', result)
+                          }}>
                           SIGNOUT
                         </button>
                       </div>
                     </div>
                   </Dropdown>
+                  </>
                   : (
                     <button onClick={() => { push('/login') }}
                       className='transition-all delay-50 text-white border border-transparent py-2 px-4 h-full rounded text-xl align-middle bg-primary hover:bg-primary-light'>Login
@@ -143,26 +123,31 @@ export default function MainHeader({
               <TextWithIcon text='(413)599-6034' icon={<FaPhoneFlip className='inline-block' />} />
             </div>
             <div className='divide-x divide-[#6D96FF] md:block hidden'>
-              {onSession && <>
-                <Link href="/dashboard/orders" className='inline-block'>
-                  <TextWithIcon text='TRACK MY ORDER' icon={<FaTruck className='inline-block' />} />
-                </Link>
-                <TextWithIcon text='FAVORITES' icon={<FaRegHeart className='inline-block' />} />
-                <Link href="/dashboard/agency-information" className='inline-block'>
-                  <TextWithIcon text={userFullName} icon={<FaUser className='inline-block' />} />
-                </Link>
-              </>
+              {onSession &&
+                (
+                  <>
+                    <LinkForSubTopNav href='/dashboard/orders'
+                      icon={<FaTruck className='inline-block' />}
+                      text='TRACK MY ORDER' />
+                    <LinkForSubTopNav href='/dashboard/favorites'
+                      icon={<FaRegHeart className='inline-block' />}
+                      text='FAVORITES' />
+                    <LinkForSubTopNav href='/dashboard/agency-information'
+                      icon={<FaUser className='inline-block' />}
+                      text={userFullName} />
+                  </>
+                )
               }
               <div className='inline-block align-middle w-[100px] px-2'>
-                <CustomCountryPicker value={countries.find((value: CountryProps) => {
-                  return value.code === countryCookie
-                }) ?? countries[2]}
-                  labelText={(value: CountryProps) => {
+                <CustomCountryPicker value={COUNTRIES.find((value: any) => {
+                  return value.code === countryCookie.toUpperCase();
+                }) ?? countries[1]}
+                  labelText={(value: any) => {
                     return (
                       <div className="flex items-center gap-4 text-white px-2">
                         <div className='block'>
                           <Image alt='selected-country-picker-alt'
-                            src={`/flags/${countryCookie}_flag.svg`}
+                            src={`/flags-svg/${countryCookie}.svg`}
                             height={24}
                             width={24}
                             className='w-6 h-6' />
@@ -174,13 +159,12 @@ export default function MainHeader({
                     );
                   }}
                   items={countries}
-                  onToggle={() => {
-                    dispatch(countryPickerToggled());
-                  }}
-                  onSelect={async (value: CountryProps) => {
-                    onCountryCookieSet(value.code);
-                  }}
-                  show={countryPicker.show ?? false} />
+                  onToggle={() => { dispatch(countryPickerToggled()); }}
+                  onSelect={async (value: any) => { onCountryCookieSet(value.code.toLowerCase()); }}
+                  show={countryPicker.show ?? false}
+                  selectedClassName={(value: any) => {
+                    return value.code === countryCookie ? 'bg-primary text-white' : ''
+                  }} />
               </div>
             </div>
           </div>

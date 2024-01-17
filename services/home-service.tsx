@@ -12,7 +12,7 @@ export class HomeService {
         var result = await response.json();
         return result;
     }
-    async getMainProducts(locale:string) {
+    async getMainProducts(locale: string) {
         const response = await fetch(`${process.env.API_URL}/main-products/${locale}`)
         var result = await response.json();
         return result;

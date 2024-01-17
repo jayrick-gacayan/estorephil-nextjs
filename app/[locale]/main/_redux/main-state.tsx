@@ -1,4 +1,5 @@
-import { RequestStatus } from "@/types/enums/request-status";
+
+import { RequestStatus } from "@/models/result";
 import { TextInputField } from "@/types/props/text-input-field";
 
 export interface MainState {
@@ -15,7 +16,6 @@ export interface MainState {
   deliveryType: string,
   deliveryAddressCountry: string,
   deliveryAddressCity: string,
-
   addToCartQuantity: number
   addToCartStatus: RequestStatus
   removeFromCartStatus: RequestStatus
