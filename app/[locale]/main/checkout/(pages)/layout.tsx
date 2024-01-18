@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <div className="mx-16 flex items-center justify-between mb-12">
                     <PreviousButton />
                     <NextButton />
-                    <div></div>
+
                 </div>
             </div>
             <div className="w-full md:w-[30%] bg-[#f8fbfe]">

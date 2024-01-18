@@ -39,14 +39,7 @@ export default function NextButton() {
     });
 
     const orderIdSearchParams = useMemo(() => { return searchParams.get('order_id') }, [searchParams.get('order_id')]);
-    // const disableButton = useMemo(() => {
-    //     if ((memoSegment === sender|| segment.includes('receiver')) &&
-    //         (checkoutState.requestStatus === RequestStatus.WAITING ||
-    //             checkoutState.requestStatus === RequestStatus.IN_PROGRESS)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }, [checkoutState.requestStatus, segment]);
+
     const disableButton = useMemo(() => {
         if ((memoSegment === 'sender' || memoSegment === 'receiver') &&
             (checkoutState.requestStatus === RequestStatus.WAITING ||
