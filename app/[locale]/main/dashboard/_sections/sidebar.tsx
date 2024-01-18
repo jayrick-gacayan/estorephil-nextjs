@@ -13,7 +13,7 @@ import { AppDispatch, RootState } from "@/redux/store";
 import { toastAdded } from "@/app/[locale]/_redux/start-slice";
 import { AgentAgencyInformationState } from "../(pages)/agency-information/_redux/agent-agency-information-state";
 import Modal from "@/app/[locale]/_components/modal";
-import { modalImageChangeOpened, profileImageChanged, updateProfileImageRequestStatusSet } from "../(pages)/agency-information/_redux/agent-agency-information-slice";
+import { modalImageChangeOpened, updateProfileImageRequestStatusSet } from "../(pages)/agency-information/_redux/agent-agency-information-slice";
 import { useOutsideClick } from "@/app/_hooks/use-outside-click";
 import { RequestStatus } from "@/types/enums/request-status";
 import { accountContainer } from "@/inversify/inversify.config";
@@ -38,7 +38,6 @@ export default function SideBar() {
 
     let current = useMemo(() => { return segment ?? '' }, [segment]);
 
-
     const profileImageStatus = useMemo(() => {
         return agentAgencyInfoState.updateProfileImageRequestStatus;
     }, [agentAgencyInfoState.updateProfileImageRequestStatus]);
@@ -56,8 +55,7 @@ export default function SideBar() {
                 modalContentRef.current.classList.add('animate-slide-down');
                 setTimeout(() => {
                     dispatch(updateProfileImageRequestStatusSet(RequestStatus.NONE));
-                    dispatch(modalImageChangeOpened(false))
-                    dispatch(profileImageChanged())
+                    dispatch(modalImageChangeOpened(false));
                 }, 300);
             }
         }
@@ -95,7 +93,6 @@ export default function SideBar() {
                             sessionData.token,
                             file,
                             (imageUrl: any) => {
-                                console.log('image url', imageUrl)
                                 updateSession({
                                     user: {
                                         ...sessionData,

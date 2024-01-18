@@ -8,11 +8,13 @@ import {
   documentsSet,
   resetPasswordRequestStatusChanged,
   updateBasicInfoRequestStatusSet,
+  updateBusinessInfoRequestStatusSet,
   updateProfileImageRequestStatusSet
 } from "./agent-agency-information-slice";
 import { RequestStatus } from "@/types/enums/request-status";
 import { toastAdded } from "@/app/[locale]/_redux/start-slice";
 import { ValidationType } from "@/types/enums/validation-type";
+import { snakeCase } from "change-case/keys";
 
 export function updateBasicInfo(
   accountRepository: AccountRepository,
@@ -32,6 +34,7 @@ export function updateBasicInfo(
       city: state.city.value,
       province: state.province.value
     }
+
     let result = await accountRepository.updateAgentBasicInfo(user, token);
 
     if (result.data && result.resultStatus === ResultStatus.SUCCESS) {
@@ -42,12 +45,48 @@ export function updateBasicInfo(
         duration: 1,
         position: "",
         type: 'success',
-        message: 'Successfully update information.'
+        message: 'Successfully update basic information.'
       }));
     }
     else {
-      console.log('I am here')
       dispatch(updateBasicInfoRequestStatusSet(RequestStatus.FAILURE))
+    }
+  }
+}
+
+export function updateBusinessInfo(
+  accountRepository: AccountRepository,
+  token: string,
+  updateCompany: (data: any) => void
+) {
+  return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+    let agentAgencyInfoState: AgentAgencyInformationState = getState().agentAgencyInfo;
+    dispatch(updateBusinessInfoRequestStatusSet(RequestStatus.WAITING))
+    dispatch(updateBusinessInfoRequestStatusSet(RequestStatus.IN_PROGRESS))
+
+    let company: any = {
+      companyName: agentAgencyInfoState.companyName.value,
+      businessNature: agentAgencyInfoState.businessNature.value,
+      firstName: agentAgencyInfoState.ownerFirstName.value,
+      lastName: agentAgencyInfoState.ownerLastName.value,
+    }
+
+    let result = await accountRepository.updateAgentBusinessInfo(company, token);
+
+    if (result.resultStatus === ResultStatus.SUCCESS) {
+
+      dispatch(updateBusinessInfoRequestStatusSet(RequestStatus.SUCCESS))
+      updateCompany(snakeCase({ ...company }));
+      dispatch(toastAdded({
+        id: Date.now(),
+        duration: 1,
+        position: "",
+        type: 'success',
+        message: 'Successfully update business information.'
+      }));
+    }
+    else {
+      dispatch(updateBusinessInfoRequestStatusSet(RequestStatus.FAILURE))
     }
   }
 }

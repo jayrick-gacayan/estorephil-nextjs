@@ -1,5 +1,4 @@
 import { FieldInput } from "@/models/field-input";
-import { FileCustomBlobString } from "@/models/file-custom-blob-string";
 import { RequestStatus } from "@/types/enums/request-status";
 import { TextInputField } from "@/types/props/text-input-field";
 
@@ -8,6 +7,7 @@ export interface AgentAgencyInformationState {
     open: boolean;
     type: string;
   };
+
   firstName: FieldInput;
   lastName: FieldInput;
   phoneNumber: FieldInput;
@@ -18,6 +18,16 @@ export interface AgentAgencyInformationState {
   zipCode: FieldInput
   country: FieldInput
   updateBasicInfoStatus: RequestStatus;
+
+  companyName: FieldInput;
+  businessNature: FieldInput;
+  ownerFirstName: FieldInput;
+  ownerLastName: FieldInput;
+  addressLine1: FieldInput;
+  addressLine2: string;
+  companyCity: FieldInput;
+  companyProvince: FieldInput;
+  updateBusinessInfoRequestStatus: RequestStatus;
 
   password: TextInputField<string>;
   passwordConfirmation: TextInputField<string>;

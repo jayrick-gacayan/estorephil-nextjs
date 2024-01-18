@@ -222,6 +222,35 @@ export class AccountRepository {
 
     }
 
+    async updateAgentBusinessInfo(company: {
+        companyName: string;
+        businessNature: string;
+        firstName: string;
+        lastName: string;
+    }, token: string) {
+        let objectToSend: any = {};
+
+        objectToSend['company_name'] = company.companyName;
+        objectToSend['business_nature'] = company.businessNature;
+        objectToSend['first_name'] = company.firstName;
+        objectToSend['last_name'] = company.lastName;
+
+        let result = await this.accountService.updateAgent(JSON.stringify({ company: { ...objectToSend } }), token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data?.company ? camelCase({ ...response.data.user }) as any : undefined,
+            error: response?.error ?? undefined,
+            statusCode: response.status
+        });
+    }
+
     async updateAgentProfileImage(user: {
         profileImage?: File
     }, token: string) {

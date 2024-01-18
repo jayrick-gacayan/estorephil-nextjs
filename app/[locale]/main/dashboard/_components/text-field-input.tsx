@@ -1,4 +1,4 @@
-import { kMaxLength } from "buffer"
+import { ReactNode } from "react"
 
 export default function TextFieldInput({
     type,
@@ -16,7 +16,7 @@ export default function TextFieldInput({
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
     required?: boolean,
     maxLength?: number,
-    label: string,
+    label?: string | ReactNode,
     type: 'number' | 'text',
     show?: boolean,
     value?: any,
@@ -29,21 +29,16 @@ export default function TextFieldInput({
         <>
             <div className={`block my-0 ${className != `` ? `${className}` : `w-[570px]`}`}>
                 <div className="relative">
-                    <div className="flex justify-between">
-                        <label className="">{label}</label>
-                        <p className={`${errorText == '' ? `hidden` : ``} text-red-500`}>{errorText}</p>
-                    </div>
-                    <div className="py-[4px]">
-                        <input
-                            required={required}
-                            type={type}
+                    <label>
+                        {label && <span className="block">{label}</span>}
+                        <input type={type}
                             maxLength={maxLength ?? 255}
-                            defaultValue={defaultValue}
                             onChange={onChange}
                             placeholder={placeholder}
                             value={value}
-                            className={`py-[4px] px-[2px] border-[1.5px] border-gray-200 rounded-sm outline-blue-500 w-full `} />
-                    </div >
+                            className={`py-[4px] px-1 border-[1.5px] block border-gray-200 rounded outline-blue-500 w-full `} />
+                    </label>
+                    {errorText !== '' && <p className='text-danger'>{errorText}</p>}
                 </div >
             </div >
         </>

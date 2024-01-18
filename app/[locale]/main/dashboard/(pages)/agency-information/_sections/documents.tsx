@@ -47,8 +47,7 @@ export default function Documents() {
     useEffect(() => {
         let accountRepository = accountContainer.get<AccountRepository>(TYPES.AccountRepository);
         if (sessionData?.token) { dispatch(agencyInfoDocuments(accountRepository, sessionData.token)); }
-    }, [sessionData?.token])
-
+    }, [sessionData?.token, dispatch])
 
     function uploadDocument(event: ChangeEvent<HTMLInputElement>) {
         const { files } = event.target;
@@ -88,7 +87,6 @@ export default function Documents() {
                     documents.map((document: any, index: number) => {
 
                         let ext = fileExtension(!!document.url ? document.url : '');
-                        console.log('ext', document.id)
                         let images = ['jpeg', 'png', 'gif', 'jpg'];
                         let docs = ['doc', 'pdf'];
 
