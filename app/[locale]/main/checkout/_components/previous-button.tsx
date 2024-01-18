@@ -20,24 +20,15 @@ export default function PreviousButton() {
     const segment = useSelectedLayoutSegment();
     const memoSegment = useMemo(() => { return segment ?? '' }, [segment]);
     const orderIdSearchParams = useMemo(() => { return searchParams.get('order_id') }, [searchParams.get('order_id')]);
-    const checkoutState: SenderState | ReceiverState | PaymentMethodState = useAppSelector((state: RootState) => {
-        if (memoSegment !== '') {
-            if (memoSegment === 'sender') { return state.sender; }
-            else if (memoSegment === 'receiver') { return state.receiver; }
-        }
-        return state.paymentMethod;
-    });
 
     const cbBackUrl = useCallback(() => {
-        if (memoSegment === '' || memoSegment === 'sender') {
-            return '/'
-        }
+        if (memoSegment === '' || memoSegment === 'sender') { return '/'; }
 
-        return `/checkout/${memoSegment}${!!orderIdSearchParams ? `?order_id=${orderIdSearchParams}` : ``}`
+        return `/checkout/${memoSegment === 'order-summary' ? 'receiver' : memoSegment === 'payment-method' ? 'order-summary' : 'sender'}${!!orderIdSearchParams ? `?order_id=${orderIdSearchParams}` : ``}`
     }, [orderIdSearchParams, memoSegment]);
 
     return memoSegment === '' || memoSegment === 'sender' ? null :
-        <Link href={cbBackUrl()} className='text-primary hover:underline'
+        <Link href={cbBackUrl()} className='text-primary hover:underline '
             onClick={() => {
                 switch (memoSegment) {
                     case 'receiver': dispatch(checkoutSenderRequestStatusSet(RequestStatus.NONE)); break;
