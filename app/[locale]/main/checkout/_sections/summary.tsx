@@ -1,15 +1,20 @@
+'use client'
 
-
+import { usePathname } from "next-intl/client"
 import SummaryCheckout from "../../cart/_sections/summary-checkout"
 export default function Summary() {
-    const questions = [
-        'WHAT PAYMENT METHODS CAN I USE?', 'HOW DO I USE A PROMO CODE?', 'WHERE TO GET PROMO CODE?', 'HOW SECURE IS MY PURCHASE?'
-    ]
+    const pathname = usePathname()
     return (
         <>
-            <div className="w-full">
-                <SummaryCheckout />
-            </div>
+            {
+                pathname.includes('order-summary') || pathname.includes('payment-method')
+                    ?
+                    <div className="w-full">
+                        <SummaryCheckout />
+                    </div>
+                    : null
+            }
+
         </>
     )
 }

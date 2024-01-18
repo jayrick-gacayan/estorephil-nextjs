@@ -18,10 +18,10 @@ import { orderContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { OrderRepository } from '@/repositories/order-repository';
 import { checkout } from '../_redux/checkout-thunk';
+import { useSelector } from 'react-redux';
 
 export default function NextButton() {
-    const segment = useSelectedLayoutSegment();
-    const pathname = usePathname();
+    const segment = usePathname();
     const router = useRouter();
     const dispatch: AppDispatch = useAppDispatch()
     const { data: sessionData } = useSession();
@@ -35,15 +35,14 @@ export default function NextButton() {
     });
 
     const disableButton = useMemo(() => {
-        if ((segment === 'sender' || segment === 'receiver') &&
+        if ((segment.includes('sender') || segment.includes('receiver')) &&
             (checkoutState.requestStatus === RequestStatus.WAITING ||
                 checkoutState.requestStatus === RequestStatus.IN_PROGRESS)) {
             return true;
         }
         return false;
-
     }, [checkoutState.requestStatus, segment]);
-
+    const state = useSelector((state: RootState) => state.checkout)
     useEffect(() => {
         if (!!segment) {
             switch (segment) {
@@ -58,7 +57,7 @@ export default function NextButton() {
                             dispatch(validateSender());
                             break;
                         case RequestStatus.SUCCESS:
-                            router.push('/checkout/receiver');
+                            router.push(`/checkout/receiver?order-id=${state.order.id}`);
                             break;
                     }
                     break;
@@ -73,7 +72,7 @@ export default function NextButton() {
                             }, 5000)
                             break;
                         case RequestStatus.SUCCESS:
-                            router.push('/checkout/order-summary');
+                            router.push(`/checkout/order-summary?order-id=${state.order.id}`);
                             break;
                     }
                     break;
@@ -111,7 +110,7 @@ export default function NextButton() {
                         dispatch(receiverRequestStatus(RequestStatus.WAITING));
                         break;
                     case 'order-summary':
-                        router.push('/checkout/payment-method')
+                        router.push(`/checkout/payment-method?order-id=${state.order.id}`)
                         break;
                     case 'payment-method':
                         dispatch(paymentMethodRequestStatusChanged(RequestStatus.WAITING));
