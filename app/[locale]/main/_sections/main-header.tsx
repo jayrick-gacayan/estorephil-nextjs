@@ -56,11 +56,7 @@ export default function MainHeader({
   const { data: sessionData } = useSession()
   const userFullName = `${sessionData?.user?.first_name} ${sessionData?.user?.last_name}`
   const onSession = !!sessionData;
-
-  useEffect(() => { console.log('sessionData main header', sessionData) }, [sessionData])
-
   useOutsideClick(dropdownProfileImageRef, () => { closeDropdown(); });
-
   return (
     <header className='sticky top-0 left-0 w-full z-[999]'>
       <CustomerSegments />

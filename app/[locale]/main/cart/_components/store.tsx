@@ -12,12 +12,10 @@ export default function Store({ store }: { store: any }) {
     const storeProducts = store?.products
     const state = useSelector((state: RootState) => state.cart)
     const dispatch = useDispatch();
-
     const isStoreSelected = () => {
         const selectedProductsInStore = state.itemsSelected.filter((item) => item.store_id === storeDetails.id);
         return selectedProductsInStore.length === storeProducts.length;
     };
-
     const handleSelectAllStoreProducts = () => {
         const newItemsSelected = state.itemsSelected.map((item) => ({ ...item }));
         storeProducts.forEach((product: any) => {
@@ -28,13 +26,9 @@ export default function Store({ store }: { store: any }) {
         });
         dispatch(selectAllStoreProducts(newItemsSelected));
     };
-
     const handleUnselectAllStoreProducts = () => {
         dispatch(unselectAllStoreProducts(storeDetails.id));
     };
-
-    console.log('on cart page cart items selected', state.itemsSelected)
-
     return (
         <div className="border shadow-md mb-8">
             <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">

@@ -13,13 +13,19 @@ import { PaymentMethodState } from '../(pages)/payment-method/_redux/payment-met
 import { useSelectedLayoutSegment } from 'next/navigation';
 import SubmitLoader from '@/app/[locale]/_components/submit-loader';
 import { paymentMethodRequestStatusChanged } from '../(pages)/payment-method/_redux/payment-method-slice';
+import { useSession } from 'next-auth/react';
+import { orderContainer } from '@/inversify/inversify.config';
+import { TYPES } from '@/inversify/types';
+import { OrderRepository } from '@/repositories/order-repository';
+import { checkout } from '../_redux/checkout-thunk';
 
 export default function NextButton() {
     const segment = useSelectedLayoutSegment();
     const pathname = usePathname();
     const router = useRouter();
     const dispatch: AppDispatch = useAppDispatch()
-
+    const { data: sessionData } = useSession();
+    const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
     const checkoutState: SenderState | ReceiverState | PaymentMethodState = useAppSelector((state: RootState) => {
         if (segment) {
             if (segment.includes('sender')) { return state.sender; }
@@ -104,11 +110,15 @@ export default function NextButton() {
                     case 'receiver':
                         dispatch(receiverRequestStatus(RequestStatus.WAITING));
                         break;
+                    case 'order-summary':
+                        router.push('/checkout/payment-method')
+                        break;
                     case 'payment-method':
                         dispatch(paymentMethodRequestStatusChanged(RequestStatus.WAITING));
                         setTimeout(() => {
                             dispatch(paymentMethodRequestStatusChanged(RequestStatus.IN_PROGRESS));
                         }, 2000)
+                        dispatch(checkout(orderRepository, sessionData?.token ?? ''))
                         break;
                 }
             }}

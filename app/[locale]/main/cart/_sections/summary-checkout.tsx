@@ -3,30 +3,101 @@ import { RootState } from '@/redux/store';
 import Link from 'next-intl/link';
 import { useEffect } from 'react';
 import { FaCcAmex, FaCcDiscover, FaCcJcb, FaCcMastercard, FaCcPaypal, FaCcVisa } from 'react-icons/fa6';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { subTotalChanged, summaryItemsquantityChanged, totalChanged } from '../_redux/cart-slice';
+import { useAppDispatch } from '@/app/_hooks/redux_hooks';
+import { createOrder, getMainCart } from '../_redux/cart-thunk';
+import { cartContainer, orderContainer } from '@/inversify/inversify.config';
+import { OrderRepository } from '@/repositories/order-repository';
+import { TYPES } from '@/inversify/types';
+import { useSession } from 'next-auth/react';
+import { RequestStatus } from '@/models/result';
+import { useRouter } from 'next-intl/client';
+import { CartRepository } from '@/repositories/cart-repository';
+import Loading from '../../_components/loading';
 
-export default function SummaryCheckout({
-  totalItems,
-  onRedirectToCheckout,
-}: {
-  totalItems: number;
-  onRedirectToCheckout: () => void;
-}) {
+export default function SummaryCheckout() {
   const state = useSelector((state: RootState) => state.cart)
   const summary = state.summary
-  const dispatch = useDispatch()
+  const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
+  const { data: sessionData, update: updateSession } = useSession()
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+  const handleCheckOut = () => {
+    dispatch(createOrder(orderRepository, sessionData?.token ?? ''))
+  }
+  const cartRepository = cartContainer.get<CartRepository>(TYPES.CartRepository)
+  const updateCartSession = async (method: string) => {
+    if (method === 'checkout') {
+      const itemsCheckedOut = state.itemsSelected
+      const sessionCartProducts = sessionData?.cart?.cart_products
+
+      if (sessionCartProducts && itemsCheckedOut) {
+        const updatedCartProducts = sessionCartProducts.map(cartProduct => {
+          const selectedItem = itemsCheckedOut.find(item => item.id === cartProduct.id);
+          if (selectedItem) {
+            const sessionCartItemQuantity = cartProduct.quantity || 0;
+            if (selectedItem.quantity < sessionCartItemQuantity) {
+              return { ...cartProduct, quantity: sessionCartItemQuantity - selectedItem.quantity };
+            } else {
+              return null;
+            }
+          }
+          return cartProduct;
+        });
+        const cartProducts = updatedCartProducts.filter(Boolean)
+        if (!!sessionData) {
+          await updateSession({
+            user: {
+              ...sessionData,
+              cart: {
+                ...sessionData?.cart,
+                cart_products: cartProducts
+              }
+            }
+          })
+        }
+      }
+    }
+    else if (method === 'mainCart') {
+      const cartCheckout = state.cartCheckout
+      const allProducts = cartCheckout.reduce((acc, store) => {
+        return acc.concat(store.products);
+      }, []);
+      if (!!sessionData) {
+        await updateSession({
+          user: {
+            ...sessionData,
+            cart: {
+              ...sessionData?.cart,
+              cart_products: allProducts,
+            }
+          }
+        })
+      }
+    }
+
+  }
+  useEffect(() => {
+    if (!!sessionData && state.createOrderStatus === RequestStatus.SUCCESS) {
+      dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
+      updateCartSession('checkout');
+      router.push('/checkout/sender')
+    }
+    if (state.getMainCartStatus === RequestStatus.SUCCESS) {
+      updateCartSession('mainCart');
+    }
+
+  }, [state.createOrderStatus, state.getMainCartStatus])
   useEffect(() => {
     const totalQuantity = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0), 0);
     const totalPrice = state.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
-    console.log('use effect called summary checkout')
     dispatch(summaryItemsquantityChanged(totalQuantity));
     dispatch(subTotalChanged(totalPrice));
     dispatch(totalChanged(totalPrice));
-  }, [state.itemsSelected, dispatch]);
-
+  }, [state.itemsSelected]);
   return (
-    <div className='w-[384px] bg-default border-l border-secondary-light'>
+    <div className=' bg-default border-l border-secondary-light'>
       <div className="p-8">
         <div className='border-b border-b-transparent'>
           <div className='text-[44px] leading-0 font-[500]'>SUMMARY</div>
@@ -112,8 +183,10 @@ export default function SummaryCheckout({
         <button
           disabled={state.itemsSelected.length === 0}
           className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
-          onClick={onRedirectToCheckout}>
-          CHECK OUT
+          onClick={handleCheckOut}>
+          {state.createOrderStatus === RequestStatus.IN_PROGRESS
+            ? (<div className='flex items-center justify-center'><p>CHECKING OUT ITEMS </p>< Loading /></div>)
+            : (<>CHECK OUT</>)}
         </button>
       </div>
       <div className="px-8 pt-20 space-y-8">

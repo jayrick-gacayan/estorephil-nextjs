@@ -7,7 +7,7 @@ export interface PaymentMethodState {
         name: FieldInput
         number: FieldInput
         expiryDate: FieldInput
-        ccv: FieldInput
+        cvv: FieldInput
     }
     firstName: FieldInput
     lastName: FieldInput

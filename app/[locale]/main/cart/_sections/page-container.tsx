@@ -34,12 +34,10 @@ export default function PageContainer() {
   const cartProducts = useMemo(() => { return state.cartCheckout }, [state.cartCheckout])
 
   useEffect(() => {
-    console.log('use effect trigger')
     if (!!sessionData) {
-      console.log('dispatch get main cart:')
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
     }
-  }, [sessionData])
+  }, [sessionData?.cart?.cart_products])
 
   return (
     <>
@@ -79,17 +77,7 @@ export default function PageContainer() {
                     <CartItemsContainer />
                   </div>
                 </div>
-                <SummaryCheckout
-                  totalItems={
-                    cartProducts.filter((value: any) => {
-                      return value.isGoingToCheckout
-                    }).length
-                  }
-                  onRedirectToCheckout={
-                    () => {
-                      router.push('/checkout/sender');
-                    }
-                  } />
+                <SummaryCheckout />
               </div>
             )
           : (

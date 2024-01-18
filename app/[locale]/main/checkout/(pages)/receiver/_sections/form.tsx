@@ -45,7 +45,7 @@ export default function Form() {
     ]
     return (
         <>
-            <div>
+            {/* <div>
                 <div className="my-4">
                     <h1 className="text-[35px] text-[#041D60] font-[600]">{translate("selectCourier")}</h1>
                     <div className="flex gap-2">
@@ -62,7 +62,7 @@ export default function Form() {
                         )}
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div>
                 <div className="text-[35px] text-[#041D60] font-[600]">{translate('receiverInfo')}</div>
                 <div>
