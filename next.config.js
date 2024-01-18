@@ -13,6 +13,12 @@ const nextConfig = {
         port: "",
       },
       {
+        protocol: 'https',
+        hostname: 'estorephil.dev2.koda.ws',
+        port: '',
+        pathname: '/rails/active_storage/blobs/redirect/**',
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "",
@@ -42,7 +48,7 @@ const nextConfig = {
         destination: '/:locale/main/home',
       },
       {
-        source: '/:locale/:path((?!admin|login|verify-login|courier|agent/register|register).*)',
+        source: '/:locale/:path((?!admin|login|verify-login|courier|agent/register|register|forgot-password).*)',
         destination: '/:locale/main/:path*',
       },
       {

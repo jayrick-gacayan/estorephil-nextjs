@@ -75,7 +75,7 @@ export default function LoginForm() {
                         <form onSubmit={loginFormSubmit} className='space-y-4'>
                             <InputCustom errorText={email.errorText}
                                 divClassName={divClassName(email.status)}
-                                rightSideContent={<div className='p-2'><FaEnvelope /></div>}
+                                rightSideContent={<div className='p-2'><FaEnvelope className='inline-block' /></div>}
                                 inputProps={{
                                     id: 'email-login-id',
                                     value: email.value,
@@ -89,10 +89,10 @@ export default function LoginForm() {
                                 divClassName={divClassName(password.status)}
                                 withPasswordEye={<div className='p-2 group-hover/password:block hidden'
                                     onClick={() => { dispatch(passwordShown()) }}>
-                                    {password.show ? <FaEyeSlash /> : <FaRegEye />}
+                                    {password.show ? <FaEyeSlash className='inline-block' /> : <FaRegEye className='inline-block' />}
                                 </div>}
                                 rightSideContent={
-                                    <div className='p-2'><FaLock /></div>
+                                    <div className='p-2'><FaLock className='inline-block' /></div>
                                 }
                                 inputProps={{
                                     id: 'password-login-id',
@@ -116,9 +116,10 @@ export default function LoginForm() {
                                         {translate('rememberMe')}
                                     </div>
                                 </div>
-                                <div className='text-tertiary-dark font-semibold text-xs'>
+                                <Link href='/forgot-password'
+                                    className='text-tertiary-dark text-xs block hover:underline'>
                                     {translate('forgotPassword?')}
-                                </div>
+                                </Link>
                             </div>
                             <button type='submit'
                                 className='w-full bg-primary rounded disabled:cursor-not-allowed text-white py-2 mt-4 flex items-center justify-center'

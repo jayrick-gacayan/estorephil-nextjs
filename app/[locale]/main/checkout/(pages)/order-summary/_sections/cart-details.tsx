@@ -33,7 +33,8 @@ export default function CartDetails() {
             {
                 stores.map(({ store, products }: any) => {
                     return (
-                        <div className="border shadow-md mb-8">
+                        <div key={`order-summary-${store.id}`}
+                            className="border shadow-md mb-8">
                             <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">
                                 <div className="flex items-center gap-4 flex-1">
                                     <div className="flex items-center gap-4">
@@ -57,7 +58,8 @@ export default function CartDetails() {
                                     </thead>
                                     <tbody>
                                         {products.map((product: any) =>
-                                            <tr className="text-left">
+                                            <tr key={`order-summary-products-${product.id}`}
+                                                className="text-left">
                                                 <th className="w-[150px] p-4">
                                                     <Image alt={`${product.name}`}
                                                         src={`${product.image_url ?? `https://www.odnetwork.org/global_graphics/default-store-350x350.jpg`}`}

@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl"
 import Label from "../_components/label"
 import { AppDispatch } from "@/redux/store";
 import { useAppDispatch } from "@/app/_hooks/redux_hooks";
-import { modalUpdateFormOpened } from "../_redux/agent-agency-information-slice";
+import { agentEditFormBusinessInfoFill, modalUpdateFormOpened } from "../_redux/agent-agency-information-slice";
 import { useSession } from "next-auth/react";
 
 export default function BusinessInformation() {
@@ -18,6 +18,12 @@ export default function BusinessInformation() {
                 <button className='underline hover:no-underline text-primary'
                     onClick={() => {
                         dispatch(modalUpdateFormOpened({ type: 'businessInfo', open: true }));
+                        dispatch(agentEditFormBusinessInfoFill({
+                            companyName: sessionData?.company?.company_name,
+                            businessNature: sessionData?.company?.business_nature,
+                            firstName: sessionData?.company?.first_name,
+                            lastName: sessionData?.company?.last_name
+                        }))
                     }}>{translate('update')}
                 </button>
             </div>
