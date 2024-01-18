@@ -65,7 +65,7 @@ export const receiverSlice = createSlice({
     name: "receiver",
     initialState,
     reducers: {
-        requestStatusSet: (state: ReceiverState, action: PayloadAction<RequestStatus>) => {
+        checkoutReceiverRequestStatusSet: (state: ReceiverState, action: PayloadAction<RequestStatus>) => {
             return {
                 ...state, requestStatus: action.payload
             }
@@ -288,6 +288,6 @@ export const {
     countryChanged, mobileNumberChanged, phoneNumberChanged,
     provinceChanged, zipCodeChanged, checkBoxReceiverInfoClicked,
     validateReceiver, checkBoxReceiverAddressClicked, checkBoxReceiverContactClicked,
-    requestStatusSet
+    checkoutReceiverRequestStatusSet,
 } = receiverSlice.actions
 export default receiverSlice.reducer

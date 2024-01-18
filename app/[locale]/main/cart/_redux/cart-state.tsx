@@ -9,6 +9,7 @@ export interface CartState {
   createOrderStatus: RequestStatus
   purchaseMethodItems: Cart[] | BalikbayanBox[];
   purchaseMethodItemToInteract: Cart | BalikbayanBox | undefined;
+  orderId: number | string | undefined
   summary: {
     items?: number
     subtotal?: number

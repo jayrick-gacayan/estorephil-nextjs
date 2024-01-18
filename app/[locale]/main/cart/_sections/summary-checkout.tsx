@@ -31,16 +31,15 @@ export default function SummaryCheckout() {
     if (method === 'checkout') {
       const itemsCheckedOut = state.itemsSelected
       const sessionCartProducts = sessionData?.cart?.cart_products
-
       if (sessionCartProducts && itemsCheckedOut) {
         const updatedCartProducts = sessionCartProducts.map(cartProduct => {
           const selectedItem = itemsCheckedOut.find(item => item.id === cartProduct.id);
           if (selectedItem) {
             const sessionCartItemQuantity = cartProduct.quantity || 0;
-            if (selectedItem.quantity < sessionCartItemQuantity) {
-              return { ...cartProduct, quantity: sessionCartItemQuantity - selectedItem.quantity };
-            } else {
+            if (selectedItem.quantity >= sessionCartItemQuantity) {
               return null;
+            } else {
+              return { ...cartProduct, quantity: sessionCartItemQuantity - selectedItem.quantity };
             }
           }
           return cartProduct;
@@ -82,7 +81,7 @@ export default function SummaryCheckout() {
     if (!!sessionData && state.createOrderStatus === RequestStatus.SUCCESS) {
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
       updateCartSession('checkout');
-      router.push('/checkout/sender')
+      router.push(`/checkout/sender?order-id=${state.orderId}`)
     }
     if (state.getMainCartStatus === RequestStatus.SUCCESS) {
       updateCartSession('mainCart');

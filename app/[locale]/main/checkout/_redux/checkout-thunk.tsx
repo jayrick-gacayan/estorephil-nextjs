@@ -89,3 +89,13 @@ export function checkout(orderRepository: OrderRepository, token: string) {
         }
     }
 }
+
+export default function getCheckoutOrder(
+    orderRepository: OrderRepository,
+    orderId: string,
+    token: string
+) {
+    return async function (dispatch: AppDispatch) {
+
+    }
+}

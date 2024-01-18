@@ -3,14 +3,14 @@
 import { usePathname, useRouter } from 'next-intl/client';
 import { useEffect, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/redux/store';
-import { requestStatusSet as senderRequestStatus, validateSender } from '../(pages)/sender/_redux/sender-slice';
-import { requestStatusSet as receiverRequestStatus } from '../(pages)/receiver/_redux/receiver-slice';
+import { checkoutSenderRequestStatusSet, validateSender } from '../(pages)/sender/_redux/sender-slice';
+import { checkoutReceiverRequestStatusSet } from '../(pages)/receiver/_redux/receiver-slice';
 import { useAppDispatch, useAppSelector } from '@/app/_hooks/redux_hooks';
 import { RequestStatus } from '@/types/enums/request-status';
 import { ReceiverState } from '../(pages)/receiver/_redux/receiver-state';
 import { SenderState } from '../(pages)/sender/_redux/sender-state';
 import { PaymentMethodState } from '../(pages)/payment-method/_redux/payment-method-state';
-import { useSelectedLayoutSegment } from 'next/navigation';
+import { useSearchParams, useSelectedLayoutSegment } from 'next/navigation';
 import SubmitLoader from '@/app/[locale]/_components/submit-loader';
 import { paymentMethodRequestStatusChanged } from '../(pages)/payment-method/_redux/payment-method-slice';
 import { useSession } from 'next-auth/react';
@@ -18,79 +18,101 @@ import { orderContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { OrderRepository } from '@/repositories/order-repository';
 import { checkout } from '../_redux/checkout-thunk';
+import { useSelector } from 'react-redux';
 
 export default function NextButton() {
+    const searchParams = useSearchParams();
     const segment = useSelectedLayoutSegment();
-    const pathname = usePathname();
     const router = useRouter();
     const dispatch: AppDispatch = useAppDispatch()
     const { data: sessionData } = useSession();
+
     const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
+
+    const memoSegment = useMemo(() => { return segment ?? '' }, [segment]);
     const checkoutState: SenderState | ReceiverState | PaymentMethodState = useAppSelector((state: RootState) => {
-        if (segment) {
-            if (segment.includes('sender')) { return state.sender; }
-            else if (segment.includes('receiver')) { return state.receiver; }
+        if (memoSegment !== '') {
+            if (memoSegment === 'sender') { return state.sender; }
+            else if (memoSegment === 'receiver') { return state.receiver; }
         }
         return state.paymentMethod;
     });
 
+    const orderIdSearchParams = useMemo(() => { return searchParams.get('order_id') }, [searchParams.get('order_id')]);
+    // const disableButton = useMemo(() => {
+    //     if ((memoSegment === sender|| segment.includes('receiver')) &&
+    //         (checkoutState.requestStatus === RequestStatus.WAITING ||
+    //             checkoutState.requestStatus === RequestStatus.IN_PROGRESS)) {
+    //         return true;
+    //     }
+    //     return false;
+    // }, [checkoutState.requestStatus, segment]);
     const disableButton = useMemo(() => {
-        if ((segment === 'sender' || segment === 'receiver') &&
+        if ((memoSegment === 'sender' || memoSegment === 'receiver') &&
             (checkoutState.requestStatus === RequestStatus.WAITING ||
                 checkoutState.requestStatus === RequestStatus.IN_PROGRESS)) {
             return true;
         }
         return false;
 
-    }, [checkoutState.requestStatus, segment]);
+    }, [checkoutState.requestStatus, memoSegment]);
 
     useEffect(() => {
-        if (!!segment) {
-            switch (segment) {
+        if (memoSegment !== '') {
+            let orderId = orderIdSearchParams;
+
+            switch (memoSegment) {
                 case 'sender':
                     switch (checkoutState.requestStatus) {
                         case RequestStatus.WAITING:
                             setTimeout(() => {
-                                dispatch(senderRequestStatus(RequestStatus.IN_PROGRESS))
+                                dispatch(checkoutSenderRequestStatusSet(RequestStatus.IN_PROGRESS))
                             }, 4000);
                             break;
                         case RequestStatus.IN_PROGRESS:
                             dispatch(validateSender());
                             break;
                         case RequestStatus.SUCCESS:
-                            router.push('/checkout/receiver');
+                            router.push(`/checkout/receiver${!!orderId ? `?order_id=${orderId}` : ``}`);
                             break;
                     }
                     break;
                 case 'receiver':
                     switch (checkoutState.requestStatus) {
                         case RequestStatus.WAITING:
-                            dispatch(receiverRequestStatus(RequestStatus.IN_PROGRESS))
+                            dispatch(checkoutReceiverRequestStatusSet(RequestStatus.IN_PROGRESS))
                             break;
                         case RequestStatus.IN_PROGRESS:
                             setTimeout(() => {
-                                dispatch(receiverRequestStatus(RequestStatus.SUCCESS))
+                                dispatch(checkoutReceiverRequestStatusSet(RequestStatus.SUCCESS))
                             }, 5000)
                             break;
                         case RequestStatus.SUCCESS:
-                            router.push('/checkout/order-summary');
+                            router.push(`/checkout/order-summary${!!orderId ? `?order_id=${orderId}` : ``}`);
                             break;
                     }
                     break;
+
             }
         }
 
-    }, [segment, dispatch, router, checkoutState.requestStatus])
+    }, [
+        memoSegment,
+        dispatch,
+        router,
+        orderIdSearchParams,
+        checkoutState.requestStatus
+    ]);
 
     function CheckoutButtonNextContent() {
-        if (!!segment) {
-            if ((segment === 'sender' || segment === 'receiver') &&
+        if (memoSegment !== '') {
+            if ((memoSegment === 'sender' || memoSegment === 'receiver') &&
                 (checkoutState.requestStatus === RequestStatus.WAITING ||
                     checkoutState.requestStatus === RequestStatus.IN_PROGRESS)
             ) {
                 return (<SubmitLoader />)
             }
-            else if (segment === 'payment-method') {
+            else if (memoSegment === 'payment-method') {
                 return 'Checkout';
             }
             else {
@@ -105,13 +127,13 @@ export default function NextButton() {
             onClick={() => {
                 switch (segment) {
                     case 'sender':
-                        dispatch(senderRequestStatus(RequestStatus.WAITING));
+                        dispatch(checkoutSenderRequestStatusSet(RequestStatus.WAITING));
                         break;
                     case 'receiver':
-                        dispatch(receiverRequestStatus(RequestStatus.WAITING));
+                        dispatch(checkoutReceiverRequestStatusSet(RequestStatus.WAITING));
                         break;
                     case 'order-summary':
-                        router.push('/checkout/payment-method')
+                        router.push(`/checkout/payment-method${!!orderIdSearchParams ? `?order_id=${orderIdSearchParams}` : ``}`)
                         break;
                     case 'payment-method':
                         dispatch(paymentMethodRequestStatusChanged(RequestStatus.WAITING));

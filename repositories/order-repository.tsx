@@ -2,6 +2,7 @@
 import { TYPES } from "@/inversify/types";
 import { AccountService } from "@/services/account-service";
 import { OrderService } from "@/services/order-service";
+import { Result } from "@/types/helpers/result-helpers";
 import { inject, injectable } from "inversify";
 import { SignInOptions } from "next-auth/react";
 
@@ -184,6 +185,25 @@ export class OrderRepository {
         }
         console.log('set cart repository dispatched', JSON.stringify(body))
         return await this.orderService.setCart(token, JSON.stringify(body))
+    }
+
+    async updateCheckoutOrder(orderId: string, token: string) {
+        let result = await this.orderService.updateCheckoutOrder(
+            JSON.stringify({ order_id: orderId })
+            , token
+        );
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data ?? undefined,
+            statusCode: response?.status ?? result.status
+        });
     }
 
 }
