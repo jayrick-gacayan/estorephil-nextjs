@@ -1,5 +1,4 @@
 'use client';
-
 import { useAppSelector, useAppDispatch } from '@/app/_hooks/redux_hooks';
 import { RootState, AppDispatch } from '@/redux/store';
 import { ReactNode, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -13,7 +12,6 @@ import { useOutsideClick } from '@/app/_hooks/use-outside-click';
 import { CartState } from '../cart/_redux/cart-state';
 import { usePrevious } from '@/app/_hooks/use_previous_value';
 import Image from 'next/image';
-import { removeFromToPurchaseMethodItem } from '../cart/_redux/cart-slice';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { MainState } from '../_redux/main-state';
 import { useSelector } from 'react-redux';
@@ -78,7 +76,6 @@ export default function CartTypeDropdown({ children }: { children: ReactNode }) 
     if (cartType !== '') {
       closeDropdown();
     }
-    console.log('cart products', cartProducts)
   }, [cartType, closeDropdown]);
 
   useOutsideClick(dropdownRef, () => { closeDropdown(); });
