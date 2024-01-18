@@ -3,7 +3,7 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest, NextResponse } from 'next/server';
 
 const locales = ['en', 'ph'];
-const publicPages = ['/', '/home', '/register', '/all-categories', '/login', '/agent/register',];
+const publicPages = ['/', '/home', '/register', '/all-categories', '/login', 'forgot-password', '/agent/register',];
 
 const intlMiddleware = createMiddleware({
   locales: locales,
@@ -24,6 +24,7 @@ const authMiddleware: any = withAuth(
           req.nextUrl.pathname.startsWith('courier') ||
           req.nextUrl.pathname.includes('dashboard') ||
           req.nextUrl.pathname === '/' ||
+          req.nextUrl.pathname === '/forgot-password' ||
           req.nextUrl.pathname === '/home' ||
           req.nextUrl.pathname === '/register' ||
           req.nextUrl.pathname === '/agent/register' ||
