@@ -23,7 +23,7 @@ export default function LoginSuccess() {
                 let role = sessionData.user.role!;
                 setTimeout(() => {
                     router.push(
-                        role.includes('agent') ? '/' : role.includes('courier') ? '/courier' : '/admin'
+                        role?.includes('agent') ? '/' : role.includes('courier') ? '/courier' : '/admin'
                     );
                 }, 2000);
 

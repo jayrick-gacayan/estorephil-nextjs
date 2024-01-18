@@ -55,4 +55,14 @@ export class OrderService {
         return result
     }
 
+    async updateCheckoutOrder(body: string, token: string) {
+        return await fetch(`${process.env.API_URL}/update-checkout-order`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+    }
 }

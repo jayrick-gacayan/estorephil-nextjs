@@ -59,7 +59,6 @@ export function NavbarSearch({ countryCookie }: { countryCookie: string; }) {
 
           }}
           value={state.searchQuery}
-          defaultValue={state.searchQuery}
           placeholder='Search products'
         />
       </div>

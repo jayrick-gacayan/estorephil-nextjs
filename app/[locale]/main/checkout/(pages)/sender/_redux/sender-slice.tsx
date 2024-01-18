@@ -57,7 +57,7 @@ export const senderSlice = createSlice({
     name: "sender",
     initialState,
     reducers: {
-        requestStatusSet: (state: SenderState, action: PayloadAction<RequestStatus>) => {
+        checkoutSenderRequestStatusSet: (state: SenderState, action: PayloadAction<RequestStatus>) => {
             return {
                 ...state, requestStatus: action.payload
             }
@@ -230,6 +230,6 @@ export const {
     validateSender, address1Changed, address2Changed,
     cityChanged, countryChanged, mobileNumberChanged, phoneNumberChanged,
     provinceChanged, zipCodeChanged,
-    requestStatusSet,
+    checkoutSenderRequestStatusSet,
 } = senderSlice.actions
 export default senderSlice.reducer

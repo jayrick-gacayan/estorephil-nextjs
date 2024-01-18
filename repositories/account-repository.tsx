@@ -1,5 +1,6 @@
 import { TYPES } from '@/inversify/types';
 import { Company } from '@/models/company';
+import { Document } from '@/models/document';
 import { User } from '@/models/user';
 import { AccountService } from '@/services/account-service';
 import { Result } from '@/types/helpers/result-helpers';
@@ -221,14 +222,43 @@ export class AccountRepository {
 
     }
 
+    async updateAgentBusinessInfo(company: {
+        companyName: string;
+        businessNature: string;
+        firstName: string;
+        lastName: string;
+    }, token: string) {
+        let objectToSend: any = {};
+
+        objectToSend['company_name'] = company.companyName;
+        objectToSend['business_nature'] = company.businessNature;
+        objectToSend['first_name'] = company.firstName;
+        objectToSend['last_name'] = company.lastName;
+
+        let result = await this.accountService.updateAgent(JSON.stringify({ company: { ...objectToSend } }), token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data?.company ? camelCase({ ...response.data.user }) as any : undefined,
+            error: response?.error ?? undefined,
+            statusCode: response.status
+        });
+    }
+
     async updateAgentProfileImage(user: {
         profileImage?: File
     }, token: string) {
         let formData = new FormData();
+
         if (user.profileImage) {
             formData.set('user[profile_image]', user.profileImage)
         }
-
 
         let result = await this.accountService.updateAgent(formData, token, true);
 
@@ -238,7 +268,7 @@ export class AccountRepository {
             response = await result.json();
         }
 
-        return new Result<User>({
+        return new Result<any>({
             response: response,
             data: response?.data?.user ? camelCase({ ...response.data.user }) as any : undefined,
             error: response?.error ?? undefined,
@@ -246,5 +276,79 @@ export class AccountRepository {
         });
     }
 
+    async resetPassword(user: {
+        password: string;
+        passwordConfirmation: string;
+    }, currentPassword: string, token: string) {
+        let result = await this.accountService.resetPassword(
+            JSON.stringify({
+                user: snakeCase({ ...user }),
+                current_password: currentPassword
+            }), token);
 
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data ?? undefined,
+            message: response?.message ?? '',
+            error: response?.error ?? undefined,
+            statusCode: response?.status ?? result.status
+        });
+    }
+
+    async agencyInfoDocFiles(token: string) {
+        let result = await this.accountService.agencyInfoDocFiles(token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<Document[]>({
+            response: response,
+            data: response?.data ? response.data.map((value: any) => { return camelCase({ ...value }) }) : undefined,
+            statusCode: response?.status ?? result.status
+        });
+    }
+
+    async uploadAgencyInfoDocFile(file: File, token: string) {
+        let formData = new FormData();
+
+        formData.append('file', file);
+        let result = await this.accountService.uploadAgencyInfoDocFile(formData, token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data ?? undefined,
+            statusCode: response?.status ?? result.status
+        });
+    }
+
+    async removeAgencyInfoDocFile(id: number, token: string) {
+        let result = await this.accountService.removeAgencyInfoDocFile(JSON.stringify({ doc_id: id }), token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        return new Result<any>({
+            response: response,
+            data: response?.data ?? undefined,
+            statusCode: result.status === 200 ? 200 : response.status ?? 400
+        });
+    }
 }
