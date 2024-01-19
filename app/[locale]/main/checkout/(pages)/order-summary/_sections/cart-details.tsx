@@ -1,34 +1,20 @@
 'use client';
-
-import { CartState } from '@/app/[locale]/main/cart/_redux/cart-state';
-import { useAppSelector } from '@/app/_hooks/redux_hooks';
-import { Seller } from '@/models/seller';
+;
 import { RootState } from '@/redux/store';
-import { useMemo } from 'react';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
+import { OrderSummaryState } from '../_redux/order-summary-state';
+import { useAppSelector } from '@/app/_hooks/redux_hooks';
+import { useMemo } from 'react';
 
 export default function CartDetails() {
-    // const cartState: CartState = useAppSelector((state: RootState) => { return state.cart; })
+    const orderSummaryState: OrderSummaryState = useAppSelector((state: RootState) => {
+        return state.orderSummary
+    })
 
-    // const stores = useMemo(() => {
-    //     let stores = cartState.itemsSelected.map((product: any) => { return product.store })
-    //         .filter((tempStore: any, index: number, currentStore: any[]) => {
-    //             let arrayCurrentTemp = currentStore.map((current: Seller) => { return current?.id });
-    //             return arrayCurrentTemp.indexOf(tempStore.id) === index;
-    //         });
+    const stores = useMemo(() => {
+        return orderSummaryState.orderStores;
+    }, [orderSummaryState.orderStores]);
 
-    //     return stores.map((store: any) => {
-    //         return {
-    //             store: store,
-    //             products: cartState.itemsSelected.filter((product: any) => {
-    //                 return product.store.id === store.id
-    //             })
-    //         }
-    //     })
-    // }, [cartState.itemsSelected])
-    const state = useSelector((state: RootState) => state.orderSummary)
-    const stores = state.orderStores
     return (
         <div className='space-y-8'>
             {

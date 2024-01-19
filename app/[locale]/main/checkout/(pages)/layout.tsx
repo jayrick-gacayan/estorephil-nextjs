@@ -15,7 +15,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                         <CheckoutIndicator />
                         {children}
                     </div>
-
                     <CheckoutButtons />
                 </div>
                 <div className="w-full md:w-[30%] bg-[#f8fbfe]">

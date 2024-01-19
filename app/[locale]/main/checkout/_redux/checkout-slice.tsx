@@ -2,7 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CheckoutState } from "./checkout-state";
 import { RequestStatus } from "@/models/result";
 
-
 export const initialState: CheckoutState = {
     checkoutProgress: 0,
     order: {},
@@ -10,6 +9,7 @@ export const initialState: CheckoutState = {
     checkoutStatus: RequestStatus.WAITING,
     getAgentOrder: RequestStatus.WAITING,
 }
+
 export const checkoutSlice = createSlice({
     name: "checkout",
     initialState,

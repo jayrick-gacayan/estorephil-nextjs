@@ -102,20 +102,11 @@ export default function getCheckoutOrder(
     return async function (dispatch: AppDispatch) {
         let result = await orderRepository.getAgentOrder(parseInt(orderId), token);
 
-        console.log('data', result.data)
         if (!!result.data && result.statusCode === 200) {
-            const allProducts: any[] = result.data.order_stores?.reduce(
-                (productsArray: any, orderStore: any) => {
-                    return productsArray.concat(orderStore.products);
-                },
-                []
-            );
             dispatch(createOrderSuccess(result.data.order))
             dispatch(senderFormFilled(result.data.order_customer))
             dispatch(receiverFormFilled(result.data.order_receiver))
-            dispatch(getAgentOrderSuccess(allProducts))
             dispatch(getAgentOrderSummarySuccess(result.data.order_stores))
-            console.log('data', result.data.order_receiver)
         }
     }
 }
@@ -126,14 +117,10 @@ export function updateCheckoutOrder(
     token: string,
 ) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
-
         const senderState = getState().sender;
-        const state: CheckoutState = getState().checkout;
-        const order = state.order;
-        const cartState: CartState = getState().cart;
+        const checkoutOrderState: CheckoutState = getState().checkout;
         const receiverState: ReceiverState = getState().receiver
 
-        const totalPrice = cartState.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
         let objectToSend = {
             order_customer: {
                 order_id: orderId,
@@ -149,7 +136,7 @@ export function updateCheckoutOrder(
                 email: senderState.emailAddress.value,
                 town: senderState.city.value,
             },
-            order: { ...order },
+            order: { ...checkoutOrderState.order },
             order_receiver: {
                 order_id: orderId,
                 first_name: receiverState.firstName.value ?? '',
@@ -169,9 +156,8 @@ export function updateCheckoutOrder(
 
         let result = await orderRepository.updateCheckoutOrder(objectToSend, orderId, token);
 
-        console.log('result on update checkout order', result.data)
         if (result.statusCode === 200) {
-            dispatch(getCheckoutOrder(orderRepository, orderId, token))
+            dispatch(getCheckoutOrder(orderRepository, orderId, token));
         }
     }
 }
