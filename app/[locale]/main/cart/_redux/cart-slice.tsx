@@ -19,7 +19,8 @@ const initialState: CartState = {
   purchaseMethodItemToInteract: undefined,
   orderId: undefined,
   getMainCartStatus: RequestStatus.WAITING,
-  createOrderStatus: RequestStatus.WAITING
+  createOrderStatus: RequestStatus.WAITING,
+  getAgentOrderStatus: RequestStatus.WAITING,
 }
 
 export const cartSlice = createSlice({
@@ -201,6 +202,19 @@ export const cartSlice = createSlice({
         ...state,
         createOrderStatus: RequestStatus.FAILURE,
       }
+    },
+    getAgentOrderLoaded: (state: CartState) => {
+      return {
+        ...state,
+        getAgentOrderStatus: RequestStatus.IN_PROGRESS
+      }
+    },
+    getAgentOrderSuccess: (state: CartState, action: PayloadAction<any>) => {
+      return {
+        ...state,
+        itemsSelected: action.payload,
+        getAgentOrderStatus: RequestStatus.SUCCESS
+      }
     }
 
   }
@@ -215,7 +229,7 @@ export const {
   selectProduct, selectAllStoreProducts, unselectAllStoreProducts,
   itemQuantityChanged, subTotalChanged, summaryItemsquantityChanged,
   unselectProduct, totalChanged, createOrderLoaded, createOrderSuccess,
-  createOrderFailed
+  createOrderFailed,getAgentOrderLoaded,getAgentOrderSuccess
 
 } = cartSlice.actions;
 

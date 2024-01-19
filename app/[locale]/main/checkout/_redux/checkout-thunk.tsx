@@ -9,6 +9,8 @@ import { checkoutLoaded, checkoutSuccess, createOrderSuccess } from "./checkout-
 import { ResultStatus, getResultStatus } from "@/models/result";
 import { senderFormFilled } from "../(pages)/sender/_redux/sender-slice";
 import { receiverFormFilled } from "../(pages)/receiver/_redux/receiver-slice";
+import { getAgentOrderSuccess } from "../../cart/_redux/cart-slice";
+import { getAgentOrderSuccess as getAgentOrderSummarySuccess } from '../(pages)/order-summary/_redux/order-summary-slice'
 
 export function checkout(orderRepository: OrderRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
@@ -102,9 +104,17 @@ export default function getCheckoutOrder(
 
         console.log('data', result.data)
         if (!!result.data && result.statusCode === 200) {
+            const allProducts: any[] = result.data.order_stores?.reduce(
+                (productsArray: any, orderStore: any) => {
+                    return productsArray.concat(orderStore.products);
+                },
+                []
+            );
             dispatch(createOrderSuccess(result.data.order))
             dispatch(senderFormFilled(result.data.order_customer))
             dispatch(receiverFormFilled(result.data.order_receiver))
+            dispatch(getAgentOrderSuccess(allProducts))
+            dispatch(getAgentOrderSummarySuccess(result.data.order_stores))
             console.log('data', result.data.order_receiver)
         }
     }

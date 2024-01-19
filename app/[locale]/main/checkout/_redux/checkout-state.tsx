@@ -4,5 +4,6 @@ export interface CheckoutState {
     checkoutProgress: number,
     order: any,
     createOrderStatus: RequestStatus,
-    checkoutStatus: RequestStatus
+    checkoutStatus: RequestStatus,
+    getAgentOrder: RequestStatus,
 }

@@ -224,16 +224,16 @@ export const senderSlice = createSlice({
         senderFormFilled: (state: SenderState, action: PayloadAction<any>) => {
             return {
                 ...state,
-                firstName: { ...state.firstName, value: action.payload.first_name },
-                lastName: { ...state.firstName, value: action.payload.last_name },
-                address1: { ...state.address1, value: action.payload.street },
-                emailAddress: { ...state.emailAddress, value: action.payload.email },
-                phoneNumber: { ...state.phoneNumber, value: action.payload.phone_number },
-                city: { ...state.city, value: action.payload.city },
-                province: { ...state.city, value: action.payload.province },
-                zipCode: { ...state.zipCode, value: action.payload.postal_code },
-                country: { ...state.country, value: action.payload.country },
-                mobileNumber: { ...state.mobileNumber, value: action.payload.mobile_number }
+                firstName: { ...state.firstName, value: action.payload?.first_name ?? ''},
+                lastName: { ...state.firstName, value: action.payload?.last_name ?? ''},
+                address1: { ...state.address1, value: action.payload?.street ?? ''},
+                emailAddress: { ...state.emailAddress, value: action.payload?.email ?? ''},
+                phoneNumber: { ...state.phoneNumber, value: action.payload?.phone_number ?? ''},
+                city: { ...state.city, value: action.payload?.city ?? ''},
+                province: { ...state.city, value: action.payload?.province ?? ''},
+                zipCode: { ...state.zipCode, value: action.payload?.postal_code ?? ''},
+                country: { ...state.country, value: action.payload?.country ?? ''},
+                mobileNumber: { ...state.mobileNumber, value: action.payload?.mobile_number ?? ''},
             }
         }
 

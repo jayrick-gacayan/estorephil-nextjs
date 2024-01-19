@@ -23,7 +23,7 @@ export default function Order({
                 <td className="border-b-[1.5px]">{order.id}</td>
                 <td className="border-b-[1.5px]">{createdAt}</td>
                 <td className="border-b-[1.5px]">{deliveredDate}</td>
-                <td className="border-b-[1.5px]">{customerName}</td>
+                <td className="border-b-[1.5px]">{order.agent_id}</td>
                 <td className="border-b-[1.5px]">{order.total_quantity}</td>
                 <td className="border-b-[1.5px]">{order.agent_referral ?? 0}</td>
                 <td className="border-b-[1.5px]">{order.total_prod_price}</td>
