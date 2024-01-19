@@ -18,7 +18,6 @@ import { orderContainer } from '@/inversify/inversify.config';
 import { TYPES } from '@/inversify/types';
 import { OrderRepository } from '@/repositories/order-repository';
 import { checkout } from '../_redux/checkout-thunk';
-import { useSelector } from 'react-redux';
 
 export default function NextButton() {
     const searchParams = useSearchParams();

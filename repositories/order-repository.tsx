@@ -1,12 +1,7 @@
-
 import { TYPES } from "@/inversify/types";
-import { AccountService } from "@/services/account-service";
 import { OrderService } from "@/services/order-service";
 import { Result } from "@/types/helpers/result-helpers";
 import { inject, injectable } from "inversify";
-import { SignInOptions } from "next-auth/react";
-
-
 @injectable()
 export class OrderRepository {
     private orderService: OrderService;
@@ -187,9 +182,13 @@ export class OrderRepository {
         return await this.orderService.setCart(token, JSON.stringify(body))
     }
 
-    async updateCheckoutOrder(orderId: string, token: string) {
+    async updateCheckoutOrder(data: any, orderId: string, token: string) {
         let result = await this.orderService.updateCheckoutOrder(
-            JSON.stringify({ order_id: orderId })
+            JSON.stringify({
+                tr_id: null,
+                order_id: orderId,
+                ...data
+            })
             , token
         );
 
@@ -199,11 +198,29 @@ export class OrderRepository {
             response = await result.json();
         }
 
+        console.log('response on update checkout order', response)
         return new Result<any>({
             response: response,
             data: response?.data ?? undefined,
             statusCode: response?.status ?? result.status
         });
+    }
+
+    async getAgentOrder(orderId: number, token: string) {
+        let result = await this.orderService.getAgentOrder(orderId, token);
+
+        let response: any = undefined;
+
+        if (result.status === 200) {
+            response = await result.json();
+        }
+
+        console.log('response on get checkout order', response)
+        return new Result<any>({
+            response: response,
+            data: response?.data ?? undefined,
+            statusCode: response?.status ?? result.status
+        })
     }
 
 }
