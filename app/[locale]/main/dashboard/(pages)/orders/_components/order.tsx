@@ -28,7 +28,7 @@ export default function Order({
                 <td className="border-b-[1.5px]">{order.agent_referral ?? 0}</td>
                 <td className="border-b-[1.5px]">{order.total_prod_price}</td>
                 <td className="border-b-[1.5px]">
-                    <div className={`flex w-[75px] py-2 rounded-full text-xs my-2 justify-center text-white ${order.status === 'pending' ? `bg-red-500`:`bg-green-500`} `}>
+                    <div className={`flex w-[75px] py-2 rounded-full text-xs my-2 justify-center text-white ${order.status === 'pending' ? `bg-red-500`:`bg-orange-500`} `}>
                         {order.status}
                     </div>
                 </td>
