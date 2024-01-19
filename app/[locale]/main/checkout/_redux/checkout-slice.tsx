@@ -8,6 +8,7 @@ export const initialState: CheckoutState = {
     order: {},
     createOrderStatus: RequestStatus.WAITING,
     checkoutStatus: RequestStatus.WAITING,
+    getAgentOrder: RequestStatus.WAITING,
 }
 export const checkoutSlice = createSlice({
     name: "checkout",
@@ -43,7 +44,8 @@ export const checkoutSlice = createSlice({
                 ...state,
                 checkoutStatus: RequestStatus.SUCCESS
             }
-        }
+        },
+
     }
 })
 export const {
