@@ -3,11 +3,9 @@ import Form from "./_sections/form";
 
 export default function Page() {
     return (
-        <>
-            <div className="relative">
-                <Form />
-                <ModalPackingUpItems />
-            </div>
-        </>
+        <div className="relative">
+            <Form />
+            <ModalPackingUpItems />
+        </div>
     )
 }

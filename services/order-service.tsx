@@ -65,4 +65,13 @@ export class OrderService {
             body: body
         })
     }
+
+    async getAgentOrder(orderId: number, token: string) {
+        return await fetch(`${process.env.API_URL}/${orderId}/agent-order`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+    }
 }

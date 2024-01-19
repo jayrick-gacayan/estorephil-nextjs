@@ -5,8 +5,10 @@ import { ReceiverState } from "../(pages)/receiver/_redux/receiver-state";
 import { CartState } from "../../cart/_redux/cart-state";
 import { CheckoutState } from "./checkout-state";
 import { PaymentMethodState } from "../(pages)/payment-method/_redux/payment-method-state";
-import { checkoutLoaded, checkoutSuccess } from "./checkout-slice";
+import { checkoutLoaded, checkoutSuccess, createOrderSuccess } from "./checkout-slice";
 import { ResultStatus, getResultStatus } from "@/models/result";
+import { senderFormFilled } from "../(pages)/sender/_redux/sender-slice";
+import { receiverFormFilled } from "../(pages)/receiver/_redux/receiver-slice";
 
 export function checkout(orderRepository: OrderRepository, token: string) {
     return async function (dispatch: AppDispatch, getState: typeof store.getState) {
@@ -96,6 +98,70 @@ export default function getCheckoutOrder(
     token: string
 ) {
     return async function (dispatch: AppDispatch) {
+        let result = await orderRepository.getAgentOrder(parseInt(orderId), token);
 
+        console.log('data', result.data)
+        if (!!result.data && result.statusCode === 200) {
+            dispatch(createOrderSuccess(result.data.order))
+            dispatch(senderFormFilled(result.data.order_customer))
+            dispatch(receiverFormFilled(result.data.order_receiver))
+            console.log('data', result.data.order_receiver)
+        }
+    }
+}
+
+export function updateCheckoutOrder(
+    orderRepository: OrderRepository,
+    orderId: string,
+    token: string,
+) {
+    return async function (dispatch: AppDispatch, getState: typeof store.getState) {
+
+        const senderState = getState().sender;
+        const state: CheckoutState = getState().checkout;
+        const order = state.order;
+        const cartState: CartState = getState().cart;
+        const receiverState: ReceiverState = getState().receiver
+
+        const totalPrice = cartState.itemsSelected.reduce((total, product) => total + (product.quantity || 0) * (product.price || 0), 0);
+        let objectToSend = {
+            order_customer: {
+                order_id: orderId,
+                first_name: senderState.firstName.value,
+                last_name: senderState.lastName.value,
+                street: senderState.address1.value,
+                city: senderState.city.value,
+                province: senderState.province.value,
+                postal_code: senderState.zipCode.value,
+                country: senderState.country.value,
+                phone_number: senderState.phoneNumber.value,
+                mobile_number: senderState.mobileNumber.value,
+                email: senderState.emailAddress.value,
+                town: senderState.city.value,
+            },
+            order: { ...order },
+            order_receiver: {
+                order_id: orderId,
+                first_name: receiverState.firstName.value ?? '',
+                last_name: receiverState.lastName.value ?? '',
+                relationship: '',
+                street: receiverState.address1.value ?? '',
+                town: receiverState.address2.value ?? '',
+                city: receiverState.city.value ?? '',
+                province: receiverState.country.value ?? '',
+                postal_code: receiverState.zipCode.value ?? '',
+                country: receiverState.country.value ?? '',
+                phone_number: receiverState.phoneNumber.value ?? '',
+                mobile_number: receiverState.mobileNumber.value ?? '',
+                email: receiverState.emailAddress.value ?? ''
+            },
+        }
+
+        let result = await orderRepository.updateCheckoutOrder(objectToSend, orderId, token);
+
+        console.log('result on update checkout order', result.data)
+        if (result.statusCode === 200) {
+            dispatch(getCheckoutOrder(orderRepository, orderId, token))
+        }
     }
 }

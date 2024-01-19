@@ -3,10 +3,7 @@ import Validations from "@/types/validations";
 import { ValidationType } from "@/models/validation-response";
 import { ReceiverState } from "./receiver-state";
 import { SenderState } from "../../sender/_redux/sender-state";
-import { RootState, store } from "@/redux/store";
-import { useSelector } from "react-redux";
 import { RequestStatus } from "@/types/enums/request-status";
-
 
 export const initialState: ReceiverState = {
     firstName: {
@@ -278,6 +275,21 @@ export const receiverSlice = createSlice({
                 }
             }
         },
+        receiverFormFilled: (state: ReceiverState, action: PayloadAction<any>) => {
+            return {
+                ...state,
+                firstName: { ...state.firstName, value: action.payload.first_name },
+                lastName: { ...state.firstName, value: action.payload.last_name },
+                address1: { ...state.address1, value: action.payload.street },
+                emailAddress: { ...state.emailAddress, value: action.payload.email },
+                phoneNumber: { ...state.phoneNumber, value: action.payload.phone_number },
+                city: { ...state.city, value: action.payload.city },
+                province: { ...state.city, value: action.payload.province },
+                zipCode: { ...state.zipCode, value: action.payload.postal_code },
+                country: { ...state.country, value: action.payload.country },
+                mobileNumber: { ...state.mobileNumber, value: action.payload.mobile_number }
+            }
+        }
     }
 })
 
@@ -288,6 +300,6 @@ export const {
     countryChanged, mobileNumberChanged, phoneNumberChanged,
     provinceChanged, zipCodeChanged, checkBoxReceiverInfoClicked,
     validateReceiver, checkBoxReceiverAddressClicked, checkBoxReceiverContactClicked,
-    checkoutReceiverRequestStatusSet,
+    checkoutReceiverRequestStatusSet, receiverFormFilled
 } = receiverSlice.actions
 export default receiverSlice.reducer

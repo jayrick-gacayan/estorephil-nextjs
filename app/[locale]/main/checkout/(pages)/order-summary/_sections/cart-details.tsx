@@ -27,7 +27,6 @@ export default function CartDetails() {
         })
     }, [cartState.itemsSelected])
 
-    console.log('stores', stores[0])
     return (
         <div className='space-y-8'>
             {
