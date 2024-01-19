@@ -2,11 +2,16 @@
 
 import { RootState } from "@/redux/store"
 import { usePathname, useRouter } from "next-intl/client";
+import { useSelectedLayoutSegment } from "next/navigation";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FaCheck } from "react-icons/fa"
 
 export default function CheckoutIndicator() {
+    const segment = useSelectedLayoutSegment();
+
+    const memoSegment = useMemo(() => { return segment ?? ''; }, [segment])
+
     const url = usePathname()
     // useEffect(() => {
     //     if (state.order.id === null || cartState.itemsSelected.length === 0) {
@@ -14,6 +19,30 @@ export default function CheckoutIndicator() {
     //     }
     // }, [state.order])
     // console.log('params', url)
+
+    function StepperIndicators({
+        current,
+        altText,
+        index,
+        length,
+    }: {
+        current: string;
+        altText: string;
+        index: number;
+        length: number;
+    }) {
+        return (
+            <div className="w-[25%]">
+                <div className="flex justify-center items-center relative">
+                    <div className={`flex items-center justify-center rounded-full w-[50px] h-[50px] px-4 py-2 text-center ${url.includes('payment-method') ? `bg-blue-500 text-white` : url.includes('order-summary') ? `bg-blue-500 text-white` : url.includes('receiver') ? `bg-blue-500 text-white` : url.includes('sender') ? `bg-blue-500 text-white` : `bg-[#f3f3f3] text-black`} text-[20px]`}>{url.includes('payment-method') ? <FaCheck size={25} /> : url.includes('order-summary') ? <FaCheck size={25} /> : url.includes('receiver') ? <FaCheck size={25} /> : 1}</div>
+                    {index > length - 1 && <hr className={`w-full border-4 z-0 border-gray-200`} />}
+
+                </div>
+                <div className="text-xs text-gray-400 font-medium pt-2"> Step 1</div>
+                <div className={`${url.includes('sender') ? `text-[#1487ff]` : `text-gray-400`} font-bold`}>Sender Info</div>
+            </div>
+        )
+    }
 
     return (
 
