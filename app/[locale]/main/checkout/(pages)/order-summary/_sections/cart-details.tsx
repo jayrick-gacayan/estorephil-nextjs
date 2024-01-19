@@ -38,7 +38,7 @@ export default function CartDetails() {
                             <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">
                                 <div className="flex items-center gap-4 flex-1">
                                     <div className="flex items-center gap-4">
-                                        <Image src={`${details.image ?? `/sellers/asianhome.png`}`}
+                                        <Image src={`${details.image_url ?? `/sellers/asianhome.png`}`}
                                             alt={`image-${details.id}`} width={48} height={48} quality={100} priority
                                             className='w-12 h-12' />
                                         <h1 className="text-slate-800">{details.name}</h1>
