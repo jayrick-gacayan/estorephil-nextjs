@@ -27,7 +27,7 @@ import courierStaffInfoReducer from '@/app/[locale]/(dashboard)/courier/staffs/[
 import agentAgencyInfoReducer from '@/app/[locale]/main/dashboard/(pages)/agency-information/_redux/agent-agency-information-slice';
 import agentRegisterReducer from '@/app/[locale]/(auth)/agent/register/_redux/agent-register-slice'
 import agentFavoriteReducer from '@/app/[locale]/main/dashboard/(pages)/favorites/_redux/agent-favorite-slice';
-
+import orderSummaryReducer from '@/app/[locale]/main/checkout/(pages)/order-summary/_redux/order-summary-slice'
 import startReducer from '@/app/[locale]/_redux/start-slice';
 
 export const store = configureStore({
@@ -46,6 +46,7 @@ export const store = configureStore({
         receiver: receiverReducer,
         paymentMethod: paymentMethodReducer,
         order: orderReducer,
+        orderSummary: orderSummaryReducer,
         orderDetail: orderDetailReducer,
         customer: customerReducer,
         notification: notificationReducer,

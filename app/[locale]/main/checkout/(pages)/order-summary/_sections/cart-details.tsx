@@ -6,41 +6,42 @@ import { Seller } from '@/models/seller';
 import { RootState } from '@/redux/store';
 import { useMemo } from 'react';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
 export default function CartDetails() {
-    const cartState: CartState = useAppSelector((state: RootState) => { return state.cart; })
+    // const cartState: CartState = useAppSelector((state: RootState) => { return state.cart; })
 
-    const stores = useMemo(() => {
-        let stores = cartState.itemsSelected.map((product: any) => { return product.store })
-            .filter((tempStore: any, index: number, currentStore: any[]) => {
-                let arrayCurrentTemp = currentStore.map((current: Seller) => { return current.id });
-                return arrayCurrentTemp.indexOf(tempStore.id) === index;
-            });
+    // const stores = useMemo(() => {
+    //     let stores = cartState.itemsSelected.map((product: any) => { return product.store })
+    //         .filter((tempStore: any, index: number, currentStore: any[]) => {
+    //             let arrayCurrentTemp = currentStore.map((current: Seller) => { return current?.id });
+    //             return arrayCurrentTemp.indexOf(tempStore.id) === index;
+    //         });
 
-        return stores.map((store: any) => {
-            return {
-                store: store,
-                products: cartState.itemsSelected.filter((product: any) => {
-                    return product.store.id === store.id
-                })
-            }
-        })
-    }, [cartState.itemsSelected])
-
-    console.log('stores', stores[0])
+    //     return stores.map((store: any) => {
+    //         return {
+    //             store: store,
+    //             products: cartState.itemsSelected.filter((product: any) => {
+    //                 return product.store.id === store.id
+    //             })
+    //         }
+    //     })
+    // }, [cartState.itemsSelected])
+    const state = useSelector((state: RootState) => state.orderSummary)
+    const stores = state.orderStores
     return (
         <div className='space-y-8'>
             {
-                stores.map(({ store, products }: any, index) => {
+                stores.map(({ details, products }: any, index) => {
                     return (
                         <div className="border shadow-md mb-8" key={index}>
                             <div className="bg-[#f8f5e5] flex items-center justify-between px-2 py-4 gap-4">
                                 <div className="flex items-center gap-4 flex-1">
                                     <div className="flex items-center gap-4">
-                                        <Image src={`${store.image ?? `/sellers/asianhome.png`}`}
-                                            alt={`image-${store.id}`} width={48} height={48} quality={100} priority
+                                        <Image src={`${details.image ?? `/sellers/asianhome.png`}`}
+                                            alt={`image-${details.id}`} width={48} height={48} quality={100} priority
                                             className='w-12 h-12' />
-                                        <h1 className="text-slate-800">{store.name}</h1>
+                                        <h1 className="text-slate-800">{details.name}</h1>
                                     </div>
                                 </div>
                             </div>

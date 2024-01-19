@@ -7,6 +7,7 @@ export interface CartState {
   itemsSelected: any[]
   getMainCartStatus: RequestStatus
   createOrderStatus: RequestStatus
+  getAgentOrderStatus: RequestStatus
   purchaseMethodItems: Cart[] | BalikbayanBox[];
   purchaseMethodItemToInteract: Cart | BalikbayanBox | undefined;
   orderId: number | string | undefined

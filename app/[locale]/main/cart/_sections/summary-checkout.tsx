@@ -12,7 +12,7 @@ import { OrderRepository } from '@/repositories/order-repository';
 import { TYPES } from '@/inversify/types';
 import { useSession } from 'next-auth/react';
 import { RequestStatus } from '@/models/result';
-import { useRouter } from 'next-intl/client';
+import { usePathname, useRouter } from 'next-intl/client';
 import { CartRepository } from '@/repositories/cart-repository';
 import Loading from '../../_components/loading';
 
@@ -22,6 +22,7 @@ export default function SummaryCheckout() {
   const orderRepository = orderContainer.get<OrderRepository>(TYPES.OrderRepository)
   const { data: sessionData, update: updateSession } = useSession()
   const router = useRouter()
+  const pathname = usePathname()
   const dispatch = useAppDispatch()
   const handleCheckOut = () => {
     dispatch(createOrder(orderRepository, sessionData?.token ?? ''))
@@ -179,14 +180,21 @@ export default function SummaryCheckout() {
           </div>
         </div>
         <Link href="/" className="text-primary block text-right text-sm py-2 underline cursor-pointer hover:text-primary-light">APPLY A PROMO CODE</Link>
-        <button
-          disabled={state.itemsSelected.length === 0}
-          className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
-          onClick={handleCheckOut}>
-          {state.createOrderStatus === RequestStatus.IN_PROGRESS
-            ? (<div className='flex items-center justify-center'><p>CHECKING OUT ITEMS </p>< Loading /></div>)
-            : (<>CHECK OUT</>)}
-        </button>
+        {
+          (pathname.includes('sender') || pathname.includes('receiver') || pathname.includes('order-summary') || pathname.includes('payment-method'))
+            ? <></>
+            : <>
+              <button
+                disabled={state.itemsSelected.length === 0}
+                className='border disabled:cursor-not-allowed cursor-pointer disabled:border-tertiary-dark w-full disabled:bg-tertiary-dark border-warning bg-warning rounded hover:bg-warning-light text-white text-center p-4 disabled:hover:bg-secondary-light'
+                onClick={handleCheckOut}>
+                {state.createOrderStatus === RequestStatus.IN_PROGRESS
+                  ? (<div className='flex items-center justify-center'><p>CHECKING OUT ITEMS </p>< Loading /></div>)
+                  : (<>CHECK OUT</>)}
+              </button>
+            </>
+        }
+
       </div>
       <div className="px-8 pt-20 space-y-8">
         <div className='block space-y-2 text-tertiary'>
