@@ -43,7 +43,7 @@ export function createOrder(orderRepository: OrderRepository, token: string) {
         const result = await orderRepository.createOrder({ token: token, stores: allStores })
         switch (getResultStatus(result.status)) {
             case ResultStatus.SUCCESS:
-                dispatch(createOrderSuccess())
+                dispatch(createOrderSuccess(result.data))
                 dispatch(createOrderSuccessCheckout(result.data))
                 break;
             default:

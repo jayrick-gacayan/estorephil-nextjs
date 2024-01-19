@@ -17,6 +17,7 @@ const initialState: CartState = {
     total: 0
   },
   purchaseMethodItemToInteract: undefined,
+  orderId: undefined,
   getMainCartStatus: RequestStatus.WAITING,
   createOrderStatus: RequestStatus.WAITING
 }
@@ -188,9 +189,10 @@ export const cartSlice = createSlice({
         createOrderStatus: RequestStatus.IN_PROGRESS
       }
     },
-    createOrderSuccess: (state: CartState) => {
+    createOrderSuccess: (state: CartState, action: PayloadAction<any>) => {
       return {
         ...state,
+        orderId: action.payload.id,
         createOrderStatus: RequestStatus.SUCCESS
       }
     },
