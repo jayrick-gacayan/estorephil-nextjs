@@ -81,7 +81,7 @@ export default function SummaryCheckout() {
     if (!!sessionData && state.createOrderStatus === RequestStatus.SUCCESS) {
       dispatch(getMainCart(cartRepository, sessionData.token ?? ''))
       updateCartSession('checkout');
-      router.push(`/checkout/sender?order-id=${state.orderId}`)
+      router.push(`/checkout/sender?order_id=${state.orderId}`)
     }
     if (state.getMainCartStatus === RequestStatus.SUCCESS) {
       updateCartSession('mainCart');
