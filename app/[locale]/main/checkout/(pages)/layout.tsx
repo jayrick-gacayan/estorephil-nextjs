@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     <CheckoutIndicator />
                     {children}
                 </div>
-                <div className="mx-16 flex items-center justify-between mb-12">
+                <div className="mx-16 mb-12">
                     <PreviousButton />
                     <NextButton />
 

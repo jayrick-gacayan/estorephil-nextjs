@@ -63,6 +63,7 @@ export default function NextButton() {
                             }, 4000);
                             break;
                         case RequestStatus.IN_PROGRESS:
+
                             dispatch(validateSender());
                             break;
                         case RequestStatus.SUCCESS:
@@ -116,7 +117,7 @@ export default function NextButton() {
     }
 
     return (
-        <button className={`py-4 bg-warning rounded-md text-white w-[50%]`}
+        <button className='py-4 bg-warning rounded-md text-white w-[50%] translate-x-1/2'
             onClick={() => {
                 switch (segment) {
                     case 'sender':

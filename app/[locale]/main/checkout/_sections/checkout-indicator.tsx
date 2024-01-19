@@ -12,12 +12,12 @@ export default function CheckoutIndicator() {
     const cartState = useSelector((state: RootState) => state.cart)
     const router = useRouter()
     const url = usePathname()
-    useEffect(() => {
-        if (state.order.id === null || cartState.itemsSelected.length === 0) {
-            router.push('/cart')
-        }
-    }, [state.order])
-    console.log('params', url)
+    // useEffect(() => {
+    //     if (state.order.id === null || cartState.itemsSelected.length === 0) {
+    //         router.push('/cart')
+    //     }
+    // }, [state.order])
+    // console.log('params', url)
     return (
         <>
             <div className="flex items-center justify-center p-4 w-[884px] m-auto">
