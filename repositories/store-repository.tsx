@@ -27,7 +27,7 @@ export class StoreRepository {
         return new Result<Store[]>(
             {
                 response: response,
-                data: response.data.map((value: any) => { return camelCase({ ...value }) as any }) ?? [],
+                data: response?.data?.map((value: any) => { return camelCase({ ...value }) as any }) ?? [],
                 statusCode: result.status
             }
         );
