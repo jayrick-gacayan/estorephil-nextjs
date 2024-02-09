@@ -8,7 +8,7 @@ export function StoreItem({
   store: Store
 }) {
   return (
-    <div className='w-32 h-32 flex-none'>
+    <div className='basis-[200px] h-32 flex-none'>
       <Link href={`/stores/${store.id}`}
         className='block w-full h-full'>
         {

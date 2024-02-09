@@ -10,6 +10,9 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      flex: {
+        '1/2': '0 0 50%'
+      },
       screens: {
         xxl: '1536px',
         xs: '480px',
@@ -107,7 +110,7 @@ const config: Config = {
   },
   plugins: [
     require('@tailwindcss/forms')({
-      strategy:'class',
+      strategy: 'class',
     }),
   ],
 }
